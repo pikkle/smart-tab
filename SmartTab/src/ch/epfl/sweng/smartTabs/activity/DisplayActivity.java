@@ -1,9 +1,5 @@
 package ch.epfl.sweng.smartTabs.activity;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
