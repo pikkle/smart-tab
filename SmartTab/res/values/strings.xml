@@ -4,5 +4,6 @@
     <string name="app_name">SmartTabs</string>
     <string name="title_activity_display">DisplayActivity</string>
     <string name="hello_world">Hello world!</string>
+    <string name="title_activity_main">MainActivity</string>
 
 </resources>
