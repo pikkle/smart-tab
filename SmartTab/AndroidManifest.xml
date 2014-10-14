@@ -16,13 +16,19 @@
         
         <activity
             android:name="ch.epfl.sweng.smartTabs.activity.MainActivity"
-            android:label="@string/title_activity_main" >
+            android:label="@string/title_activity_main" 
+            android:theme="@android:style/Theme.NoTitleBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
-        
         <activity
             android:name="ch.epfl.sweng.smartTabs.activity.DisplayActivity"
             android:label="@string/title_activity_display"
-            android:screenOrientation="landscape" >
+            android:screenOrientation="landscape" 
+            android:theme="@android:style/Theme.NoTitleBar">
         </activity>
     </application>
 
