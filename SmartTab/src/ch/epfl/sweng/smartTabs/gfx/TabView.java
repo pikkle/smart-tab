@@ -1,5 +1,6 @@
 package ch.epfl.sweng.smartTabs.gfx;
 
+import ch.epfl.sweng.smartTabs.music.Tab;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -11,15 +12,16 @@ public class TabView extends View {
 	private final float RATIO = 0.34375f;
 	private final char[] STANDARD_TUNNING = {'e','B','G','D','A','E'};
 	private final Paint paint = new Paint();
+	private final Tab mTab;
 	
-    public TabView(Context context) {
+	public TabView(Context context, Tab tab) {
          super(context);
+         mTab = tab;
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
        super.onDraw(canvas);
-  
        clearScreen(canvas);
        drawNameSong(canvas);
        drawStrings(canvas);
@@ -35,13 +37,14 @@ public class TabView extends View {
    private void drawNameSong(Canvas canvas){
 	   paint.setTextSize(48f);
        paint.setColor(Color.GRAY);
-       canvas.drawText("Jeux interdits", 50, 100, paint);
+       canvas.drawText(mTab.getName(), 50, 100, paint);
    }
    
    private void drawStrings(Canvas canvas){
        paint.setColor(Color.BLACK);
        paint.setTextSize(36f);
        paint.setStrokeWidth(2f);
+       // Drawing the six strings
        for (int i = 0; i < 6; i++) {
     	   canvas.drawLine(getWidth()/8, RATIO*getHeight() + i*getHeight()/16, getWidth(), RATIO*getHeight() + i*getHeight()/16, paint);
     	   canvas.drawText(STANDARD_TUNNING[i]+"", getWidth()/16, RATIO*getHeight() + i*getHeight()/16, paint);
