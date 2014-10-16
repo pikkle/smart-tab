@@ -1,3 +1,4 @@
-.classpath
-project.properties
-bin/*
+SmartTab/.classpath
+SmartTab/project.properties
+SmartTab/bin/*
+SmartTab/gen/*
