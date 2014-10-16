@@ -1,9 +1,10 @@
-http://mpikkle.com/getTabs/http://mpikkle.com/getTabs/<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
 
     <string name="app_name">SmartTabs</string>
     <string name="title_activity_display">DisplayActivity</string>
-    <string name="title_activity_main">MainActivity</string>http://mpikkle.com/getTabs/
-    <string name="serverURL">http://mpikkle.com/getTabs/</string>
-
+    <string name="title_activity_main">MainActivity</string>
+    <string name="hello_world">Hello World!</string>
+    <string name="serverURL">x</string>
+    
 </resources>
