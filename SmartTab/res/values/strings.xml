@@ -4,7 +4,12 @@
     <string name="app_name">SmartTabs</string>
     <string name="title_activity_display">DisplayActivity</string>
     <string name="title_activity_main">MainActivity</string>
+<<<<<<< HEAD
     <string name="hello_world">Hello World!</string>
     <string name="serverURL">x</string>
     
+=======
+    <string name="serverURL">http://mpikkle.com/getTabs/</string>
+
+>>>>>>> 66e776a1df2e5f7ca384deb17fee9442ce70351a
 </resources>
