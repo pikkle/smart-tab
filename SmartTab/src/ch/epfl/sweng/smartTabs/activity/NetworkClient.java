@@ -8,14 +8,14 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Array;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
-import java.util.List;
+import java.util.Map;
 
-import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
+
 
 /**
  * @author rphkhr
@@ -30,29 +30,19 @@ public class NetworkClient {
 	/*Creates a new NetworkClient that takes in parameter the serverURL, and returns a JSON with a list of
 	 * partition names and corresponding URL containing the partition in a format we can understand and display.
 	 */
-	public NetworkClient() {
+	public NetworkClient(String url) {
 	}
 
-	public Array fetchTabList(String url){
-		List<E> tabArray = null;
-		try{
-			String tmpStringArray = downloadContent(url);
-			JSONArray jsonArray = new JSONArray(tmpStringArray);
-			for (int i = 0; i<jsonArray.length(); i++){
-				HashMap tmpHash = jsonArray.getJSONArray(i);
-				tabArray.add(jsonArray);
-			}
-		} catch (IOException e) {
-			System.err.println("InputStream not valid");
-			e.printStackTrace();
-		} catch (JSONException e) {
-			System.err.println("JSON creation not available.");			
-			e.printStackTrace();
+	public Map<String,URL> fetchTabMap(String url) throws IOException, JSONException{
+		String s = downloadContent(url);
+		System.out.println(s);
+		JSONObject a = new JSONObject(s);
+		HashMap<String, URL> map = new HashMap<String, URL>();
+		for (int i = 0; i < a.length(); i++) {
+			System.out.println(a.get("Nom"));
 		}
 		
-		
-		
-		return tabArray;
+		return map;
 	}
 
 	/**

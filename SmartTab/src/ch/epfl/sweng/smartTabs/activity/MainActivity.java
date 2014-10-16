@@ -1,6 +1,10 @@
 package ch.epfl.sweng.smartTabs.activity;
 
-import java.lang.reflect.Array;
+import java.io.IOException;
+import java.net.URL;
+import java.util.Map;
+
+import org.json.JSONException;
 
 import android.app.Activity;
 import android.content.Context;
@@ -10,7 +14,6 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.Toast;
-import ch.epfl.sweng.quizapp.QuizActivity.DownloadWebpageTask;
 import ch.epfl.sweng.smartTabs.R;
 
 
@@ -36,20 +39,24 @@ public class MainActivity extends Activity {
 		startActivity(i);
 	}
 
-	private class DownloadWebpageTask extends AsyncTask<Void, Void, Array>{
-
-
-
-
-
-
-
+	private class DownloadWebpageTask extends AsyncTask<Void, Void, Map<String,URL>>{
 		@Override
-		protected Array doInBackground(Void... params) {
+		protected Map<String,URL> doInBackground(Void... params) {
+			try {
+				return netClient.fetchTabMap(getString(R.string.serverURL));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			return null;
 		}
-
+		
+		@Override
+		protected void onPostExecute(Map map) {
+			
+		}
 	}
-
-
 }
