@@ -23,12 +23,13 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-
+		
+		//download list of tablatures URL.
 		String serverURL = getString(R.string.serverURL);
 		netClient = new NetworkClient(serverURL);
 		ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-
 		NetworkInfo netInfo = connMgr.getActiveNetworkInfo();
+		
 		if (netInfo != null && netInfo.isConnected()) {
 			new DownloadWebpageTask().execute();
 		} else {
@@ -53,9 +54,13 @@ public class MainActivity extends Activity {
 			}
 			return null;
 		}
-		
+		//Call this method after fetching the map containing tab names and corresponding URL.
+		//Generate menu buttons here and on-click listeners that fetch URL contents.
 		@Override
-		protected void onPostExecute(Map map) {
+		protected void onPostExecute(Map<String, URL> map) {
+			
+			
+			
 			
 		}
 	}
