@@ -7,7 +7,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.view.View;
 
-public class TabView extends View {
+public class GridView extends View {
 
 	// Some serious math ...
 	private final float RATIO = 0.34375f;
@@ -15,7 +15,7 @@ public class TabView extends View {
 	private final Paint paint = new Paint();
 	private final Tab mTab;
 
-	public TabView(Context context, Tab tab) {
+	public GridView(Context context, Tab tab) {
 		super(context);
 		mTab = tab;
 	}
@@ -45,7 +45,6 @@ public class TabView extends View {
 		paint.setColor(Color.BLACK);
 		paint.setTextSize(36f);
 		paint.setStrokeWidth(2f);
-		// Drawing the six strings
 		for (int i = 0; i < 6; i++) {
 			canvas.drawLine(getWidth()/8, RATIO*getHeight() + i*getHeight()/16, getWidth(), RATIO*getHeight() + i*getHeight()/16, paint);
 			canvas.drawText(STANDARD_TUNNING[i]+"", getWidth()/16, RATIO*getHeight() + i*getHeight()/16, paint);

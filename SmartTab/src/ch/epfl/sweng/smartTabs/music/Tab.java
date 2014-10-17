@@ -3,5 +3,4 @@ public class Tab {
 	public String getName() {
 		return "Testing";
 	}
-
 }
