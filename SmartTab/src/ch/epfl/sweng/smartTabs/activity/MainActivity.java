@@ -5,6 +5,7 @@ import java.net.URL;
 import java.util.Map;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.app.Activity;
 import android.content.Context;
@@ -20,6 +21,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 import ch.epfl.sweng.smartTabs.R;
+import ch.epfl.sweng.smartTabs.music.Tab;
 
 public class MainActivity extends Activity {
 	private NetworkClient netClient;
@@ -88,10 +90,21 @@ public class MainActivity extends Activity {
 						e.printStackTrace();
 					}
 					
+					try {
+						JSONObject jsonTablature = new JSONObject(item);
+						Tab tablature = Tab.parseTabFromJSON(jsonTablature);
+					} catch (JSONException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					
 					
 					//TODO Christopherrrrr, t'as l'URL ici, je fetch le contenu en tant que string, et fait
 					//ce que tu veux avec. capiche or no capiche? <3
+					/*Voilà là tu te retrouve avec un nouvel objet Tab avec touts ce qu'il faut dedans, par
+					 * contre c'est pas moi qui utilise cet objet c'est la display activity donc tu demandes 
+					 * à faton ce qu'il veut en faire.
+					 */
 				}
 			});
 			

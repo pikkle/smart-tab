@@ -26,7 +26,7 @@ public class Tab {
 		mTimeList = timeList;
 	}
 
-	public Tab parseTabFromJSON(JSONObject jsonTab) throws JSONException {
+	public static Tab parseTabFromJSON(JSONObject jsonTab) throws JSONException {
 		String jsonTabName = jsonTab.getString("tabName");
 		boolean jsonComplex = jsonTab.getBoolean("complex");
 		int jsonTempo = jsonTab.getInt("tempo");
