@@ -1,4 +1,5 @@
-SmartTab/.classpath
-SmartTab/project.properties
+SmartTab/local.properties
+SmartTab/.settings/
+SmartTab/.loadpath
 SmartTab/bin/*
 SmartTab/gen/*
