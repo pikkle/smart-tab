@@ -13,31 +13,36 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.Toast;
 import ch.epfl.sweng.smartTabs.R;
 
-
 public class MainActivity extends Activity {
 	private NetworkClient netClient;
+	private ListView listV;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		
+
 		//download list of tablatures URL.
 		String serverURL = getString(R.string.serverURL);
 		netClient = new NetworkClient(serverURL);
 		ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo netInfo = connMgr.getActiveNetworkInfo();
-		
+
 		if (netInfo != null && netInfo.isConnected()) {
 			new DownloadWebpageTask().execute();
 		} else {
 			Toast.makeText(this, "Error retrieving tablature. Please try again.", Toast.LENGTH_LONG).show();
 		}
 
-		Intent i = new Intent(this, DisplayActivity.class);
-		startActivity(i);
+		//Intent i = new Intent(this, DisplayActivity.class);
+		//startActivity(i);
 	}
 
 	private class DownloadWebpageTask extends AsyncTask<Void, Void, Map<String,URL>>{
@@ -57,10 +62,38 @@ public class MainActivity extends Activity {
 		//Call this method after fetching the map containing tab names and corresponding URL.
 		//Generate menu buttons here and on-click listeners that fetch URL contents.
 		@Override
-		protected void onPostExecute(Map<String, URL> map) {
-			
-			
-			
+		protected void onPostExecute(final Map<String, URL> map) {
+			listV = (ListView) findViewById(R.id.list);
+			//Add tab names to list view by iteration.
+			String [] values = new String[map.size()];
+			int count = 0;
+			for (String key : map.keySet()){
+				values[count]=key;
+				count++;
+			}
+			//create & add adapter to listview
+			ArrayAdapter<String> adap = new ArrayAdapter<String>(getApplicationContext(), 
+					android.R.layout.simple_list_item_1, values);
+			listV.setAdapter(adap);
+			listV.setOnItemClickListener(new OnItemClickListener() {
+
+				@Override
+				public void onItemClick(AdapterView<?> parent, View view,
+						int position, long id) {
+					String item = (String) listV.getAdapter().getItem(position);
+					URL url = map.get(item);
+					try {
+						netClient.downloadContent(url);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					
+					
+					
+					//TODO Christopherrrrr, t'as l'URL ici, je fetch le contenu en tant que string, et fait
+					//ce que tu veux avec. capiche or no capiche? <3
+				}
+			});
 			
 		}
 	}

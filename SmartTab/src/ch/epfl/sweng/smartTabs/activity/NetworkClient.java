@@ -37,7 +37,7 @@ public class NetworkClient {
 	//From the URL, download the String which is then parsed into JSONArray, containing JSONObjects with 
 	//tablature name (coded with "name") and corresponding URL (coded with "filename").
 	public Map<String,URL> fetchTabMap(String url) throws IOException, JSONException{
-		String s = downloadContent(url);
+		String s = downloadContent(new URL(url));
 		//test if we correctly downloaded the string.
 		System.out.println(s);
 		//create JSONArray from the string
@@ -48,7 +48,8 @@ public class NetworkClient {
 		for (int i = 0; i<jArray.length(); i++){
 			JSONObject jObj = new JSONObject();
 			jObj = (JSONObject) jArray.get(i);
-			map.put(jObj.getString("name"), new URL (jObj.getString("fileName")));
+			map.put(jObj.getString("name"), new URL (jObj.getString("filename")));
+			System.out.println(jObj.getString("name") + " URL :" + jObj.getString("filename"));
 		}
 		
 		return map;
@@ -58,12 +59,12 @@ public class NetworkClient {
 	 * @param url that contains link to all tablatures
 	 * @return String that will be converted to JSON that contains tablatures. Parsing from JSON will be done later.
 	 */
-	private String downloadContent(String urlString) throws IOException {
+	
+	public String downloadContent(URL url) throws IOException {
 		InputStream is = null;
 
 		try {
 			//transform string into url
-			URL url = new URL(urlString);
 			//open network connection and set timeouts and request method
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			conn.setReadTimeout(readTimeout /* milliseconds */);
