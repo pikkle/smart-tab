@@ -38,7 +38,7 @@ public class GridView extends View {
 	private void drawNameSong(Canvas canvas){
 		paint.setTextSize(48f);
 		paint.setColor(Color.GRAY);
-		canvas.drawText(mTab.getName(), 50, 100, paint);
+		canvas.drawText(mTab.getTabName(), 50, 100, paint);
 	}
 
 	private void drawStrings(Canvas canvas){
