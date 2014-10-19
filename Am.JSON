@@ -1,0 +1,13 @@
+{
+  "name": "Test of a simple part with one chord: A minor",
+  "complex": false,
+  "tempo": 120,
+  "partition": [ {
+      "corde_1": "0",
+      "corde_2": "1",
+      "corde_3": "2",
+      "corde_4": "2",
+      "corde_5": "0",
+      "corde_6": "0"
+    }]
+}
