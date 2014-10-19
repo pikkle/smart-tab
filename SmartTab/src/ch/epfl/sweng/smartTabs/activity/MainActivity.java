@@ -80,28 +80,30 @@ public class MainActivity extends Activity {
 				@Override
 				public void onItemClick(AdapterView<?> parent, View view,
 						int position, long id) {
-					String item = (String) listV.getAdapter().getItem(position);
-					URL url = map.get(item);
-					String toRet = null;
-					
-					try {
-						toRet = netClient.downloadContent(url);
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-					
-					try {
-						JSONObject jsonTablature = new JSONObject(toRet);
-						Tab tablature = Tab.parseTabFromJSON(jsonTablature);
-						Intent i = new Intent(MainActivity.this, DisplayActivity.class);
-						i.putExtra("tab", tablature);
-						startActivity(i);
-						
-					} catch (JSONException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					
+//					String item = (String) listV.getAdapter().getItem(position);
+//					URL url = map.get(item);
+//					String toRet = null;
+//					
+//					try {
+//						toRet = netClient.downloadContent(url);
+//					} catch (IOException e) {
+//						e.printStackTrace();
+//					}
+//					
+//					try {
+//						JSONObject jsonTablature = new JSONObject(toRet);
+//						Tab tablature = Tab.parseTabFromJSON(jsonTablature);
+//						Intent i = new Intent(MainActivity.this, DisplayActivity.class);
+//						i.putExtra("tab", tablature);
+//						startActivity(i);
+//						
+//					} catch (JSONException e) {
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//					}
+//					
+					Intent i = new Intent(MainActivity.this, DisplayActivity.class);
+					startActivity(i);
 					
 					
 					//TODO Christopherrrrr, t'as l'URL ici, je fetch le contenu en tant que string, et fait

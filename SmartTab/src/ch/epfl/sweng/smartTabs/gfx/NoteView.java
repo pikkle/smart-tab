@@ -34,29 +34,16 @@ public class NoteView extends View implements Runnable{
 
 	}
 
+
+
+
+
 	@Override
 	public void run() {
-		xPos += deltaX;
-			if(deltaX > 0){
-				if(xPos >= getWidth() - RADIUS/2){
-					deltaX *= -1;
-				}
-			}else{
-				if(xPos <= 0){
-					deltaX *= -1;
-				}
-			}
-
-			yPos += deltaY;
-			if(deltaY > 0){
-				if(yPos >= getHeight() - RADIUS/2){
-					deltaY *= -1;
-				}
-			}else{
-				if(yPos <= 0){
-					deltaY *= -1;
-				}
-			}
-		
+		while(true){
+			System.out.println("TEST");
+	    }
+			
 	}
+	    
 }

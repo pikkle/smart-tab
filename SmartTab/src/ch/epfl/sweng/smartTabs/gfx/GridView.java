@@ -15,6 +15,7 @@ public class GridView extends View {
 
 	// Some serious math ...
 	private final float RATIO = 0.34375f;
+	// The tuning is harcoded for the moment, until we 
 	private final char[] STANDARD_TUNNING = {'e','B','G','D','A','E'};
 	private final Paint paint = new Paint();
 	private final Tab mTab;
