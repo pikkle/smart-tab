@@ -4,7 +4,8 @@ import android.graphics.Canvas;
 
 
 /**
- * @author Faton Ramadani
+ * @author fatonramadani
+ * TabAnimationThread is the thread used to draw the moving notes
  */
 public class TabAnimationThread extends Thread{
 	
@@ -28,6 +29,13 @@ public class TabAnimationThread extends Thread{
 			    	noteview.drawNotes(canvas);
 			    }
 			    noteview.getHolder().unlockCanvasAndPost(canvas);
+			}
+			
+			try {
+			    sleep(30);
+			} catch (InterruptedException e) {
+			    // TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 		}
 	}
