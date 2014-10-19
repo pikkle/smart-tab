@@ -1,5 +1,6 @@
 package ch.epfl.sweng.smartTabs.music;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +11,10 @@ import org.json.JSONObject;
 /**
  * @author chrisgaubla
  */
-public class Tab {
+public class Tab implements Serializable{
+
+	private static final long serialVersionUID = 1L;
+	
 	private final String mTabName;
 	private final boolean mComplex;
 	private final int mTempo;
@@ -47,7 +51,6 @@ public class Tab {
 		}
 		return new Tab(jsonTabName, jsonComplex, jsonTempo, parsedSignatures,
 				parsedTimeList);
-
 	}
 
 	public String getTabName() {

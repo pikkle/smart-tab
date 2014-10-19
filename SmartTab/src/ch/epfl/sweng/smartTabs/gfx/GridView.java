@@ -7,6 +7,10 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.view.View;
 
+/**
+ * @author fatonramadani
+ * The view which draws the static parts of the tab, such as, the tuning and the name
+ */
 public class GridView extends View {
 
 	// Some serious math ...
@@ -38,7 +42,8 @@ public class GridView extends View {
 	private void drawNameSong(Canvas canvas){
 		paint.setTextSize(48f);
 		paint.setColor(Color.GRAY);
-		canvas.drawText(mTab.getTabName(), 50, 100, paint);
+	    canvas.drawText(mTab.getTabName(), 50, 100, paint);
+		canvas.drawText("Test", 50, 100, paint);
 	}
 
 	private void drawStrings(Canvas canvas){
