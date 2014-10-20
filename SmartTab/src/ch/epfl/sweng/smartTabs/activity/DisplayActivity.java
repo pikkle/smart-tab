@@ -2,7 +2,10 @@ package ch.epfl.sweng.smartTabs.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.widget.GridView;
 import ch.epfl.sweng.smartTabs.gfx.NoteView;
+import ch.epfl.sweng.smartTabs.gfx.TabAnimationThread;
+import ch.epfl.sweng.smartTabs.gfx.TabViewGroup;
 
 /**
  * @author fatonramadani
@@ -17,8 +20,15 @@ public class DisplayActivity extends Activity {
 		//Intent intent = getIntent();
 		//Tab tab = (Tab) intent.getExtras().getSerializable("tab");
 		//setContentView(new GridView(this,tab));
-		NoteView n = new NoteView(this);	
+		NoteView n = new NoteView(this);
+		GridView t = new GridView(this);
+		
+		TabViewGroup tvg = new TabViewGroup(this);
+		//tvg.addView(n);
+		//tvg.addView(t);
 		setContentView(n);
-		runOnUiThread(n);
+		
+		TabAnimationThread thread = new TabAnimationThread(n);
+		thread.start();
 	}
 }
