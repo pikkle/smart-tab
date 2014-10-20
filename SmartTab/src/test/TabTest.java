@@ -1,6 +1,5 @@
 package test;
 
-import org.junit.Test;
 
 import junit.framework.TestCase;
 /**
@@ -10,9 +9,4 @@ import junit.framework.TestCase;
  */
 
 public class TabTest extends TestCase {
-
-	
-	@Test public void testString() {
-		
-	}
 }
