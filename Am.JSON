@@ -3,11 +3,11 @@
   "complex": false,
   "tempo": 120,
   "partition": [ {
-      "corde_1": "0",
-      "corde_2": "1",
-      "corde_3": "2",
-      "corde_4": "2",
-      "corde_5": "0",
-      "corde_6": "0"
+      "string_1": "0",
+      "string_2": "1",
+      "string_3": "2",
+      "string_4": "2",
+      "string_5": "0",
+      "string_6": "0"
     }]
 }
