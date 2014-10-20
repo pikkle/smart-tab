@@ -1,6 +1,3 @@
-/**
- * 
- */
 package ch.epfl.sweng.smartTabs.activity;
 
 import java.io.BufferedReader;
@@ -16,7 +13,6 @@ import java.util.Map;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 
 /**
  * @author rphkhr
@@ -35,7 +31,7 @@ public class NetworkClient {
 
 	//From the URL, download the String which is then parsed into JSONArray, containing JSONObjects with 
 	//tablature name (coded with "name") and corresponding URL (coded with "filename").
-	public Map<String,URL> fetchTabMap(String url) throws IOException, JSONException{
+	public Map<String, URL> fetchTabMap(String url) throws IOException, JSONException {
 		String s = downloadContent(new URL(url));
 		//test if we correctly downloaded the string.
 		System.out.println(s);

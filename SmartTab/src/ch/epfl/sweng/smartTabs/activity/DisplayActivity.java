@@ -1,7 +1,5 @@
 package ch.epfl.sweng.smartTabs.activity;
 
-import java.util.ArrayList;
-
 import android.app.Activity;
 import android.media.AudioManager;
 import android.media.SoundPool;
@@ -12,8 +10,8 @@ import ch.epfl.sweng.smartTabs.gfx.TabAnimationThread;
 import ch.epfl.sweng.smartTabs.music.Time;
 
 /**
- * @author fatonramadani The activity which displays the tabs, handle the
- *         animation
+ * @author fatonramadani 
+ * The activity which displays the tabs and handle the animation
  */
 public class DisplayActivity extends Activity {
 	private static SoundPool pool;
@@ -25,6 +23,7 @@ public class DisplayActivity extends Activity {
 	private static int e1;
 	private static int g2;
 	private static int stringIndex;
+	private final int maxStreams = 6;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -33,10 +32,9 @@ public class DisplayActivity extends Activity {
 		// Intent intent = getIntent();
 		// Tab tab = (Tab) intent.getExtras().getSerializable("tab");
 		// setContentView(new GridView(this,tab));
+		
 		n = new NoteView(this);
-		// GridView t = new GridView(this);
-
-		pool = new SoundPool(5, AudioManager.STREAM_MUSIC, 0);
+		pool = new SoundPool(maxStreams, AudioManager.STREAM_MUSIC, 0);
 
 		stringIndex = 1;
 
@@ -46,10 +44,7 @@ public class DisplayActivity extends Activity {
 		e1 = pool.load(this, R.raw.e1, 1);
 		g2 = pool.load(this, R.raw.g2, 1);
 
-
-		// TabViewGroup tvg = new TabViewGroup(this);
-		// tvg.addView(n);
-		// tvg.addView(t);
+		
 		setContentView(n);
 
 		TabAnimationThread thread = new TabAnimationThread(n);
@@ -104,6 +99,52 @@ public class DisplayActivity extends Activity {
 			pool.play(g2, 1, 1, 1, 0, 1);
 
 			break;
+		case 10:
+			System.out.println("Playing string : " + stringIndex);
+			pool.play(a3, 1, 1, 1, 0, 1);
+			pool.play(e1, 1, 1, 1, 0, 1);
+
+			break;
+		case 11:
+			System.out.println("Playing string : " + stringIndex);
+			pool.play(b2, 1, 1, 1, 0, 1);
+			break;
+		case 12:
+			System.out.println("Playing string : " + stringIndex);
+			pool.play(g2, 1, 1, 1, 0, 1);
+
+			break;
+		case 13:
+			System.out.println("Playing string : " + stringIndex);
+			pool.play(a3, 1, 1, 1, 0, 1);
+
+			break;
+		case 14:
+			System.out.println("Playing string : " + stringIndex);
+			pool.play(b2, 1, 1, 1, 0, 1);
+
+			break;
+		case 15:
+			System.out.println("Playing string : " + stringIndex);
+			pool.play(g2, 1, 1, 1, 0, 1);
+			break;
+			
+		case 16:
+			System.out.println("Playing string : " + stringIndex);
+			pool.play(a3, 1, 1, 1, 0, 1);
+
+			break;
+			
+		case 17:
+			System.out.println("Playing string : " + stringIndex);
+			pool.play(b2, 1, 1, 1, 0, 1);
+
+			break;
+		case 18:
+			System.out.println("Playing string : " + stringIndex);
+			pool.play(g2, 1, 1, 1, 0, 1);
+
+			break;	
 		default:
 			break;
 		}

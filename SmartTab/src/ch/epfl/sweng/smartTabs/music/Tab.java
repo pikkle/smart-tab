@@ -11,7 +11,7 @@ import org.json.JSONObject;
 /**
  * @author chrisgaubla
  */
-public class Tab implements Serializable{
+public final class Tab implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
@@ -36,8 +36,8 @@ public class Tab implements Serializable{
 		int jsonTempo = jsonTab.getInt("tempo");
 		JSONArray jsonSignatures;
 		try {
-		jsonSignatures = jsonTab.getJSONArray("signatures");
-		} catch(JSONException e){
+			jsonSignatures = jsonTab.getJSONArray("signatures");
+		} catch (JSONException e) {
 			jsonSignatures = new JSONArray();
 		}
 		JSONArray jsonTimeList = jsonTab.getJSONArray("partition");

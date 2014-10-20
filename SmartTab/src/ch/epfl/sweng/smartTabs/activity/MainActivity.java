@@ -5,7 +5,6 @@ import java.net.URL;
 import java.util.Map;
 
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import android.app.Activity;
 import android.content.Context;
@@ -22,8 +21,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 import ch.epfl.sweng.smartTabs.R;
-import ch.epfl.sweng.smartTabs.music.Tab;
 
+/**
+ * The MainActivity shows the menu, downloads the tabs and start the displayActivity with the tab 
+ */
 public class MainActivity extends Activity {
 	private NetworkClient netClient;
 	private ListView listV;
@@ -32,7 +33,6 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		//download list of tablatures URL.
 		String serverURL = getString(R.string.serverURL);
 		netClient = new NetworkClient(serverURL);
 		ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -45,16 +45,17 @@ public class MainActivity extends Activity {
 		}
 	}
 
-	private class DownloadWebpageTask extends AsyncTask<Void, Void, Map<String,URL>>{
+	/**
+	 *	This private class downloads JSONs from the server
+	 */
+	private class DownloadWebpageTask extends AsyncTask<Void, Void, Map<String, URL>> {
 		@Override
-		protected Map<String,URL> doInBackground(Void... params) {
+		protected Map<String, URL> doInBackground(Void... params) {
 			try {
 				return netClient.fetchTabMap(getString(R.string.serverURL));
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (JSONException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			return null;
@@ -71,7 +72,6 @@ public class MainActivity extends Activity {
 				values[count]=key;
 				count++;
 			}
-			//create & add adapter to listview
 			ArrayAdapter<String> adap = new ArrayAdapter<String>(getApplicationContext(), 
 					android.R.layout.simple_list_item_1, values);
 			listV.setAdapter(adap);
@@ -105,13 +105,6 @@ public class MainActivity extends Activity {
 					Intent i = new Intent(MainActivity.this, DisplayActivity.class);
 					startActivity(i);
 					
-					
-					//TODO Christopherrrrr, t'as l'URL ici, je fetch le contenu en tant que string, et fait
-					//ce que tu veux avec. capiche or no capiche? <3
-					/*Voil� l� tu te retrouve avec un nouvel objet Tab avec touts ce qu'il faut dedans, par
-					 * contre c'est pas moi qui utilise cet objet c'est la display activity donc tu demandes 
-					 * � faton ce qu'il veut en faire.
-					 */
 				}
 			});
 			
