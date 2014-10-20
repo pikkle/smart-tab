@@ -34,8 +34,12 @@ public class Tab implements Serializable{
 		String jsonTabName = jsonTab.getString("tabName");
 		boolean jsonComplex = jsonTab.getBoolean("complex");
 		int jsonTempo = jsonTab.getInt("tempo");
-		
-		JSONArray jsonSignatures = jsonTab.getJSONArray("signatures");
+		JSONArray jsonSignatures;
+		try {
+		jsonSignatures = jsonTab.getJSONArray("signatures");
+		} catch(JSONException e){
+			jsonSignatures = new JSONArray();
+		}
 		JSONArray jsonTimeList = jsonTab.getJSONArray("partition");
 		
 		List<String> parsedSignatures = new ArrayList<String>();
