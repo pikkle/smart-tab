@@ -76,8 +76,7 @@ public class DisplayActivity extends Activity {
 			break;
 		case 4:
 			System.out.println("Playing string : " + stringIndex);
-			pool.play(a3, 1, 1, 1, 0, 1);
-			pool.play(b2, 1, 1, 1, 0, 1);
+			pool.play(b3, 1, 1, 1, 0, 1);
 
 			break;
 		case 5:
@@ -86,6 +85,21 @@ public class DisplayActivity extends Activity {
 
 			break;
 		case 6:
+			System.out.println("Playing string : " + stringIndex);
+			pool.play(g2, 1, 1, 1, 0, 1);
+			break;
+			
+		case 7:
+			System.out.println("Playing string : " + stringIndex);
+			pool.play(b3, 1, 1, 1, 0, 1);
+
+			break;
+		case 8:
+			System.out.println("Playing string : " + stringIndex);
+			pool.play(b2, 1, 1, 1, 0, 1);
+
+			break;
+		case 9:
 			System.out.println("Playing string : " + stringIndex);
 			pool.play(g2, 1, 1, 1, 0, 1);
 

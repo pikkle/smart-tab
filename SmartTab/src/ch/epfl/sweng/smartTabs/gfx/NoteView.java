@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 
 import ch.epfl.sweng.smartTabs.activity.DisplayActivity;
-import ch.epfl.sweng.smartTabs.music.Tab;
 import ch.epfl.sweng.smartTabs.music.Time;
 import android.content.Context;
 import android.graphics.Canvas;
@@ -19,21 +18,27 @@ public class NoteView extends View{
 	private final Paint paint = new Paint();
 	private ArrayList<Time> times = new ArrayList<Time>();
 	private int d = 200;
-	private int[] posX = {0,-100,-2*d,-3*d,-4*d,-5*d,-6*d,0,0,0};
+	private int[] posX = {0,-d,-2*d,-3*d,-4*d,-5*d,-6*d,-7*d,-8*d,-9*d};
 	private int ptr = 0;
 	private final float RATIO = 0.34375f;
 	private String[] n1 = {"7","","","","","0"};
 	private String[] n2 = {"","0","","","",""};
 	private String[] n3 = {"","","0","","",""};
-	private String[] n4 = {"5","","","","","0"};
+	private String[] n4 = {"7","","","","",""};
 	private String[] n5 = {"","0","","","",""};
 	private String[] n6 = {"","","0","","",""};
+	private String[] n7 = {"7","","","","",""};
+	private String[] n8 = {"","0","","","",""};
+	private String[] n9 = {"","","0","","",""};
 	private Time t1;
 	private Time t2;
 	private Time t3;
 	private Time t4;
 	private Time t5;
 	private Time t6;
+	private Time t7;
+	private Time t8;
+	private Time t9;
 	
 	// The tuning is harcoded for the moment, until we 
 	private final char[] STANDARD_TUNNING = {'e','B','G','D','A','E'};
@@ -48,6 +53,9 @@ public class NoteView extends View{
 		t4 = new Time(n4, 0, 0, false, 3);
 		t5 = new Time(n5, 0, 0, false, 4);
 		t6 = new Time(n6, 0, 0, false, 5);
+		t7 = new Time(n7, 0, 0, false, 6);
+		t8 = new Time(n8, 0, 0, false, 7);
+		t9 = new Time(n9, 0, 0, false, 8);
 		
 		paint.setAntiAlias(true);
 		// 10 should be the size
@@ -60,6 +68,10 @@ public class NoteView extends View{
 		times.add(t4);
 		times.add(t5);
 		times.add(t6);
+		times.add(t7);
+		times.add(t8);
+		times.add(t9);
+		
 	}
 
 
@@ -73,7 +85,7 @@ public class NoteView extends View{
 		
 
 		paint.setTextSize(48f);
-		for(int i = ptr; i < 6 + ptr; i++){
+		for(int i = ptr; i < 9 + ptr; i++){
 			drawTimes(times.get(i),canvas);
 		}
 	}
@@ -89,7 +101,7 @@ public class NoteView extends View{
 
 
 	protected void slideNotes(int speed) {
-		for (int i = 0; i < 6; i++) {
+		for (int i = 0; i < 9; i++) {
 			posX[i] += deltaX*speed;
 			if ((getWidth() - posX[times.get(i).getStep() % 10] >= (getWidth() / 3 - 4))
 					&& (getWidth() - posX[times.get(i).getStep() % 10] < (getWidth() / 3 + 1))) {
