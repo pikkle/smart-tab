@@ -24,15 +24,36 @@ public class Time {
 	}
 	
 	public static Time parseTimeFromJson(JSONObject jsonTime) throws JSONException{
-		double jsonDuration = jsonTime.getDouble("duree");
 		String[] jsonNotes = new String[6];
 		for(int i = 1; i<= 6; i++){
-			String corde = "corde_"+i;
+			String corde = "string_"+i;
 			jsonNotes[i-1] = jsonTime.getString(corde);
 		}
-		int jsonMesure = jsonTime.getInt("mesure");
-		boolean jsonTernary = jsonTime.getBoolean("ternaire");
-		int jsonStep = jsonTime.getInt("pas");
+		double jsonDuration;
+		try {
+			jsonDuration = jsonTime.getDouble("length");
+		} catch(JSONException e) {
+			jsonDuration = 0;
+		}
+		int jsonMesure;
+		try {
+			jsonMesure = jsonTime.getInt("measure");
+		}catch(JSONException e) {
+			jsonMesure = 0;
+		}
+		boolean jsonTernary;
+		try {
+			jsonTernary = jsonTime.getBoolean("ternary");
+		}catch(JSONException e) {
+			jsonTernary = false;
+		}
+		int jsonStep;
+		try {
+			jsonStep = jsonTime.getInt("step");
+		}catch(JSONException e) {
+			jsonStep = 0;
+		}
+		
 		return new Time(jsonNotes, jsonDuration, jsonMesure, jsonTernary, jsonStep);
 	}
 	public String getNote(int string){
