@@ -19,7 +19,7 @@ public class NoteView extends View{
 	private final Paint paint = new Paint();
 	private ArrayList<Time> times = new ArrayList<Time>();
 	private int d = 200;
-	private int[] posX = {0,-100,-150,-3*d,-4*d,-5*d,-6*d,0,0,0};
+	private int[] posX = {0,-100,-2*d,-3*d,-4*d,-5*d,-6*d,0,0,0};
 	private int ptr = 0;
 	private final float RATIO = 0.34375f;
 	private String[] n1 = {"7","","","","","0"};
