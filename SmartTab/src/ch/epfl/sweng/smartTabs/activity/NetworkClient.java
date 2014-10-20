@@ -3,10 +3,10 @@
  */
 package ch.epfl.sweng.smartTabs.activity;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -26,7 +26,6 @@ import org.json.JSONObject;
 public class NetworkClient {
 	final private int readTimeout = 10000;
 	final private int connectTimeout = 15000;
-	final private int maxBufferSize = 1000;
 
 	/*Creates a new NetworkClient that takes in parameter the serverURL, and returns a JSON with a list of
 	 * partition names and corresponding URL containing the partition in a format we can understand and display.
@@ -49,9 +48,8 @@ public class NetworkClient {
 			JSONObject jObj = new JSONObject();
 			jObj = (JSONObject) jArray.get(i);
 			map.put(jObj.getString("name"), new URL (jObj.getString("filename")));
-			System.out.println(jObj.getString("name") + " URL :" + jObj.getString("filename"));
 		}
-		
+
 		return map;
 	}
 
@@ -59,7 +57,7 @@ public class NetworkClient {
 	 * @param url that contains link to all tablatures
 	 * @return String that will be converted to JSON that contains tablatures. Parsing from JSON will be done later.
 	 */
-	
+
 	public String downloadContent(URL url) throws IOException {
 		InputStream is = null;
 
@@ -84,16 +82,20 @@ public class NetworkClient {
 	}
 
 	private String readStream(InputStream is) {
-		char[] buffer = new char[maxBufferSize];
-		Reader reader = null;
+		BufferedReader reader;
+		String line, output = "";
 		try {
-			reader = new InputStreamReader(is, "UTF-8");
-			reader.read(buffer);
+			reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+
+			while ((line = reader.readLine()) != null){
+				output+=line;
+			}
+
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
-		}        
-		return new String(buffer);		
+		}
+		return new String(output);		
 	}
 }

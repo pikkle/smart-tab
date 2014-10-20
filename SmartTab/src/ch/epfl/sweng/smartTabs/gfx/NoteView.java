@@ -2,6 +2,9 @@ package ch.epfl.sweng.smartTabs.gfx;
 
 import java.util.ArrayList;
 
+
+import ch.epfl.sweng.smartTabs.activity.DisplayActivity;
+import ch.epfl.sweng.smartTabs.music.Tab;
 import ch.epfl.sweng.smartTabs.music.Time;
 import android.content.Context;
 import android.graphics.Canvas;
@@ -19,24 +22,32 @@ public class NoteView extends View{
 	private int[] posX = {0,-100,-150,-3*d,-4*d,-5*d,-6*d,0,0,0};
 	private int ptr = 0;
 	private final float RATIO = 0.34375f;
+	private String[] n1 = {"7","","","","","0"};
+	private String[] n2 = {"","0","","","",""};
+	private String[] n3 = {"","","0","","",""};
+	private String[] n4 = {"5","","","","","0"};
+	private String[] n5 = {"","0","","","",""};
+	private String[] n6 = {"","","0","","",""};
+	private Time t1;
+	private Time t2;
+	private Time t3;
+	private Time t4;
+	private Time t5;
+	private Time t6;
 	
 	// The tuning is harcoded for the moment, until we 
 	private final char[] STANDARD_TUNNING = {'e','B','G','D','A','E'};
 
+	
+
 	public NoteView(Context context) {
 		super(context);
-		String[] n1 = {"7","","","","","0"};
-		String[] n2 = {"","0","","","",""};
-		String[] n3 = {"","","0","","",""};
-		String[] n4 = {"5","","","","","0"};
-		String[] n5 = {"","0","","","",""};
-		String[] n6 = {"","","0","","",""};
-		Time t1 = new Time(n1, 0, 0, false, 0);
-		Time t2 = new Time(n2, 0, 0, false, 1);
-		Time t3 = new Time(n3, 0, 0, false, 2);
-		Time t4 = new Time(n4, 0, 0, false, 3);
-		Time t5 = new Time(n5, 0, 0, false, 4);
-		Time t6 = new Time(n6, 0, 0, false, 5);
+		t1 = new Time(n1, 0, 0, false, 0);
+		t2 = new Time(n2, 0, 0, false, 1);
+		t3 = new Time(n3, 0, 0, false, 2);
+		t4 = new Time(n4, 0, 0, false, 3);
+		t5 = new Time(n5, 0, 0, false, 4);
+		t6 = new Time(n6, 0, 0, false, 5);
 		
 		paint.setAntiAlias(true);
 		// 10 should be the size
@@ -80,6 +91,11 @@ public class NoteView extends View{
 	protected void slideNotes(int speed) {
 		for (int i = 0; i < 6; i++) {
 			posX[i] += deltaX*speed;
+			if ((getWidth() - posX[times.get(i).getStep() % 10] >= (getWidth() / 3 - 4))
+					&& (getWidth() - posX[times.get(i).getStep() % 10] < (getWidth() / 3 + 1))) {
+				DisplayActivity.playNote(times.get(i));
+			}
+
 		}
 	}
 	
