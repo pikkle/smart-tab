@@ -2,7 +2,6 @@ package ch.epfl.sweng.smartTabs.gfx;
 
 import java.util.ArrayList;
 
-import ch.epfl.sweng.smartTabs.music.Tab;
 import ch.epfl.sweng.smartTabs.music.Time;
 import android.content.Context;
 import android.graphics.Canvas;
@@ -17,7 +16,7 @@ public class NoteView extends View{
 	private final Paint paint = new Paint();
 	private ArrayList<Time> times = new ArrayList<Time>();
 	private int d = 200;
-	private int[] posX = {0,-d,-2*d,-3*d,-4*d,-5*d,-6*d,0,0,0};
+	private int[] posX = {0,-100,-150,-3*d,-4*d,-5*d,-6*d,0,0,0};
 	private int ptr = 0;
 	private final float RATIO = 0.34375f;
 	
