@@ -66,11 +66,12 @@ public class NetworkClient {
 
 	private String readStream(InputStream is) {
 		BufferedReader reader;
-		String line, output = "";
+		String line;
+		String output = "";
 		try {
 			reader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
 
-			while ((line = reader.readLine()) != null){
+			while ((line = reader.readLine()) != null) {
 				output+=line;
 			}
 
@@ -82,16 +83,16 @@ public class NetworkClient {
 		return new String(output);		
 	}
 	
-	public Map<String, URL> parseFromJson(String s) throws JSONException, MalformedURLException{
+	public Map<String, URL> parseFromJson(String s) throws JSONException, MalformedURLException {
 		//create JSONArray from the string
 		JSONArray jArray = new JSONArray(s);
 		HashMap<String, URL> map = new HashMap<String, URL>();
 		//Loop through the array, creating JSONObject on each iteration, and fetching JSONObjects contents
 		//and putting them into the map.
-		for (int i = 0; i<jArray.length(); i++){
+		for (int i = 0; i<jArray.length(); i++) {
 			JSONObject jObj = new JSONObject();
 			jObj = (JSONObject) jArray.get(i);
-			map.put(jObj.getString("name"), new URL (jObj.getString("filename")));
+			map.put(jObj.getString("name"), new URL(jObj.getString("filename")));
 		}
 		
 		return map;
