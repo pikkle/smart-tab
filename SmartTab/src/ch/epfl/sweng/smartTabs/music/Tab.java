@@ -31,7 +31,7 @@ public final class Tab implements Serializable{
 	}
 
 	public static Tab parseTabFromJSON(JSONObject jsonTab) throws JSONException {
-		String jsonTabName = jsonTab.getString("tabName");
+		String jsonTabName = jsonTab.getString("name");
 		boolean jsonComplex = jsonTab.getBoolean("complex");
 		int jsonTempo = jsonTab.getInt("tempo");
 		JSONArray jsonSignatures;
@@ -49,8 +49,7 @@ public final class Tab implements Serializable{
 			parsedSignatures.set(i, jsonSignatures.getString(i));
 		}
 		for (int i = 0; i < jsonTimeList.length(); i++) {
-			Time jsonTime = Time.parseTimeFromJson(jsonTimeList
-					.getJSONObject(i));
+			Time jsonTime = Time.parseTimeFromJson(jsonTimeList.getJSONObject(i));
 			parsedTimeList.set(i, jsonTime);
 		}
 		return new Tab(jsonTabName, jsonComplex, jsonTempo, parsedSignatures,
