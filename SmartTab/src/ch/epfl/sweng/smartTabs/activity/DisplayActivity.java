@@ -32,7 +32,7 @@ public class DisplayActivity extends Activity {
 		// Intent intent = getIntent();
 		// Tab tab = (Tab) intent.getExtras().getSerializable("tab");
 		// setContentView(new GridView(this,tab));
-		
+
 		n = new NoteView(this);
 		pool = new SoundPool(maxStreams, AudioManager.STREAM_MUSIC, 0);
 
@@ -44,7 +44,7 @@ public class DisplayActivity extends Activity {
 		e1 = pool.load(this, R.raw.e1, 1);
 		g2 = pool.load(this, R.raw.g2, 1);
 
-		
+
 		setContentView(n);
 
 		TabAnimationThread thread = new TabAnimationThread(n);
@@ -83,7 +83,7 @@ public class DisplayActivity extends Activity {
 			System.out.println("Playing string : " + stringIndex);
 			pool.play(g2, 1, 1, 1, 0, 1);
 			break;
-			
+
 		case 7:
 			System.out.println("Playing string : " + stringIndex);
 			pool.play(b3, 1, 1, 1, 0, 1);
@@ -128,13 +128,13 @@ public class DisplayActivity extends Activity {
 			System.out.println("Playing string : " + stringIndex);
 			pool.play(g2, 1, 1, 1, 0, 1);
 			break;
-			
+
 		case 16:
 			System.out.println("Playing string : " + stringIndex);
 			pool.play(a3, 1, 1, 1, 0, 1);
 
 			break;
-			
+
 		case 17:
 			System.out.println("Playing string : " + stringIndex);
 			pool.play(b2, 1, 1, 1, 0, 1);

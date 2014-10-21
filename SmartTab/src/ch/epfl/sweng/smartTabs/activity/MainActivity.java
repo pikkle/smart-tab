@@ -9,7 +9,6 @@ import org.json.JSONException;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -33,8 +32,8 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		String serverURL = getString(R.string.serverURL);
-		netClient = new NetworkClient(serverURL);
+		//String serverURL = getString(R.string.serverURL);
+		netClient = new NetworkClient();
 		ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo netInfo = connMgr.getActiveNetworkInfo();
 
@@ -68,7 +67,7 @@ public class MainActivity extends Activity {
 			//Add tab names to list view by iteration.
 			String [] values = new String[map.size()];
 			int count = 0;
-			for (String key : map.keySet()){
+			for (String key : map.keySet()) {
 				values[count]=key;
 				count++;
 			}
