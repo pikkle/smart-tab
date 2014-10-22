@@ -22,6 +22,7 @@ public class DisplayActivity extends Activity {
 	private static int b3;
 	private static int e1;
 	private static int g2;
+	private static int g3;
 	private static int stringIndex;
 	private final int maxStreams = 6;
 
@@ -43,6 +44,7 @@ public class DisplayActivity extends Activity {
 		b3 = pool.load(this, R.raw.b3, 1);
 		e1 = pool.load(this, R.raw.e1, 1);
 		g2 = pool.load(this, R.raw.g2, 1);
+		g3 = pool.load(this, R.raw.g3, 1);
 
 
 		setContentView(n);
@@ -101,7 +103,7 @@ public class DisplayActivity extends Activity {
 			break;
 		case 10:
 			System.out.println("Playing string : " + stringIndex);
-			pool.play(a3, 1, 1, 1, 0, 1);
+			pool.play(b3, 1, 1, 1, 0, 1);
 			pool.play(e1, 1, 1, 1, 0, 1);
 
 			break;
@@ -131,7 +133,7 @@ public class DisplayActivity extends Activity {
 
 		case 16:
 			System.out.println("Playing string : " + stringIndex);
-			pool.play(a3, 1, 1, 1, 0, 1);
+			pool.play(g3, 1, 1, 1, 0, 1);
 
 			break;
 

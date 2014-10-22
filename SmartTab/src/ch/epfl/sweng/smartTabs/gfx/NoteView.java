@@ -18,8 +18,9 @@ import android.view.View;
 public class NoteView extends View{
 
 	// deltaX should differ according to tempo
-	private final int deltaX = 5;
-	private final int d = 200;
+	private final int tempo = 200;
+	private final int deltaX = 4;
+	private final int d = 120;
 	private final Paint paint = new Paint();
 	private ArrayList<Time> times = new ArrayList<Time>();
 	private int[] posX = {0,-d,-2*d,-3*d,-4*d,-5*d,-6*d,-7*d,-8*d,-9*d,-10*d,-11*d,-12*d,-13*d,-14*d, -15*d,-16*d,-17*d,-18*d};
@@ -34,13 +35,13 @@ public class NoteView extends View{
 	private String[] n7 = {"7","","","","",""};
 	private String[] n8 = {"","0","","","",""};
 	private String[] n9 = {"","","0","","",""};
-	private String[] n10 = {"5","","","","","0"};
+	private String[] n10 = {"7","","","","","0"};
 	private String[] n11 = {"","0","","","",""};
 	private String[] n12 = {"","","0","","",""};
 	private String[] n13 = {"5","","","","",""};
 	private String[] n14 = {"","0","","","",""};
 	private String[] n15 = {"","","0","","",""};
-	private String[] n16 = {"5","","","","",""};
+	private String[] n16 = {"3","","","","",""};
 	private String[] n17 = {"","0","","","",""};
 	private String[] n18 = {"","","0","","",""};
 	private Time t1 = new Time(n1, 0, 0, false, 0);
@@ -125,7 +126,7 @@ public class NoteView extends View{
 	protected void slideNotes(int speed) {
 		for (int i = 0; i < 18; i++) {
 			posX[i] += deltaX*speed;
-			if ((getWidth() - posX[times.get(i).getStep() % 18] >= (getWidth() / 3 - 4))
+			if ((getWidth() - posX[times.get(i).getStep() % 18] >= (getWidth() / 3 - 3))
 					&& (getWidth() - posX[times.get(i).getStep() % 18] < (getWidth() / 3 + 1))) {
 				DisplayActivity.playNote(times.get(i));
 			}
