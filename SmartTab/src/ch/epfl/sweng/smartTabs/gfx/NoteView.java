@@ -43,24 +43,24 @@ public class NoteView extends View{
 	private String[] n16 = {"5","","","","",""};
 	private String[] n17 = {"","0","","","",""};
 	private String[] n18 = {"","","0","","",""};
-	private Time t1;
-	private Time t2;
-	private Time t3;
-	private Time t4;
-	private Time t5;
-	private Time t6;
-	private Time t7;
-	private Time t8;
-	private Time t9;
-	private Time t10;
-	private Time t11;
-	private Time t12;
-	private Time t13;
-	private Time t14;
-	private Time t15;
-	private Time t16;
-	private Time t17;
-	private Time t18;
+	private Time t1 = new Time(n1, 0, 0, false, 0);
+	private Time t2 = new Time(n2, 0, 0, false, 1);
+	private Time t3 = new Time(n3, 0, 0, false, 2);
+	private Time t4 = new Time(n4, 0, 0, false, 3);
+	private Time t5 = new Time(n5, 0, 0, false, 4);
+	private Time t6 = new Time(n6, 0, 0, false, 5);
+	private Time t7 = new Time(n7, 0, 0, false, 6);
+	private Time t8 = new Time(n8, 0, 0, false, 7);
+	private Time t9 = new Time(n9, 0, 0, false, 8);
+	private Time t10 = new Time(n10, 0, 0, false, 9);
+	private Time t11 = new Time(n11, 0, 0, false, 10);
+	private Time t12 = new Time(n12, 0, 0, false, 11);
+	private Time t13 = new Time(n13, 0, 0, false, 12);
+	private Time t14 = new Time(n14, 0, 0, false, 13);
+	private Time t15 = new Time(n15, 0, 0, false, 14);
+	private Time t16 = new Time(n16, 0, 0, false, 15);
+	private Time t17 = new Time(n17, 0, 0, false, 16);
+	private Time t18 = new Time(n18, 0, 0, false, 17);
 	
 	// The tuning is hard coded for the moment, until we create the Note class
 	private final char[] stantardTuning = {'e', 'B', 'G', 'D', 'A', 'E'};
@@ -69,24 +69,6 @@ public class NoteView extends View{
 
 	public NoteView(Context context) {
 		super(context);
-		t1 = new Time(n1, 0, 0, false, 0);
-		t2 = new Time(n2, 0, 0, false, 1);
-		t3 = new Time(n3, 0, 0, false, 2);
-		t4 = new Time(n4, 0, 0, false, 3);
-		t5 = new Time(n5, 0, 0, false, 4);
-		t6 = new Time(n6, 0, 0, false, 5);
-		t7 = new Time(n7, 0, 0, false, 6);
-		t8 = new Time(n8, 0, 0, false, 7);
-		t9 = new Time(n9, 0, 0, false, 8);
-		t10 = new Time(n10, 0, 0, false, 9);
-		t11 = new Time(n11, 0, 0, false, 10);
-		t12 = new Time(n12, 0, 0, false, 11);
-		t13 = new Time(n13, 0, 0, false, 12);
-		t14 = new Time(n14, 0, 0, false, 13);
-		t15 = new Time(n15, 0, 0, false, 14);
-		t16 = new Time(n16, 0, 0, false, 15);
-		t17 = new Time(n17, 0, 0, false, 16);
-		t18 = new Time(n18, 0, 0, false, 17);
 		
 		paint.setAntiAlias(true);
 		// 10 should be the size
