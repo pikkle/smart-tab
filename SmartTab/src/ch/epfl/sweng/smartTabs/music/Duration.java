@@ -11,13 +11,13 @@ public enum Duration {
 	Blanche (2),
 	Ronde (4);
 	
-	private double myDuration = 0D;
+	private double myDuration;
 	   
 	private Duration(double duration) {	
 		myDuration = duration;
 	}
 	
-	public double getDuration(Duration d) {
-		return d.myDuration;
+	public double getDuration() {
+		return myDuration;
 	}
 }

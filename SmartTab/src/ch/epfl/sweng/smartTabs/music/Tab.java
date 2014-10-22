@@ -40,20 +40,21 @@ public final class Tab implements Serializable{
 		} catch (JSONException e) {
 			jsonSignatures = new JSONArray();
 		}
+		
 		JSONArray jsonTimeList = jsonTab.getJSONArray("partition");
 		
 		List<String> parsedSignatures = new ArrayList<String>();
 		List<Time> parsedTimeList = new ArrayList<Time>();
 		
 		for (int i = 0; i < jsonSignatures.length(); i++) {
-			parsedSignatures.set(i, jsonSignatures.getString(i));
+			parsedSignatures.add(jsonSignatures.getString(i));
 		}
 		for (int i = 0; i < jsonTimeList.length(); i++) {
 			Time jsonTime = Time.parseTimeFromJson(jsonTimeList.getJSONObject(i));
-			parsedTimeList.set(i, jsonTime);
+			parsedTimeList.add(jsonTime);
 		}
-		return new Tab(jsonTabName, jsonComplex, jsonTempo, parsedSignatures,
-				parsedTimeList);
+		
+		return new Tab(jsonTabName, jsonComplex, jsonTempo, parsedSignatures, parsedTimeList);
 	}
 
 	public String getTabName() {

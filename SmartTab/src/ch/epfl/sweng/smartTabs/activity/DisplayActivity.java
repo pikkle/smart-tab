@@ -1,16 +1,19 @@
 package ch.epfl.sweng.smartTabs.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Bundle;
 import ch.epfl.sweng.smartTabs.R;
 import ch.epfl.sweng.smartTabs.gfx.NoteView;
 import ch.epfl.sweng.smartTabs.gfx.TabAnimationThread;
+import ch.epfl.sweng.smartTabs.music.Instrument;
+import ch.epfl.sweng.smartTabs.music.Tab;
 import ch.epfl.sweng.smartTabs.music.Time;
 
 /**
- * @author fatonramadani 
+ * @author Faton Ramadani 
  * The activity which displays the tabs and handle the animation
  */
 public class DisplayActivity extends Activity {
@@ -30,11 +33,11 @@ public class DisplayActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		// Intent intent = getIntent();
-		// Tab tab = (Tab) intent.getExtras().getSerializable("tab");
-		// setContentView(new GridView(this,tab));
+		Intent intent = getIntent();
+		Tab tab = (Tab) intent.getExtras().getSerializable("tab");
+		
 
-		n = new NoteView(this);
+		n = new NoteView(this, tab, Instrument.GUITAR);
 		pool = new SoundPool(maxStreams, AudioManager.STREAM_MUSIC, 0);
 
 		stringIndex = 1;
