@@ -23,6 +23,7 @@ import ch.epfl.sweng.smartTabs.R;
 import ch.epfl.sweng.smartTabs.music.Tab;
 
 /**
+ * author: Raphael El-Khoury
  * The MainActivity shows the menu, downloads the tabs and start the displayActivity with the tab 
  */
 public class MainActivity extends Activity {
