@@ -1,11 +1,8 @@
 package ch.epfl.sweng.smartTabs.activity;
 
 import android.app.Activity;
-<<<<<<< HEAD
 import android.graphics.Point;
-=======
 import android.content.Intent;
->>>>>>> be1181eac68fcb7fa85d83b487d4d66cd02212f0
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Bundle;
@@ -54,7 +51,7 @@ public class DisplayActivity extends Activity {
 		display.getSize(size);
 		int width = size.x;
 		int height = size.y;
-		mDrawable = new GridViewDraw(width, height, "Jeux Interdits");
+		mDrawable = new GridViewDraw(width, height, Instrument.GUITAR, tab);
 		n.setBackground(mDrawable);
 
 		a3 = pool.load(this, R.raw.a3, 1);

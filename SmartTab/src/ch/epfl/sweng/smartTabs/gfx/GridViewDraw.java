@@ -1,5 +1,8 @@
 package ch.epfl.sweng.smartTabs.gfx;
 
+import ch.epfl.sweng.smartTabs.music.Height;
+import ch.epfl.sweng.smartTabs.music.Instrument;
+import ch.epfl.sweng.smartTabs.music.Tab;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -15,17 +18,20 @@ import android.graphics.drawable.Drawable;
 public class GridViewDraw extends Drawable{
 	private final Paint paint = new Paint();
 	// The tuning is hard coded for the moment, until we create the Note class
-	private final char[] stantardTuning = {'e', 'B', 'G', 'D', 'A', 'E'};
+	private final Height[] stantardTuning = {Height.Mi, Height.Si, Height.Sol, Height.Ré, Height.La, Height.Mi };
 	private final float ratio = 0.34375f;
 	private int mWidth;
 	private int mHeight;
 	private String nameSong;
+	private Instrument myInstrument;
+	private Tab myTab;
 	
-	public GridViewDraw(int width, int height, String name) {
+	public GridViewDraw(int width, int height, Instrument instru, Tab tab) {
 		super();
 		mWidth = width;
 		mHeight = height;
-		nameSong = name;
+		myInstrument = instru; // Swaggy Baby tu PESES dans le GAME
+		myTab = tab;
 		
 	}
 
@@ -56,7 +62,7 @@ public class GridViewDraw extends Drawable{
 		
 	}
 	
-	private void clearScreen(Canvas canvas){
+	private void clearScreen(Canvas canvas) {
 		paint.setStyle(Paint.Style.FILL);
 		paint.setColor(Color.WHITE);
 		canvas.drawPaint(paint);
@@ -65,14 +71,14 @@ public class GridViewDraw extends Drawable{
 	private void drawNameSong(Canvas canvas){
 		paint.setTextSize(48f);
 		paint.setColor(Color.GRAY);
-		canvas.drawText(nameSong, 50, 100, paint);
+		canvas.drawText(myTab.getTabName(), 50, 100, paint);
 	}
 
 	private void drawStrings(Canvas canvas){
 		paint.setColor(Color.BLACK);
 		paint.setTextSize(36f);
 		paint.setStrokeWidth(2f);
-		for (int i = 0; i < 6; i++) {
+		for (int i = 0; i < myInstrument.getNumOfStrings(); i++) {
 			canvas.drawLine(mWidth/8, ratio*mHeight + i*mHeight/16, mWidth, ratio*mHeight + i*mHeight/16, paint);
 			canvas.drawText(stantardTuning[i]+"", mWidth/16, ratio*mHeight + i*mHeight/16, paint);
 		}
@@ -82,7 +88,7 @@ public class GridViewDraw extends Drawable{
 	private void drawCursor(Canvas canvas){
 		paint.setColor(Color.RED);
 		paint.setStrokeWidth(10f);
-		canvas.drawLine(mWidth/3, mHeight/4, mWidth/3,3*mHeight/4, paint);
+		canvas.drawLine(mWidth/4, mHeight/4, mWidth/4,3*mHeight/4, paint);
 		paint.setStrokeWidth(1f);
 	}
 }
