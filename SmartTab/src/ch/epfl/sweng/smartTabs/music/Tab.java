@@ -31,7 +31,7 @@ public final class Tab implements Serializable{
 	}
 
 	public static Tab parseTabFromJSON(JSONObject jsonTab) throws JSONException {
-		String jsonTabName = jsonTab.getString("tabName");
+		String jsonTabName = jsonTab.getString("name");
 		boolean jsonComplex = jsonTab.getBoolean("complex");
 		int jsonTempo = jsonTab.getInt("tempo");
 		JSONArray jsonSignatures;
