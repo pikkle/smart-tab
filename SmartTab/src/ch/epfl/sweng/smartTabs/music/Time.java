@@ -1,5 +1,7 @@
 package ch.epfl.sweng.smartTabs.music;
 
+import java.io.Serializable;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -7,8 +9,9 @@ import org.json.JSONObject;
  * @author chrisgaubla
  *
  */
-public class Time {
+public class Time implements Serializable{
 	
+	private static final long serialVersionUID = 1L;
 	private final double mDuration;
 	private final String[] mNotes;
 	private final int mMesure;
@@ -34,7 +37,7 @@ public class Time {
 		try {
 			jsonDuration = jsonTime.getDouble("length");
 		} catch (JSONException e) {
-			jsonDuration = 0;
+			jsonDuration = 1;
 		}
 		int jsonMesure;
 		try {
