@@ -95,7 +95,7 @@ public class MainActivity extends Activity {
 		
 		private URL myUrl;
 		
-		public DownloadTabs(URL url){
+		public DownloadTabs(URL url) {
 			myUrl = url;
 		}
 		@Override
