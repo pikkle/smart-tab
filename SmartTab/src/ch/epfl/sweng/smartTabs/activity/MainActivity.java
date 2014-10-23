@@ -20,8 +20,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 import ch.epfl.sweng.smartTabs.R;
+import ch.epfl.sweng.smartTabs.music.Tab;
 
 /**
+ * author: Raphael El-Khoury
  * The MainActivity shows the menu, downloads the tabs and start the displayActivity with the tab 
  */
 public class MainActivity extends Activity {
@@ -40,7 +42,7 @@ public class MainActivity extends Activity {
 		if (netInfo != null && netInfo.isConnected()) {
 			new DownloadWebpageTask().execute();
 		} else {
-			Toast.makeText(this, "Error retrieving tablature. Please try again.", Toast.LENGTH_LONG).show();
+			Toast.makeText(this, "Error retrieving tablatures. Please try again.", Toast.LENGTH_LONG).show();
 		}
 	}
 
@@ -64,49 +66,56 @@ public class MainActivity extends Activity {
 		@Override
 		protected void onPostExecute(final Map<String, URL> map) {
 			listV = (ListView) findViewById(R.id.list);
-			//Add tab names to list view by iteration.
 			String [] values = new String[map.size()];
 			int count = 0;
 			for (String key : map.keySet()) {
 				values[count]=key;
 				count++;
 			}
+			
 			ArrayAdapter<String> adap = new ArrayAdapter<String>(getApplicationContext(), 
 					android.R.layout.simple_list_item_1, values);
 			listV.setAdapter(adap);
 			listV.setOnItemClickListener(new OnItemClickListener() {
 
 				@Override
-				public void onItemClick(AdapterView<?> parent, View view,
-						int position, long id) {
-//					String item = (String) listV.getAdapter().getItem(position);
-//					URL url = map.get(item);
-//					String toRet = null;
-//					
-//					try {
-//						toRet = netClient.downloadContent(url);
-//					} catch (IOException e) {
-//						e.printStackTrace();
-//					}
-//					
-//					try {
-//						JSONObject jsonTablature = new JSONObject(toRet);
-//						Tab tablature = Tab.parseTabFromJSON(jsonTablature);
-//						Intent i = new Intent(MainActivity.this, DisplayActivity.class);
-//						i.putExtra("tab", tablature);
-//						startActivity(i);
-//						
-//					} catch (JSONException e) {
-//						// TODO Auto-generated catch block
-//						e.printStackTrace();
-//					}
-//					
-					Intent i = new Intent(MainActivity.this, DisplayActivity.class);
-					startActivity(i);
-					
+				public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+					String item = (String) listV.getAdapter().getItem(position);
+					URL url = map.get(item);
+					new DownloadTabs(url).execute();
 				}
 			});
 			
+		}
+	}
+	
+	/**
+	 * @author Faton Ramadani
+	 */
+	private class DownloadTabs extends AsyncTask<Void, Void, Tab> {
+		
+		private URL myUrl;
+		
+		public DownloadTabs(URL url){
+			myUrl = url;
+		}
+		@Override
+		protected Tab doInBackground(Void... params) {
+			try {
+				return netClient.fetchTab(myUrl);
+			} catch (IOException e) {
+				e.printStackTrace();
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+			return null;
+		}
+		
+		@Override
+		protected void onPostExecute(Tab tab) {
+			Intent i = new Intent(MainActivity.this, DisplayActivity.class);
+			i.putExtra("tab", tab);
+			startActivity(i);		
 		}
 	}
 }

@@ -3,6 +3,10 @@ package ch.epfl.sweng.smartTabs.gfx;
 import java.util.ArrayList;
 
 import ch.epfl.sweng.smartTabs.activity.DisplayActivity;
+import ch.epfl.sweng.smartTabs.music.Duration;
+import ch.epfl.sweng.smartTabs.music.Height;
+import ch.epfl.sweng.smartTabs.music.Instrument;
+import ch.epfl.sweng.smartTabs.music.Tab;
 import ch.epfl.sweng.smartTabs.music.Time;
 import android.content.Context;
 import android.graphics.Canvas;
@@ -11,14 +15,23 @@ import android.graphics.Paint;
 import android.view.View;
 
 /**
+<<<<<<< HEAD
  * @author fatonramadani The note view draws the notes
  */
 public class NoteView extends View {
+=======
+ * @author Faton Ramadani
+ * The note view draws the notes
+ */
+public class NoteView extends View{
+	
+	// The tuning is hard coded for the moment, until we create the Note class
+	private final Height[] stantardTuning = {Height.Mi, Height.Si, Height.Sol, Height.Ré, Height.La, Height.Mi };
+>>>>>>> be1181eac68fcb7fa85d83b487d4d66cd02212f0
 
-	// deltaX should differ according to tempo
-	private final int deltaX = 5;
-	private final int d = 200;
+	private final int d = 120;
 	private final Paint paint = new Paint();
+<<<<<<< HEAD
 	private ArrayList<Time> times = new ArrayList<Time>();
 	private int[] posX = { 0, -d, -2 * d, -3 * d, -4 * d, -5 * d, -6 * d,
 			-7 * d, -8 * d, -9 * d, -10 * d, -11 * d, -12 * d, -13 * d,
@@ -62,9 +75,26 @@ public class NoteView extends View {
 	private Time t16;
 	private Time t17;
 	private Time t18;
+=======
+	private final ArrayList<Time> times = new ArrayList<Time>();
+	private final int[] posX = {0, -d, -2*d, -3*d, -4*d, -5*d};
+	private final float ratio = 0.34375f;
+	
+	
+	private double dx = Duration.Ronde.getDuration();
+	private int ptr = 0;
+	private final Instrument myInstrument;
 
-	public NoteView(Context context) {
+	private int h;
+	private int w;
+	private final Tab myTab;
+	
+	private final int numNotes = 6;
+>>>>>>> be1181eac68fcb7fa85d83b487d4d66cd02212f0
+
+	public NoteView(Context context, Tab tab, Instrument instrument){
 		super(context);
+<<<<<<< HEAD
 		t1 = new Time(n1, 0, 0, false, 0);
 		t2 = new Time(n2, 0, 0, false, 1);
 		t3 = new Time(n3, 0, 0, false, 2);
@@ -107,21 +137,45 @@ public class NoteView extends View {
 		times.add(t16);
 		times.add(t17);
 		times.add(t18);
+=======
+		myInstrument = instrument;
+		myTab = tab;
+		h = getHeight();
+		w = getWidth();
+		
+		paint.setAntiAlias(true);
+		for (int i = 0; i < numNotes; i++) {
+			times.add(myTab.getTime(i));
+		}
+	}
+>>>>>>> be1181eac68fcb7fa85d83b487d4d66cd02212f0
 
 	}
 
+<<<<<<< HEAD
 	protected void onDraw(Canvas canvas) {
+=======
+	protected void onDraw(Canvas canvas) {	
+		h = getHeight();
+		w = getWidth();
+>>>>>>> be1181eac68fcb7fa85d83b487d4d66cd02212f0
 		super.onDraw(canvas);
 
 		paint.setColor(Color.BLACK);
 
 		paint.setTextSize(48f);
+<<<<<<< HEAD
 		for (int i = ptr; i < 18 + ptr; i++) {
+=======
+		// 6 notes
+		for (int i = ptr; i < numNotes + ptr; i++) {
+>>>>>>> be1181eac68fcb7fa85d83b487d4d66cd02212f0
 			drawTimes(times.get(i), canvas);
 		}
 	}
 
 	private void drawTimes(Time time, Canvas canvas) {
+<<<<<<< HEAD
 		for (int i = 0; i < 6; i++) {
 			if (getWidth() - posX[time.getStep() % 18] > getWidth() / 3) {
 				paint.setColor(Color.BLACK);
@@ -129,18 +183,58 @@ public class NoteView extends View {
 						getWidth() - posX[time.getStep() % 18], ratio
 								* getHeight() + i * getHeight() / 16, paint);
 			}
+=======
+		for (int i = 0; i < myInstrument.getNumOfStrings(); i++) {
+			if (w - posX[time.getStep() % numNotes] > w/4 ) {
+				paint.setColor(Color.BLACK);
+				canvas.drawText(time.getNote(i), w - posX[time.getStep() % 6], ratio*h + i*h/16, paint);
+			}	
+>>>>>>> be1181eac68fcb7fa85d83b487d4d66cd02212f0
 		}
 	}
 
 	protected void slideNotes(int speed) {
+<<<<<<< HEAD
 		for (int i = 0; i < 18; i++) {
 			posX[i] += deltaX * speed;
 			if ((getWidth() - posX[times.get(i).getStep() % 18] >= (getWidth() / 3 - 4))
 					&& (getWidth() - posX[times.get(i).getStep() % 18] < (getWidth() / 3 + 1))) {
+=======
+		for (int i = 0; i < numNotes; i++) {
+			posX[i] += dx*speed;
+			if ((w - posX[times.get(i).getStep() % 6] == (w / 4))){
+>>>>>>> be1181eac68fcb7fa85d83b487d4d66cd02212f0
 				DisplayActivity.playNote(times.get(i));
+				dx = 4/times.get(i).getDuration();
 			}
 
 		}
 	}
 
+<<<<<<< HEAD
+=======
+	private void drawNameSong(Canvas canvas){
+		paint.setTextSize(48f);
+		paint.setColor(Color.GRAY);
+		canvas.drawText(myTab.getTabName(), 50, 100, paint);
+	}
+
+	private void drawStrings(Canvas canvas){
+		paint.setColor(Color.BLACK);
+		paint.setTextSize(36f);
+		paint.setStrokeWidth(2f);
+		for (int i = 0; i < myInstrument.getNumOfStrings(); i++) {
+			canvas.drawLine(w/8, ratio*h + i*h/16, w, ratio*h + i*h/16, paint);
+			canvas.drawText(stantardTuning[i]+"", w/16, ratio*h + i*h/16, paint);
+		}
+		canvas.drawLine(w/8, ratio*h, w/8, ratio*h + 5*h/16, paint);
+	}
+
+	private void drawCursor(Canvas canvas){
+		paint.setColor(Color.RED);
+		paint.setStrokeWidth(10f);
+		canvas.drawLine(w/4, h/4, w/4,3*h/4, paint);
+		paint.setStrokeWidth(1f);
+	}
+>>>>>>> be1181eac68fcb7fa85d83b487d4d66cd02212f0
 }

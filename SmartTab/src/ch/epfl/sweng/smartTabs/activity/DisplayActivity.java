@@ -1,7 +1,11 @@
 package ch.epfl.sweng.smartTabs.activity;
 
 import android.app.Activity;
+<<<<<<< HEAD
 import android.graphics.Point;
+=======
+import android.content.Intent;
+>>>>>>> be1181eac68fcb7fa85d83b487d4d66cd02212f0
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Bundle;
@@ -10,10 +14,12 @@ import ch.epfl.sweng.smartTabs.R;
 import ch.epfl.sweng.smartTabs.gfx.GridViewDraw;
 import ch.epfl.sweng.smartTabs.gfx.NoteView;
 import ch.epfl.sweng.smartTabs.gfx.TabAnimationThread;
+import ch.epfl.sweng.smartTabs.music.Instrument;
+import ch.epfl.sweng.smartTabs.music.Tab;
 import ch.epfl.sweng.smartTabs.music.Time;
 
 /**
- * @author fatonramadani 
+ * @author Faton Ramadani 
  * The activity which displays the tabs and handle the animation
  */
 public class DisplayActivity extends Activity {
@@ -25,6 +31,7 @@ public class DisplayActivity extends Activity {
 	private static int b3;
 	private static int e1;
 	private static int g2;
+	private static int g3;
 	private static int stringIndex;
 	private final int maxStreams = 6;
 	private GridViewDraw mDrawable;
@@ -33,11 +40,11 @@ public class DisplayActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		// Intent intent = getIntent();
-		// Tab tab = (Tab) intent.getExtras().getSerializable("tab");
-		// setContentView(new GridView(this,tab));
+		Intent intent = getIntent();
+		Tab tab = (Tab) intent.getExtras().getSerializable("tab");
+		
 
-		n = new NoteView(this);
+		n = new NoteView(this, tab, Instrument.GUITAR);
 		pool = new SoundPool(maxStreams, AudioManager.STREAM_MUSIC, 0);
 
 		stringIndex = 1;
@@ -55,6 +62,7 @@ public class DisplayActivity extends Activity {
 		b3 = pool.load(this, R.raw.b3, 1);
 		e1 = pool.load(this, R.raw.e1, 1);
 		g2 = pool.load(this, R.raw.g2, 1);
+		g3 = pool.load(this, R.raw.g3, 1);
 
 
 		setContentView(n);
@@ -113,7 +121,7 @@ public class DisplayActivity extends Activity {
 			break;
 		case 10:
 			System.out.println("Playing string : " + stringIndex);
-			pool.play(a3, 1, 1, 1, 0, 1);
+			pool.play(b3, 1, 1, 1, 0, 1);
 			pool.play(e1, 1, 1, 1, 0, 1);
 
 			break;
@@ -143,7 +151,7 @@ public class DisplayActivity extends Activity {
 
 		case 16:
 			System.out.println("Playing string : " + stringIndex);
-			pool.play(a3, 1, 1, 1, 0, 1);
+			pool.play(g3, 1, 1, 1, 0, 1);
 
 			break;
 

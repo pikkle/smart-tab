@@ -1,30 +1,32 @@
 package ch.epfl.sweng.smartTabs.gfx;
 
-
 /**
  * @author Faton Ramadani
+ * The thread which handles the animation, can pause , increase or decrease the speed
+ * of the animation.
  */
 public class TabAnimationThread extends Thread{
-	
-	private NoteView noteview;
+
+	private NoteView myNoteview;
 	private boolean running = false;
 	private int speed = 1;
-	private long delay = 10l;
-	
-	public TabAnimationThread(NoteView noteview){
-		this.noteview = noteview;
+	private final long delay = 10L;
+	private final int threshold = 5;
+
+	public TabAnimationThread(NoteView noteview) {
+		myNoteview = noteview;
 		this.running = true;
 	}
-	
+
 	public void setRunning(boolean run) {
         running = run;    
 	}
-	
+
 	@Override
 	public void run() {
-		while(running){
-			noteview.slideNotes(speed);
-			noteview.postInvalidate();
+		while (running) {
+			myNoteview.slideNotes(speed);
+			myNoteview.postInvalidate();
 			try {
 			    sleep(delay);
 			} catch (InterruptedException e) {
@@ -32,8 +34,15 @@ public class TabAnimationThread extends Thread{
 			}
 		}
 	}
-	
-	public void setSpeed(int newSpeed){
-		this.speed = newSpeed;
+
+	public void setSpeed(int newSpeed) {
+		if (newSpeed < 0) {
+			throw new IllegalArgumentException();
+		} else if (newSpeed > threshold) {
+			System.out.println("The new speed is too fast");
+			throw new IllegalArgumentException();
+		} else {
+			this.speed = newSpeed;
+		}
 	}
 }
