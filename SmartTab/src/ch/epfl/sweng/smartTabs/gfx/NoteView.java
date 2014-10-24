@@ -59,10 +59,6 @@ public class NoteView extends View{
 		h = getHeight();
 		w = getWidth();
 		super.onDraw(canvas);
-		clearScreen(canvas);
-		drawNameSong(canvas);
-		drawStrings(canvas);
-		drawCursor(canvas);
 		paint.setColor(Color.BLACK);
 		
 
@@ -93,34 +89,5 @@ public class NoteView extends View{
 
 		}
 	}
-	
-	private void clearScreen(Canvas canvas){
-		paint.setStyle(Paint.Style.FILL);
-		paint.setColor(Color.WHITE);
-		canvas.drawPaint(paint);
-	}
 
-	private void drawNameSong(Canvas canvas){
-		paint.setTextSize(48f);
-		paint.setColor(Color.GRAY);
-		canvas.drawText(myTab.getTabName(), 50, 100, paint);
-	}
-
-	private void drawStrings(Canvas canvas){
-		paint.setColor(Color.BLACK);
-		paint.setTextSize(36f);
-		paint.setStrokeWidth(2f);
-		for (int i = 0; i < myInstrument.getNumOfStrings(); i++) {
-			canvas.drawLine(w/8, ratio*h + i*h/16 , w, ratio*h + i*h/16, paint);
-			canvas.drawText(stantardTuning[i]+"", w/16, ratio*h + i*h/16, paint);
-		}
-		canvas.drawLine(w/8, ratio*h, w/8, ratio*h + 5*h/16, paint);
-	}
-
-	private void drawCursor(Canvas canvas){
-		paint.setColor(Color.RED);
-		paint.setStrokeWidth(10f);
-		canvas.drawLine(w/4, h/4, w/4,3*h/4, paint);
-		paint.setStrokeWidth(1f);
-	}
 }

@@ -43,7 +43,7 @@ public class TabTest extends AndroidTestCase{
 		Tab parsedTab = Tab.parseTabFromJSON(jObj);
 		assertEquals(120, parsedTab.getTempo());
 		int falseTempo = 121;
-		assertFalse(!(falseTempo == parsedTab.getTempo()));
+		assertFalse(falseTempo == parsedTab.getTempo());
 	}
 
 }

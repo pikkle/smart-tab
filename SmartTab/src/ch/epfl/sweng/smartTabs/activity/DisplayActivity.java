@@ -1,11 +1,14 @@
 package ch.epfl.sweng.smartTabs.activity;
 
 import android.app.Activity;
+import android.graphics.Point;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Bundle;
+import android.view.Display;
 import ch.epfl.sweng.smartTabs.R;
+import ch.epfl.sweng.smartTabs.gfx.GridViewDraw;
 import ch.epfl.sweng.smartTabs.gfx.NoteView;
 import ch.epfl.sweng.smartTabs.gfx.TabAnimationThread;
 import ch.epfl.sweng.smartTabs.music.Instrument;
@@ -28,6 +31,7 @@ public class DisplayActivity extends Activity {
 	private static int g3;
 	private static int stringIndex;
 	private final int maxStreams = 6;
+	private GridViewDraw mDrawable;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +45,14 @@ public class DisplayActivity extends Activity {
 		pool = new SoundPool(maxStreams, AudioManager.STREAM_MUSIC, 0);
 
 		stringIndex = 1;
+		
+		Display display = getWindowManager().getDefaultDisplay();
+		Point size = new Point();
+		display.getSize(size);
+		int width = size.x;
+		int height = size.y;
+		mDrawable = new GridViewDraw(width, height, Instrument.GUITAR, tab);
+		n.setBackground(mDrawable);
 
 		a3 = pool.load(this, R.raw.a3, 1);
 		b2 = pool.load(this, R.raw.b2, 1);
