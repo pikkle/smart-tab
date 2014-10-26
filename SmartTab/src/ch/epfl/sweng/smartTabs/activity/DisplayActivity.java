@@ -7,6 +7,8 @@ import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Bundle;
 import android.view.Display;
+import android.view.MotionEvent;
+import android.view.View;
 import ch.epfl.sweng.smartTabs.gfx.GridViewDraw;
 import ch.epfl.sweng.smartTabs.gfx.NoteView;
 import ch.epfl.sweng.smartTabs.gfx.TabAnimationThread;
@@ -26,6 +28,7 @@ public class DisplayActivity extends Activity {
 	private static SoundPool pool;
 	private static SampleMap map;
 	private GridViewDraw mDrawable;
+	private TabAnimationThread thread ;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -48,16 +51,23 @@ public class DisplayActivity extends Activity {
 		mDrawable = new GridViewDraw(width, height, Instrument.GUITAR, tab);
 		n.setBackground(mDrawable);
 
-
 		setContentView(n);
 
-		TabAnimationThread thread = new TabAnimationThread(n);
+		thread = new TabAnimationThread(n);
 		thread.start();
 	}
 
-	public static void playNote(Time time) {
+	@Override
+    public boolean onTouchEvent(MotionEvent event) {
+		//thread.switchRunning();
 		
-		for (int i = 0; i < 6; i++) {
+		
+		System.out.println("TEST");
+		return true;
+    }
+	
+	public static void playNote(Time time) {
+		for (int i = 0; i < (Instrument.GUITAR).getNumOfStrings(); i++) {
 			if (!time.getNote(i).equals("")) {
 				pool.play(map.getSampleId(i, Integer.parseInt(time.getNote(i))), 1, 1, 1, 0, 1);
 			}

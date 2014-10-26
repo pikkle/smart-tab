@@ -14,11 +14,16 @@ public class Note {
 		myDuration = duration;
 	}
 	
-	public Note addHalfTon(int delta){
-		// Represente the case when we need to change the octave
+	public Note(int octave, Height height) {
+		myOctave = octave;
+		myHeight = height;
+		myDuration = Duration.Noire;
+	}
+	
+	public Note addHalfTon(int delta) {
 		int index = this.myHeight.getIndex();
-		int deltaOct = index % 11;
+		int newOct = myOctave + index % Height.getMax();
 		Height height =  this.myHeight.get(index + delta);
-		return new Note(deltaOct, height, this.myDuration);	
+		return new Note(newOct, height);	
 	}
 }

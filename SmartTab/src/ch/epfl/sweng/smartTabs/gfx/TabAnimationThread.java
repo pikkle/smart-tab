@@ -18,8 +18,12 @@ public class TabAnimationThread extends Thread{
 		this.running = true;
 	}
 
-	public void setRunning(boolean run) {
-        running = run;    
+	public void switchRunning() {
+		if (running) {
+			running = false;
+		} else {
+			running = true;
+		}
 	}
 
 	@Override
