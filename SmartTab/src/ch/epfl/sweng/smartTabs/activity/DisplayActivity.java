@@ -8,7 +8,6 @@ import android.media.SoundPool;
 import android.os.Bundle;
 import android.view.Display;
 import android.view.MotionEvent;
-import android.view.View;
 import ch.epfl.sweng.smartTabs.gfx.GridViewDraw;
 import ch.epfl.sweng.smartTabs.gfx.NoteView;
 import ch.epfl.sweng.smartTabs.gfx.TabAnimationThread;
@@ -28,7 +27,7 @@ public class DisplayActivity extends Activity {
 	private static SoundPool pool;
 	private static SampleMap map;
 	private GridViewDraw mDrawable;
-	private TabAnimationThread thread ;
+	private TabAnimationThread thread;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -59,13 +58,9 @@ public class DisplayActivity extends Activity {
 
 	@Override
     public boolean onTouchEvent(MotionEvent event) {
-		
-		
 		if (event.getAction() == MotionEvent.ACTION_DOWN) {
 			thread.switchRunning();
-			System.out.println("TEST");
 		}
-		
 		return true;
     }
 	

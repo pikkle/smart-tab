@@ -38,6 +38,13 @@ public class GridViewDraw extends Drawable{
 		drawNameSong(canvas);
 		drawStrings(canvas);
 		drawCursor(canvas);
+		
+		drawStandardGrid();
+	}
+
+	private void drawStandardGrid() {
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
@@ -64,13 +71,13 @@ public class GridViewDraw extends Drawable{
 		canvas.drawPaint(paint);
 	}
 	
-	private void drawNameSong(Canvas canvas){
+	private void drawNameSong(Canvas canvas) {
 		paint.setTextSize(48f);
 		paint.setColor(Color.GRAY);
 		canvas.drawText(myTab.getTabName(), 50, 100, paint);
 	}
 	
-	private void drawStrings(Canvas canvas){
+	private void drawStrings(Canvas canvas) {
 		paint.setColor(Color.BLACK);
 		paint.setTextSize(36f);
 		paint.setStrokeWidth(2f);
@@ -81,7 +88,7 @@ public class GridViewDraw extends Drawable{
 		canvas.drawLine(mWidth/8, ratio*mHeight, mWidth/8, ratio*mHeight + 5*mHeight/16, paint);
 	}
 
-	private void drawCursor(Canvas canvas){
+	private void drawCursor(Canvas canvas) {
 		paint.setColor(Color.RED);
 		paint.setStrokeWidth(10f);
 		canvas.drawLine(mWidth/4, mHeight/4, mWidth/4,3*mHeight/4, paint);

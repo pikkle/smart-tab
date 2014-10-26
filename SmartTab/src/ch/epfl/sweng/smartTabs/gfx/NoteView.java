@@ -55,7 +55,7 @@ public class NoteView extends View{
 		w = getWidth();
 		super.onDraw(canvas);
 		paint.setColor(Color.BLACK);
-		
+			
 
 		paint.setTextSize(48f);
 		// 6 notes
