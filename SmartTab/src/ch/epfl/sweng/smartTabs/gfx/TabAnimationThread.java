@@ -32,7 +32,6 @@ public class TabAnimationThread extends Thread{
 		playing = false;
 	}
 
-	
 	@Override
 	public void run() {
 		while (playing) {
