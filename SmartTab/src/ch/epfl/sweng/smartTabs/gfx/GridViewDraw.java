@@ -3,7 +3,6 @@ package ch.epfl.sweng.smartTabs.gfx;
 import ch.epfl.sweng.smartTabs.music.Height;
 import ch.epfl.sweng.smartTabs.music.Instrument;
 import ch.epfl.sweng.smartTabs.music.Tab;
-import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.ColorFilter;
@@ -12,7 +11,7 @@ import android.graphics.drawable.Drawable;
 
 /**
  * 
- * @author lourichard
+ * @author lourichard ( swag tmtc =D)
  *
  */
 public class GridViewDraw extends Drawable{
@@ -21,7 +20,6 @@ public class GridViewDraw extends Drawable{
 	private final float ratio = 0.34375f;
 	private int mWidth;
 	private int mHeight;
-	private String nameSong;
 	private Instrument myInstrument;
 	private Tab myTab;
 	
@@ -40,7 +38,6 @@ public class GridViewDraw extends Drawable{
 		drawNameSong(canvas);
 		drawStrings(canvas);
 		drawCursor(canvas);
-		
 	}
 
 	@Override
@@ -66,13 +63,14 @@ public class GridViewDraw extends Drawable{
 		paint.setColor(Color.WHITE);
 		canvas.drawPaint(paint);
 	}
-
+	
+	// TODO: should not be constant position, needs to be done automaticaly 
 	private void drawNameSong(Canvas canvas){
 		paint.setTextSize(48f);
 		paint.setColor(Color.GRAY);
 		canvas.drawText(myTab.getTabName(), 50, 100, paint);
 	}
-
+	
 	private void drawStrings(Canvas canvas){
 		paint.setColor(Color.BLACK);
 		paint.setTextSize(36f);
