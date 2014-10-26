@@ -21,7 +21,7 @@ import ch.epfl.sweng.smartTabs.music.Time;
  */
 public class DisplayActivity extends Activity {
 	private final int maxStreams = 45;
-
+	
 	private static NoteView n;
 	private static SoundPool pool;
 	private static SampleMap map;
@@ -54,12 +54,17 @@ public class DisplayActivity extends Activity {
 		TabAnimationThread thread = new TabAnimationThread(n);
 		thread.start();
 	}
-
-	public static void playNote(Time time) {
+	
+	/**
+	 * This method plays the correct sample depending on the note received from the parameter time
+	 * @param time
+	 */
+	public static void playNote(final Time time) {
 		
 		for (int i = 0; i < 6; i++) {
 			if (!time.getNote(i).equals("")) {
-				pool.play(map.getSampleId(i, Integer.parseInt(time.getNote(i))), 1, 1, 1, 0, 1);
+				pool.play(map.getSampleId(i, 
+						Integer.parseInt(time.getNote(i))), 1, 1, 1, 0, 1);
 			}
 		}
 	}

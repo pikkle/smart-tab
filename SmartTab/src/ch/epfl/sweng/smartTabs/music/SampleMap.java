@@ -108,7 +108,13 @@ public class SampleMap {
 		
 	}
 	
-	public int getSampleId(int string, int fret){
+	/**
+	 * This method returns the soundId of the sample corresponding to the note played in the tab
+	 * @param string index of the string
+	 * @param fret index of the fret
+	 * @return soundId of the sample to play
+	 */
+	public final int getSampleId(final int string, final int fret) {
 		return noteMap[string][fret];
 	}
 }
