@@ -59,12 +59,21 @@ public class DisplayActivity extends Activity {
 
 	@Override
     public boolean onTouchEvent(MotionEvent event) {
-		//thread.switchRunning();
 		
 		
-		System.out.println("TEST");
+		if (event.getAction() == MotionEvent.ACTION_DOWN) {
+			thread.switchRunning();
+			System.out.println("TEST");
+		}
+		
 		return true;
     }
+	
+	@Override
+	public void onBackPressed() {
+		thread.stopPlaying();
+		super.onBackPressed();
+	}
 	
 	public static void playNote(Time time) {
 		for (int i = 0; i < (Instrument.GUITAR).getNumOfStrings(); i++) {
