@@ -22,7 +22,7 @@ public class NoteView extends View{
 	private final int d = 120;
 	private final Paint paint = new Paint();
 	private final ArrayList<Time> times = new ArrayList<Time>();
-	private final int[] posX = {0, -d, -2*d, -3*d, -4*d, -5*d};
+	private final int[] posX = {0, -d, -2*d, -3*d, -4*d, -5*d, -6*d, -780, -840, -900, -960, -1020, -1140,-1200, -1260, -1320, -1380,-1440};
 	private final float ratio = 0.34375f;
 	
 	
@@ -34,7 +34,7 @@ public class NoteView extends View{
 	private int w;
 	private final Tab myTab;
 	
-	private final int numNotes = 6;
+	private final int numNotes = 18;
 
 	public NoteView(Context context, Tab tab, Instrument instrument) {
 		super(context);
@@ -55,7 +55,7 @@ public class NoteView extends View{
 		w = getWidth();
 		super.onDraw(canvas);
 		paint.setColor(Color.BLACK);
-		
+			
 
 		paint.setTextSize(48f);
 		// 6 notes
@@ -68,7 +68,7 @@ public class NoteView extends View{
 		for (int i = 0; i < myInstrument.getNumOfStrings(); i++) {
 			if (w - posX[time.getStep() % numNotes] > w/4) {
 				paint.setColor(Color.BLACK);
-				canvas.drawText(time.getNote(i), w - posX[time.getStep() % 6], ratio*h + i*h/16 + h/64, paint);
+				canvas.drawText(time.getNote(i), w - posX[time.getStep() % 18], ratio*h + i*h/16 + h/64, paint);
 			}	
 		}
 	}
@@ -77,10 +77,9 @@ public class NoteView extends View{
 	protected void slideNotes(int speed) {
 		for (int i = 0; i < numNotes; i++) {
 			posX[i] += dx*speed;
-			if ((w - posX[times.get(i).getStep() % 6] == (w / 4))){
-				DisplayActivity.playNote(times.get(i));
-				dx = 4/times.get(i).getDuration();
-			}
+			//if ((w - posX[times.get(i).getStep() % 18] == (w / 4))){
+			//	DisplayActivity.playNote(times.get(i));
+			//}
 
 		}
 	}

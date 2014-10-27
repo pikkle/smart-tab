@@ -17,12 +17,13 @@ public class Note {
 	public Note(int octave, Height height) {
 		myOctave = octave;
 		myHeight = height;
+		// by default
 		myDuration = Duration.Noire;
 	}
 	
-	public Note addHalfTon(int delta) {
+	public Note addHalfTone(int delta) {
 		int index = this.myHeight.getIndex();
-		int newOct = myOctave + index % Height.getMax();
+		int newOct = myOctave + ((index + delta) / Height.getMax());
 		Height height =  this.myHeight.get(index + delta);
 		return new Note(newOct, height);	
 	}

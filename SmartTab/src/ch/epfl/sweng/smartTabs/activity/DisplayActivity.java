@@ -27,7 +27,7 @@ public class DisplayActivity extends Activity {
 	private static SoundPool pool;
 	private static SampleMap map;
 	private GridViewDraw mDrawable;
-	private TabAnimationThread thread ;
+	private TabAnimationThread thread;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -58,13 +58,11 @@ public class DisplayActivity extends Activity {
 
 
 	@Override
-    public boolean onTouchEvent(MotionEvent event) {		
-		
+
+    public boolean onTouchEvent(MotionEvent event) {
 		if (event.getAction() == MotionEvent.ACTION_DOWN) {
 			thread.switchRunning();
-			System.out.println("TEST");
 		}
-		
 		return true;
     }
 	
