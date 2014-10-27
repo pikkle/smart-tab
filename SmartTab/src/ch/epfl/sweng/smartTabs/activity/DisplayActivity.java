@@ -27,10 +27,11 @@ public class DisplayActivity extends Activity {
 	private static NoteView n;
 	private static SoundPool pool;
 	private static SampleMap map;
+	private static NotePlaybackThread playbackThread;
+	
 	private GridViewDraw mDrawable;
 	private TabAnimationThread thread;
-	private static NotePlaybackThread playbackThread;
-	private Thread t;
+	private Thread initSampleMapThread;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +57,7 @@ public class DisplayActivity extends Activity {
 
 		setContentView(n);
 
-		t = new Thread(new Runnable() {
+		initSampleMapThread = new Thread(new Runnable() {
 
 			@Override
 			public void run() {
@@ -64,9 +65,9 @@ public class DisplayActivity extends Activity {
 						pool);
 			}
 		});
-		t.start();
+		initSampleMapThread.start();
 		try {
-			t.join();
+			initSampleMapThread.join();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -92,6 +93,10 @@ public class DisplayActivity extends Activity {
 		super.onBackPressed();
 	}
 
+	/**
+	 * This method plays the notes contained in the Time object.
+	 * @param time is the Time object containing the notes to play
+	 */
 	public static void playNote(final Time time) {
 		playbackThread = new NotePlaybackThread(pool, map, time);
 		playbackThread.start();

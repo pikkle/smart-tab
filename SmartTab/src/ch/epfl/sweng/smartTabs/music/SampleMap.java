@@ -9,7 +9,10 @@ import ch.epfl.sweng.smartTabs.R;
  * Ismail Imani
  */
 public class SampleMap {
-	private int [][] noteMap = new int[6][20];
+	private final int strings = 6;
+	private final int frets = 20;
+
+	private int [][] noteMap = new int[strings][frets];
 
 	public SampleMap(Context a, SoundPool pool) {
 
@@ -111,7 +114,9 @@ public class SampleMap {
 	}
 
 	/**
-	 * This method returns the soundId of the sample corresponding to the note played in the tab
+	 * This method returns the soundId of
+	 * the sample corresponding to the note
+	 *  played in the tab.
 	 * @param string index of the string
 	 * @param fret index of the fret
 	 * @return soundId of the sample to play
