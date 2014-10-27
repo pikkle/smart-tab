@@ -26,9 +26,13 @@ public class GridViewDraw extends Drawable{
 	private int mHeight;
 	private Instrument myInstrument;
 	private Tab myTab;
-	private boolean displayTab;
-	private boolean displayPartition;
+	
+	//TODO add an option to show the tablature and/or the standard partition
+	private boolean displayTab = true;
+	private boolean displayPartition = true;
 	private Resources mRes;
+	
+	private Bitmap mGKeyImage;
 	
 	public GridViewDraw(int width, int height, Instrument instru, Tab tab, Resources res) {
 		super();
@@ -37,6 +41,12 @@ public class GridViewDraw extends Drawable{
 		myInstrument = instru; // Swaggy Baby tu PESES dans le GAME
 		myTab = tab;
 		mRes = res;
+		
+		mGKeyImage = BitmapFactory.decodeResource(mRes, ch.epfl.sweng.smartTabs.R.raw.cledesol);
+		mGKeyImage = mGKeyImage.copy(Bitmap.Config.ARGB_8888, true);
+		int newHeight = (int) (mHeight*ratio/1.2f) ;
+		int newWidth = mGKeyImage.getWidth() *  newHeight / mGKeyImage.getHeight();
+		mGKeyImage = Bitmap.createScaledBitmap(mGKeyImage, newWidth, newHeight, false);
 	}
 
 	@Override
@@ -44,8 +54,10 @@ public class GridViewDraw extends Drawable{
 		clearScreen(canvas);
 		drawNameSong(canvas);
 		
-		drawStrings(canvas, false);
-		drawStandardGrid(canvas, false);
+		boolean tabOnly = !displayPartition && displayTab;
+		boolean standardOnly = displayPartition && !displayTab;
+		drawStrings(canvas, tabOnly);
+		drawStandardGrid(canvas, standardOnly);
 		
 		drawCursor(canvas);
 		
@@ -56,6 +68,7 @@ public class GridViewDraw extends Drawable{
 		paint.setColor(Color.BLACK);
 		paint.setTextSize(36f);
 		paint.setStrokeWidth(2f);
+		
 		if (centered) {
 			for (int i = 0; i < 5; i++) {
 				canvas.drawLine(mWidth/10, ratio*mHeight + i*mHeight/20, mWidth, ratio*mHeight + i*mHeight/20, paint);
@@ -71,6 +84,7 @@ public class GridViewDraw extends Drawable{
 			}
 			paint.setStrokeWidth(15f);
 			canvas.drawLine(mWidth/10 + 2f, distributedHeight, mWidth/10 + 2f, distributedHeight + 4*mHeight/20, paint);
+			canvas.drawBitmap(mGKeyImage, mWidth/8, mHeight/5f, paint);
 		}
 	}
 
