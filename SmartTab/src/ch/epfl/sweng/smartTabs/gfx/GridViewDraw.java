@@ -3,6 +3,10 @@ package ch.epfl.sweng.smartTabs.gfx;
 import ch.epfl.sweng.smartTabs.music.Height;
 import ch.epfl.sweng.smartTabs.music.Instrument;
 import ch.epfl.sweng.smartTabs.music.Tab;
+import android.R;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.ColorFilter;
@@ -24,14 +28,15 @@ public class GridViewDraw extends Drawable{
 	private Tab myTab;
 	private boolean displayTab;
 	private boolean displayPartition;
+	private Resources mRes;
 	
-	public GridViewDraw(int width, int height, Instrument instru, Tab tab) {
+	public GridViewDraw(int width, int height, Instrument instru, Tab tab, Resources res) {
 		super();
 		mWidth = width;
 		mHeight = height;
 		myInstrument = instru; // Swaggy Baby tu PESES dans le GAME
 		myTab = tab;
-		
+		mRes = res;
 	}
 
 	@Override
@@ -51,14 +56,16 @@ public class GridViewDraw extends Drawable{
 		paint.setColor(Color.BLACK);
 		paint.setTextSize(36f);
 		paint.setStrokeWidth(2f);
-		if (centered){
+		if (centered) {
 			for (int i = 0; i < 5; i++) {
 				canvas.drawLine(mWidth/10, ratio*mHeight + i*mHeight/20, mWidth, ratio*mHeight + i*mHeight/20, paint);
 				canvas.drawText(stantardTuning[i]+"", mWidth/16, ratio*mHeight + i*mHeight/16, paint);
-			}
+				}
 			canvas.drawLine(mWidth/10, ratio*mHeight, mWidth/10, ratio*mHeight + 5*mHeight/16, paint);
+			
 		} else {
-			float distributedHeight = mHeight/8;
+			float margin = mHeight/8;
+			float distributedHeight = mHeight/8 + margin;
 			for (int i = 0; i < 5; i++) {
 				canvas.drawLine(mWidth/10, distributedHeight + i*mHeight/20, mWidth, distributedHeight + i*mHeight/20, paint);
 			}
@@ -108,10 +115,12 @@ public class GridViewDraw extends Drawable{
 			}
 			canvas.drawLine(mWidth/10, ratio*mHeight, mWidth/10, ratio*mHeight + 5*mHeight/16, paint);
 		} else {
-			float distributedHeight = (mHeight-(mHeight/8))/2;
+			float margin = mHeight/8;
+			float distributedHeight = mHeight*7/16 + margin;
+			float centerText = mHeight/80;
 			for (int i = 0; i < myInstrument.getNumOfStrings(); i++) {
 				canvas.drawLine(mWidth/10, distributedHeight + i*mHeight/16, mWidth, distributedHeight + i*mHeight/16, paint);
-				canvas.drawText(stantardTuning[i]+"", mWidth/16, distributedHeight + i*mHeight/16, paint);
+				canvas.drawText(stantardTuning[i]+"", mWidth/16, distributedHeight + centerText + i*mHeight/16, paint);
 			}
 			canvas.drawLine(mWidth/10, distributedHeight, mWidth/10, distributedHeight + 5*mHeight/16, paint);
 		}
@@ -121,7 +130,8 @@ public class GridViewDraw extends Drawable{
 	private void drawCursor(Canvas canvas) {
 		paint.setColor(Color.RED);
 		paint.setStrokeWidth(10f);
-		canvas.drawLine(mWidth/4, mHeight/8, mWidth/4, 7*mHeight/8, paint);
+		float margin = mHeight/10;
+		canvas.drawLine(mWidth/4, mHeight/8 + margin, mWidth/4, 15*mHeight/16, paint);
 		paint.setStrokeWidth(1f);
 	}
 }
