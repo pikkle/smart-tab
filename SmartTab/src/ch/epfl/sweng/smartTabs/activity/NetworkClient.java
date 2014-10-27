@@ -23,7 +23,6 @@ import ch.epfl.sweng.smartTabs.music.Tab;
  * 212765
  */
 public class NetworkClient {
-	// TODO: Not hard code these values
 	private final int readTimeout = 10000;
 	private final int connectTimeout = 15000;
 

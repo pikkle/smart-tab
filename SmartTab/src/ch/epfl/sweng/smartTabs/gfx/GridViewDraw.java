@@ -64,7 +64,6 @@ public class GridViewDraw extends Drawable{
 		canvas.drawPaint(paint);
 	}
 	
-	// TODO: should not be constant position, needs to be done automaticaly 
 	private void drawNameSong(Canvas canvas){
 		paint.setTextSize(48f);
 		paint.setColor(Color.GRAY);

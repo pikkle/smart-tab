@@ -9,6 +9,7 @@ public class TabAnimationThread extends Thread{
 
 	private NoteView myNoteview;
 	private boolean running = false;
+	private boolean playing = true;
 	private int speed = 1;
 	private final long delay = 10L;
 	private final int threshold = 5;
@@ -18,19 +19,31 @@ public class TabAnimationThread extends Thread{
 		this.running = true;
 	}
 
-	public void setRunning(boolean run) {
-        running = run;    
+	public void switchRunning() {
+		if (running) {
+			running = false;
+		} else {
+			running = true;
+		}
+	}
+	
+	public void stopPlaying() {
+		running = false;
+		playing = false;
 	}
 
+	
 	@Override
 	public void run() {
-		while (running) {
-			myNoteview.slideNotes(speed);
-			myNoteview.postInvalidate();
-			try {
-			    sleep(delay);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
+		while (playing) {
+			while (running) {
+				myNoteview.slideNotes(speed);
+				myNoteview.postInvalidate();
+				try {
+				    sleep(delay);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
 			}
 		}
 	}

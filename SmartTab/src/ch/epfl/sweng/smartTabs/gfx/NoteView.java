@@ -2,10 +2,8 @@ package ch.epfl.sweng.smartTabs.gfx;
 
 import java.util.ArrayList;
 
-
 import ch.epfl.sweng.smartTabs.activity.DisplayActivity;
 import ch.epfl.sweng.smartTabs.music.Duration;
-import ch.epfl.sweng.smartTabs.music.Height;
 import ch.epfl.sweng.smartTabs.music.Instrument;
 import ch.epfl.sweng.smartTabs.music.Tab;
 import ch.epfl.sweng.smartTabs.music.Time;
@@ -20,9 +18,6 @@ import android.view.View;
  * The note view draws the notes
  */
 public class NoteView extends View{
-	
-	// The tuning is hard coded for the moment, until we create the Note class
-	private final Height[] stantardTuning = {Height.E, Height.B, Height.G, Height.D, Height.A, Height.E };
 
 	private final int d = 120;
 	private final Paint paint = new Paint();
@@ -41,7 +36,7 @@ public class NoteView extends View{
 	
 	private final int numNotes = 6;
 
-	public NoteView(Context context, Tab tab, Instrument instrument){
+	public NoteView(Context context, Tab tab, Instrument instrument) {
 		super(context);
 		myInstrument = instrument;
 		myTab = tab;
@@ -71,7 +66,7 @@ public class NoteView extends View{
 
 	private void drawTimes(Time time, Canvas canvas) {
 		for (int i = 0; i < myInstrument.getNumOfStrings(); i++) {
-			if (w - posX[time.getStep() % numNotes] > w/4 ) {
+			if (w - posX[time.getStep() % numNotes] > w/4) {
 				paint.setColor(Color.BLACK);
 				canvas.drawText(time.getNote(i), w - posX[time.getStep() % 6], ratio*h + i*h/16 + h/64, paint);
 			}	
