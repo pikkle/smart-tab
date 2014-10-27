@@ -8,6 +8,8 @@ import android.media.SoundPool;
 import android.os.Bundle;
 import android.view.Display;
 import android.view.MotionEvent;
+import android.view.Window;
+import android.view.WindowManager;
 import ch.epfl.sweng.smartTabs.gfx.GridViewDraw;
 import ch.epfl.sweng.smartTabs.gfx.NoteView;
 import ch.epfl.sweng.smartTabs.gfx.TabAnimationThread;
@@ -33,6 +35,9 @@ public class DisplayActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
+	    this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		
 		Intent intent = getIntent();
 		Tab tab = (Tab) intent.getExtras().getSerializable("tab");
 
