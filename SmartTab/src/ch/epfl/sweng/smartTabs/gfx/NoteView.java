@@ -44,9 +44,6 @@ public class NoteView extends View{
 		w = getWidth();
 
 		paint.setAntiAlias(true);
-//		for (int i = 0; i < numNotes; i++) {
-//			times.add(myTab.getTime(i));
-//		}
 	}
 
 

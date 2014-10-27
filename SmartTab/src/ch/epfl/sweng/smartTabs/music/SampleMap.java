@@ -1,18 +1,21 @@
 package ch.epfl.sweng.smartTabs.music;
-import ch.epfl.sweng.smartTabs.R;
-import android.app.Activity;
+
+import android.content.Context;
 import android.media.SoundPool;
+import ch.epfl.sweng.smartTabs.R;
 
 /**
- * 
  * @author imani92
  * Ismail Imani
  */
 public class SampleMap {
-	private int [][] noteMap = new int[6][20];
-	
-	public SampleMap(Activity a, SoundPool pool) {
-		
+	private final int strings = 6;
+	private final int frets = 20;
+
+	private int [][] noteMap = new int[strings][frets];
+
+	public SampleMap(Context a, SoundPool pool) {
+
 		noteMap[0][0] = pool.load(a, R.raw.e3, 1);		//E3
 		noteMap[0][12] = pool.load(a, R.raw.e4, 1);		//E4
 		noteMap[1][5] = getSampleId(0, 0);				//E3
@@ -39,7 +42,7 @@ public class SampleMap {
 		noteMap[5][13] = getSampleId(3, 3);				//F2
 		noteMap[5][14] = getSampleId(3, 4);				//F#2
 
-		
+
 		noteMap[0][3] = pool.load(a, R.raw.g3, 1);		//G3
 		noteMap[0][4] = pool.load(a, R.raw.gd3, 1);		//G#3
 		noteMap[1][8] = getSampleId(0, 3);				//G3
@@ -55,7 +58,7 @@ public class SampleMap {
 		noteMap[5][3] = pool.load(a, R.raw.g1, 1);		//G1
 		noteMap[5][4] = pool.load(a, R.raw.gd1, 1);		//G#1
 
-		
+
 		noteMap[0][5] = pool.load(a, R.raw.a3, 1);		//A3
 		noteMap[0][6] = pool.load(a, R.raw.ad3, 1);		//A#3
 		noteMap[1][10] = getSampleId(0, 5);				//A3
@@ -78,7 +81,7 @@ public class SampleMap {
 		noteMap[3][9] = getSampleId(1, 0);				//B2
 		noteMap[4][2] = pool.load(a, R.raw.b1, 1);		//B1
 		noteMap[5][7] = getSampleId(4, 2);				//B1
-		
+
 		noteMap[0][8] = pool.load(a, R.raw.c4, 1);		//C4
 		noteMap[0][9] = pool.load(a, R.raw.cd4, 1);		//C#4
 		noteMap[1][1] = pool.load(a, R.raw.c3, 1);		//C3
@@ -93,7 +96,7 @@ public class SampleMap {
 		noteMap[4][4] = pool.load(a, R.raw.cd2, 1);		//C#2
 		noteMap[5][8] = getSampleId(4, 3);				//C2
 		noteMap[5][9] = getSampleId(4, 4);				//C#2
-		
+
 		noteMap[0][10] = pool.load(a, R.raw.d4, 1);		//D4
 		noteMap[0][11] = pool.load(a, R.raw.dd4, 1);	//D#4
 		noteMap[1][3] = pool.load(a, R.raw.d3, 1);		//D3
@@ -108,12 +111,12 @@ public class SampleMap {
 		noteMap[4][6] = getSampleId(3, 1);				//D#2
 		noteMap[5][10] = getSampleId(3, 0);				//D2
 		noteMap[5][11] = getSampleId(3, 1);				//D#2
-		
-		
 	}
-	
+
 	/**
-	 * This method returns the soundId of the sample corresponding to the note played in the tab
+	 * This method returns the soundId of
+	 * the sample corresponding to the note
+	 *  played in the tab.
 	 * @param string index of the string
 	 * @param fret index of the fret
 	 * @return soundId of the sample to play

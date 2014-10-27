@@ -7,7 +7,7 @@ import ch.epfl.sweng.smartTabs.music.TabGenerationThread;
  * The thread which handles the animation, can pause , increase or decrease the speed
  * of the animation.
  */
-public class TabAnimationThread extends Thread{
+public class TabAnimationThread extends Thread {
 
 	private NoteView myNoteview;
 	private boolean running = false;
