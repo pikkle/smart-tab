@@ -12,6 +12,7 @@ import ch.epfl.sweng.smartTabs.gfx.GridViewDraw;
 import ch.epfl.sweng.smartTabs.gfx.NoteView;
 import ch.epfl.sweng.smartTabs.gfx.TabAnimationThread;
 import ch.epfl.sweng.smartTabs.music.Instrument;
+import ch.epfl.sweng.smartTabs.music.NotePlaybackThread;
 import ch.epfl.sweng.smartTabs.music.SampleMap;
 import ch.epfl.sweng.smartTabs.music.Tab;
 import ch.epfl.sweng.smartTabs.music.Time;
@@ -21,13 +22,15 @@ import ch.epfl.sweng.smartTabs.music.Time;
  * The activity which displays the tabs and handle the animation
  */
 public class DisplayActivity extends Activity {
-	private final int maxStreams = 45;
+	private final int maxStreams = 39;
 
 	private static NoteView n;
 	private static SoundPool pool;
 	private static SampleMap map;
 	private GridViewDraw mDrawable;
 	private TabAnimationThread thread;
+	private static NotePlaybackThread playbackThread;
+	private Thread t;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -40,17 +43,34 @@ public class DisplayActivity extends Activity {
 		n = new NoteView(this, tab, Instrument.GUITAR);
 		pool = new SoundPool(maxStreams, AudioManager.STREAM_MUSIC, 0);
 
-		map = new SampleMap(this, pool);
+
 
 		Display display = getWindowManager().getDefaultDisplay();
 		Point size = new Point();
 		display.getSize(size);
 		int width = size.x;
 		int height = size.y;
-		mDrawable = new GridViewDraw(width, height, Instrument.GUITAR, tab);
+		mDrawable = new GridViewDraw(width, height,
+				Instrument.GUITAR, tab);
 		n.setBackground(mDrawable);
 
 		setContentView(n);
+
+		t = new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+				map = new SampleMap(getApplicationContext(),
+						pool);
+			}
+		});
+		t.start();
+		try {
+			t.join();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+
 
 		thread = new TabAnimationThread(n);
 		thread.start();
@@ -58,27 +78,27 @@ public class DisplayActivity extends Activity {
 
 
 	@Override
-
-    public boolean onTouchEvent(MotionEvent event) {
+	public boolean onTouchEvent(MotionEvent event) {
 		if (event.getAction() == MotionEvent.ACTION_DOWN) {
 			thread.switchRunning();
 		}
 		return true;
-    }
-	
+	}
+
 	@Override
 	public void onBackPressed() {
 		thread.stopPlaying();
 		pool.release();
 		super.onBackPressed();
 	}
-	
-	public static void playNote(Time time) {
-		for (int i = 0; i < (Instrument.GUITAR).getNumOfStrings(); i++) {
-			if (!time.getNote(i).equals("")) {
-				pool.play(map.getSampleId(i, 
-						Integer.parseInt(time.getNote(i))), 1, 1, 1, 0, 1);
-			}
+
+	public static void playNote(final Time time) {
+		playbackThread = new NotePlaybackThread(pool, map, time);
+		playbackThread.start();
+		try {
+			playbackThread.join();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
 		}
 	}
 }
