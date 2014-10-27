@@ -4,11 +4,11 @@ package ch.epfl.sweng.smartTabs.music;
  * @author Faton Ramadani
  */
 public enum Height {
-	C (1), CD (2), D (3), DD (4), E (5), F (6), FD(7) , G (8), GD (9), A (10), AD (11), B (12);
+	C (0), CD (1), D (2), DD (3), E (4), F (5), FD(6) , G (7), GD (8), A (9), AD (10), B (11);
 
-	private final static int MAXHALFTONE = 12;
+	private static final int MAXHALFTONE = 12;
 	private final int myIndex;
-	Height(int index) {
+	Height(final int index) {
 		this.myIndex = index;
 	}
 	

@@ -71,7 +71,7 @@ public class MainActivity extends Activity {
 				values[count]=key;
 				count++;
 			}
-			
+
 			ArrayAdapter<String> adap = new ArrayAdapter<String>(getApplicationContext(), 
 					android.R.layout.simple_list_item_1, values);
 			listV.setAdapter(adap);
@@ -84,18 +84,17 @@ public class MainActivity extends Activity {
 					new DownloadTabs(url).execute();
 				}
 			});
-			
 		}
 	}
-	
+
 	/**
 	 * @author Faton Ramadani
 	 */
 	private class DownloadTabs extends AsyncTask<Void, Void, Tab> {
-		
+
 		private URL myUrl;
-		
-		public DownloadTabs(URL url) {
+
+		public DownloadTabs(final URL url) {
 			myUrl = url;
 		}
 		@Override
@@ -109,12 +108,13 @@ public class MainActivity extends Activity {
 			}
 			return null;
 		}
-		
+
 		@Override
-		protected void onPostExecute(Tab tab) {
-			Intent i = new Intent(MainActivity.this, DisplayActivity.class);
+		protected void onPostExecute(final Tab tab) {
+			Intent i = new Intent(MainActivity.this,
+					DisplayActivity.class);
 			i.putExtra("tab", tab);
-			startActivity(i);		
+			startActivity(i);
 		}
 	}
 }

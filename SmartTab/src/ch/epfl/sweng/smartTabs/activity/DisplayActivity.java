@@ -17,12 +17,12 @@ import ch.epfl.sweng.smartTabs.music.Tab;
 import ch.epfl.sweng.smartTabs.music.Time;
 
 /**
- * @author Faton Ramadani 
+ * @author Faton Ramadani
  * The activity which displays the tabs and handle the animation
  */
 public class DisplayActivity extends Activity {
 	private final int maxStreams = 45;
-	
+
 	private static NoteView n;
 	private static SoundPool pool;
 	private static SampleMap map;
@@ -35,13 +35,13 @@ public class DisplayActivity extends Activity {
 
 		Intent intent = getIntent();
 		Tab tab = (Tab) intent.getExtras().getSerializable("tab");
-		
+
 
 		n = new NoteView(this, tab, Instrument.GUITAR);
 		pool = new SoundPool(maxStreams, AudioManager.STREAM_MUSIC, 0);
-		
+
 		map = new SampleMap(this, pool);
-		
+
 		Display display = getWindowManager().getDefaultDisplay();
 		Point size = new Point();
 		display.getSize(size);
@@ -69,6 +69,7 @@ public class DisplayActivity extends Activity {
 	@Override
 	public void onBackPressed() {
 		thread.stopPlaying();
+		pool.release();
 		super.onBackPressed();
 	}
 	

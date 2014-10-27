@@ -3,7 +3,11 @@ import ch.epfl.sweng.smartTabs.R;
 import android.app.Activity;
 import android.media.SoundPool;
 
-
+/**
+ * 
+ * @author imani92
+ * Ismail Imani
+ */
 public class SampleMap {
 	private int [][] noteMap = new int[6][20];
 	

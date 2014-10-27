@@ -24,7 +24,7 @@ public class Note {
 	public Note addHalfTone(int delta) {
 		int index = this.myHeight.getIndex();
 		int newOct = myOctave + ((index + delta) / Height.getMax());
-		Height height =  this.myHeight.get(index + delta);
+		Height height =  this.myHeight.get((index + delta) % Height.getMax());
 		return new Note(newOct, height);	
 	}
 }

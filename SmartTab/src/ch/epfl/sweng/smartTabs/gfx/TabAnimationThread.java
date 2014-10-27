@@ -1,5 +1,7 @@
 package ch.epfl.sweng.smartTabs.gfx;
 
+import ch.epfl.sweng.smartTabs.music.TabGenerationThread;
+
 /**
  * @author Faton Ramadani
  * The thread which handles the animation, can pause , increase or decrease the speed
@@ -11,12 +13,15 @@ public class TabAnimationThread extends Thread{
 	private boolean running = false;
 	private boolean playing = true;
 	private int speed = 1;
-	private final long delay = 10L;
+	private final long delay = 10;
 	private final int threshold = 5;
+	private final TabGenerationThread thread;
 
 	public TabAnimationThread(NoteView noteview) {
 		myNoteview = noteview;
 		this.running = true;
+		thread = new TabGenerationThread(noteview.getTab(), noteview.getTimes());
+		thread.start();
 	}
 
 	public void switchRunning() {
@@ -26,26 +31,32 @@ public class TabAnimationThread extends Thread{
 			running = true;
 		}
 	}
-	
+
 	public void stopPlaying() {
 		running = false;
 		playing = false;
 	}
 
 	@Override
-	public void run() {
-		while (playing) {
-			while (running) {
-				myNoteview.slideNotes(speed);
-				myNoteview.postInvalidate();
-				try {
-				    sleep(delay);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
+	public void run()  {
+		try {
+			thread.join();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+
+			while (playing) {
+				while (running) {
+					myNoteview.slideNotes(speed);
+					myNoteview.postInvalidate();
+					try {
+					    sleep(delay);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
 				}
 			}
 		}
-	}
 
 	public void setSpeed(int newSpeed) {
 		if (newSpeed < 0) {
