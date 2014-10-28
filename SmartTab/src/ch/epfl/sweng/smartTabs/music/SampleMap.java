@@ -124,4 +124,15 @@ public class SampleMap {
 	public final int getSampleId(final int string, final int fret) {
 		return noteMap[string][fret];
 	}
+	
+	public final int[][] fillMap(){
+		int[][] sampleMap = new int[strings][frets];
+		
+		/*
+		 * Algorithm to auto-fill the sample map	
+		 *
+		*/
+		
+		return sampleMap;
+	}
 }

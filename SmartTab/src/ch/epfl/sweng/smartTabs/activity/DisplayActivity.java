@@ -105,12 +105,12 @@ public class DisplayActivity extends Activity {
 		} else {
 			backPressedOnce = true;
 			Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
-
+			
 			new Handler().postDelayed(new Runnable() {
 
 				@Override
 				public void run() {
-					backPressedOnce = true;
+					backPressedOnce = false;
 				}
 			}, 2000);
 		}
