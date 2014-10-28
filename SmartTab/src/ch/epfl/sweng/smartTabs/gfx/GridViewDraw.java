@@ -41,7 +41,7 @@ public class GridViewDraw extends Drawable{
 	private Rect centerScreenRect; // standard/tablature notation only
 	private Rect leftTopPartRect; // Clef for the music sheet
 	private Rect leftBottomPartRect; // Tuning for the tablature
-	private Rect leftCenterPartRect; // Clef OR Tuning
+	private Rect leftCenterPartRect; // Clef OR Tuning 
 	
 	private static final float HEADER_PROPORTION = 0.1f;
 	private static final float LEFT_SIDE_PROPORTION = 0.25f;
@@ -59,15 +59,18 @@ public class GridViewDraw extends Drawable{
 		mRes = res;
 		
 		screenRect = new Rect(0, 0, mWidth, mHeight);
-		headerRect = new Rect(screenRect.left, screenRect.top, screenRect.right, 
-				(int) (screenRect.height() * HEADER_PROPORTION));
+		headerRect = new Rect(screenRect.left, screenRect.top, 
+				screenRect.right, (int) (screenRect.height() * HEADER_PROPORTION));
 		leftPartRect = new Rect(screenRect.left, headerRect.top, 
 				(int) (screenRect.right * LEFT_SIDE_PROPORTION), screenRect.bottom);
 		topScreenRect = new Rect(screenRect.left, headerRect.bottom, screenRect.right, screenRect.centerY());
 		bottomScreenRect = new Rect(screenRect.left, screenRect.centerY(), screenRect.right, screenRect.bottom);
-		centerScreenRect = new Rect(screenRect.left, headerRect.bottom, screenRect.right, screenRect.bottom);
+		centerScreenRect = new Rect(screenRect.left, headerRect.bottom, screenRect.right, screenRect.bottom); //TODO diviser le rectangle en hauteur pour avoir la même taille que le bottomScreenRect
 		leftTopPartRect = new Rect(leftPartRect.left, topScreenRect.top, leftPartRect.right, topScreenRect.bottom);
-		
+		leftBottomPartRect = new Rect(leftPartRect.left, bottomScreenRect.top, 
+				leftPartRect.top, bottomScreenRect.bottom);
+		leftCenterPartRect = new Rect(leftCenterPartRect.left, centerScreenRect.top, 
+				leftCenterPartRect.right, centerScreenRect.bottom);
 		
 		mGKeyImage = BitmapFactory.decodeResource(mRes, ch.epfl.sweng.smartTabs.R.raw.cledesol);
 		mGKeyImage = mGKeyImage.copy(Bitmap.Config.ARGB_8888, true);
