@@ -32,7 +32,7 @@ public class GridViewDraw extends Drawable{
 	
 	//TODO add an option to show the tablature and/or the standard partition
 	private boolean displayTab = true;
-	private boolean displayPartition = true;
+	private boolean displayPartition = false;
 	private Resources mRes;
 	
 	private static final int STANDARD_NOTATION_LINES_NUMBER = 5;
@@ -87,15 +87,18 @@ public class GridViewDraw extends Drawable{
 	@Override
 	public void draw(Canvas canvas) {
 		clearScreen(canvas);
+		
 		drawNameSong(canvas);
 		
-		boolean tabOnly = !displayPartition && displayTab;
-		boolean standardOnly = displayPartition && !displayTab;
-		drawStrings(canvas, tabOnly);
-		drawStandardGrid(canvas, standardOnly);
+		if (displayTab) {
+			drawTablatureGrid(canvas, !displayPartition);
+		}
+		if (displayPartition) {
+			drawStandardGrid(canvas, !displayTab);
+		}
 		
-		drawCursor(canvas);
-		
+		//drawCursor(canvas);
+		//showBoxes(canvas);
 	}
 
 	@Override
@@ -125,7 +128,8 @@ public class GridViewDraw extends Drawable{
 	private void drawNameSong(Canvas canvas) {
 		paint.setTextSize(TITLE_FONT_SIZE);
 		paint.setColor(Color.GRAY);
-		canvas.drawText(myTab.getTabName(), headerRect.left, headerRect.top, paint);
+		Rect titleRect = Box.marginRect(headerRect, 0.99f, 0.1f);
+		canvas.drawText(myTab.getTabName(), titleRect.left, titleRect.top, paint);
 	}
 
 	private void drawStandardGrid(Canvas canvas, boolean isCentered) {
@@ -147,16 +151,29 @@ public class GridViewDraw extends Drawable{
 				paint);
 	}
 	
-	private void drawStrings(Canvas canvas, boolean isCentered) {
+	private void drawTablatureGrid(Canvas canvas, boolean isCentered) {
 		paint.setColor(Color.BLACK);
 		paint.setStrokeWidth(THIN_LINE_WIDTH);
 		paint.setTextSize(TUNING_TEXT_SIZE);
 		
 		Rect left = isCentered ? leftCenterPartRect : leftBottomPartRect;
 		Rect right = isCentered ? rightCenterPartRect : rightBottomPartRect;
+		int margin = (int) (left.width() * MARGIN);
+		left = Box.marginRect(left, margin);
+		right = Box.marginRect(right, margin);
+
+		paint.setColor(Color.RED);
+		paint.setAlpha(50);
+		canvas.drawRect(left, paint);
+		
+		paint.setColor(Color.BLUE);
+		paint.setAlpha(50);
+		canvas.drawRect(right, paint);
+		/*
+		tablatureLinesMargin = 100;
 		for (int i = 0; i < myInstrument.getNumOfStrings(); i++) {
 			canvas.drawLine(left.left + (left.width() * LEFT_TAB_RATIO), left.top + i * tablatureLinesMargin,
-					right.right, right.top + i * tablatureLinesMargin,
+					right.right, left.top + i * tablatureLinesMargin,
 					paint);
 			canvas.drawText(stantardTuning[i].toString(), 
 					left.left + (left.width() * LEFT_TAB_RATIO), 
@@ -166,6 +183,7 @@ public class GridViewDraw extends Drawable{
 		canvas.drawLine(left.left + (left.width() * LEFT_TAB_RATIO), left.top, 
 				left.left + (left.width() * LEFT_TAB_RATIO), left.bottom, 
 				paint);
+		*/
 	}
 
 	private void drawCursor(Canvas canvas) {
@@ -178,7 +196,6 @@ public class GridViewDraw extends Drawable{
 	 * Initialize the screen boxes
 	 */
 	private void createBoxes() {
-		//TODO Consider margin within the sub boxes
 		// Divides the screen into 2 main boxes: header and body
 		screenRect = new Rect(0, 0, mWidth, mHeight);
 		headerRect = new Rect(screenRect.left, screenRect.top, 
@@ -194,8 +211,8 @@ public class GridViewDraw extends Drawable{
 		topContentRect = new Rect(bodyRect.left, bodyRect.bottom, bodyRect.right, bodyRect.centerY());
 		bottomContentRect = new Rect(bodyRect.left, bodyRect.centerY(), bodyRect.right, bodyRect.bottom);
 		int verticalMargin = (bodyRect.height()-bottomContentRect.height())/2;
-		centerScreenRect = new Rect(bodyRect.top+verticalMargin, bodyRect.left, 
-				bodyRect.bottom-verticalMargin, bodyRect.right);
+		centerScreenRect = new Rect(bodyRect.left+verticalMargin, bodyRect.top, 
+				bodyRect.right-verticalMargin, bodyRect.bottom);
 		
 		// Intersects the splits to get the left parts
 		leftTopPartRect = new Rect(leftPartRect.left, topContentRect.top, leftPartRect.right, topContentRect.bottom);
@@ -208,7 +225,7 @@ public class GridViewDraw extends Drawable{
 		rightTopPartRect = new Rect(rightPartRect.left, topContentRect.top, rightPartRect.right, topContentRect.bottom);
 		rightBottomPartRect = new Rect(rightPartRect.left, bottomContentRect.top, 
 				rightPartRect.right, bottomContentRect.bottom);
-		rightCenterPartRect = new Rect(leftPartRect.left, centerScreenRect.top, 
+		rightCenterPartRect = new Rect(rightPartRect.left, centerScreenRect.top, 
 				rightPartRect.right, centerScreenRect.bottom);
 		
 	}
@@ -226,11 +243,30 @@ public class GridViewDraw extends Drawable{
 		
 	}
 
-
-	private Rect marginRect(Rect r, float delta) throws InvalidParameterException{
-		if (delta < 0 || delta > 1){
-			throw new InvalidParameterException("Delta should be between 0 and 1");
-		}
-		return null;
+	private void showBoxes(Canvas canvas) { //test to display boxes on the screen
+		paint.setColor(Color.RED);
+		paint.setAlpha(50);
+		canvas.drawRect(headerRect, paint);
+		
+		paint.setColor(Color.BLUE);
+		paint.setAlpha(50);
+		canvas.drawRect(bodyRect, paint);
+		
+		paint.setColor(Color.BLACK);
+		paint.setAlpha(50);
+		canvas.drawRect(leftPartRect, paint);
+		
+		paint.setColor(Color.WHITE);
+		paint.setAlpha(50);
+		canvas.drawRect(rightPartRect, paint);
+		
+		paint.setColor(Color.BLACK);
+		paint.setAlpha(50);
+		canvas.drawRect(topContentRect, paint);
+		
+		paint.setColor(Color.WHITE);
+		paint.setAlpha(50);
+		canvas.drawRect(bottomContentRect, paint);
+		
 	}
 }
