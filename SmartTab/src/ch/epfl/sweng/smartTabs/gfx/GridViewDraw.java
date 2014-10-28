@@ -1,7 +1,5 @@
 package ch.epfl.sweng.smartTabs.gfx;
 
-import java.security.InvalidParameterException;
-
 import ch.epfl.sweng.smartTabs.R;
 import ch.epfl.sweng.smartTabs.music.Height;
 import ch.epfl.sweng.smartTabs.music.Instrument;
@@ -24,7 +22,6 @@ import android.graphics.drawable.Drawable;
 public class GridViewDraw extends Drawable{
 	private final Paint paint = new Paint();
 	private final Height[] stantardTuning = {Height.E, Height.B, Height.G, Height.D, Height.A, Height.E };
-	private final float ratio = 0.34375f;
 	private int mWidth;
 	private int mHeight;
 	private Instrument myInstrument;
@@ -54,15 +51,19 @@ public class GridViewDraw extends Drawable{
 	
 	private static final float HEADER_RATIO = 0.1f;
 	private static final float TOP_CONTENT_RATIO = 0.4f;
-	
 	private static final float LEFT_SIDE_RATIO = 0.25f;
-	private static final float LEFT_STANDARD_RATIO = 0.5f;
-	private static final float LEFT_TAB_RATIO = 0.5f;
-	
+		
+	private static final float TITLE_WIDTH_MARGIN_DELTA = 0.99f;
+	private static final float TITLE_HEIGHT_MARGIN_DELTA = 0.1f;
+	private static final float CLEF_TUNING_LEFT_MARGIN = 0.5f;
+	private static final float MIDDLE_SMALL_MARGIN = 0.5f;
+	private static final float BIG_MARGIN = 0.25f;
 	private static final float MARGIN = 0.125f;
+	private static final float STRING_SHIFT = 0.5f;
+	private static final float STRING_SHIFT_BOTTOM = 0.33f;
 	
 	private static final float THIN_LINE_WIDTH = 2f;
-	private static final float MED_LINE_WIDTH = 8f;
+	private static final float MED_LINE_WIDTH = 5f;
 	private static final float HARD_LINE_WIDTH = 15f;
 	
 	private static final float TUNING_TEXT_SIZE = 36f;
@@ -76,7 +77,7 @@ public class GridViewDraw extends Drawable{
 		super();
 		mWidth = width;
 		mHeight = height;
-		myInstrument = instru; // Swaggy Baby tu PESES dans le GAME
+		myInstrument = instru;
 		myTab = tab;
 		mRes = res;
 		
@@ -125,7 +126,7 @@ public class GridViewDraw extends Drawable{
 	private void drawNameSong(Canvas canvas) {
 		paint.setTextSize(TITLE_FONT_SIZE);
 		paint.setColor(Color.GRAY);
-		Rect titleRect = Box.marginRect(headerRect, 0.99f, 0.1f);
+		Rect titleRect = Box.marginRect(headerRect, TITLE_WIDTH_MARGIN_DELTA, TITLE_HEIGHT_MARGIN_DELTA);
 		canvas.drawText(myTab.getTabName(), titleRect.left, titleRect.top, paint);
 	}
 
@@ -138,11 +139,13 @@ public class GridViewDraw extends Drawable{
 			left = Box.marginRect(left, margin, margin, 0, margin);
 			right = Box.marginRect(right, 0, margin, 0, margin);
 			standardRect = Box.marginRect(Box.bigUnion(left, right), 
-					left.width()/2, left.height()/4, 0, left.height()/4);
+					(int) (left.width()*CLEF_TUNING_LEFT_MARGIN), 
+					(int) (left.height()*BIG_MARGIN), 0, (int) (left.height()*BIG_MARGIN));
 		} else {
-			left = Box.marginRect(left, margin, margin, 0, margin/2);
-			right = Box.marginRect(right, 0, margin, 0, margin/2);
-			standardRect = Box.marginRect(Box.bigUnion(left, right), left.width()/2, 0, 0, 0);
+			left = Box.marginRect(left, margin, margin, 0, (int) (margin*MIDDLE_SMALL_MARGIN));
+			right = Box.marginRect(right, 0, margin, 0, (int) (margin*MIDDLE_SMALL_MARGIN));
+			standardRect = Box.marginRect(Box.bigUnion(left, right), 
+					(int) (left.width()*CLEF_TUNING_LEFT_MARGIN), 0, 0, 0);
 		}
 		Rect clefRect = Box.intersection(standardRect, left);
 		Rect sheetRect = Box.intersection(standardRect, right);
@@ -155,13 +158,13 @@ public class GridViewDraw extends Drawable{
 		paint.setColor(Color.BLACK);
 		paint.setStrokeWidth(THIN_LINE_WIDTH);
 		for (int i = 0; i < STANDARD_NOTATION_LINES_NUMBER; i++) {
-			canvas.drawLine(clefRect.left, clefRect.top + (i+0.5f) * lineMargin,
-					sheetRect.right, sheetRect.top + (i+0.5f) * lineMargin,
+			canvas.drawLine(clefRect.left, clefRect.top + (i+STRING_SHIFT) * lineMargin,
+					sheetRect.right, sheetRect.top + (i+STRING_SHIFT) * lineMargin,
 					paint);
 		}
 		paint.setStrokeWidth(HARD_LINE_WIDTH);
-		canvas.drawLine(clefRect.left+HARD_LINE_WIDTH/2, clefRect.top + (0.5f*lineMargin), 
-				clefRect.left+HARD_LINE_WIDTH/2, clefRect.bottom - (0.5f*lineMargin), paint);
+		canvas.drawLine(clefRect.left+HARD_LINE_WIDTH/2, clefRect.top + (STRING_SHIFT*lineMargin), 
+				clefRect.left+HARD_LINE_WIDTH/2, clefRect.bottom - (STRING_SHIFT*lineMargin), paint);
 		canvas.drawBitmap(clefDeSol, clefRect.left + 2*HARD_LINE_WIDTH, clefRect.top, paint);
 		
 		paint.setColor(Color.RED);
@@ -178,11 +181,14 @@ public class GridViewDraw extends Drawable{
 		if (isCentered) {
 			left = Box.marginRect(left, margin, margin, 0, margin);
 			right = Box.marginRect(right, 0, margin, 0, margin);
-			tabRect = Box.marginRect(Box.bigUnion(left, right), left.width()/2, left.height()/4, 0, left.height()/4);
+			tabRect = Box.marginRect(Box.bigUnion(left, right), 
+					(int) (left.width() * CLEF_TUNING_LEFT_MARGIN), (int) (left.height()*BIG_MARGIN), 
+					0, (int) (left.height()*BIG_MARGIN));
 		} else {
 			left = Box.marginRect(left, margin, margin/2, 0, margin);
 			right = Box.marginRect(right, 0, margin/2, 0, margin);
-			tabRect = Box.marginRect(Box.bigUnion(left, right), left.width()/2, 0, 0, 0);
+			tabRect = Box.marginRect(Box.bigUnion(left, right), 
+					(int) (left.width()*CLEF_TUNING_LEFT_MARGIN), 0, 0, 0);
 		}
 		Rect nutRect = Box.intersection(tabRect, left);
 		Rect neckRect = Box.intersection(tabRect, right);
@@ -192,16 +198,17 @@ public class GridViewDraw extends Drawable{
 		paint.setStrokeWidth(THIN_LINE_WIDTH);
 		paint.setTextSize(TUNING_TEXT_SIZE);
 		for (int i = 0; i < myInstrument.getNumOfStrings(); i++) {
-			canvas.drawLine(nutRect.left, nutRect.top + (i+0.5f) * lineMargin,
-					neckRect.right, neckRect.top + (i+0.5f) * lineMargin,
+			canvas.drawLine(nutRect.left, nutRect.top + (i+STRING_SHIFT) * lineMargin,
+					neckRect.right, neckRect.top + (i+STRING_SHIFT) * lineMargin,
 					paint);
 			canvas.drawText(stantardTuning[i].toString(), 
 					nutRect.left-TUNING_TEXT_SIZE, 
-					nutRect.top + ((i+0.5f) * lineMargin) + (TUNING_TEXT_SIZE/3), 
+					nutRect.top + ((i+STRING_SHIFT) * lineMargin) + (TUNING_TEXT_SIZE*STRING_SHIFT_BOTTOM), 
 					 paint);
 		}
-		canvas.drawLine(nutRect.left, nutRect.top + (0.5f) * lineMargin, 
-				nutRect.left, nutRect.bottom - (0.5f) * lineMargin, paint);
+		paint.setStrokeWidth(MED_LINE_WIDTH);
+		canvas.drawLine(nutRect.left, nutRect.top + (STRING_SHIFT * lineMargin), 
+				nutRect.left, nutRect.bottom - (STRING_SHIFT * lineMargin), paint);
 		
 		paint.setColor(Color.RED);
 		paint.setStrokeWidth(CURSOR_WIDTH);
@@ -254,8 +261,6 @@ public class GridViewDraw extends Drawable{
 	 */
 	private void initializeBitmaps() {
 		clefDeSol = BitmapFactory.decodeResource(mRes, R.raw.cledesol);
-		//clefDeSol = clefDeSol.copy(Bitmap.Config.ARGB_8888, true); // sets the bitmap to mutable for resize
-		
 		
 	}
 	

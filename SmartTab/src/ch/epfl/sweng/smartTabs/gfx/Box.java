@@ -78,8 +78,8 @@ public enum Box{;
 				|| marginTop + marginBottom > r.height()
 				|| marginLeft + marginRight > r.width()) {
 			throw new InvalidParameterException(
-					"The margin should not be negative nor be bigger than the given rectangle's width or height\n"
-					+ r + " + margins: ("+ marginLeft + ", " + marginTop + ", " + marginRight + ", " + marginBottom + ")");
+					"The margin should not be negative nor be bigger than the given rectangle's width or height\n"+ r 
+					+ " + margins: ("+ marginLeft + ", " + marginTop + ", " + marginRight + ", " + marginBottom + ")");
 		}
 		return new Rect(r.left+marginLeft, r.top+marginTop, r.right-marginRight, r.bottom-marginBottom);
 	}
