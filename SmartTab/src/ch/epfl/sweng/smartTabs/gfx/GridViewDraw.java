@@ -1,9 +1,11 @@
 package ch.epfl.sweng.smartTabs.gfx;
 
+import java.security.InvalidParameterException;
+
+import ch.epfl.sweng.smartTabs.R;
 import ch.epfl.sweng.smartTabs.music.Height;
 import ch.epfl.sweng.smartTabs.music.Instrument;
 import ch.epfl.sweng.smartTabs.music.Tab;
-import android.R;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -33,6 +35,8 @@ public class GridViewDraw extends Drawable{
 	private boolean displayPartition = true;
 	private Resources mRes;
 	
+	private static final int STANDARD_NOTATION_LINES_NUMBER = 5;
+	
 	private Rect screenRect; // full screen
 	private Rect headerRect; // title, ..
 	private Rect bodyRect; // main content
@@ -48,11 +52,15 @@ public class GridViewDraw extends Drawable{
 	private Rect rightBottomPartRect; // Tuning for the tablature
 	private Rect rightCenterPartRect; // Clef OR Tuning 
 	
+	private float standardNotationLinesMargin;
+	
 	private static final float HEADER_RATIO = 0.1f;
 	private static final float LEFT_SIDE_RATIO = 0.25f;
+	private static final float LEFT_STANDARD_RATIO = 0.5f;
 	private static final float MARGIN = 0.125f;
+	private static final float HARD_LINE_WIDTH = 15f;
 	
-	private Bitmap mGKeyImage;
+	private Bitmap clefDeSol;
 	
 	
 	public GridViewDraw(int width, int height, Instrument instru, Tab tab, Resources res) {
@@ -64,15 +72,11 @@ public class GridViewDraw extends Drawable{
 		mRes = res;
 		
 		createBoxes();
+		initializeBitmaps();
 		
-		mGKeyImage = BitmapFactory.decodeResource(mRes, ch.epfl.sweng.smartTabs.R.raw.cledesol);
-		mGKeyImage = mGKeyImage.copy(Bitmap.Config.ARGB_8888, true);
-		int newHeight = (int) (mHeight*ratio/1.2f) ;
-		int newWidth = mGKeyImage.getWidth() *  newHeight / mGKeyImage.getHeight();
-		mGKeyImage = Bitmap.createScaledBitmap(mGKeyImage, newWidth, newHeight, false);
 	}
 
-	
+
 	@Override
 	public void draw(Canvas canvas) {
 		clearScreen(canvas);
@@ -85,31 +89,23 @@ public class GridViewDraw extends Drawable{
 		
 		drawCursor(canvas);
 		
-		
 	}
 
 	private void drawStandardGrid(Canvas canvas, boolean centered) {
 		paint.setColor(Color.BLACK);
-		paint.setTextSize(36f);
 		paint.setStrokeWidth(2f);
 		
-		if (centered) {
-			for (int i = 0; i < 5; i++) {
-				canvas.drawLine(mWidth/10, ratio*mHeight + i*mHeight/20, mWidth, ratio*mHeight + i*mHeight/20, paint);
-				canvas.drawText(stantardTuning[i]+"", mWidth/16, ratio*mHeight + i*mHeight/16, paint);
-				}
-			canvas.drawLine(mWidth/10, ratio*mHeight, mWidth/10, ratio*mHeight + 5*mHeight/16, paint);
-			
-		} else {
-			float margin = mHeight/8;
-			float distributedHeight = mHeight/8 + margin;
-			for (int i = 0; i < 5; i++) {
-				canvas.drawLine(mWidth/10, distributedHeight + i*mHeight/20, mWidth, distributedHeight + i*mHeight/20, paint);
-			}
-			paint.setStrokeWidth(15f);
-			canvas.drawLine(mWidth/10 + 2f, distributedHeight, mWidth/10 + 2f, distributedHeight + 4*mHeight/20, paint);
-			canvas.drawBitmap(mGKeyImage, mWidth/8, mHeight/5f, paint);
+		Rect left = centered ? leftCenterPartRect : leftTopPartRect;
+		Rect right = centered ? rightCenterPartRect : rightTopPartRect;
+		for (int i = 0; i < STANDARD_NOTATION_LINES_NUMBER; i++) {
+			canvas.drawLine(left.width() * LEFT_STANDARD_RATIO, left.top + i * standardNotationLinesMargin,
+					right.right, right.top + i * standardNotationLinesMargin,
+					paint);
 		}
+		paint.setStrokeWidth(HARD_LINE_WIDTH);
+		canvas.drawLine(left.width() * LEFT_STANDARD_RATIO, left.top, 
+				left.width()/2, left.bottom, 
+				paint);
 	}
 
 	@Override
@@ -209,6 +205,27 @@ public class GridViewDraw extends Drawable{
 				rightPartRect.right, bottomContentRect.bottom);
 		rightCenterPartRect = new Rect(leftPartRect.left, centerScreenRect.top, 
 				rightPartRect.right, centerScreenRect.bottom);
+		
 	}
 	
+	
+	/**
+	 * Initialize different Bitmaps for the standard notation
+	 */
+	private void initializeBitmaps() {
+		clefDeSol = BitmapFactory.decodeResource(mRes, R.raw.cledesol);
+		//clefDeSol = clefDeSol.copy(Bitmap.Config.ARGB_8888, true); // sets the bitmap to mutable for resize
+		int newHeight = displayTab ? leftTopPartRect.height() : leftCenterPartRect.height();
+		int newWidth = clefDeSol.getWidth() * newHeight / clefDeSol.getHeight(); // keeps the image ratio
+		clefDeSol = Bitmap.createScaledBitmap(clefDeSol, newWidth, newHeight, false);
+		
+	}
+
+
+	private Rect marginRect(Rect r, float delta) throws InvalidParameterException{
+		if (delta < 0 || delta > 1){
+			throw new InvalidParameterException("Delta should be between 0 and 1");
+		}
+		return null;
+	}
 }
