@@ -53,12 +53,19 @@ public class GridViewDraw extends Drawable{
 	private Rect rightCenterPartRect; // Clef OR Tuning 
 	
 	private float standardNotationLinesMargin;
+	private float tablatureLinesMargin;
 	
 	private static final float HEADER_RATIO = 0.1f;
 	private static final float LEFT_SIDE_RATIO = 0.25f;
 	private static final float LEFT_STANDARD_RATIO = 0.5f;
+	private static final float LEFT_TAB_RATIO = 0.5f;
+	
 	private static final float MARGIN = 0.125f;
+	private static final float THIN_LINE_WIDTH = 2f;
 	private static final float HARD_LINE_WIDTH = 15f;
+	private static final float TUNING_TEXT_SIZE = 36f;
+	private static final float TITLE_FONT_SIZE = 48f;
+	private static final float CURSOR_WIDTH = 10f;
 	
 	private Bitmap clefDeSol;
 	
@@ -91,23 +98,6 @@ public class GridViewDraw extends Drawable{
 		
 	}
 
-	private void drawStandardGrid(Canvas canvas, boolean centered) {
-		paint.setColor(Color.BLACK);
-		paint.setStrokeWidth(2f);
-		
-		Rect left = centered ? leftCenterPartRect : leftTopPartRect;
-		Rect right = centered ? rightCenterPartRect : rightTopPartRect;
-		for (int i = 0; i < STANDARD_NOTATION_LINES_NUMBER; i++) {
-			canvas.drawLine(left.width() * LEFT_STANDARD_RATIO, left.top + i * standardNotationLinesMargin,
-					right.right, right.top + i * standardNotationLinesMargin,
-					paint);
-		}
-		paint.setStrokeWidth(HARD_LINE_WIDTH);
-		canvas.drawLine(left.width() * LEFT_STANDARD_RATIO, left.top, 
-				left.width()/2, left.bottom, 
-				paint);
-	}
-
 	@Override
 	public int getOpacity() {
 		// TODO Auto-generated method stub
@@ -133,40 +123,55 @@ public class GridViewDraw extends Drawable{
 	}
 	
 	private void drawNameSong(Canvas canvas) {
-		paint.setTextSize(48f);
+		paint.setTextSize(TITLE_FONT_SIZE);
 		paint.setColor(Color.GRAY);
-		canvas.drawText(myTab.getTabName(), 50, 100, paint);
+		canvas.drawText(myTab.getTabName(), headerRect.left, headerRect.top, paint);
+	}
+
+	private void drawStandardGrid(Canvas canvas, boolean isCentered) {
+		paint.setColor(Color.BLACK);
+		paint.setStrokeWidth(THIN_LINE_WIDTH);
+		
+		Rect left = isCentered ? leftCenterPartRect : leftTopPartRect;
+		Rect right = isCentered ? rightCenterPartRect : rightTopPartRect;
+		for (int i = 0; i < STANDARD_NOTATION_LINES_NUMBER; i++) {
+			canvas.drawLine((left.left + left.width()) * LEFT_STANDARD_RATIO, 
+					left.top + i * standardNotationLinesMargin,
+					right.right, 
+					right.top + i * standardNotationLinesMargin,
+					paint);
+		}
+		paint.setStrokeWidth(HARD_LINE_WIDTH);
+		canvas.drawLine((left.left + left.width()) * LEFT_STANDARD_RATIO, left.top, 
+				(left.left + left.width()) * LEFT_STANDARD_RATIO, left.bottom, 
+				paint);
 	}
 	
-	private void drawStrings(Canvas canvas, boolean centered) {
+	private void drawStrings(Canvas canvas, boolean isCentered) {
 		paint.setColor(Color.BLACK);
-		paint.setTextSize(36f);
-		paint.setStrokeWidth(2f);
-		if (centered){
-			for (int i = 0; i < myInstrument.getNumOfStrings(); i++) {
-				canvas.drawLine(mWidth/10, ratio*mHeight + i*mHeight/16, mWidth, ratio*mHeight + i*mHeight/16, paint);
-				canvas.drawText(stantardTuning[i]+"", mWidth/16, ratio*mHeight + i*mHeight/16, paint);
-			}
-			canvas.drawLine(mWidth/10, ratio*mHeight, mWidth/10, ratio*mHeight + 5*mHeight/16, paint);
-		} else {
-			float margin = mHeight/8;
-			float distributedHeight = mHeight*7/16 + margin;
-			float centerText = mHeight/80;
-			for (int i = 0; i < myInstrument.getNumOfStrings(); i++) {
-				canvas.drawLine(mWidth/10, distributedHeight + i*mHeight/16, mWidth, distributedHeight + i*mHeight/16, paint);
-				canvas.drawText(stantardTuning[i]+"", mWidth/16, distributedHeight + centerText + i*mHeight/16, paint);
-			}
-			canvas.drawLine(mWidth/10, distributedHeight, mWidth/10, distributedHeight + 5*mHeight/16, paint);
-		}
+		paint.setStrokeWidth(THIN_LINE_WIDTH);
+		paint.setTextSize(TUNING_TEXT_SIZE);
 		
+		Rect left = isCentered ? leftCenterPartRect : leftBottomPartRect;
+		Rect right = isCentered ? rightCenterPartRect : rightBottomPartRect;
+		for (int i = 0; i < myInstrument.getNumOfStrings(); i++) {
+			canvas.drawLine(left.left + (left.width() * LEFT_TAB_RATIO), left.top + i * tablatureLinesMargin,
+					right.right, right.top + i * tablatureLinesMargin,
+					paint);
+			canvas.drawText(stantardTuning[i].toString(), 
+					left.left + (left.width() * LEFT_TAB_RATIO), 
+					left.top + i * tablatureLinesMargin, 
+					 paint);
+		}
+		canvas.drawLine(left.left + (left.width() * LEFT_TAB_RATIO), left.top, 
+				left.left + (left.width() * LEFT_TAB_RATIO), left.bottom, 
+				paint);
 	}
 
 	private void drawCursor(Canvas canvas) {
 		paint.setColor(Color.RED);
-		paint.setStrokeWidth(10f);
-		float margin = mHeight/10;
-		canvas.drawLine(mWidth/4, mHeight/8 + margin, mWidth/4, 15*mHeight/16, paint);
-		paint.setStrokeWidth(1f);
+		paint.setStrokeWidth(CURSOR_WIDTH);
+		canvas.drawLine(leftPartRect.right, leftPartRect.top, leftPartRect.right, leftPartRect.bottom, paint);
 	}
 	
 	/**
