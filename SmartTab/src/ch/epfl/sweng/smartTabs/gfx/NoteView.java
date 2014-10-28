@@ -61,10 +61,12 @@ public class NoteView extends View{
 	}
 
 	private void drawTimes(Time time, Canvas canvas) {
+		float delta = h*7/16 + h/8;
 		for (int i = 0; i < myInstrument.getNumOfStrings(); i++) {
 			if (w - posX[time.getStep() % numNotes] > w/4) {
 				paint.setColor(Color.BLACK);
-				canvas.drawText(time.getNote(i), w - posX[time.getStep() % 18], ratio*h + i*h/16 + h/64, paint);
+				
+				canvas.drawText(time.getNote(i), w - posX[time.getStep() % 18], delta + i*h/16 + h/64, paint);
 			}
 		}
 	}

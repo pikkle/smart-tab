@@ -50,8 +50,7 @@ public class DisplayActivity extends Activity {
 		display.getSize(size);
 		int width = size.x;
 		int height = size.y;
-		mDrawable = new GridViewDraw(width, height,
-				Instrument.GUITAR, tab);
+		mDrawable = new GridViewDraw(width, height, Instrument.GUITAR, tab, getResources());
 		n.setBackground(mDrawable);
 
 		setContentView(n);
