@@ -11,6 +11,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
 
 /**
@@ -32,7 +33,22 @@ public class GridViewDraw extends Drawable{
 	private boolean displayPartition = true;
 	private Resources mRes;
 	
+	private Rect screenRect; // full screen
+	private Rect leftPartRect;
+	private Rect headerRect; // title, ..
+	private Rect topScreenRect; // standard notation
+	private Rect bottomScreenRect; // tablature
+	private Rect centerScreenRect; // standard/tablature notation only
+	private Rect leftTopPartRect; // Clef for the music sheet
+	private Rect leftBottomPartRect; // Tuning for the tablature
+	private Rect leftCenterPartRect; // Clef OR Tuning
+	
+	private static final float HEADER_PROPORTION = 0.1f;
+	private static final float LEFT_SIDE_PROPORTION = 0.25f;
+	private static final float MARGIN = 0.125f;
+	
 	private Bitmap mGKeyImage;
+	
 	
 	public GridViewDraw(int width, int height, Instrument instru, Tab tab, Resources res) {
 		super();
@@ -41,6 +57,17 @@ public class GridViewDraw extends Drawable{
 		myInstrument = instru; // Swaggy Baby tu PESES dans le GAME
 		myTab = tab;
 		mRes = res;
+		
+		screenRect = new Rect(0, 0, mWidth, mHeight);
+		headerRect = new Rect(screenRect.left, screenRect.top, screenRect.right, 
+				(int) (screenRect.height() * HEADER_PROPORTION));
+		leftPartRect = new Rect(screenRect.left, headerRect.top, 
+				(int) (screenRect.right * LEFT_SIDE_PROPORTION), screenRect.bottom);
+		topScreenRect = new Rect(screenRect.left, headerRect.bottom, screenRect.right, screenRect.centerY());
+		bottomScreenRect = new Rect(screenRect.left, screenRect.centerY(), screenRect.right, screenRect.bottom);
+		centerScreenRect = new Rect(screenRect.left, headerRect.bottom, screenRect.right, screenRect.bottom);
+		leftTopPartRect = new Rect(leftPartRect.left, topScreenRect.top, leftPartRect.right, topScreenRect.bottom);
+		
 		
 		mGKeyImage = BitmapFactory.decodeResource(mRes, ch.epfl.sweng.smartTabs.R.raw.cledesol);
 		mGKeyImage = mGKeyImage.copy(Bitmap.Config.ARGB_8888, true);
