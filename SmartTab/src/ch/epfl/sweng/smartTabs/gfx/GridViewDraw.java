@@ -32,7 +32,7 @@ public class GridViewDraw extends Drawable{
 	
 	//TODO add an option to show the tablature and/or the standard partition
 	private boolean displayTab = true;
-	private boolean displayPartition = false;
+	private boolean displayPartition = true;
 	private Resources mRes;
 	
 	private static final int STANDARD_NOTATION_LINES_NUMBER = 5;
@@ -52,17 +52,19 @@ public class GridViewDraw extends Drawable{
 	private Rect rightBottomPartRect; // Tuning for the tablature
 	private Rect rightCenterPartRect; // Clef OR Tuning 
 	
-	private float standardNotationLinesMargin;
-	private float tablatureLinesMargin;
-	
 	private static final float HEADER_RATIO = 0.1f;
+	private static final float TOP_CONTENT_RATIO = 0.4f;
+	
 	private static final float LEFT_SIDE_RATIO = 0.25f;
 	private static final float LEFT_STANDARD_RATIO = 0.5f;
 	private static final float LEFT_TAB_RATIO = 0.5f;
 	
 	private static final float MARGIN = 0.125f;
+	
 	private static final float THIN_LINE_WIDTH = 2f;
+	private static final float MED_LINE_WIDTH = 8f;
 	private static final float HARD_LINE_WIDTH = 15f;
+	
 	private static final float TUNING_TEXT_SIZE = 36f;
 	private static final float TITLE_FONT_SIZE = 48f;
 	private static final float CURSOR_WIDTH = 10f;
@@ -87,18 +89,13 @@ public class GridViewDraw extends Drawable{
 	@Override
 	public void draw(Canvas canvas) {
 		clearScreen(canvas);
-		
 		drawNameSong(canvas);
-		
 		if (displayTab) {
 			drawTablatureGrid(canvas, !displayPartition);
 		}
 		if (displayPartition) {
 			drawStandardGrid(canvas, !displayTab);
 		}
-		
-		//drawCursor(canvas);
-		//showBoxes(canvas);
 	}
 
 	@Override
@@ -133,63 +130,83 @@ public class GridViewDraw extends Drawable{
 	}
 
 	private void drawStandardGrid(Canvas canvas, boolean isCentered) {
-		paint.setColor(Color.BLACK);
-		paint.setStrokeWidth(THIN_LINE_WIDTH);
-		
 		Rect left = isCentered ? leftCenterPartRect : leftTopPartRect;
 		Rect right = isCentered ? rightCenterPartRect : rightTopPartRect;
+		int margin = (int) (left.width() * MARGIN);
+		Rect standardRect;
+		if (isCentered) {
+			left = Box.marginRect(left, margin, margin, 0, margin);
+			right = Box.marginRect(right, 0, margin, 0, margin);
+			standardRect = Box.marginRect(Box.bigUnion(left, right), 
+					left.width()/2, left.height()/4, 0, left.height()/4);
+		} else {
+			left = Box.marginRect(left, margin, margin, 0, margin/2);
+			right = Box.marginRect(right, 0, margin, 0, margin/2);
+			standardRect = Box.marginRect(Box.bigUnion(left, right), left.width()/2, 0, 0, 0);
+		}
+		Rect clefRect = Box.intersection(standardRect, left);
+		Rect sheetRect = Box.intersection(standardRect, right);
+		
+		int newHeight = clefRect.height();
+		int newWidth = clefDeSol.getWidth() * newHeight / clefDeSol.getHeight(); // keeps the image ratio
+		clefDeSol = Bitmap.createScaledBitmap(clefDeSol, newWidth, newHeight, false);
+		
+		float lineMargin = (float) (sheetRect.height()/STANDARD_NOTATION_LINES_NUMBER);
+		paint.setColor(Color.BLACK);
+		paint.setStrokeWidth(THIN_LINE_WIDTH);
 		for (int i = 0; i < STANDARD_NOTATION_LINES_NUMBER; i++) {
-			canvas.drawLine((left.left + left.width()) * LEFT_STANDARD_RATIO, 
-					left.top + i * standardNotationLinesMargin,
-					right.right, 
-					right.top + i * standardNotationLinesMargin,
+			canvas.drawLine(clefRect.left, clefRect.top + (i+0.5f) * lineMargin,
+					sheetRect.right, sheetRect.top + (i+0.5f) * lineMargin,
 					paint);
 		}
 		paint.setStrokeWidth(HARD_LINE_WIDTH);
-		canvas.drawLine((left.left + left.width()) * LEFT_STANDARD_RATIO, left.top, 
-				(left.left + left.width()) * LEFT_STANDARD_RATIO, left.bottom, 
-				paint);
+		canvas.drawLine(clefRect.left+HARD_LINE_WIDTH/2, clefRect.top + (0.5f*lineMargin), 
+				clefRect.left+HARD_LINE_WIDTH/2, clefRect.bottom - (0.5f*lineMargin), paint);
+		canvas.drawBitmap(clefDeSol, clefRect.left + 2*HARD_LINE_WIDTH, clefRect.top, paint);
+		
+		paint.setColor(Color.RED);
+		paint.setStrokeWidth(CURSOR_WIDTH);
+		canvas.drawLine(clefRect.right, clefRect.top, 
+				clefRect.right, clefRect.bottom, paint);
 	}
 	
 	private void drawTablatureGrid(Canvas canvas, boolean isCentered) {
-		paint.setColor(Color.BLACK);
-		paint.setStrokeWidth(THIN_LINE_WIDTH);
-		paint.setTextSize(TUNING_TEXT_SIZE);
-		
 		Rect left = isCentered ? leftCenterPartRect : leftBottomPartRect;
 		Rect right = isCentered ? rightCenterPartRect : rightBottomPartRect;
 		int margin = (int) (left.width() * MARGIN);
-		left = Box.marginRect(left, margin);
-		right = Box.marginRect(right, margin);
-
-		paint.setColor(Color.RED);
-		paint.setAlpha(50);
-		canvas.drawRect(left, paint);
+		Rect tabRect;
+		if (isCentered) {
+			left = Box.marginRect(left, margin, margin, 0, margin);
+			right = Box.marginRect(right, 0, margin, 0, margin);
+			tabRect = Box.marginRect(Box.bigUnion(left, right), left.width()/2, left.height()/4, 0, left.height()/4);
+		} else {
+			left = Box.marginRect(left, margin, margin/2, 0, margin);
+			right = Box.marginRect(right, 0, margin/2, 0, margin);
+			tabRect = Box.marginRect(Box.bigUnion(left, right), left.width()/2, 0, 0, 0);
+		}
+		Rect nutRect = Box.intersection(tabRect, left);
+		Rect neckRect = Box.intersection(tabRect, right);
+		float lineMargin = (float) (neckRect.height()/myInstrument.getNumOfStrings());
 		
-		paint.setColor(Color.BLUE);
-		paint.setAlpha(50);
-		canvas.drawRect(right, paint);
-		/*
-		tablatureLinesMargin = 100;
+		paint.setColor(Color.BLACK);
+		paint.setStrokeWidth(THIN_LINE_WIDTH);
+		paint.setTextSize(TUNING_TEXT_SIZE);
 		for (int i = 0; i < myInstrument.getNumOfStrings(); i++) {
-			canvas.drawLine(left.left + (left.width() * LEFT_TAB_RATIO), left.top + i * tablatureLinesMargin,
-					right.right, left.top + i * tablatureLinesMargin,
+			canvas.drawLine(nutRect.left, nutRect.top + (i+0.5f) * lineMargin,
+					neckRect.right, neckRect.top + (i+0.5f) * lineMargin,
 					paint);
 			canvas.drawText(stantardTuning[i].toString(), 
-					left.left + (left.width() * LEFT_TAB_RATIO), 
-					left.top + i * tablatureLinesMargin, 
+					nutRect.left-TUNING_TEXT_SIZE, 
+					nutRect.top + ((i+0.5f) * lineMargin) + (TUNING_TEXT_SIZE/3), 
 					 paint);
 		}
-		canvas.drawLine(left.left + (left.width() * LEFT_TAB_RATIO), left.top, 
-				left.left + (left.width() * LEFT_TAB_RATIO), left.bottom, 
-				paint);
-		*/
-	}
-
-	private void drawCursor(Canvas canvas) {
+		canvas.drawLine(nutRect.left, nutRect.top + (0.5f) * lineMargin, 
+				nutRect.left, nutRect.bottom - (0.5f) * lineMargin, paint);
+		
 		paint.setColor(Color.RED);
 		paint.setStrokeWidth(CURSOR_WIDTH);
-		canvas.drawLine(leftPartRect.right, leftPartRect.top, leftPartRect.right, leftPartRect.bottom, paint);
+		canvas.drawLine(nutRect.right, nutRect.top, 
+				nutRect.right, nutRect.bottom, paint);
 	}
 	
 	/**
@@ -208,8 +225,9 @@ public class GridViewDraw extends Drawable{
 		rightPartRect = new Rect(leftPartRect.right, bodyRect.top, bodyRect.right, bodyRect.bottom);
 		
 		// Splits the body in two parts horizontally or centers it
-		topContentRect = new Rect(bodyRect.left, bodyRect.bottom, bodyRect.right, bodyRect.centerY());
-		bottomContentRect = new Rect(bodyRect.left, bodyRect.centerY(), bodyRect.right, bodyRect.bottom);
+		topContentRect = new Rect(bodyRect.left, bodyRect.top, 
+				bodyRect.right, (int) (bodyRect.top+(bodyRect.bottom*TOP_CONTENT_RATIO)));
+		bottomContentRect = new Rect(bodyRect.left, topContentRect.bottom, bodyRect.right, bodyRect.bottom);
 		int verticalMargin = (bodyRect.height()-bottomContentRect.height())/2;
 		centerScreenRect = new Rect(bodyRect.left+verticalMargin, bodyRect.top, 
 				bodyRect.right-verticalMargin, bodyRect.bottom);
@@ -237,36 +255,8 @@ public class GridViewDraw extends Drawable{
 	private void initializeBitmaps() {
 		clefDeSol = BitmapFactory.decodeResource(mRes, R.raw.cledesol);
 		//clefDeSol = clefDeSol.copy(Bitmap.Config.ARGB_8888, true); // sets the bitmap to mutable for resize
-		int newHeight = displayTab ? leftTopPartRect.height() : leftCenterPartRect.height();
-		int newWidth = clefDeSol.getWidth() * newHeight / clefDeSol.getHeight(); // keeps the image ratio
-		clefDeSol = Bitmap.createScaledBitmap(clefDeSol, newWidth, newHeight, false);
+		
 		
 	}
-
-	private void showBoxes(Canvas canvas) { //test to display boxes on the screen
-		paint.setColor(Color.RED);
-		paint.setAlpha(50);
-		canvas.drawRect(headerRect, paint);
-		
-		paint.setColor(Color.BLUE);
-		paint.setAlpha(50);
-		canvas.drawRect(bodyRect, paint);
-		
-		paint.setColor(Color.BLACK);
-		paint.setAlpha(50);
-		canvas.drawRect(leftPartRect, paint);
-		
-		paint.setColor(Color.WHITE);
-		paint.setAlpha(50);
-		canvas.drawRect(rightPartRect, paint);
-		
-		paint.setColor(Color.BLACK);
-		paint.setAlpha(50);
-		canvas.drawRect(topContentRect, paint);
-		
-		paint.setColor(Color.WHITE);
-		paint.setAlpha(50);
-		canvas.drawRect(bottomContentRect, paint);
-		
-	}
+	
 }

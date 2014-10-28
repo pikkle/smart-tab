@@ -78,7 +78,8 @@ public enum Box{;
 				|| marginTop + marginBottom > r.height()
 				|| marginLeft + marginRight > r.width()) {
 			throw new InvalidParameterException(
-					"The margin should not be negative nor be bigger than the given rectangle's width or height");
+					"The margin should not be negative nor be bigger than the given rectangle's width or height\n"
+					+ r + " + margins: ("+ marginLeft + ", " + marginTop + ", " + marginRight + ", " + marginBottom + ")");
 		}
 		return new Rect(r.left+marginLeft, r.top+marginTop, r.right-marginRight, r.bottom-marginBottom);
 	}
@@ -90,8 +91,8 @@ public enum Box{;
 	 * @return The big rectangle that contains both r1 and r2 in it
 	 */
 	public static Rect bigUnion(Rect r1, Rect r2) {
-		int left = Math.max(r1.left, r2.left);
-		int top = Math.max(r1.top, r2.top);
+		int left = Math.min(r1.left, r2.left);
+		int top = Math.min(r1.top, r2.top);
 		int right = Math.max(r1.right, r2.right);
 		int bottom = Math.max(r1.bottom, r2.bottom);
 		return new Rect(left, top, right, bottom);
