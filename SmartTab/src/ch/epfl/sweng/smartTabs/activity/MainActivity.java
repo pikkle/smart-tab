@@ -21,6 +21,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 import ch.epfl.sweng.smartTabs.R;
 import ch.epfl.sweng.smartTabs.music.Tab;
+import ch.epfl.sweng.smartTabs.network.NetworkClient;
 
 /**
  * author: Raphael El-Khoury
