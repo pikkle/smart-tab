@@ -47,6 +47,10 @@
                 "description": "Position of the note in the measure", 
                 "type": "integer", 
                 "minimum": 0
+            },
+            "part": {
+                "description": "Part of the song: intro, chores etc ...",
+                "type": "string"
             }
         }, 
         "required": [
