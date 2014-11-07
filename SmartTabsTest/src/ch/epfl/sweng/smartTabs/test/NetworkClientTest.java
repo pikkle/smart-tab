@@ -15,7 +15,7 @@ import org.json.JSONException;
 
 import android.test.AndroidTestCase;
 import android.view.ViewDebug.ExportedProperty;
-import ch.epfl.sweng.smartTabs.activity.NetworkClient;
+import ch.epfl.sweng.smartTabs.network.NetworkClient;
 
 
 /**
