@@ -13,6 +13,8 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -25,7 +27,7 @@ import ch.epfl.sweng.smartTabs.music.Tab;
 import ch.epfl.sweng.smartTabs.network.NetworkClient;
 
 /**
- * author: Raphael El-Khoury
+ * author: Raphael Khoury
  * The MainActivity shows the menu, downloads the tabs and start the displayActivity with the tab 
  */
 public class MainActivity extends Activity {
@@ -46,6 +48,37 @@ public class MainActivity extends Activity {
 			Toast.makeText(this, "Error retrieving tablatures. Please try again.", Toast.LENGTH_LONG).show();
 		}
 	}
+
+	
+	/**
+	 * Author: Raphael Khoury
+	 * Add items to Action Bar, define actions when clicked
+	 * call method that launches new Activity when Settings is clicked
+	 */
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu){
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.main_activity_action_bar, menu);
+		return super.onCreateOptionsMenu(menu);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle presses on the action bar items
+		switch (item.getItemId()) {
+		case R.id.action_settings:
+			openSettings();
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+	}
+
+	private void openSettings() {
+		startActivity(new Intent(this, PreferencesActivity.class));
+	}
+
+
 
 	/**
 	 *	This private class downloads JSONs from the server
