@@ -49,7 +49,7 @@ public class MainActivity extends Activity {
 		}
 	}
 
-	
+
 	/**
 	 * Author: Raphael Khoury
 	 * Add items to Action Bar, define actions when clicked
@@ -67,17 +67,12 @@ public class MainActivity extends Activity {
 		// Handle presses on the action bar items
 		switch (item.getItemId()) {
 		case R.id.action_settings:
-			openSettings();
+			startActivity(new Intent(this, PreferencesActivity.class));
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
 	}
-
-	private void openSettings() {
-		startActivity(new Intent(this, PreferencesActivity.class));
-	}
-
 
 
 	/**

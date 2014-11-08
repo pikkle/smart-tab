@@ -38,6 +38,14 @@
             android:name=".activity.PreferencesActivity"
             android:label="@string/title_activity_preference" >
         </activity>
+        <activity
+            android:name="ch.epfl.sweng.smartTabs.activity.AboutAppActivity"
+            android:label="@string/title_activity_about_app" >
+        </activity>
+        <activity
+            android:name="ch.epfl.sweng.smartTabs.activity.AboutDevsActivity"
+            android:label="@string/title_activity_about_devs" >
+        </activity>
     </application>
 
 </manifest>

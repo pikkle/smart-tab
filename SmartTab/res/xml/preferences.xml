@@ -2,17 +2,26 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <PreferenceCategory android:title="@string/title_help" >
+        <Preference 
+            android:title="@string/title_help" 
+            android:key="pref_help"></Preference>
+
         <CheckBoxPreference
             android:defaultValue="true"
             android:key="pref_sync"
-            android:summary="@string/show_help_on_startup_yes"
+            android:summaryOff="@string/show_help_on_startup_no"
+            android:summaryOn="@string/show_help_on_startup_yes"
             android:title="@string/show_help" />
-
-        <Preference android:title="@string/title_help" >
-            <intent 
-                android:targetPackage="ch.epfl.sweng.smartTabs.activity"
-                android:targetClass="ch.epfl.sweng.smartTabs.activity.helpActivity" />
-        </Preference>
+    </PreferenceCategory>
+    
+    
+    <PreferenceCategory android:title="@string/title_about" >
+        <Preference 
+            android:title="@string/title_about_dev" 
+            android:key="pref_abt_dev"></Preference>
+        <Preference 
+            android:title="@string/title_about_app" 
+            android:key="pref_abt_app"></Preference>
     </PreferenceCategory>
 
 </PreferenceScreen>
