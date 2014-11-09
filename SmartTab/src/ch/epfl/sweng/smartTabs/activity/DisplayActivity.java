@@ -49,22 +49,16 @@ public class DisplayActivity extends Activity {
 		Intent intent = getIntent();
 		Tab tab = (Tab) intent.getExtras().getSerializable("tab");
 
-
-		n = new NoteView(this, tab, Instrument.GUITAR);
-		pool = new SoundPool(maxStreams, AudioManager.STREAM_MUSIC, 0);
-
-
-
 		Display display = getWindowManager().getDefaultDisplay();
 		Point size = new Point();
 		display.getSize(size);
 		int width = size.x;
 		int height = size.y;
 		mDrawable = new GridViewDraw(width, height, Instrument.GUITAR, tab, getResources());
-		mDrawable = new GridViewDraw(width, height,
-				Instrument.GUITAR, tab, getResources());
-		n.setBackground(mDrawable);
 
+		n = new NoteView(this, tab, Instrument.GUITAR, mDrawable);
+		pool = new SoundPool(maxStreams, AudioManager.STREAM_MUSIC, 0);
+		
 		setContentView(n);
 
 		initSampleMapThread = new Thread(new Runnable() {

@@ -6,6 +6,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.view.View;
 import ch.epfl.sweng.smartTabs.activity.DisplayActivity;
 import ch.epfl.sweng.smartTabs.music.Duration;
@@ -24,7 +25,8 @@ public class NoteView extends View{
 	private ArrayList<Time> times = new ArrayList<Time>();
 	private final int[] posX = {0, -d, -2*d, -3*d, -4*d, -5*d, -6*d, -780, -840, -900, -960, -1020, -1140,-1200, -1260, -1320, -1380,-1440};
 	private final float ratio = 0.34375f;
-
+	
+	private static final float TAB_TEXT_SIZE = 48f;
 
 	private double dx = Duration.Ronde.getDuration();
 	private int ptr = 0;
@@ -35,8 +37,10 @@ public class NoteView extends View{
 	private final Tab myTab;
 
 	private final int numNotes = 18;
+	
+	private GridViewDraw mGridView;
 
-	public NoteView(Context context, Tab tab, Instrument instrument) {
+	public NoteView(Context context, Tab tab, Instrument instrument, GridViewDraw gridView) {
 		super(context);
 		myInstrument = instrument;
 		myTab = tab;
@@ -44,6 +48,9 @@ public class NoteView extends View{
 		w = getWidth();
 
 		paint.setAntiAlias(true);
+		
+		mGridView = gridView;
+		this.setBackground(mGridView);
 	}
 
 
@@ -52,21 +59,24 @@ public class NoteView extends View{
 		w = getWidth();
 		super.onDraw(canvas);
 		paint.setColor(Color.BLACK);
-
-		paint.setTextSize(48f);
 		// 6 notes
-		for (int i = ptr; i < numNotes + ptr; i++) {
-			drawTimes(times.get(i), canvas);
+		if (mGridView.isDisplayTab()){
+			for (int i = ptr; i < numNotes + ptr; i++) {
+				drawTimes(times.get(i), canvas);
+			}
 		}
 	}
 
 	private void drawTimes(Time time, Canvas canvas) {
-		float delta = h*7/16 + h/8;
+		Rect r = mGridView.getTabRect();
+		float margin = mGridView.getTabLineMargin();
+		paint.setTextSize(TAB_TEXT_SIZE);
 		for (int i = 0; i < myInstrument.getNumOfStrings(); i++) {
+			System.out.println(time.getNote(i));
 			if (w - posX[time.getStep() % numNotes] > w/4) {
 				paint.setColor(Color.BLACK);
-				
-				canvas.drawText(time.getNote(i), w - posX[time.getStep() % 18], delta + i*h/16 + h/64, paint);
+				float textHeight = r.top + i*margin - (TAB_TEXT_SIZE/2);
+				canvas.drawText(time.getNote(i), w - posX[time.getStep() % 18], textHeight, paint);
 			}
 		}
 	}
