@@ -35,19 +35,19 @@ function parser() {
             prompt("length doesn't match!");
         }
     }
-    prompt(strings);
 
     <!-- Create timesArray strings and add each times in json format-->
+
     var timesArray = "[";
-    var str_ = "\"string_";
-    var midstr = "\":\"";
+    var startString = "\"string_";
+    var middleString = "\":\"";
 
     for(var i =0;i<length;i++){
         timesArray=timesArray.concat("{");
         for(var j =0; j<6;j++){
-            timesArray=timesArray.concat(str_);
+            timesArray=timesArray.concat(startString);
             timesArray=timesArray.concat(j);
-            timesArray=timesArray.concat(midstr);
+            timesArray=timesArray.concat(middleString);
             if(strings[j].charAt(i)!="-"){
                 timesArray=timesArray.concat(strings[j].charAt(i));
             }
