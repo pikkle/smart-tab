@@ -73,10 +73,19 @@ E |------------|" style="font-family:monospace,Courier"></textarea>
           var strings = tab.split("\n");
           var tuning = new Array();
 
-          for(int i = 0;i<6;i++){
+          for(var i = 0;i<6;i++){
             tuning[i] = strings[i].charAt(0);
+            strings[i] = strings[i].substr(1);
+            strings[i] = strings[i].replace(/\|/g, "");
           }
-        }
+          var length = strings[0].length
+          for (var i = 0;i<6;i++){
+            if(strings[i].length != length){
+              prompt("length doesn't match!");
+            }
+          }
+          prompt(strings);
+        };
         </script>
 
       </div>
