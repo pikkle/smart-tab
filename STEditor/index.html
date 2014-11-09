@@ -72,12 +72,15 @@ E |------------|" style="font-family:monospace,Courier"></textarea>
           var tab  = document.getElementById('tab').value;
           var strings = tab.split("\n");
           var tuning = new Array();
-
+          <!--Modify each strings to fit the format -->
           for(var i = 0;i<6;i++){
             tuning[i] = strings[i].charAt(0);
             strings[i] = strings[i].substr(1);
+            strings[i] = strings[i].trim();
             strings[i] = strings[i].replace(/\|/g, "");
+            strings[i] = strings[i].replace(/[hps]/g,"-");
           }
+          <!-- Check if the length of each string match -->
           var length = strings[0].length
           for (var i = 0;i<6;i++){
             if(strings[i].length != length){
@@ -85,6 +88,35 @@ E |------------|" style="font-family:monospace,Courier"></textarea>
             }
           }
           prompt(strings);
+
+          <!-- Create timesArray strings and add each times in json format-->
+          var timesArray = "[";
+          var str_ = "\"string_";
+          var midstr = "\":\"";
+
+          for(var i =0;i<length;i++){
+            timesArray=timesArray.concat("{");
+            for(var j =0; j<6;j++){
+              timesArray=timesArray.concat(str_);
+              timesArray=timesArray.concat(j);
+              timesArray=timesArray.concat(midstr);
+              if(strings[j].charAt(i)!="-"){
+                timesArray=timesArray.concat(strings[j].charAt(i));
+              }
+              timesArray=timesArray.concat("\"");
+              if(j<(5)){
+                timesArray=timesArray.concat(",");
+              }
+            }
+            timesArray=timesArray.concat("}");
+            if(i<(length-1)){
+              timesArray=timesArray.concat(",");
+            }
+          }
+          timesArray=timesArray.concat("]");
+          prompt(timesArray);
+
+          
         };
         </script>
 
