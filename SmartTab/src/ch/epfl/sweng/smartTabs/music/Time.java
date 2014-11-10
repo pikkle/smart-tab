@@ -12,14 +12,14 @@ import org.json.JSONObject;
 public class Time implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
-	private final double mDuration;
+	private final String mDuration;
 	private final String[] mNotes;
 	private final int mMesure;
 	private final boolean mTernary;
 	private final int mStep;
 	private final static int NUMCHORDS = 6;
 	
-	public Time(String[] notes, double duration, int mesure, boolean ternary, int step) {
+	public Time(String[] notes, String duration, int mesure, boolean ternary, int step) {
 		mNotes = notes;
 		mDuration = duration;
 		mMesure = mesure;
@@ -32,12 +32,13 @@ public class Time implements Serializable{
 		for (int i = 1; i<= NUMCHORDS; i++) {
 			String corde = "string_"+i;
 			jsonNotes[i-1] = jsonTime.getString(corde);
+			System.out.println(jsonNotes[i-1]);
 		}
-		double jsonDuration;
+		String jsonDuration;
 		try {
-			jsonDuration = jsonTime.getDouble("length");
+			jsonDuration = jsonTime.getString("length");
 		} catch (JSONException e) {
-			jsonDuration = 1;
+			jsonDuration = Duration.Noir.name();
 		}
 		int jsonMesure;
 		try {
@@ -63,7 +64,7 @@ public class Time implements Serializable{
 	public String getNote(int string) {
 		return mNotes[string];
 	}
-	public double getDuration() {
+	public String getDuration() {
 		return mDuration;
 	}
 	public int getMesure() {
@@ -74,5 +75,15 @@ public class Time implements Serializable{
 	} 
 	public int getStep() {
 		return mStep;
+	}
+	public String toString(){
+		String s = "";
+		for (String n : mNotes) {
+			if(n=="")
+				s+="-";
+			else
+				s+=n + " ";
+		} 
+		return s;
 	}
 }

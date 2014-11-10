@@ -11,6 +11,7 @@ public class NotePlaybackThread extends Thread {
 	private SoundPool mPool;
 	private SampleMap mSamples;
 	private Time mTime;
+	private Note[] mTuning;
 
 	/**
 	 * Constructor of the NotePlaybackThread.
@@ -19,10 +20,11 @@ public class NotePlaybackThread extends Thread {
 	 * @param time is the Time containing the notes to play
 	 */
 	public NotePlaybackThread(final SoundPool pool,
-			final SampleMap samples, final Time time) {
+			final SampleMap samples, final Time time, Note[] tuning) {
 		mPool = pool;
 		mSamples = samples;
 		mTime = time;
+		mTuning = tuning;
 	}
 
 	@Override
@@ -36,9 +38,11 @@ public class NotePlaybackThread extends Thread {
 	 */
 	public final void playNote(final Time time) {
 		for (int i = 0; i < (Instrument.GUITAR).getNumOfStrings(); i++) {
-			if (!mTime.getNote(i).equals("")) {
-				mPool.play(mSamples.getSampleId(i,
-						Integer.parseInt(mTime.getNote(i))), 1, 1, 1, 0, 1);
+			String fret = mTime.getNote(i);
+			if (!fret.equals("")) {
+				int fretNumber = Integer.parseInt(fret);
+				Note note = mTuning[i].addHalfTones(fretNumber);
+				mPool.play(mSamples.getSampleId(note), 1, 1, 1, 0, 1);
 			}
 		}
 	}

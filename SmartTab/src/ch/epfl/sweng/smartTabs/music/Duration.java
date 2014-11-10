@@ -7,7 +7,7 @@ package ch.epfl.sweng.smartTabs.music;
 public enum Duration {
 	DoubleCroche (0.25),
 	Croche (0.5),
-	Noire (1),
+	Noir (1),
 	Blanche (2),
 	Ronde (4);
 	
