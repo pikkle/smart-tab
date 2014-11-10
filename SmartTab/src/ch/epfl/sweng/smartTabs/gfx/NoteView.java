@@ -72,7 +72,6 @@ public class NoteView extends View{
 		float margin = mGridView.getTabLineMargin();
 		paint.setTextSize(TAB_TEXT_SIZE);
 		for (int i = 0; i < myInstrument.getNumOfStrings(); i++) {
-			System.out.println(time.getNote(i));
 			if (w - posX[time.getStep() % numNotes] > w/4) {
 				paint.setColor(Color.BLACK);
 				float textHeight = r.top + i*margin - (TAB_TEXT_SIZE/2);
