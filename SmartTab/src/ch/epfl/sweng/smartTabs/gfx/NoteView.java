@@ -12,11 +12,8 @@ import android.graphics.Rect;
 import android.view.View;
 import ch.epfl.sweng.smartTabs.R;
 import ch.epfl.sweng.smartTabs.activity.DisplayActivity;
-<<<<<<< HEAD
-=======
 import ch.epfl.sweng.smartTabs.music.Duration;
 import ch.epfl.sweng.smartTabs.music.Height;
->>>>>>> 6edc8a2543a84ab53c2758fa9ce030c45bd1d915
 import ch.epfl.sweng.smartTabs.music.Instrument;
 import ch.epfl.sweng.smartTabs.music.Note;
 import ch.epfl.sweng.smartTabs.music.Tab;
@@ -38,11 +35,7 @@ public class NoteView extends View {
 	private TimesArrayGenerationThread timesGenThread;
 
 	private static final float TAB_TEXT_SIZE = 48f;
-
-<<<<<<< HEAD
-=======
 	private double dx = Duration.Noire.getDuration();
->>>>>>> 6edc8a2543a84ab53c2758fa9ce030c45bd1d915
 	private int ptr = 0;
 	private final Instrument myInstrument;
 
@@ -60,8 +53,6 @@ public class NoteView extends View {
 		myInstrument = instrument;
 		myTab = tab;
 		w = getWidth();
-<<<<<<< HEAD
-
 		timesGenThread = new TimesArrayGenerationThread(myTab, times, posX);
 		timesGenThread.start();
 
@@ -71,8 +62,6 @@ public class NoteView extends View {
 			e.printStackTrace();
 		}
 
-=======
->>>>>>> 6edc8a2543a84ab53c2758fa9ce030c45bd1d915
 		paint.setAntiAlias(true);
 
 		mGridView = gridView;
@@ -96,14 +85,14 @@ public class NoteView extends View {
 		Rect r = mGridView.getTabRect();
 		float margin = mGridView.getTabLineMargin();
 		paint.setTextSize(TAB_TEXT_SIZE);
-		double pos = w - posX[time.getStep() % numNotes];
+		double pos = w - posX.get(time.getStep() % numNotes);
 		Bitmap noteNoire = BitmapFactory.decodeResource(getResources(), R.raw.cledesol);
 		//noteNoire = Bitmap.createScaledBitmap(noteNoire, ???standardWidth, ???standardHeight, false);
 		noteNoire = Bitmap.createBitmap(noteNoire);
 		for (int i = 0; i < myInstrument.getNumOfStrings(); i++) {
 			if (pos > mGridView.getTabLeftRect().left) {
 				float textHeight = r.top + i*margin - (TAB_TEXT_SIZE/2);
-				canvas.drawText(time.getNote(i), w - posX[time.getStep() % 18], textHeight, paint);
+				canvas.drawText(time.getNote(i), w - posX.get(time.getStep() % 18), textHeight, paint);
 				//canvas.drawBitmap(noteNoire, clefRect.left + 2 * HARD_LINE_WIDTH, clefRect.top, paint);
 				//canvas.drawBitmap(noteNoire, w - posX[time.getStep() % 18], top, paint);
 				if(pos < (w/4 - w/80)) {
