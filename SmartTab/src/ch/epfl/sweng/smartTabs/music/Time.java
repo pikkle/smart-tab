@@ -5,6 +5,8 @@ import java.io.Serializable;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.graphics.Bitmap;
+
 /**
  * @author chrisgaubla
  *
@@ -75,4 +77,5 @@ public class Time implements Serializable{
 	public int getStep() {
 		return mStep;
 	}
+	
 }
