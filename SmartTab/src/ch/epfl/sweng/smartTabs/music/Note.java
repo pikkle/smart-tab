@@ -28,9 +28,6 @@ public class Note {
 		return new Note(newOct, height);	
 	}
 	
-<<<<<<< HEAD
-}
-=======
 	public Height getHeight() {
 		return myHeight;
 	}
@@ -41,6 +38,4 @@ public class Note {
 	public String toString(){
 		return myHeight.name().toLowerCase()+myOctave;
 	}
-
 }
->>>>>>> 0fb9309ac2a47715a12834b45bf97ed21139619f

@@ -2,7 +2,7 @@ package ch.epfl.sweng.smartTabs.music;
 
 /**
  * @author Faton Ramadani
- * Squelette de la partie musical
+ * The duration enumeration represents the possible duration of a note.
  */
 public enum Duration {
 	DoubleCroche (0.25),

@@ -10,7 +10,6 @@ import java.util.ArrayList;
 public class TimesArrayGenerationThread extends Thread {
 	private final Tab mTab;
 	private final ArrayList<Time> mTimes;
-	private final int numNotes = 18;
 	private final ArrayList<Integer> mPosX;
 	private final int stdPace = 120;
 
@@ -23,7 +22,7 @@ public class TimesArrayGenerationThread extends Thread {
 
 	@Override
 	public final void run() {
-		for (int i = 0; i < numNotes; i++) {
+		for (int i = 0; i < 18; i++) {
 			
 			mTimes.add(mTab.getTime(i));
 			if(i==0){

@@ -37,15 +37,13 @@ public class NoteView extends View {
 	private TimesArrayGenerationThread timesGenThread;
 
 	private static final float TAB_TEXT_SIZE = 48f;
-	private double dx = Duration.Noir.getDuration();
 	private int ptr = 0;
 	private final Instrument myInstrument;
 
 	private int w;
 	private final Tab myTab;
 	private Note[] tuning = {new Note(3, Height.E), new Note(2, Height.B), new Note(2, Height.G), new Note(2, Height.D), new Note(1, Height.A), new Note(1, Height.E)};
-
-	private final int numNotes = 18;
+	private int maxNotes = 0;
 
 	private GridViewDraw mGridView;
 
@@ -65,6 +63,7 @@ public class NoteView extends View {
 			e.printStackTrace();
 		}
 
+		maxNotes = posX.size();
 		paint.setAntiAlias(true);
 
 		mGridView = gridView;
@@ -78,7 +77,7 @@ public class NoteView extends View {
 		paint.setColor(Color.BLACK);
 		// 6 notes
 		if (mGridView.isDisplayTab()) {
-			for (int i = ptr; i < numNotes + ptr; i++) {
+			for (int i = ptr; i < maxNotes + ptr; i++) {
 				drawTimes(times.get(i), canvas);
 			}
 		}
@@ -88,14 +87,14 @@ public class NoteView extends View {
 		Rect r = mGridView.getTabRect();
 		float margin = mGridView.getTabLineMargin();
 		paint.setTextSize(TAB_TEXT_SIZE);
-		double pos = w - posX.get(time.getStep() % numNotes);
-		Bitmap noteNoire = BitmapFactory.decodeResource(getResources(), R.raw.cledesol);
+		double pos = w - posX.get(time.getStep() % maxNotes);
+		//Bitmap noteNoire = BitmapFactory.decodeResource(getResources(), R.raw.cledesol);
 		//noteNoire = Bitmap.createScaledBitmap(noteNoire, ???standardWidth, ???standardHeight, false);
-		noteNoire = Bitmap.createBitmap(noteNoire);
+		//noteNoire = Bitmap.createBitmap(noteNoire);
 		for (int i = 0; i < myInstrument.getNumOfStrings(); i++) {
 			if (pos > mGridView.getTabLeftRect().left) {
 				float textHeight = r.top + i*margin - (TAB_TEXT_SIZE/2);
-				canvas.drawText(time.getNote(i), w - posX.get(time.getStep() % 18), textHeight, paint);
+				canvas.drawText(time.getNote(i), w - posX.get(time.getStep() % maxNotes), textHeight, paint);
 				//canvas.drawBitmap(noteNoire, clefRect.left + 2 * HARD_LINE_WIDTH, clefRect.top, paint);
 				//canvas.drawBitmap(noteNoire, w - posX[time.getStep() % 18], top, paint);
 				if(pos < (w/4 - w/80)) {
@@ -114,11 +113,11 @@ public class NoteView extends View {
 	}
 
 	protected void slideNotes(int speed) {
-		for (int i = 0; i < numNotes; i++) {
+		for (int i = 0; i < maxNotes; i++) {
 //			posX[i] += 4*speed;
 			posX.set(i, posX.get(i)+4*speed);
 			
-			if ((w - posX.get(times.get(i).getStep() % 18) == (w / 4))) {
+			if ((w - posX.get(times.get(i).getStep() % maxNotes) == (w / 4))) {
 				DisplayActivity.playNote(times.get(i), tuning);
 			}
 		}
