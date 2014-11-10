@@ -13,6 +13,7 @@ import ch.epfl.sweng.smartTabs.music.Duration;
 import ch.epfl.sweng.smartTabs.music.Instrument;
 import ch.epfl.sweng.smartTabs.music.Tab;
 import ch.epfl.sweng.smartTabs.music.Time;
+import ch.epfl.sweng.smartTabs.music.TimesArrayGenerationThread;
 
 /**
  * @author Faton Ramadani
@@ -25,6 +26,8 @@ public class NoteView extends View{
 	private ArrayList<Time> times = new ArrayList<Time>();
 	private final int[] posX = {0, -d, -2*d, -3*d, -4*d, -5*d, -6*d, -780, -840, -900, -960, -1020, -1140,-1200, -1260, -1320, -1380,-1440};
 	private final float ratio = 0.34375f;
+	private TimesArrayGenerationThread timesGenThread;
+
 	
 	private static final float TAB_TEXT_SIZE = 48f;
 
@@ -46,10 +49,21 @@ public class NoteView extends View{
 		myTab = tab;
 		h = getHeight();
 		w = getWidth();
+		
+
+		timesGenThread = new TimesArrayGenerationThread(myTab, times);
+		timesGenThread.start();
+		
+		try {
+			timesGenThread.join();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 
 		paint.setAntiAlias(true);
 		
 		mGridView = gridView;
+		
 		this.setBackground(mGridView);
 	}
 
@@ -72,7 +86,6 @@ public class NoteView extends View{
 		float margin = mGridView.getTabLineMargin();
 		paint.setTextSize(TAB_TEXT_SIZE);
 		for (int i = 0; i < myInstrument.getNumOfStrings(); i++) {
-			System.out.println(time.getNote(i));
 			if (w - posX[time.getStep() % numNotes] > w/4) {
 				paint.setColor(Color.BLACK);
 				float textHeight = r.top + i*margin - (TAB_TEXT_SIZE/2);

@@ -28,7 +28,7 @@ import ch.epfl.sweng.smartTabs.music.Time;
 public class DisplayActivity extends Activity {
 	private final int maxStreams = 39;
 
-	private static NoteView n;
+	private NoteView n;
 	private static SoundPool pool;
 	private static SampleMap map;
 	private static NotePlaybackThread playbackThread;
@@ -75,7 +75,6 @@ public class DisplayActivity extends Activity {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-
 
 		thread = new TabAnimationThread(n);
 		thread.start();

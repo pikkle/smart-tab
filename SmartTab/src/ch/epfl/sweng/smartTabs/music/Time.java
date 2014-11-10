@@ -75,4 +75,14 @@ public class Time implements Serializable{
 	public int getStep() {
 		return mStep;
 	}
+	public String toString(){
+		String s = "";
+		for (String n : mNotes) {
+			if(n=="")
+				s+="-";
+			else
+				s+=n + " ";
+		} 
+		return s;
+	}
 }
