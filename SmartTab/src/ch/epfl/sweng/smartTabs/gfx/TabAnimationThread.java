@@ -45,18 +45,18 @@ public class TabAnimationThread extends Thread {
 			e.printStackTrace();
 		}
 
-			while (playing) {
-				while (running) {
-					myNoteview.slideNotes(speed);
-					myNoteview.postInvalidate();
-					try {
-					    sleep(delay);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
+		while (playing) {
+			while (running) {
+				myNoteview.slideNotes(speed);
+				myNoteview.postInvalidate();
+				try {
+				    sleep(delay);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
 				}
 			}
 		}
+	}
 
 	public void setSpeed(int newSpeed) {
 		if (newSpeed < 0) {
