@@ -54,7 +54,7 @@ public class DisplayActivity extends Activity {
 		display.getSize(size);
 		int width = size.x;
 		int height = size.y;
-		mDrawable = new GridViewDraw(width, height, Instrument.GUITAR, tab, getResources());
+		mDrawable = new GridViewDraw(width, height, Instrument.GUITAR, getResources());
 
 		n = new NoteView(this, tab, Instrument.GUITAR, mDrawable);
 		pool = new SoundPool(maxStreams, AudioManager.STREAM_MUSIC, 0);
