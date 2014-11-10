@@ -279,11 +279,17 @@ public class GridViewDraw extends Drawable {
 		canvas.drawLine(nutRect.left,
 				nutRect.top + (STRING_SHIFT * tabLineMargin), nutRect.left,
 				nutRect.bottom - (STRING_SHIFT * tabLineMargin), paint);
-
+		
 		paint.setColor(Color.RED);
 		paint.setStrokeWidth(CURSOR_WIDTH);
+		//canvas.drawLine(mWidth/4, mHeight/4, mWidth/4,3*mHeight/4, paint);
+		paint.setStrokeWidth(3f);
+		paint.setStyle(Paint.Style.STROKE);
+		canvas.drawRect(mWidth/4 - mWidth/80, nutRect.top, mWidth/4 + mWidth/80, nutRect.bottom, paint);
+		/*paint.setColor(Color.RED);
+		paint.setStrokeWidth(CURSOR_WIDTH);
 		canvas.drawLine(nutRect.right, nutRect.top, nutRect.right,
-				nutRect.bottom, paint);
+				nutRect.bottom, paint);*/
 	}
 
 
@@ -334,6 +340,20 @@ public class GridViewDraw extends Drawable {
 	 */
 	public Rect getTabRect() {
 		return neckRect;
+	}
+
+	/**
+	 * @return the clefRect
+	 */
+	public Rect getStandardLeftRect() {
+		return clefRect;
+	}
+
+	/**
+	 * @return the nutRect
+	 */
+	public Rect getTabLeftRect() {
+		return nutRect;
 	}
 
 	/**
