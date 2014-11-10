@@ -72,11 +72,12 @@ public class GridViewDraw extends Drawable {
 	private float standardLineMargin;
 	private float tabLineMargin;
 
-	public GridViewDraw(int width, int height, Instrument instru, Resources res) {
+	public GridViewDraw(int width, int height, Instrument instru, Tab tab, Resources res) {
 		super();
 		mWidth = width;
 		mHeight = height;
 		myInstrument = instru;
+		myTab = tab;
 		mRes = res;
 
 		// Divides the screen into 2 main boxes: header and body
