@@ -16,6 +16,7 @@ import ch.epfl.sweng.smartTabs.gfx.GridViewDraw;
 import ch.epfl.sweng.smartTabs.gfx.NoteView;
 import ch.epfl.sweng.smartTabs.gfx.TabAnimationThread;
 import ch.epfl.sweng.smartTabs.music.Instrument;
+import ch.epfl.sweng.smartTabs.music.Note;
 import ch.epfl.sweng.smartTabs.music.NotePlaybackThread;
 import ch.epfl.sweng.smartTabs.music.SampleMap;
 import ch.epfl.sweng.smartTabs.music.Tab;
@@ -26,7 +27,7 @@ import ch.epfl.sweng.smartTabs.music.Time;
  * The activity which displays the tabs and handle the animation
  */
 public class DisplayActivity extends Activity {
-	private final int maxStreams = 39;
+	private final int maxStreams = 50;
 
 	private NoteView n;
 	private static SoundPool pool;
@@ -66,7 +67,7 @@ public class DisplayActivity extends Activity {
 			@Override
 			public void run() {
 				map = new SampleMap(getApplicationContext(),
-						pool);
+						pool, n.getTuning());
 			}
 		});
 		initSampleMapThread.start();
@@ -113,8 +114,8 @@ public class DisplayActivity extends Activity {
 	 * This method plays the notes contained in the Time object.
 	 * @param time is the Time object containing the notes to play
 	 */
-	public static void playNote(final Time time) {
-		playbackThread = new NotePlaybackThread(pool, map, time);
+	public static void playNote(final Time time, Note[] tuning) {
+		playbackThread = new NotePlaybackThread(pool, map, time, tuning);
 		playbackThread.start();
 		try {
 			playbackThread.join();

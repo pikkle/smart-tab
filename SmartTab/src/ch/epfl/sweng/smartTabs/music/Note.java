@@ -18,10 +18,10 @@ public class Note {
 		myOctave = octave;
 		myHeight = height;
 		// by default
-		myDuration = Duration.Noire;
+		myDuration = Duration.Noir;
 	}
 	
-	public Note addHalfTone(int delta) {
+	public Note addHalfTones(int delta) {
 		int index = this.myHeight.getIndex();
 		int newOct = myOctave + ((index + delta) / Height.getMax());
 		Height height =  this.myHeight.get((index + delta) % Height.getMax());
@@ -35,4 +35,8 @@ public class Note {
 	public int getOctave() {
 		return myOctave;
 	}
+	public String toString(){
+		return myHeight.name().toLowerCase()+myOctave;
+	}
+
 }

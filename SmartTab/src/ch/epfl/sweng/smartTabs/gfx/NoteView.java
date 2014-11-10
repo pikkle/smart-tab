@@ -2,6 +2,7 @@ package ch.epfl.sweng.smartTabs.gfx;
 
 import java.util.ArrayList;
 
+import android.R.integer;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -27,6 +28,7 @@ public class NoteView extends View {
 
 	private final Paint paint = new Paint();
 	private ArrayList<Time> times = new ArrayList<Time>();
+	private int d = 120;
 //	private final int[] posX = { 0, -d, -2 * d, -3 * d, -4 * d, -5 * d, -6 * d,
 //			-780, -840, -900, -960, -1020, -1140, -1200, -1260, -1320, -1380,
 //			-1440 };
@@ -35,13 +37,13 @@ public class NoteView extends View {
 	private TimesArrayGenerationThread timesGenThread;
 
 	private static final float TAB_TEXT_SIZE = 48f;
-	private double dx = Duration.Noire.getDuration();
+	private double dx = Duration.Noir.getDuration();
 	private int ptr = 0;
 	private final Instrument myInstrument;
 
 	private int w;
 	private final Tab myTab;
-	private Note[] tuning = {new Note(4, Height.E), new Note(3, Height.B), new Note(3, Height.G), new Note(3, Height.D), new Note(2, Height.A), new Note(2, Height.E)};
+	private Note[] tuning = {new Note(3, Height.E), new Note(2, Height.B), new Note(2, Height.G), new Note(2, Height.D), new Note(1, Height.A), new Note(1, Height.E)};
 
 	private final int numNotes = 18;
 
@@ -54,6 +56,7 @@ public class NoteView extends View {
 		myTab = tab;
 		w = getWidth();
 		timesGenThread = new TimesArrayGenerationThread(myTab, times, posX);
+//		timesGenThread = new TimesArrayGenerationThread(myTab, times);
 		timesGenThread.start();
 
 		try {
@@ -112,8 +115,11 @@ public class NoteView extends View {
 
 	protected void slideNotes(int speed) {
 		for (int i = 0; i < numNotes; i++) {
+//			posX[i] += 4*speed;
+			posX.set(i, posX.get(i)+4*speed);
+			
 			if ((w - posX.get(times.get(i).getStep() % 18) == (w / 4))) {
-				DisplayActivity.playNote(times.get(i));
+				DisplayActivity.playNote(times.get(i), tuning);
 			}
 		}
 	}
@@ -124,6 +130,9 @@ public class NoteView extends View {
 
 	public ArrayList<Time> getTimes() {
 		return times;
+	}
+	public Note[] getTuning(){
+		return tuning;
 	}
 
 }

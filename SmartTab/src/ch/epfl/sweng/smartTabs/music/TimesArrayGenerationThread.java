@@ -24,11 +24,13 @@ public class TimesArrayGenerationThread extends Thread {
 	@Override
 	public final void run() {
 		for (int i = 0; i < numNotes; i++) {
+			
 			mTimes.add(mTab.getTime(i));
 			if(i==0){
 				mPosX.add(0);
 			} else {
-				mPosX.add((int) (mPosX.get(i-1) + +stdPace*mTab.getTime(i).getDuration()));				
+				double noteDuration = Duration.valueOf(mTab.getTime(i).getDuration()).getDuration();
+				mPosX.add((int) (mPosX.get(i-1) - stdPace*noteDuration));				
 			}
 		}
 	}
