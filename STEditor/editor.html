@@ -17,10 +17,10 @@
 
     <!-- Custom styles for this template -->
     <link href="theme.css" rel="stylesheet">
-
+    <link href="editor.css" rel="stylesheet">
   </head>
 
-  <body role="document">
+  <body role="document" onload='init()' onresize="resizeCanvas()">
 
     <!-- Fixed navbar -->
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -36,42 +36,18 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="index.html">Converter</a></li>
-            <li><a href="editor.html">Editor</a></li>
+            <li><a href="index.html">Converter</a></li>
+            <li class="active"><a href="editor.html">Editor</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
     </nav>
 
-    <div class="container theme-showcase" role="main">
-
-      <!-- Main jumbotron for a primary marketing message or call to action -->
-      <div class="jumbotron">
-        <h1>Ascii Tab Converter</h1>
-        <p>Copy and paste a tab in the Ascii Tab Format. Please refer to the documentation: <a href="http://en.wikipedia.org/wiki/ASCII_tab">ASCII Tab on Wikipédia</a></p>
+    <script type="text/javascript" src="editor.js"></script>
+    <canvas id='id_canvas' onmousedown='touch(event)'></canvas>
 
 
-        <p>Song Name:</p>
-        <textarea id="name" cols="50" rows="1" placeholder="C Note" ></textarea>
-        <p>Tempo:</p>
-        <textarea id="tempo" cols="50" rows="1" placeholder="120" ></textarea>
 
-        <p>Tab:</p>
-        <textarea id="tab" cols="110" rows="6" placeholder="e |-----0------|
-B |-----1------|
-G |-----0------|
-D |-----2------|
-A |-----3------|
-E |------------|" style="font-family:monospace,Courier"></textarea>
-
-        <br>
-        <p><a href="#" class="btn btn-primary" role="button" onclick="parser()">Convert &raquo;</a></p>
-
-        <script type="text/javascript" src="parser.js">  parser()</script>
-
-      </div>
-
-    </div> <!-- /container -->
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
