@@ -39,19 +39,19 @@ function parser() {
     <!-- Create timesArray strings and add each times in json format-->
 
     var timesArray = "[";
-    var startString = "\"string_";
-    var middleString = "\":\"";
+    var startString = "\"string_x\":\"y\"";
+
 
     for(var i =0;i<length;i++){
         timesArray=timesArray.concat("{");
         for(var j =0; j<6;j++){
-            timesArray=timesArray.concat(startString);
-            timesArray=timesArray.concat(j);
-            timesArray=timesArray.concat(middleString);
+            var stringBuilder = startString.replace("x", j)
             if(strings[j].charAt(i)!="-"){
-                timesArray=timesArray.concat(strings[j].charAt(i));
+                timesArray=timesArray.concat(stringBuilder.replace("y", strings[j].charAt(i)));
             }
-            timesArray=timesArray.concat("\"");
+            else {
+                timesArray=timesArray.concat(stringBuilder.replace("y", ""));
+            }
             if(j<(5)){
                 timesArray=timesArray.concat(",");
             }
