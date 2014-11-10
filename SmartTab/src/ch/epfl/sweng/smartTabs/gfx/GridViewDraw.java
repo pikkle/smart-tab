@@ -343,6 +343,20 @@ public class GridViewDraw extends Drawable {
 	}
 
 	/**
+	 * @return the clefRect
+	 */
+	public Rect getStandardLeftRect() {
+		return clefRect;
+	}
+
+	/**
+	 * @return the nutRect
+	 */
+	public Rect getTabLeftRect() {
+		return nutRect;
+	}
+
+	/**
 	 * @return the standardLineMargin
 	 */
 	public float getStandardLineMargin() {
