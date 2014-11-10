@@ -3,13 +3,22 @@ package ch.epfl.sweng.smartTabs.gfx;
 import java.util.ArrayList;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.view.View;
+import ch.epfl.sweng.smartTabs.R;
 import ch.epfl.sweng.smartTabs.activity.DisplayActivity;
+<<<<<<< HEAD
+=======
+import ch.epfl.sweng.smartTabs.music.Duration;
+import ch.epfl.sweng.smartTabs.music.Height;
+>>>>>>> 6edc8a2543a84ab53c2758fa9ce030c45bd1d915
 import ch.epfl.sweng.smartTabs.music.Instrument;
+import ch.epfl.sweng.smartTabs.music.Note;
 import ch.epfl.sweng.smartTabs.music.Tab;
 import ch.epfl.sweng.smartTabs.music.Time;
 import ch.epfl.sweng.smartTabs.music.TimesArrayGenerationThread;
@@ -30,11 +39,16 @@ public class NoteView extends View {
 
 	private static final float TAB_TEXT_SIZE = 48f;
 
+<<<<<<< HEAD
+=======
+	private double dx = Duration.Noire.getDuration();
+>>>>>>> 6edc8a2543a84ab53c2758fa9ce030c45bd1d915
 	private int ptr = 0;
 	private final Instrument myInstrument;
 
 	private int w;
 	private final Tab myTab;
+	private Note[] tuning = {new Note(4, Height.E), new Note(3, Height.B), new Note(3, Height.G), new Note(3, Height.D), new Note(2, Height.A), new Note(2, Height.E)};
 
 	private final int numNotes = 18;
 
@@ -46,6 +60,7 @@ public class NoteView extends View {
 		myInstrument = instrument;
 		myTab = tab;
 		w = getWidth();
+<<<<<<< HEAD
 
 		timesGenThread = new TimesArrayGenerationThread(myTab, times, posX);
 		timesGenThread.start();
@@ -56,6 +71,8 @@ public class NoteView extends View {
 			e.printStackTrace();
 		}
 
+=======
+>>>>>>> 6edc8a2543a84ab53c2758fa9ce030c45bd1d915
 		paint.setAntiAlias(true);
 
 		mGridView = gridView;
@@ -79,27 +96,26 @@ public class NoteView extends View {
 		Rect r = mGridView.getTabRect();
 		float margin = mGridView.getTabLineMargin();
 		paint.setTextSize(TAB_TEXT_SIZE);
-		double pos = w - posX.get(time.getStep() % numNotes);
+		double pos = w - posX[time.getStep() % numNotes];
+		Bitmap noteNoire = BitmapFactory.decodeResource(getResources(), R.raw.cledesol);
+		//noteNoire = Bitmap.createScaledBitmap(noteNoire, ???standardWidth, ???standardHeight, false);
+		noteNoire = Bitmap.createBitmap(noteNoire);
 		for (int i = 0; i < myInstrument.getNumOfStrings(); i++) {
-			if (w - posX.get(time.getStep() % numNotes) > w / 4) {
-				paint.setColor(Color.BLACK);
-				System.out.println(time.getNote(i));
-				if (pos > mGridView.getTabLeftRect().left) {
-					float textHeight = r.top + i * margin - (TAB_TEXT_SIZE / 2);
-					canvas.drawText(time.getNote(i), w
-							- posX.get(time.getStep() % 18), textHeight, paint);
-					if (pos < (w / 4 - w / 80)) {
-						// paint.setAlpha((int) (pos - 150));
-						paint.setAlpha(150);
-						paint.setFakeBoldText(false);
-					} else if (((w / 4 - w / 80) < pos)
-							&& (pos < (w / 4 + w / 80))) {
-						paint.setColor(Color.RED);
-						paint.setFakeBoldText(true);
-					} else {
-						paint.setFakeBoldText(false);
-						paint.setColor(Color.BLACK);
-					}
+			if (pos > mGridView.getTabLeftRect().left) {
+				float textHeight = r.top + i*margin - (TAB_TEXT_SIZE/2);
+				canvas.drawText(time.getNote(i), w - posX[time.getStep() % 18], textHeight, paint);
+				//canvas.drawBitmap(noteNoire, clefRect.left + 2 * HARD_LINE_WIDTH, clefRect.top, paint);
+				//canvas.drawBitmap(noteNoire, w - posX[time.getStep() % 18], top, paint);
+				if(pos < (w/4 - w/80)) {
+					//paint.setAlpha((int) (pos - 150));
+					paint.setAlpha(150);
+					paint.setFakeBoldText(false);
+				} else if (((w/4 - w/80) < pos) && (pos < (w/4 + w/80))) {
+					paint.setColor(Color.RED);
+					paint.setFakeBoldText(true);
+				}else {					
+					paint.setFakeBoldText(false);
+					paint.setColor(Color.BLACK);
 				}
 			}
 		}
@@ -110,7 +126,6 @@ public class NoteView extends View {
 			if ((w - posX.get(times.get(i).getStep() % 18) == (w / 4))) {
 				DisplayActivity.playNote(times.get(i));
 			}
-
 		}
 	}
 

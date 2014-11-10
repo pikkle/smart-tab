@@ -27,4 +27,12 @@ public class Note {
 		Height height =  this.myHeight.get((index + delta) % Height.getMax());
 		return new Note(newOct, height);	
 	}
+	
+	public Height getHeight() {
+		return myHeight;
+	}
+	
+	public int getOctave() {
+		return myOctave;
+	}
 }
