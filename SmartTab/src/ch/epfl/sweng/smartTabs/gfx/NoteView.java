@@ -74,7 +74,7 @@ public class NoteView extends View{
 		double pos = w - posX[time.getStep() % numNotes];
 		for (int i = 0; i < myInstrument.getNumOfStrings(); i++) {
 			System.out.println(time.getNote(i));
-			if (pos > w/8) {
+			if (pos > mGridView.getTabLeftRect().left) {
 				float textHeight = r.top + i*margin - (TAB_TEXT_SIZE/2);
 				canvas.drawText(time.getNote(i), w - posX[time.getStep() % 18], textHeight, paint);
 				if(pos < (w/4 - w/80)) {
