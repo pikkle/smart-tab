@@ -20,11 +20,7 @@ public class TabAnimationThread extends Thread {
 	}
 
 	public void switchRunning() {
-		if (running) {
-			running = false;
-		} else {
-			running = true;
-		}
+		running = !running;
 	}
 
 	public void stopPlaying() {
@@ -47,6 +43,8 @@ public class TabAnimationThread extends Thread {
 		}
 	}
 
+	// Change the playing speed, can't be negative, 
+	// nor too high ( The threshold is yet to be defined).
 	public void setSpeed(int newSpeed) {
 		if (newSpeed < 0) {
 			throw new IllegalArgumentException();
