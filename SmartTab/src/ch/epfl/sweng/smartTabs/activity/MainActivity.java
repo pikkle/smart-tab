@@ -8,6 +8,7 @@ import org.json.JSONException;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -22,6 +23,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.Toast;
 import ch.epfl.sweng.smartTabs.R;
 import ch.epfl.sweng.smartTabs.music.Tab;
@@ -42,8 +44,8 @@ public class MainActivity extends Activity {
 		ActionBar actionBar = getActionBar();
 		actionBar.setTitle(getString(R.string.title_app_home));
 
-		
-		
+
+
 		netClient = new NetworkClient();
 		ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo netInfo = connMgr.getActiveNetworkInfo();
@@ -65,26 +67,48 @@ public class MainActivity extends Activity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.main_activity_action_bar, menu);
+
+		SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+		SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+		if (null != searchView) {
+			searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+			searchView.setIconifiedByDefault(true);
+		}
+
+		SearchView.OnQueryTextListener queryTextListener = new SearchView.OnQueryTextListener() {
+			public boolean onQueryTextChange(String newText) {
+				return onQueryTextSubmit(newText);
+			}
+
+			public boolean onQueryTextSubmit(String query) {
+				new DownloadWebpageTask().execute(query);
+				return false;
+			}
+		};
+		searchView.setOnQueryTextListener(queryTextListener);
+
 		return super.onCreateOptionsMenu(menu);
+
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle presses on the action bar items
 		switch (item.getItemId()) {
-			case R.id.action_settings:
-				startActivity(new Intent(this, PreferencesActivity.class));
-				return true;
-			case R.id.action_refresh:
-				Toast.makeText(getApplicationContext(), "Refreshing Tab List.", Toast.LENGTH_SHORT).show();
-				new DownloadWebpageTask().execute();
-				Toast.makeText(getApplicationContext(), "Tab List Fetched.", Toast.LENGTH_SHORT).show();
-				return true;
-			case R.id.action_search:
-				//code here for searching.
-				return true;
-			default:
-				return super.onOptionsItemSelected(item);
+		case R.id.action_settings:
+			startActivity(new Intent(this, PreferencesActivity.class));
+			return true;
+		case R.id.action_refresh:
+			Toast.makeText(getApplicationContext(), "Refreshing Tab List.", Toast.LENGTH_SHORT).show();
+			new DownloadWebpageTask().execute("");
+			Toast.makeText(getApplicationContext(), "Tab List Fetched.", Toast.LENGTH_SHORT).show();
+			return true;
+		case R.id.action_search:
+			//Get action bar item, get query, execute
+			new DownloadWebpageTask().execute("");
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
 		}
 	}
 
