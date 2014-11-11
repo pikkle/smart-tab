@@ -5,7 +5,8 @@
         android:id="@+id/action_search"
         android:icon="@drawable/search"
         android:showAsAction="always"
-        android:title="@string/action_search"/>
+        android:title="@string/action_search"
+        android:actionViewClass="android.widget.SearchView"/>
 
     <!-- Refresh, will show if there is room -->
     <item

@@ -15,5 +15,6 @@ public class AboutAppActivity extends Activity {
 		// Enabling Up / Back navigation
 		ActionBar actionBar = getActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
+		actionBar.setTitle(getString(R.string.title_about_app));
 	}
 }

@@ -1,5 +1,6 @@
 package ch.epfl.sweng.smartTabs.activity;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.Preference;
@@ -17,7 +18,10 @@ public class PreferencesActivity extends PreferenceActivity {
 		super.onCreate(savedInstanceState);
 		getFragmentManager().beginTransaction().replace(android.R.id.content, new PreferencesFrag()).commit();
 		
-		
+		ActionBar actionBar = getActionBar();
+		actionBar.setDisplayHomeAsUpEnabled(true);
+		actionBar.setTitle(getString(R.string.title_settings));
+
 	}
 	
 	

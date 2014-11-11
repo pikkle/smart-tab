@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.json.JSONException;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -38,12 +39,17 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
+		ActionBar actionBar = getActionBar();
+		actionBar.setTitle(getString(R.string.title_app_home));
+
+		
+		
 		netClient = new NetworkClient();
 		ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo netInfo = connMgr.getActiveNetworkInfo();
 
 		if (netInfo != null && netInfo.isConnected()) {
-			new DownloadWebpageTask().execute();
+			new DownloadWebpageTask().execute("");
 		} else {
 			Toast.makeText(this, "Error retrieving tablatures. Please try again.", Toast.LENGTH_LONG).show();
 		}
@@ -71,11 +77,12 @@ public class MainActivity extends Activity {
 			return true;
 		case R.id.action_refresh:
 			Toast.makeText(getApplicationContext(), "Refreshing Tab List.", Toast.LENGTH_SHORT).show();
-			new DownloadWebpageTask().execute();
+			new DownloadWebpageTask().execute("");
 			Toast.makeText(getApplicationContext(), "Tab List Fetched.", Toast.LENGTH_SHORT).show();
 			return true;
 		case R.id.action_search:
-			//code here for searching.
+			//Get action bar item, get query, execute
+			new DownloadWebpageTask().execute("black");
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
@@ -86,11 +93,12 @@ public class MainActivity extends Activity {
 	/**
 	 *	This private class downloads JSONs from the server
 	 */
-	private class DownloadWebpageTask extends AsyncTask<Void, Void, Map<String, URL>> {
+	private class DownloadWebpageTask extends AsyncTask<String, Void, Map<String, URL>> {
 		@Override
-		protected Map<String, URL> doInBackground(Void... params) {
+		protected Map<String, URL> doInBackground(String... params) {
 			try {
-				return netClient.fetchTabMap(getString(R.string.serverURL));
+				if (params[0].isEmpty()) return netClient.fetchTabMap(getString(R.string.serverURL));
+				else return netClient.fetchTabMap(getString(R.string.serverURLQuery)+params[0]);
 			} catch (IOException e) {
 				e.printStackTrace();
 			} catch (JSONException e) {
