@@ -87,16 +87,11 @@ public class NoteView extends View {
 		Rect r = mGridView.getTabRect();
 		float margin = mGridView.getTabLineMargin();
 		paint.setTextSize(TAB_TEXT_SIZE);
-		double pos = w - posX.get(time.getStep() % maxNotes);
-		//Bitmap noteNoire = BitmapFactory.decodeResource(getResources(), R.raw.cledesol);
-		//noteNoire = Bitmap.createScaledBitmap(noteNoire, ???standardWidth, ???standardHeight, false);
-		//noteNoire = Bitmap.createBitmap(noteNoire);
+		float pos = w - posX.get(time.getStep());
 		for (int i = 0; i < myInstrument.getNumOfStrings(); i++) {
 			if (pos > mGridView.getTabLeftRect().left) {
-				float textHeight = r.top + i*margin - (TAB_TEXT_SIZE/2);
-				canvas.drawText(time.getNote(i), w - posX.get(time.getStep() % maxNotes), textHeight, paint);
-				//canvas.drawBitmap(noteNoire, clefRect.left + 2 * HARD_LINE_WIDTH, clefRect.top, paint);
-				//canvas.drawBitmap(noteNoire, w - posX[time.getStep() % 18], top, paint);
+				float textHeight = r.top + (i+1)*margin - (TAB_TEXT_SIZE/2);
+				canvas.drawText(time.getNote(i), pos, textHeight, paint);
 				if (pos < (w/4 - w/80)) {
 					//paint.setAlpha((int) (pos - 150));
 					paint.setAlpha(150);

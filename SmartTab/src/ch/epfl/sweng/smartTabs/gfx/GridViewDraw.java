@@ -44,7 +44,7 @@ public class GridViewDraw extends Drawable {
 	private final Rect rightCenterRect; // Clef OR Tuning
 
 	private static final float HEADER_RATIO = 0.1f;
-	private static final float TOP_CONTENT_RATIO = 0.4f;
+	private static final float TOP_CONTENT_RATIO = 0.3f;
 	private static final float LEFT_SIDE_RATIO = 0.25f; 
 
 	private static final float TITLE_WIDTH_MARGIN_DELTA = 0.99f;
@@ -133,6 +133,14 @@ public class GridViewDraw extends Drawable {
 		}
 		if (displayPartition) {
 			drawStandardGrid(canvas);
+		}
+		if (displayPartition && displayTab) {
+			paint.setColor(Color.BLACK);
+			paint.setStrokeWidth(HARD_LINE_WIDTH);
+			// Draws vertical hard line at the left end of the standard grid
+			canvas.drawLine(clefRect.left + HARD_LINE_WIDTH / 2, clefRect.top
+					+ (STRING_SHIFT * standardLineMargin), nutRect.left + HARD_LINE_WIDTH / 2,
+					nutRect.bottom - (STRING_SHIFT * standardLineMargin), paint);
 		}
 	}
 
@@ -246,16 +254,11 @@ public class GridViewDraw extends Drawable {
 					sheetRect.top + (i + STRING_SHIFT) * standardLineMargin, 
 					paint);
 		}
-		paint.setStrokeWidth(HARD_LINE_WIDTH);
-		// Draws vertical hard line at the left end of the standard grid
-		canvas.drawLine(clefRect.left + HARD_LINE_WIDTH / 2, clefRect.top
-				+ (STRING_SHIFT * standardLineMargin), clefRect.left + HARD_LINE_WIDTH
-				/ 2, clefRect.bottom - (STRING_SHIFT * standardLineMargin), paint);
 
 		// Draws G clef bitmap
 		canvas.drawBitmap(clefDeSol, clefRect.left + 2 * HARD_LINE_WIDTH, clefRect.top, paint);
 
-		paint.setColor(Color.RED);
+		paint.setColor(Color.rgb(255, 140, 0));
 		paint.setStrokeWidth(CURSOR_WIDTH);
 		// Draws the cursor
 		canvas.drawLine(clefRect.right, clefRect.top, clefRect.right,
@@ -275,17 +278,10 @@ public class GridViewDraw extends Drawable {
 					+ ((i + STRING_SHIFT) * tabLineMargin)
 					+ (TUNING_TEXT_SIZE * STRING_SHIFT_BOTTOM), paint);
 		}
-		paint.setStrokeWidth(MED_LINE_WIDTH);
-		canvas.drawLine(nutRect.left,
-				nutRect.top + (STRING_SHIFT * tabLineMargin), nutRect.left,
-				nutRect.bottom - (STRING_SHIFT * tabLineMargin), paint);
 		
 		paint.setColor(Color.RED);
 		paint.setStrokeWidth(CURSOR_WIDTH);
-		//canvas.drawLine(mWidth/4, mHeight/4, mWidth/4,3*mHeight/4, paint);
-		paint.setStrokeWidth(3f);
 		paint.setStyle(Paint.Style.STROKE);
-		canvas.drawRect(mWidth/4 - mWidth/80, nutRect.top, mWidth/4 + mWidth/80, nutRect.bottom, paint);
 		/*paint.setColor(Color.RED);
 		paint.setStrokeWidth(CURSOR_WIDTH);
 		canvas.drawLine(nutRect.right, nutRect.top, nutRect.right,
