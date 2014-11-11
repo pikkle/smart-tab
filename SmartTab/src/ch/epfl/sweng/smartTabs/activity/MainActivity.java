@@ -75,7 +75,7 @@ public class MainActivity extends Activity {
 			Toast.makeText(getApplicationContext(), "Tab List Fetched.", Toast.LENGTH_SHORT).show();
 			return true;
 		case R.id.action_search:
-			
+			//code here for searching.
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
