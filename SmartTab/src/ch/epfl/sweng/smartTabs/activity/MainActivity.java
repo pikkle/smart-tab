@@ -62,7 +62,7 @@ public class MainActivity extends Activity {
 	 * call method that launches new Activity when Settings is clicked
 	 */
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu){
+	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.main_activity_action_bar, menu);
 		return super.onCreateOptionsMenu(menu);
@@ -72,20 +72,19 @@ public class MainActivity extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle presses on the action bar items
 		switch (item.getItemId()) {
-		case R.id.action_settings:
-			startActivity(new Intent(this, PreferencesActivity.class));
-			return true;
-		case R.id.action_refresh:
-			Toast.makeText(getApplicationContext(), "Refreshing Tab List.", Toast.LENGTH_SHORT).show();
-			new DownloadWebpageTask().execute("");
-			Toast.makeText(getApplicationContext(), "Tab List Fetched.", Toast.LENGTH_SHORT).show();
-			return true;
-		case R.id.action_search:
-			//Get action bar item, get query, execute
-			new DownloadWebpageTask().execute("black");
-			return true;
-		default:
-			return super.onOptionsItemSelected(item);
+			case R.id.action_settings:
+				startActivity(new Intent(this, PreferencesActivity.class));
+				return true;
+			case R.id.action_refresh:
+				Toast.makeText(getApplicationContext(), "Refreshing Tab List.", Toast.LENGTH_SHORT).show();
+				new DownloadWebpageTask().execute();
+				Toast.makeText(getApplicationContext(), "Tab List Fetched.", Toast.LENGTH_SHORT).show();
+				return true;
+			case R.id.action_search:
+				//code here for searching.
+				return true;
+			default:
+				return super.onOptionsItemSelected(item);
 		}
 	}
 

@@ -9,6 +9,9 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import ch.epfl.sweng.smartTabs.R;
 
+/**
+ * TODO : Javadoc
+ */
 public class PreferencesActivity extends PreferenceActivity {
 
 	
@@ -24,11 +27,13 @@ public class PreferencesActivity extends PreferenceActivity {
 
 	}
 	
-	
+	/**
+	 * TODO : Javadoc
+	 */
 	public static class PreferencesFrag extends PreferenceFragment{
 		
 		@Override
-		public void onCreate(Bundle savedInstanceState){
+		public void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
 			addPreferencesFromResource(R.xml.preferences);
 			Preference helpPref = (Preference) findPreference("pref_help");

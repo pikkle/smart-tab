@@ -35,16 +35,16 @@ public class GridViewDraw extends Drawable {
 
 	private static final int STANDARD_NOTATION_LINES_NUMBER = 5;
 
-	private final Rect HEADER_RECT; // title, ..
-	private final Rect LEFT_TOP_RECT; // Clef for the music sheet
-	private final Rect lEFT_BOTTOM_RECT; // Tuning for the tablature
-	private final Rect LEFT_CENTER_RECT; // Clef OR Tuning
-	private final Rect RIGHT_TOP_RECT; // Clef for the music sheet
-	private final Rect RIGHT_BOTTOM_RECT; // Tuning for the tablature
-	private final Rect RIGHT_CENTER_RECT; // Clef OR Tuning
+	private final Rect headerRect; 		// title, ..
+	private final Rect leftTopRect; 	// Clef for the music sheet
+	private final Rect leftBottomRect; 	// Tuning for the tablature
+	private final Rect leftCenterRect; 	// Clef OR Tuning
+	private final Rect rightTopRect; 	// Clef for the music sheet
+	private final Rect rightBottomRect; // Tuning for the tablature
+	private final Rect rightCenterRect; // Clef OR Tuning
 
 	private static final float HEADER_RATIO = 0.1f;
-	private static final float TOP_CONTENT_RATIO = 0.4f;
+	private static final float TOP_CONTENT_RATIO = 0.3f;
 	private static final float LEFT_SIDE_RATIO = 0.25f; 
 
 	private static final float TITLE_WIDTH_MARGIN_DELTA = 0.99f;
@@ -82,9 +82,9 @@ public class GridViewDraw extends Drawable {
 
 		// Divides the screen into 2 main boxes: header and body
 		Rect screenRect = new Rect(0, 0, mWidth, mHeight);
-		HEADER_RECT = new Rect(screenRect.left, screenRect.top,
+		headerRect = new Rect(screenRect.left, screenRect.top,
 				screenRect.right, (int) (screenRect.height() * HEADER_RATIO));
-		Rect bodyRect = new Rect(screenRect.left, HEADER_RECT.bottom,
+		Rect bodyRect = new Rect(screenRect.left, headerRect.bottom,
 				screenRect.right, screenRect.bottom);
 
 		// Splits in two parts vertically
@@ -103,20 +103,20 @@ public class GridViewDraw extends Drawable {
 				bodyRect.top, bodyRect.right - verticalMargin, bodyRect.bottom);
 
 		// Intersects the splits to get the left parts
-		LEFT_TOP_RECT = new Rect(leftPartRect.left, topContentRect.top,
+		leftTopRect = new Rect(leftPartRect.left, topContentRect.top,
 				leftPartRect.right, topContentRect.bottom);
-		lEFT_BOTTOM_RECT = new Rect(leftPartRect.left, bottomContentRect.top,
+		leftBottomRect = new Rect(leftPartRect.left, bottomContentRect.top,
 				leftPartRect.right, bottomContentRect.bottom);
-		LEFT_CENTER_RECT = new Rect(leftPartRect.left, centerScreenRect.top,
+		leftCenterRect = new Rect(leftPartRect.left, centerScreenRect.top,
 				leftPartRect.right, centerScreenRect.bottom);
 
 		// Intersects the splits to get the right parts
-		RIGHT_TOP_RECT = new Rect(rightPartRect.left, topContentRect.top,
+		rightTopRect = new Rect(rightPartRect.left, topContentRect.top,
 				rightPartRect.right, topContentRect.bottom);
-		RIGHT_BOTTOM_RECT = new Rect(rightPartRect.left,
+		rightBottomRect = new Rect(rightPartRect.left,
 				bottomContentRect.top, rightPartRect.right,
 				bottomContentRect.bottom);
-		RIGHT_CENTER_RECT = new Rect(rightPartRect.left,
+		rightCenterRect = new Rect(rightPartRect.left,
 				centerScreenRect.top, rightPartRect.right,
 				centerScreenRect.bottom);
 				
@@ -133,6 +133,14 @@ public class GridViewDraw extends Drawable {
 		}
 		if (displayPartition) {
 			drawStandardGrid(canvas);
+		}
+		if (displayPartition && displayTab) {
+			paint.setColor(Color.BLACK);
+			paint.setStrokeWidth(HARD_LINE_WIDTH);
+			// Draws vertical hard line at the left end of the standard grid
+			canvas.drawLine(clefRect.left + HARD_LINE_WIDTH / 2, clefRect.top
+					+ (STRING_SHIFT * standardLineMargin), nutRect.left + HARD_LINE_WIDTH / 2,
+					nutRect.bottom - (STRING_SHIFT * standardLineMargin), paint);
 		}
 	}
 
@@ -156,8 +164,8 @@ public class GridViewDraw extends Drawable {
 		if (displayPartition) {
 			// Standard grid positions calculations
 			// Selects a centered box if possible
-			Rect standardLeft = !displayTab ? LEFT_CENTER_RECT : LEFT_TOP_RECT;
-			Rect standardRight = !displayTab ? RIGHT_CENTER_RECT : RIGHT_TOP_RECT;
+			Rect standardLeft = !displayTab ? leftCenterRect : leftTopRect;
+			Rect standardRight = !displayTab ? rightCenterRect : rightTopRect;
 			int standardMargin = (int) (standardLeft.width() * MARGIN);
 			Rect standardRect;
 
@@ -195,8 +203,8 @@ public class GridViewDraw extends Drawable {
 		if (displayTab) {
 			// Tablature grid positions calculations
 			// Select centered box if possible
-			Rect left = !displayPartition ? LEFT_CENTER_RECT : lEFT_BOTTOM_RECT;
-			Rect right = !displayPartition ? RIGHT_CENTER_RECT : RIGHT_BOTTOM_RECT;
+			Rect left = !displayPartition ? leftCenterRect : leftBottomRect;
+			Rect right = !displayPartition ? rightCenterRect : rightBottomRect;
 			int margin = (int) (left.width() * MARGIN);
 			Rect tabRect;
 			if (!displayPartition) {
@@ -229,7 +237,7 @@ public class GridViewDraw extends Drawable {
 	private void drawSongName(Canvas canvas) {
 		paint.setTextSize(TITLE_FONT_SIZE);
 		paint.setColor(Color.GRAY);
-		Rect titleRect = Box.marginRect(HEADER_RECT, TITLE_WIDTH_MARGIN_DELTA,
+		Rect titleRect = Box.marginRect(headerRect, TITLE_WIDTH_MARGIN_DELTA,
 				TITLE_HEIGHT_MARGIN_DELTA);
 		canvas.drawText(myTab.getTabName(), titleRect.left, titleRect.top,
 				paint);
@@ -246,16 +254,11 @@ public class GridViewDraw extends Drawable {
 					sheetRect.top + (i + STRING_SHIFT) * standardLineMargin, 
 					paint);
 		}
-		paint.setStrokeWidth(HARD_LINE_WIDTH);
-		// Draws vertical hard line at the left end of the standard grid
-		canvas.drawLine(clefRect.left + HARD_LINE_WIDTH / 2, clefRect.top
-				+ (STRING_SHIFT * standardLineMargin), clefRect.left + HARD_LINE_WIDTH
-				/ 2, clefRect.bottom - (STRING_SHIFT * standardLineMargin), paint);
 
 		// Draws G clef bitmap
 		canvas.drawBitmap(clefDeSol, clefRect.left + 2 * HARD_LINE_WIDTH, clefRect.top, paint);
 
-		paint.setColor(Color.RED);
+		paint.setColor(Color.rgb(255, 140, 0));
 		paint.setStrokeWidth(CURSOR_WIDTH);
 		// Draws the cursor
 		canvas.drawLine(clefRect.right, clefRect.top, clefRect.right,
@@ -275,17 +278,10 @@ public class GridViewDraw extends Drawable {
 					+ ((i + STRING_SHIFT) * tabLineMargin)
 					+ (TUNING_TEXT_SIZE * STRING_SHIFT_BOTTOM), paint);
 		}
-		paint.setStrokeWidth(MED_LINE_WIDTH);
-		canvas.drawLine(nutRect.left,
-				nutRect.top + (STRING_SHIFT * tabLineMargin), nutRect.left,
-				nutRect.bottom - (STRING_SHIFT * tabLineMargin), paint);
 		
 		paint.setColor(Color.RED);
 		paint.setStrokeWidth(CURSOR_WIDTH);
-		//canvas.drawLine(mWidth/4, mHeight/4, mWidth/4,3*mHeight/4, paint);
-		paint.setStrokeWidth(3f);
 		paint.setStyle(Paint.Style.STROKE);
-		canvas.drawRect(mWidth/4 - mWidth/80, nutRect.top, mWidth/4 + mWidth/80, nutRect.bottom, paint);
 		/*paint.setColor(Color.RED);
 		paint.setStrokeWidth(CURSOR_WIDTH);
 		canvas.drawLine(nutRect.right, nutRect.top, nutRect.right,
