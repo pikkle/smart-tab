@@ -66,11 +66,27 @@ public class MainActivity extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle presses on the action bar items
 		switch (item.getItemId()) {
+<<<<<<< HEAD
 			case R.id.action_settings:
 				startActivity(new Intent(this, PreferencesActivity.class));
 				return true;
 			default:
 				return super.onOptionsItemSelected(item);
+=======
+		case R.id.action_settings:
+			startActivity(new Intent(this, PreferencesActivity.class));
+			return true;
+		case R.id.action_refresh:
+			Toast.makeText(getApplicationContext(), "Refreshing Tab List.", Toast.LENGTH_SHORT).show();
+			new DownloadWebpageTask().execute();
+			Toast.makeText(getApplicationContext(), "Tab List Fetched.", Toast.LENGTH_SHORT).show();
+			return true;
+		case R.id.action_search:
+			//code here for searching.
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+>>>>>>> cb36c78dbe14040c75d16c7691e3e0eda8d22634
 		}
 	}
 
