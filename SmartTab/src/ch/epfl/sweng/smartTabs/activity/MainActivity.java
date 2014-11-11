@@ -69,6 +69,14 @@ public class MainActivity extends Activity {
 		case R.id.action_settings:
 			startActivity(new Intent(this, PreferencesActivity.class));
 			return true;
+		case R.id.action_refresh:
+			Toast.makeText(getApplicationContext(), "Refreshing Tab List.", Toast.LENGTH_SHORT).show();
+			new DownloadWebpageTask().execute();
+			Toast.makeText(getApplicationContext(), "Tab List Fetched.", Toast.LENGTH_SHORT).show();
+			return true;
+		case R.id.action_search:
+			
+			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}

@@ -1,9 +1,22 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
+    <!-- Search, will always show in action bar -->
+    <item
+        android:id="@+id/action_search"
+        android:icon="@drawable/search"
+        android:showAsAction="always"
+        android:title="@string/action_search"/>
+    <!-- Settings, will always show in overflow -->
     <item
         android:id="@+id/action_settings"
-        android:showAsAction="always"
-        android:icon="@drawable/settings"
+        android:showAsAction="never"
         android:title="@string/action_settings"/>
+    
+    <!-- Refresh, will always be shown -->
+    <item
+        android:id="@+id/action_refresh"
+        android:icon="@drawable/refresh"
+        android:showAsAction="ifRoom"
+        android:title="@string/action_refresh"/>
 
 </menu>

@@ -16,7 +16,8 @@ public class PreferencesActivity extends PreferenceActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		getFragmentManager().beginTransaction().replace(android.R.id.content, new PreferencesFrag()).commit();
-	
+		
+		
 	}
 	
 	
@@ -50,6 +51,7 @@ public class PreferencesActivity extends PreferenceActivity {
 			
 			Preference abtAppPref = (Preference) findPreference("pref_abt_app");
 			abtAppPref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+				
 				
 				@Override
 				public boolean onPreferenceClick(Preference preference) {
