@@ -21,8 +21,9 @@ public class SampleMap {
 			for (int j = 0; j < frets; j++) {
 				Note newNote = tuning[i].addHalfTones(j);
 				String noteName = newNote.toString();
-				if(!samples.containsKey(noteName)){				
-					samples.put(noteName, pool.load(context, context.getResources().getIdentifier(noteName, "raw", context.getPackageName()), 1));
+				if (!samples.containsKey(noteName)) {				
+					samples.put(noteName, pool.load(context, 
+							context.getResources().getIdentifier(noteName, "raw", context.getPackageName()), 1));
 				}
 			}
 		}
@@ -36,7 +37,7 @@ public class SampleMap {
 	 * @param fret index of the fret
 	 * @return soundId of the sample to play
 	 */
-	public final int getSampleId(Note note){
+	public final int getSampleId(Note note) {
 		return samples.get(note.toString());
 	}
 }
