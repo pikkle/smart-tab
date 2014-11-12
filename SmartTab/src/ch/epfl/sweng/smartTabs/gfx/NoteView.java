@@ -111,8 +111,10 @@ public class NoteView extends View {
 		for (int i = 0; i < maxNotes; i++) {
 			posX.set(i, posX.get(i)+DX*speed);
 			
-			if ((w - posX.get(times.get(i).getStep() % maxNotes) == (w / 4))) {
+			if ((w - posX.get(times.get(i).getStep() % maxNotes) <= mGridView.getTabRect().left+DX*speed) 
+					&& (w - posX.get(times.get(i).getStep() % maxNotes) > mGridView.getTabRect().left)) {
 				((DisplayActivity) this.getContext()).playNote(times.get(i), tuning);
+				System.out.println(times.get(i).toString() + " : " +times.get(i).getStep());
 			}
 		}
 	}
