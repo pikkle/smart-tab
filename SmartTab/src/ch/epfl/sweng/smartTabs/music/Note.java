@@ -10,6 +10,7 @@ import android.annotation.SuppressLint;
 public class Note {
 	private final int myOctave;
 	private final Height myHeight;
+	@SuppressWarnings("unused")
 	private final Duration myDuration;
 	
 	public Note(int octave, Height height, Duration duration) {
