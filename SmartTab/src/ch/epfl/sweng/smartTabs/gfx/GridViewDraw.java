@@ -43,7 +43,7 @@ public class GridViewDraw extends Drawable {
 	private final Rect rightBottomRect; // Tuning for the tablature
 	private final Rect rightCenterRect; // Clef OR Tuning
 
-	private static final float HEADER_RATIO = 0.1f;
+	private static final float HEADER_RATIO = 0.08f;
 	private static final float TOP_CONTENT_RATIO = 0.3f;
 	private static final float LEFT_SIDE_RATIO = 0.25f; 
 
@@ -60,8 +60,7 @@ public class GridViewDraw extends Drawable {
 	private static final float MED_LINE_WIDTH = 5f;
 	private static final float HARD_LINE_WIDTH = 15f;
 
-	private static final float TUNING_TEXT_SIZE = 36f;
-	private static final float TITLE_FONT_SIZE = 48f;
+	private final float textSize;
 	private static final float CURSOR_WIDTH = 10f;
 
 	private Bitmap clefDeSol;
@@ -80,6 +79,7 @@ public class GridViewDraw extends Drawable {
 		myTab = tab;
 		mRes = res;
 
+		textSize = mHeight*HEADER_RATIO*0.5f;
 		// Divides the screen into 2 main boxes: header and body
 		Rect screenRect = new Rect(0, 0, mWidth, mHeight);
 		headerRect = new Rect(screenRect.left, screenRect.top,
@@ -120,6 +120,9 @@ public class GridViewDraw extends Drawable {
 				centerScreenRect.top, rightPartRect.right,
 				centerScreenRect.bottom);
 				
+		
+		
+	
 		initializeBitmaps();
 		invalidateBoxes();
 	}
@@ -127,6 +130,7 @@ public class GridViewDraw extends Drawable {
 	@Override
 	public void draw(Canvas canvas) {
 		clearScreen(canvas);
+		
 		drawSongName(canvas);
 		if (displayTab) {
 			drawTablatureGrid(canvas);
@@ -138,7 +142,7 @@ public class GridViewDraw extends Drawable {
 			paint.setColor(Color.BLACK);
 			paint.setStrokeWidth(HARD_LINE_WIDTH);
 			// Draws vertical hard line at the left end of the standard grid
-			canvas.drawLine(clefRect.left + HARD_LINE_WIDTH / 2, clefRect.top
+			canvas.drawLine(nutRect.left + HARD_LINE_WIDTH / 2, clefRect.top
 					+ (STRING_SHIFT * standardLineMargin), nutRect.left + HARD_LINE_WIDTH / 2,
 					nutRect.bottom - (STRING_SHIFT * standardLineMargin), paint);
 		}
@@ -171,7 +175,7 @@ public class GridViewDraw extends Drawable {
 
 			// adds a margin to the box
 			if (!displayTab) {
-				standardLeft = Box.marginRect(standardLeft, standardMargin, standardMargin, 0, standardMargin);
+				standardLeft = Box.marginRect(standardLeft, standardMargin, standardMargin, 0, 0);
 				standardRight = Box.marginRect(standardRight, 0, standardMargin, 0, standardMargin);
 				standardRect = Box.marginRect(
 						Box.bigUnion(standardLeft, standardRight),
@@ -180,8 +184,7 @@ public class GridViewDraw extends Drawable {
 						0,
 						(int) (standardLeft.height() * BIG_MARGIN));
 			} else {
-				standardLeft = Box.marginRect(standardLeft, standardMargin, standardMargin, 0,
-						(int) (standardMargin * MIDDLE_SMALL_MARGIN));
+				standardLeft = Box.marginRect(standardLeft, standardMargin, 0, 0, 0);
 				standardRight = Box.marginRect(standardRight, 0, standardMargin, 0,
 						(int) (standardMargin * MIDDLE_SMALL_MARGIN));
 				standardRect = Box.marginRect(Box.bigUnion(standardLeft, standardRight),
@@ -197,7 +200,7 @@ public class GridViewDraw extends Drawable {
 			int standardWidth = clefDeSol.getWidth() * standardHeight / clefDeSol.getHeight(); // keeps the image ratio
 			clefDeSol = Bitmap.createScaledBitmap(clefDeSol, standardWidth, standardHeight, false);
 
-			standardLineMargin = (float) (sheetRect.height() / STANDARD_NOTATION_LINES_NUMBER);
+			standardLineMargin = (float) (sheetRect.height()*0.93f / STANDARD_NOTATION_LINES_NUMBER);
 			
 		} 
 		if (displayTab) {
@@ -235,7 +238,7 @@ public class GridViewDraw extends Drawable {
 	}
 
 	private void drawSongName(Canvas canvas) {
-		paint.setTextSize(TITLE_FONT_SIZE);
+		paint.setTextSize(textSize);
 		paint.setColor(Color.GRAY);
 		Rect titleRect = Box.marginRect(headerRect, TITLE_WIDTH_MARGIN_DELTA,
 				TITLE_HEIGHT_MARGIN_DELTA);
@@ -249,34 +252,34 @@ public class GridViewDraw extends Drawable {
 		// Draws standard lines (5 by default)
 		for (int i = 0; i < STANDARD_NOTATION_LINES_NUMBER; i++) {
 			canvas.drawLine(clefRect.left, 
-					clefRect.top + (i + STRING_SHIFT) * standardLineMargin, 
+					clefRect.top + (i + STRING_SHIFT) * standardLineMargin + MARGIN*leftTopRect.width(), 
 					sheetRect.right, 
 					sheetRect.top + (i + STRING_SHIFT) * standardLineMargin, 
 					paint);
 		}
 
 		// Draws G clef bitmap
-		canvas.drawBitmap(clefDeSol, clefRect.left + 2 * HARD_LINE_WIDTH, clefRect.top, paint);
+		canvas.drawBitmap(clefDeSol, clefRect.left + 2 * HARD_LINE_WIDTH, clefRect.top + clefDeSol.getHeight()/30, paint);
 
 		paint.setColor(Color.rgb(255, 140, 0));
 		paint.setStrokeWidth(CURSOR_WIDTH);
 		// Draws the cursor
 		canvas.drawLine(clefRect.right, clefRect.top, clefRect.right,
-				clefRect.bottom, paint);
+				nutRect.bottom, paint);
 	}
 
 	private void drawTablatureGrid(Canvas canvas) {
 		paint.setColor(Color.BLACK);
 		paint.setStrokeWidth(THIN_LINE_WIDTH);
-		paint.setTextSize(TUNING_TEXT_SIZE);
+		paint.setTextSize(textSize);
 		for (int i = 0; i < myInstrument.getNumOfStrings(); i++) {
 			canvas.drawLine(nutRect.left, nutRect.top + (i + STRING_SHIFT)
 					* tabLineMargin, neckRect.right, neckRect.top
 					+ (i + STRING_SHIFT) * tabLineMargin, paint);
 			canvas.drawText(stantardTuning[i].toString(), nutRect.left
-					- TUNING_TEXT_SIZE, nutRect.top
+					- textSize, nutRect.top
 					+ ((i + STRING_SHIFT) * tabLineMargin)
-					+ (TUNING_TEXT_SIZE * STRING_SHIFT_BOTTOM), paint);
+					+ (textSize * STRING_SHIFT_BOTTOM), paint);
 		}
 		
 		paint.setColor(Color.RED);

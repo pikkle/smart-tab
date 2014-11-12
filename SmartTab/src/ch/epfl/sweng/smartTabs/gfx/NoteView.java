@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.Typeface;
 import android.view.View;
 import ch.epfl.sweng.smartTabs.activity.DisplayActivity;
 import ch.epfl.sweng.smartTabs.music.Duration;
@@ -21,7 +22,7 @@ import ch.epfl.sweng.smartTabs.music.Time;
 
 public class NoteView extends View {
 
-	private static final float TAB_TEXT_SIZE = 48f;
+	private final float tabTextSize;
 	private static final int DX = 4;
 	private static final int PACE = 120;
 	
@@ -41,7 +42,8 @@ public class NoteView extends View {
 	private int maxNotes = 0;
 
 	private GridViewDraw mGridView;
-
+	
+	private Typeface font;
 	public NoteView(Context context, Tab tab, Instrument instrument,
 			GridViewDraw gridView) {
 		
@@ -65,7 +67,10 @@ public class NoteView extends View {
 		maxNotes = posX.size();
 		mGridView = gridView;
 		
+		tabTextSize = mGridView.getTabLineMargin()/2;
+		font = Typeface.createFromAsset(context.getAssets(), "fonts/DroidSansMono.ttf");
 		paint.setAntiAlias(true);
+		paint.setTypeface(font);
 		this.setBackground(mGridView);
 	}
 	
@@ -86,12 +91,24 @@ public class NoteView extends View {
 	private void drawTimes(Time time, Canvas canvas) {
 		Rect r = mGridView.getTabRect();
 		float margin = mGridView.getTabLineMargin();
-		paint.setTextSize(TAB_TEXT_SIZE);
+		paint.setTextSize(tabTextSize);
 		float pos = w - posX.get(time.getStep());
 		for (int i = 0; i < myInstrument.getNumOfStrings(); i++) {
 			if (pos > mGridView.getTabLeftRect().left) {
-				float textHeight = r.top + (i+1)*margin - (TAB_TEXT_SIZE/2);
+				float textHeight = r.top + (i+1)*margin - (tabTextSize/1.5f);
+				if (pos > mGridView.getTabLeftRect().left + time.getNote(i).length()*tabTextSize*0.6f) {
+					paint.setColor(Color.WHITE);
+					canvas.drawRect(pos-tabTextSize*0.1f,
+							textHeight-tabTextSize*0.8f,
+							pos+time.getNote(i).length()*tabTextSize*0.8f-tabTextSize*0.1f,
+							textHeight, 
+							paint);
+				}
+				paint.setColor(Color.BLACK);
+				
 				canvas.drawText(time.getNote(i), pos, textHeight, paint);
+				
+				/*
 				if (pos < (w/4 - w/80)) {
 					//paint.setAlpha((int) (pos - 150));
 					paint.setAlpha(150);
@@ -103,6 +120,7 @@ public class NoteView extends View {
 					paint.setFakeBoldText(false);
 					paint.setColor(Color.BLACK);
 				}
+				*/
 			}
 		}
 	}

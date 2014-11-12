@@ -58,7 +58,7 @@ public class Time implements Serializable {
 		try {
 			jsonStep = jsonTime.getInt("step");
 		} catch (JSONException e) {
-			jsonStep = 0;
+			throw new JSONException("The step value is not valid");
 		}
 
 		return new Time(jsonNotes, jsonDuration, jsonMesure, jsonTernary,
