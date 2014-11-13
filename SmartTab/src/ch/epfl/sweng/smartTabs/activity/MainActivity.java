@@ -135,7 +135,7 @@ public class MainActivity extends Activity {
 		protected void onPostExecute(final Map<String, URL> map) {
 			listV = (ListView) findViewById(R.id.list);
 			String [] values = new String[map.size()];
-			if (values.length==0){
+			if (values.length==0) {
 				Toast.makeText(getApplicationContext(), "No Tabs to show", Toast.LENGTH_SHORT).show();
 			}
 			int count = 0;
