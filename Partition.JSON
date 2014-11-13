@@ -69,6 +69,9 @@
         "name": {
             "type": "string"
         }, 
+        "artist":{
+            "type": "string"
+        },
         "complex": {
             "description": "If yes ot no the notes will have additionnal informations like length, count etc...", 
             "type": "boolean"
