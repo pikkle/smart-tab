@@ -72,6 +72,10 @@
         "artist":{
             "type": "string"
         },
+        "tuning":{
+            "type": "array",
+            "description": "Tuning of the guitar"
+        },
         "complex": {
             "description": "If yes ot no the notes will have additionnal informations like length, count etc...", 
             "type": "boolean"
