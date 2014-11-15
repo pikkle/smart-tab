@@ -51,15 +51,19 @@
         </activity>
         <!-- About App Activity -->
         <activity
-            android:name="ch.epfl.sweng.smartTabs.activity.AboutAppActivity"
+            android:name=".activity.AboutAppActivity"
             android:label="@string/title_activity_about_app"
             android:parentActivityName=".activity.PreferencesActivity" >
         </activity>
         <!-- About Developers Activity -->
         <activity
-            android:name="ch.epfl.sweng.smartTabs.activity.AboutDevsActivity"
+            android:name=".activity.AboutDevsActivity"
             android:label="@string/title_activity_about_devs"
             android:parentActivityName=".activity.PreferencesActivity" >
+        </activity>
+        <activity
+            android:name="ch.epfl.sweng.smartTabs.activity.TestActivity"
+            android:label="@string/title_activity_test" >
         </activity>
     </application>
 

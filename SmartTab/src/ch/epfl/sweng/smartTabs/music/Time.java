@@ -40,17 +40,23 @@ public class Time implements Serializable {
 		try {
 			jsonDuration = jsonTime.getString("length");
 		} catch (JSONException e) {
-			throw new JSONException("The length value is not valid");		}
+//			throw new JSONException("The length value is not valid");
+			jsonDuration = "Noir";
+		}
 		int jsonMesure;
 		try {
 			jsonMesure = jsonTime.getInt("measure");
 		} catch (JSONException e) {
-			throw new JSONException("The measure value is not valid");		}
+			//throw new JSONException("The measure value is not valid");
+			jsonMesure = 0;
+		}
 		boolean jsonTernary;
 		try {
 			jsonTernary = jsonTime.getBoolean("ternary");
 		} catch (JSONException e) {
-			throw new JSONException("The ternary value is not valid");		}
+//			throw new JSONException("The ternary value is not valid");
+			jsonTernary = false;
+		}
 		int jsonStep;
 		try {
 			jsonStep = jsonTime.getInt("step");

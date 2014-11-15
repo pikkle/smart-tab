@@ -80,6 +80,24 @@ public class GridViewDraw extends Drawable {
 		mRes = res;
 
 		textSize = mHeight*HEADER_RATIO*0.5f;
+		
+		/*
+		//TODO: set defaults
+		int screenPadding = 0;
+		int headerPadding = 0;
+		int bodyPadding = 0;
+		int footerPadding = 0;
+		float FOOTER_RATIO = 0.1f;
+		
+		// Main boxes
+		Box screenBox = new Box(0, 0, mWidth, mHeight, screenPadding);
+		Box headerBox = new Box(screenBox.left(), screenBox.top(), 
+				screenBox.right(), (int) (screenBox.bottom()*HEADER_RATIO), headerPadding);
+		Box footerBox = new Box(screenBox.left(), (int) (screenBox.top()*FOOTER_RATIO),
+				screenBox.right(), screenBox.bottom(), footerPadding); 
+		Box bodyBox = new Box(screenBox.fLeft(), headerBox.fBottom(),
+				screenBox.fRight(), footerBox.fTop(), bodyPadding);
+		*/
 		// Divides the screen into 2 main boxes: header and body
 		Rect screenRect = new Rect(0, 0, mWidth, mHeight);
 		headerRect = new Rect(screenRect.left, screenRect.top,

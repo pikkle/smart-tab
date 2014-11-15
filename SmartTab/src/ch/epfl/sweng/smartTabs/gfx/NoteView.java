@@ -51,10 +51,9 @@ public class NoteView extends View {
 		myInstrument = instrument;
 		myTab = tab;
 		w = getWidth();
-	
 		
 		// Fill the position of the times according to the durations
-		for (int i = 0; i < tab.length(); i++) {
+		for (int i = 0; i < myTab.length(); i++) {
 			times.add(myTab.getTime(i));
 			if (i==0) {
 				posX.add(0);
