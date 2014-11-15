@@ -78,28 +78,18 @@ public class TablatureView extends View{
 					paint);
 			
 		}
-		posX.add(0);
 		//Adds notes to the grid
-		/*
+		int pos = canvas.getWidth(); //starts at the end of the screen
 		for (int i = 1; i < tab.length(); i++) {
 			double noteDuration = Duration.valueOf(tab.getTime(i).getDuration()).getDuration();
-			posX.add((int) (posX.get(i-1) - PACE*noteDuration));
+			pos += PACE*noteDuration;
+			
 			for (int j = 0; j < instr.getNumOfStrings(); j++) {
-				float textHeight = r.top + (j+1)*margin - (tabTextSize/1.5f);
-				if (pos > mGridView.getTabLeftRect().left + time.getNote(j).length()*tabTextSize*0.6f) {
-					paint.setColor(Color.WHITE);
-					canvas.drawRect(pos-tabTextSize*0.1f,
-							textHeight-tabTextSize*0.8f,
-							pos+time.getNote(j).length()*tabTextSize*0.8f-tabTextSize*0.1f,
-							textHeight, 
-							paint);
-				}
+				float textHeight = (j+1) * tabLineMargin;
 				paint.setColor(Color.BLACK);
-				
-				canvas.drawText(time.getNote(i), pos, textHeight, paint);
+				canvas.drawText(tab.getTime(i).getNote(j), pos, textHeight, paint);
 			}
 		}
-		*/
 		
     }
 }
