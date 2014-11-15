@@ -8,21 +8,113 @@ import java.security.InvalidParameterException;
 import android.graphics.Rect;
 
 /**
- * Gives static functions to Rect
+ * Rect wrapper adding padding to it
  * @author pikkle
  */
-public enum Box{;
+public class Box {
+	private Rect rect;
+	private int padding;
 	
 	/**
-	 * Gives a smaller rectangle within a given one, leaving a margin between them of factor delta
-	 * @param r The rectangle to resize
-	 * @param delta The ratio of the margin (0 <= delta <= 1)
-	 * @return The smaller rectangle centered at the same point
-	 * @throws InvalidParameterException if delta isn't in the given bounds
+	 * Creates a box with the given coordinates and the given padding
+	 * @param left The X coordinate of the left side of the box
+	 * @param top The Y coordinate of the top side of the box
+	 * @param right The X coordinate of the right side of the box
+	 * @param bottom The Y coordinate of the bottom side of the box
+	 * @param padding The padding to apply to the box
+	 * @throws InvalidParameterException when the padding is too  big or if the coordinates are bad (left>right || top>bottom)
 	 */
-	public static Rect marginRect(Rect r, float delta) throws InvalidParameterException {
-		return marginRect(r, delta, delta);
+	public Box(int left, int top, int right, int bottom, int padding) throws InvalidParameterException{
+		if (padding > right-left || padding > bottom-top) {
+			throw new InvalidParameterException("The padding is too high for the rectangle :" +
+					"R(" + left + "," + top + "," + right + "," + bottom +") with padding="+ padding);
+		} else if (left > right || top > bottom) {
+			throw new InvalidParameterException("The values are invalid " + 
+					"R(" + left + "," + top + "," + right + "," + bottom +")");
+		}
+		rect = new Rect(left, top, right, bottom);
 	}
+	
+	/**
+	 * Creates a box with a new padding
+	 * @param b The base box
+	 * @param padding The new padding
+	 */
+	public Box(Box b, int padding) {
+		this(b.fLeft(), b.fTop(), b.fRight(), b.fBottom(), padding);
+	}
+	
+	/**
+	 * Gives the smallest Rectangle that contains both given rectangles
+	 * @param r1 The first rectangle to connect
+	 * @param r2 The second rectangle to connect
+	 * @return The big box that contains both r1 and r2 in it with no padding
+	 */
+	public static Box bigUnion(Box r1, Box r2) {
+		int left = Math.min(r1.left(), r2.left());
+		int top = Math.min(r1.top(), r2.top());
+		int right = Math.max(r1.right(), r2.right());
+		int bottom = Math.max(r1.bottom(), r2.bottom());
+		return new Box(left, top, right, bottom, 0);
+	}
+	
+	/**
+	 * Intersects both rectangles. Returns r1 if they cannot be intersected. Also removes the padding
+	 * @param r1 The first rectangle to intersect
+	 * @param r2 The second rectangle to intersect
+	 * @return The intersection rectangle
+	 */
+	public static Box intersection(Box r1, Box r2) {
+		Box r = new Box(r1, 0);
+		r.rect.intersect(r2.rect);
+		return r;
+	}
+	
+	/**
+	 * Sets a new padding
+	 * @param padding
+	 */
+	public void setPadding(int padding) throws InvalidParameterException{
+		if (padding > rect.right-rect.left || padding > rect.bottom-rect.top) {
+			throw new InvalidParameterException("The padding is too high for the rectangle " +
+					"R(" + rect.left + "," + rect.top + "," + rect.right + "," + rect.bottom +") with padding: "+ padding);
+		}
+	}
+	public int left() {
+		return rect.left+padding;
+	}
+	public int top() {
+		return rect.top+padding;
+	}
+	public int right() {
+		return rect.right-padding;
+	}
+	public int bottom() {
+		return rect.bottom-padding;
+	}
+	public int fLeft() {
+		return rect.left;
+	}
+	public int fTop() {
+		return rect.top;
+	}
+	public int fRight() {
+		return rect.right;
+	}
+	public int fBottom() {
+		return rect.bottom;
+	}
+	public void moveBy(int dx, int dy) {
+		rect.left += dx;
+		rect.top += dy;
+		rect.right += dx;
+		rect.bottom += dy;
+	}
+	
+	public String toString() {
+		return "Rectangle: (" + rect.toString() +"); padding: " + padding;
+	}
+	
 	
 	/**
 	 * Gives a smaller rectangle within a given one, leaving a margin between them of factor delta

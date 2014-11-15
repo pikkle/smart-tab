@@ -16,6 +16,7 @@ import ch.epfl.sweng.smartTabs.gfx.GridViewDraw;
 import ch.epfl.sweng.smartTabs.gfx.NoteView;
 import ch.epfl.sweng.smartTabs.gfx.TabAnimationThread;
 import ch.epfl.sweng.smartTabs.music.Instrument;
+import ch.epfl.sweng.smartTabs.music.Note;
 import ch.epfl.sweng.smartTabs.music.NotePlaybackThread;
 import ch.epfl.sweng.smartTabs.music.SampleMap;
 import ch.epfl.sweng.smartTabs.music.Tab;
@@ -26,16 +27,17 @@ import ch.epfl.sweng.smartTabs.music.Time;
  * The activity which displays the tabs and handle the animation
  */
 public class DisplayActivity extends Activity {
-	private final int maxStreams = 39;
+	private final int maxStreams = 50;
 
+	// TODO : Should be final
 	private NoteView n;
 	private static SoundPool pool;
 	private static SampleMap map;
 	private static NotePlaybackThread playbackThread;
+	private static final int DELAY = 2000;
 
 	private GridViewDraw mDrawable;
 	private TabAnimationThread thread;
-	private Thread initSampleMapThread;
 
 	private boolean backPressedOnce = false;
 
@@ -44,7 +46,8 @@ public class DisplayActivity extends Activity {
 		super.onCreate(savedInstanceState);
 
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+		this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
 		Intent intent = getIntent();
 		Tab tab = (Tab) intent.getExtras().getSerializable("tab");
@@ -54,6 +57,8 @@ public class DisplayActivity extends Activity {
 		display.getSize(size);
 		int width = size.x;
 		int height = size.y;
+		
+		
 		mDrawable = new GridViewDraw(width, height, Instrument.GUITAR, tab, getResources());
 
 		n = new NoteView(this, tab, Instrument.GUITAR, mDrawable);
@@ -61,20 +66,10 @@ public class DisplayActivity extends Activity {
 		
 		setContentView(n);
 
-		initSampleMapThread = new Thread(new Runnable() {
+		// TODO : The new thread was useless
+		map = new SampleMap(getApplicationContext(),
+						pool, n.getTuning());
 
-			@Override
-			public void run() {
-				map = new SampleMap(getApplicationContext(),
-						pool);
-			}
-		});
-		initSampleMapThread.start();
-		try {
-			initSampleMapThread.join();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
 
 		thread = new TabAnimationThread(n);
 		thread.start();
@@ -105,7 +100,7 @@ public class DisplayActivity extends Activity {
 				public void run() {
 					backPressedOnce = false;
 				}
-			}, 2000);
+			}, DELAY);
 		}
 	}
 
@@ -113,13 +108,8 @@ public class DisplayActivity extends Activity {
 	 * This method plays the notes contained in the Time object.
 	 * @param time is the Time object containing the notes to play
 	 */
-	public static void playNote(final Time time) {
-		playbackThread = new NotePlaybackThread(pool, map, time);
+	public void playNote(final Time time, Note[] tuning) {
+		playbackThread = new NotePlaybackThread(pool, map, time, tuning);
 		playbackThread.start();
-		try {
-			playbackThread.join();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
 	}
 }
