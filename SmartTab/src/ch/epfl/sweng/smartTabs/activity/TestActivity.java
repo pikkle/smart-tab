@@ -53,6 +53,23 @@ public class TestActivity extends Activity {
 		headerView.setTitle(tab.getTabName());
 		tablatureView.setTab(tab);
 		tablatureView.setInstrument(Instrument.GUITAR);
+		
+		// Basic scrolling
+		Thread t = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				while(true) {
+					tablatureView.scrollBy(10, 0);
+					try {
+						Thread.sleep(10);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+		});
+		t.start();
 	}
 
 	@Override
