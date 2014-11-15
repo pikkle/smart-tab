@@ -24,7 +24,6 @@ public class SampleMap {
 		noteMap[4][7]  = getSampleId(3, 2);				//E2
 		noteMap[5][12] = getSampleId(3, 2);				//E2
 		noteMap[5][0] = pool.load(a, R.raw.e1, 1);		//E1
-
 		noteMap[0][1] = pool.load(a, R.raw.f3, 1);		//F3
 		noteMap[0][2] = pool.load(a, R.raw.fd3, 1);		//F#3
 		noteMap[0][13] = pool.load(a, R.raw.f4, 1);		//F4

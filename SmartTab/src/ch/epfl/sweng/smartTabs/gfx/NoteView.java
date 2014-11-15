@@ -84,17 +84,25 @@ public class NoteView extends View {
 	private void drawTimes(Time time, Canvas canvas) {
 		Rect r = mGridView.getTabRect();
 		float margin = mGridView.getTabLineMargin();
+		float standardMargin = mGridView.getStandardLineMargin();
 		paint.setTextSize(TAB_TEXT_SIZE);
 		double pos = w - posX.get(time.getStep() % numNotes);
-		Bitmap noteNoire = BitmapFactory.decodeResource(getResources(), R.raw.cledesol);
-		//noteNoire = Bitmap.createScaledBitmap(noteNoire, ???standardWidth, ???standardHeight, false);
+		Bitmap noteNoire = BitmapFactory.decodeResource(getResources(), R.raw.noire);
+		noteNoire = Bitmap.createScaledBitmap(noteNoire, (int)mGridView.getStandardLineMargin()/4, (int)mGridView.getStandardLineMargin(), false);
 		noteNoire = Bitmap.createBitmap(noteNoire);
 		for (int i = 0; i < myInstrument.getNumOfStrings(); i++) {
 			if (pos > mGridView.getTabLeftRect().left) {
+				//Note note = tuning[i].addHalfTone(Integer.parseInt(time.getNote(i)));
+				System.out.println("time get note : (" + time.getNote(i) + ")");
+				if(!time.getNote(i).equals("")){
+					System.out.println("je passe dans le if");
+					Note note = tuning[i].addHalfTone(7);
+					System.out.println(Integer.parseInt(time.getNote(i)));
+					canvas.drawBitmap(noteNoire, w - posX.get(time.getStep() % 18), mGridView.getStandardRect().top + note.getHeight().getIndex()*standardMargin, paint);
+				}
 				float textHeight = r.top + i*margin - (TAB_TEXT_SIZE/2);
 				canvas.drawText(time.getNote(i), w - posX.get(time.getStep() % 18), textHeight, paint);
 				//canvas.drawBitmap(noteNoire, clefRect.left + 2 * HARD_LINE_WIDTH, clefRect.top, paint);
-				//canvas.drawBitmap(noteNoire, w - posX[time.getStep() % 18], top, paint);
 				if(pos < (w/4 - w/80)) {
 					//paint.setAlpha((int) (pos - 150));
 					paint.setAlpha(150);
