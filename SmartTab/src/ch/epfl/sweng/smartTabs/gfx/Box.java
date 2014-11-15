@@ -11,7 +11,7 @@ import android.graphics.Rect;
  * Gives static functions to Rect
  * @author pikkle
  */
-public enum Box{;
+public class Box{;
 	
 	/**
 	 * Gives a smaller rectangle within a given one, leaving a margin between them of factor delta
@@ -20,9 +20,11 @@ public enum Box{;
 	 * @return The smaller rectangle centered at the same point
 	 * @throws InvalidParameterException if delta isn't in the given bounds
 	 */
-	public static Rect marginRect(Rect r, float delta) throws InvalidParameterException {
+	/*public static Rect marginRect(Rect r, float delta) throws InvalidParameterException {
 		return marginRect(r, delta, delta);
-	}
+		
+		Math m = 
+	}*/
 	
 	/**
 	 * Gives a smaller rectangle within a given one, leaving a margin between them of factor delta

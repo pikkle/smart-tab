@@ -34,6 +34,7 @@ public class DisplayActivity extends Activity {
 	private static SoundPool pool;
 	private static SampleMap map;
 	private static NotePlaybackThread playbackThread;
+	private static final int DELAY = 2000;
 
 	private GridViewDraw mDrawable;
 	private TabAnimationThread thread;
@@ -99,7 +100,7 @@ public class DisplayActivity extends Activity {
 				public void run() {
 					backPressedOnce = false;
 				}
-			}, 2000);
+			}, DELAY);
 		}
 	}
 
