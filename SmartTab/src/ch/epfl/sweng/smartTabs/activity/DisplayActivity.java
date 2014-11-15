@@ -111,10 +111,5 @@ public class DisplayActivity extends Activity {
 	public void playNote(final Time time, Note[] tuning) {
 		playbackThread = new NotePlaybackThread(pool, map, time, tuning);
 		playbackThread.start();
-		try {
-			playbackThread.join();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
 	}
 }
