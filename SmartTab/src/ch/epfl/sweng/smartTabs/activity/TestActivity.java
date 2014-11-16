@@ -31,6 +31,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 import android.widget.LinearLayout.LayoutParams;
@@ -59,6 +60,9 @@ public class TestActivity extends Activity {
 	private static final int DELAY = 2000;
 	
 	private int playingPosition = 125; //Position of the time to play (Intital value corresponds to the future cursor position)
+	private TablatureView tablatureView;
+	private MusicSheetView musicSheetView;
+	private HorizontalScrollView scroller;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -77,14 +81,18 @@ public class TestActivity extends Activity {
 		contentWrapper = (LinearLayout) (this.findViewById(R.id.contentWrapper));
 		bodyWrapper = (LinearLayout) (this.findViewById(R.id.bodyWrapper));
 		musicWrapper = (LinearLayout) (this.findViewById(R.id.musicWrapper));
+		//scroller = (HorizontalScrollView) (this.findViewById(R.id.scroller));
 		
 		headerView = new HeaderView(getBaseContext(), tab.getTabName());
 		footerView = new FooterView(getBaseContext());
+		tablatureView = new TablatureView(getBaseContext(), tab, Instrument.GUITAR, PACE);
+		musicSheetView = new MusicSheetView(getBaseContext(), tab);
 		
-		scrollingView = new ScrollingView(getBaseContext(), tab, Instrument.GUITAR, PACE);
 		cursorView = new CursorView(getBaseContext());
 		
-		musicWrapper.addView(scrollingView, weight(1));
+		musicWrapper.addView(musicSheetView, weight(4));
+		musicWrapper.addView(tablatureView, weight(6));		
+		//musicWrapper.addView(scrollingView, weight(1));
 		bodyWrapper.addView(footerView, weight(1));
 		contentWrapper.addView(headerView, 0, weight(1));
 		wrapper.addView(cursorView);
@@ -95,8 +103,8 @@ public class TestActivity extends Activity {
 			@Override
 			public void run() {
 				while(true) {
-					if (running && !scrollingView.isTerminated()) {
-						scrollingView.scrollBy(1, 0);
+					if (running && tablatureView.isTerminated()) {
+						tablatureView.scrollBy(1, 0);
 						playingPosition++;		//increment the position at which we want to look for a time to play
 					}
 					
