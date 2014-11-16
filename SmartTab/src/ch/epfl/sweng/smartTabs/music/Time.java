@@ -20,9 +20,10 @@ public class Time implements Serializable {
 	private final int mStep;
 	private final static int NUMCHORDS = 6;
 	private final static Note[] tuning = {
-		new Note(3, Height.E), new Note(2, Height.B),
-		new Note(2, Height.G), new Note(2, Height.D), 
-		new Note(1, Height.A), new Note(1, Height.E)
+		new Note(Height.E, 3), new Note(Height.B, 2),
+		new Note(Height.G, 2), new Note(Height.D, 2), 
+		new Note(Height.A, 1), new Note(Height.E, 1)
+
 	};
 
 	public Time(String[] notes, Note[] partitionNotes, String duration, int mesure, boolean ternary,
