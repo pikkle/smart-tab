@@ -150,5 +150,4 @@ public class NoteView extends View {
 	public int getMaxNotes() {
 		return maxNotes;
 	}
-
 }

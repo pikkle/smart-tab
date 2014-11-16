@@ -1,18 +1,12 @@
-/**
- * 
- */
 package ch.epfl.sweng.smartTabs.gfx;
 
-import ch.epfl.sweng.smartTabs.R;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.util.AttributeSet;
 import android.view.View;
-import android.view.animation.AnimationUtils;
-import android.widget.LinearLayout;
+
 
 /**
  * @author pikkle
@@ -21,6 +15,8 @@ import android.widget.LinearLayout;
 public class FooterView extends View{
 	private boolean displayed = true;
 	private Paint paint;
+	// TODO : fix this issue
+	@SuppressWarnings("unused")
 	private Resources res;
 
 	/**
