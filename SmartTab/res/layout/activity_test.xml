@@ -21,15 +21,16 @@
 	        android:orientation="vertical"
 	        tools:ignore="UselessParent" >
 	    	
-	        <LinearLayout
-	            android:id="@+id/musicWrapper"
-	            android:layout_width="fill_parent"
-	            android:layout_height="0dp"
-	            android:layout_weight="@integer/musicWraperRatio"
-	            android:orientation="vertical"
-	            tools:ignore="NestedWeights" >
-	
-			</LinearLayout>
+	            
+		        <LinearLayout
+		            android:id="@+id/musicWrapper"
+		            android:layout_width="wrap_content"
+		            android:layout_height="fill_parent"
+		            android:orientation="vertical"
+		            tools:ignore="NestedWeights" >
+		
+				</LinearLayout>
+				
 			
 	    </LinearLayout>
 	    

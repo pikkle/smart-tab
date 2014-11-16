@@ -16,8 +16,7 @@ public class ScrollingView extends HorizontalScrollView{
 
 	public ScrollingView(Context context, Tab tab, Instrument instr, int pace) {
 		super(context);
-		tablatureView = new TablatureView(context, tab, instr, pace);
-		musicSheetView = new MusicSheetView(context, tab);
+		
 	}
 
 	public boolean isTerminated() {
