@@ -12,7 +12,7 @@ import org.json.JSONObject;
 /**
  * @author chrisgaubla
  */
-public final class Tab implements Serializable{
+public final class Tab implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
