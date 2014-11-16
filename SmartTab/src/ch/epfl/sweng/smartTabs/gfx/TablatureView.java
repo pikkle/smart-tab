@@ -3,22 +3,18 @@
  */
 package ch.epfl.sweng.smartTabs.gfx;
 
-import java.util.ArrayList;
-
-import ch.epfl.sweng.smartTabs.music.Duration;
-import ch.epfl.sweng.smartTabs.music.Height;
-import ch.epfl.sweng.smartTabs.music.Instrument;
-import ch.epfl.sweng.smartTabs.music.Tab;
-import ch.epfl.sweng.smartTabs.music.Time;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.util.AttributeSet;
 import android.view.View;
 import android.view.WindowManager;
+import ch.epfl.sweng.smartTabs.music.Duration;
+import ch.epfl.sweng.smartTabs.music.Height;
+import ch.epfl.sweng.smartTabs.music.Instrument;
+import ch.epfl.sweng.smartTabs.music.Tab;
 
 /**
  * @author pikkle
@@ -56,6 +52,7 @@ public class TablatureView extends View{
 		super.onDraw(canvas);
 		
 		float textSize = canvas.getHeight()*0.1f;
+		int startingPos = canvas.getWidth()*1/4; //Display initially starts at 1/4 of the screen width
 		int tabLineMargin = (int) (canvas.getHeight()/(instr.getNumOfStrings()+1));
 		paint.setColor(Color.BLACK);
 		paint.setStrokeWidth(THIN_LINE_WIDTH);
@@ -64,20 +61,20 @@ public class TablatureView extends View{
 		for (int i = 1; i <= instr.getNumOfStrings(); i++) { //Draws the grid
 			paint.setStrokeWidth(i+1);
 			canvas.drawLine(
-					canvas.getWidth()*3/4, 
+					startingPos, 
 					i * tabLineMargin, 
 					endOfTab, //TODO: calculate size of tab
 					i * tabLineMargin, 
 					paint);
 			paint.getTextBounds(stantardTuning[i-1].toString(), 0, stantardTuning[i-1].toString().length(), textRect);
 			canvas.drawText(stantardTuning[i-1].toString(),
-					canvas.getWidth()*3/4 - textSize, 
+					startingPos - textSize, 
 					i * tabLineMargin - textRect.centerY(), 
 					paint);
 		}
 		
 		//Adds notes to the grid
-		int pos = canvas.getWidth(); //starts at the end of the screen
+		int pos = startingPos + 100;
 		Rect noteRect = new Rect();
 		for (int i = 0; i < tab.length(); i++) {
 			double noteDuration = Duration.valueOf(tab.getTime(i).getDuration()).getDuration();

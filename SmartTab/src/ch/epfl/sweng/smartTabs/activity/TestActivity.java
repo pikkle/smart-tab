@@ -113,9 +113,9 @@ public class TestActivity extends Activity {
 		Thread t2 = new Thread(new Runnable() {
 			
 			Note[] tuning = {
-					new Note(3, Height.E), new Note(2, Height.B),
-					new Note(2, Height.G), new Note(2, Height.D), 
-					new Note(1, Height.A), new Note(1, Height.E)
+					new Note(Height.E, 3), new Note(Height.B, 2),
+					new Note(Height.G, 2), new Note(Height.D, 2), 
+					new Note(Height.A, 1), new Note(Height.E, 1)
 			};
 			SampleMap map = new SampleMap(getApplicationContext(),pool, tuning);
 			@Override
