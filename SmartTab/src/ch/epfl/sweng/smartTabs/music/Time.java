@@ -45,7 +45,7 @@ public class Time implements Serializable {
 			jsonNotes[i - 1] = jsonTime.getString(corde);
 			if(!jsonNotes[i - 1].equals("")) {
 				int fretNumber = Integer.parseInt(jsonNotes[i - 1]);
-				partitionNotes[i - 1] = tuning[i].addHalfTones(fretNumber);
+				partitionNotes[i - 1] = tuning[i - 1].addHalfTones(fretNumber);
 			}
 		}
 		String jsonDuration;
@@ -82,6 +82,10 @@ public class Time implements Serializable {
 
 	public String getNote(int string) {
 		return mTabNotes[string];
+	}
+	
+	public Note getPartitionNote(int index) {
+		return mPartitionNotes[index];
 	}
 
 	public String getDuration() {

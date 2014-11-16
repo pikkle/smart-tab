@@ -1,5 +1,7 @@
 package ch.epfl.sweng.smartTabs.music;
 
+import java.io.Serializable;
+
 import android.annotation.SuppressLint;
 
 /**
@@ -7,7 +9,7 @@ import android.annotation.SuppressLint;
  * A note represents the a musical note, with its height and octave
  */
 
-public class Note {
+public class Note implements Serializable {
 	private final int myOctave;
 	private final Height myHeight;
 	@SuppressWarnings("unused")

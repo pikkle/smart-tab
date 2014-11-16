@@ -78,7 +78,7 @@ public class TestActivity extends Activity {
 		
 		headerView = new HeaderView(getBaseContext(), tab.getTabName());
 		footerView = new FooterView(getBaseContext());
-		musicSheetView = new MusicSheetView(getBaseContext());
+		musicSheetView = new MusicSheetView(getBaseContext(), tab);
 		tablatureView = new TablatureView(getBaseContext(), tab, Instrument.GUITAR, PACE);
 		cursorView = new CursorView(getBaseContext());
 		
