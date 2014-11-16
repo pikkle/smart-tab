@@ -13,13 +13,13 @@ public class Note {
 	@SuppressWarnings("unused")
 	private final Duration myDuration;
 	
-	public Note(int octave, Height height, Duration duration) {
+	public Note(Height height, int octave, Duration duration) {
 		myOctave = octave;
 		myHeight = height;
 		myDuration = duration;
 	}
 	
-	public Note(int octave, Height height) {
+	public Note(Height height, int octave) {
 		myOctave = octave;
 		myHeight = height;
 		// by default
@@ -30,7 +30,7 @@ public class Note {
 		int index = this.myHeight.getIndex();
 		int newOct = myOctave + ((index + delta) / Height.getMax());
 		Height height =  this.myHeight.get((index + delta) % Height.getMax());		
-		return new Note(newOct, height);	
+		return new Note(height, newOct);	
 	}
 	
 	public Height getHeight() {
