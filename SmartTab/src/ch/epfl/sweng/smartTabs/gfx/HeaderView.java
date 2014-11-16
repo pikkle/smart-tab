@@ -19,25 +19,22 @@ import android.view.View;
 public class HeaderView extends View{
 	private Resources res;
 	private Paint paint;
-	private String mTitle = "";
+	private String mTitle;
 	
 	/**
 	 * @param context
 	 * @param attrs
 	 */
-	public HeaderView(Context context, AttributeSet attrs) {
-		super(context, attrs);
+	public HeaderView(Context context, String title) {
+		super(context);
 		paint = new Paint();
 		res = context.getResources();
-	}
-	
-	public void setTitle(String title) {
 		mTitle = title;
 	}
 	
 	@Override
     protected void onDraw(Canvas canvas) {
-		//drawDebugBox(canvas);
+		drawDebugBox(canvas);
 		float textSize = canvas.getHeight()*0.6f;
 		paint.setTextSize(textSize);
 		paint.setAlpha(255);

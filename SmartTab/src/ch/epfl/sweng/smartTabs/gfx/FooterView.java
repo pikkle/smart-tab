@@ -27,8 +27,8 @@ public class FooterView extends View{
 	 * @param context
 	 * @param attrs
 	 */
-	public FooterView(Context context, AttributeSet attrs) {
-		super(context, attrs);
+	public FooterView(Context context) {
+		super(context);
 		paint = new Paint();
 		res = context.getResources();
 	}
@@ -46,20 +46,6 @@ public class FooterView extends View{
 		canvas.drawText("Footer !", 0, canvas.getHeight()/2+textSize/2, paint);
 		
     }
-	
-	public void hide() {
-		displayed = false;
-		LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) getLayoutParams();
-		params.weight = 0;
-		setLayoutParams(params);
-	}
-	
-	public void show() {
-		displayed = true;
-		LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) getLayoutParams();
-		params.weight = res.getInteger(R.integer.footerRatio);
-		setLayoutParams(params);
-	}
 
 	public boolean isDisplayed() {
 		return displayed;
