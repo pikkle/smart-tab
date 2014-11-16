@@ -34,9 +34,9 @@ public class NoteView extends View {
 	private int w;
 	
 	private Note[] tuning = {
-			new Note(3, Height.E), new Note(2, Height.B),
-			new Note(2, Height.G), new Note(2, Height.D), 
-			new Note(1, Height.A), new Note(1, Height.E)
+			new Note(Height.E, 3), new Note(Height.B, 2),
+			new Note(Height.G, 2), new Note(Height.D, 2), 
+			new Note(Height.A, 1), new Note(Height.E, 1)
 	};
 	
 	private int maxNotes = 0;
