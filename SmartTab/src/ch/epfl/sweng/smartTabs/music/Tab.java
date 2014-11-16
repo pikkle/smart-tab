@@ -22,21 +22,15 @@ public final class Tab implements Serializable{
 	private final List<String> mSignatures;
 	private final List<Time> mTimeList;
 	private final HashMap<Float, Time> mTimeMap = new HashMap<Float, Time>(); //maps time with the place it is in time
-
+	private final int pace = 200;
+	
 	private Tab(String tabName, boolean complex, int tempo,
 			List<String> signatures, List<Time> timeList) {
 		mTabName = tabName;
 		mComplex = complex;
 		mTempo = tempo;
 		mSignatures = signatures;
-		mTimeList = timeList;
-		
-		float clock = 0;
-		for (int i = 0; i < timeList.size(); i++) {
-			double dur = Duration.valueOf(timeList.get(i).getDuration()).getDuration();
-			mTimeMap.put(Float.valueOf((float) (clock+dur)), timeList.get(i));
-			clock += dur;
-		}
+		mTimeList = timeList;		
 	}
 
 	public static Tab parseTabFromJSON(JSONObject jsonTab) throws JSONException {
@@ -63,6 +57,22 @@ public final class Tab implements Serializable{
 			parsedTimeList.add(jsonTime);
 		}
 		return new Tab(jsonTabName, jsonComplex, jsonTempo, parsedSignatures, parsedTimeList);
+	}
+	
+	/**
+	 * This method is used to initialise the timeMap.
+	 * The purpose of this method is to synchronise the positions in the map
+	 *  with the position of the first time in TablatureView
+	 * @param firstPos the position of the first time in the TablatureView
+	 */
+	public void initTimeMap(int firstPos){
+		float timePos = firstPos; 							//Position of the time (initial value equal to the position of the first time)
+		mTimeMap.put(timePos, mTimeList.get(0)); 			//init the first item of the map
+		for (int i = 1; i < mTimeList.size(); i++) {
+			double dur = Duration.valueOf(mTimeList.get(i-1).getDuration()).getDuration();
+			timePos += dur*pace;							//Position of the current time is the pos. of the previous time + the distance between them (dur*pace)
+			mTimeMap.put(Float.valueOf((float) timePos), mTimeList.get(i));
+		}
 	}
 
 	public String getTabName() {
@@ -91,5 +101,9 @@ public final class Tab implements Serializable{
 	
 	public Time getTimeAt(float time) {
 		return mTimeMap.get(Float.valueOf(time));
+	}
+	
+	public boolean timeMapContains(float key) {
+		return mTimeMap.containsKey(key);
 	}
 }

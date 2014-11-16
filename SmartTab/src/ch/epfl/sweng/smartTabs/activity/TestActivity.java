@@ -58,6 +58,8 @@ public class TestActivity extends Activity {
 	private SoundPool pool = new SoundPool(50, AudioManager.STREAM_MUSIC, 0);
 	private static final int DELAY = 2000;
 	
+	private int playingPosition = 125; //Position of the time to play (Intital value corresponds to the future cursor position)
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -96,7 +98,7 @@ public class TestActivity extends Activity {
 				while(true) {
 					if (running && !tablatureView.isTerminated()) {
 						tablatureView.scrollBy(1, 0);
-						
+						playingPosition++;		//increment the position at which we want to look for a time to play
 					}
 					
 					try {
@@ -121,8 +123,8 @@ public class TestActivity extends Activity {
 			@Override
 			public void run() {
 				while(true) {
-					if (tablatureView.getScrollX() % (PACE*SMALLEST_DURATION)== 0) {
-						Time t = tab.getTimeAt(tablatureView.getScrollX()/(PACE*SMALLEST_DURATION));
+					if (tab.timeMapContains(playingPosition)) {
+						Time t = tab.getTimeAt(playingPosition);
 						if (t != null) {
 							for (int i = 0; i < (Instrument.GUITAR).getNumOfStrings(); i++) {
 								String fret = t.getNote(i);
@@ -188,7 +190,7 @@ public class TestActivity extends Activity {
 			pool.release();
 		} else {
 			backPressedOnce = true;
-			Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, "Press BACK again to exit", Toast.LENGTH_SHORT).show();
 			
 			new Handler().postDelayed(new Runnable() {
 
