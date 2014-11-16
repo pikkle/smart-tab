@@ -183,7 +183,7 @@ public class MainActivity extends Activity {
 
 		@Override
 		protected void onPostExecute(final Tab tab) {
-			Intent i = new Intent(MainActivity.this, TestActivity.class);
+			Intent i = new Intent(MainActivity.this, DisplayActivity.class);
 			i.putExtra("tab", tab);
 			startActivity(i);
 		}
