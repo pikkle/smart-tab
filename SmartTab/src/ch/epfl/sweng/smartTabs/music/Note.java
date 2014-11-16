@@ -1,11 +1,16 @@
 package ch.epfl.sweng.smartTabs.music;
 
+import android.annotation.SuppressLint;
+
 /**
  * @author Faton Ramadani
+ * A note represents the a musical note, with its height and octave
  */
+
 public class Note {
 	private final int myOctave;
 	private final Height myHeight;
+	@SuppressWarnings("unused")
 	private final Duration myDuration;
 	
 	public Note(int octave, Height height, Duration duration) {
@@ -28,9 +33,6 @@ public class Note {
 		return new Note(newOct, height);	
 	}
 	
-<<<<<<< HEAD
-}
-=======
 	public Height getHeight() {
 		return myHeight;
 	}
@@ -38,9 +40,9 @@ public class Note {
 	public int getOctave() {
 		return myOctave;
 	}
-	public String toString(){
+	// TODO : fix this
+	@SuppressLint("DefaultLocale") 
+	public String toString() { 
 		return myHeight.name().toLowerCase()+myOctave;
 	}
-
 }
->>>>>>> 0fb9309ac2a47715a12834b45bf97ed21139619f

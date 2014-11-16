@@ -15,7 +15,7 @@
     </PreferenceCategory>
     
     
-    <PreferenceCategory android:title="@string/title_about" >
+    <PreferenceCategory android:title="@string/title_activity_help" >
         <Preference 
             android:title="@string/title_about_dev" 
             android:key="pref_abt_dev"></Preference>

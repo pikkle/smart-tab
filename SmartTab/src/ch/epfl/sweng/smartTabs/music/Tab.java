@@ -2,6 +2,7 @@ package ch.epfl.sweng.smartTabs.music;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.json.JSONArray;
@@ -20,6 +21,7 @@ public final class Tab implements Serializable{
 	private final int mTempo;
 	private final List<String> mSignatures;
 	private final List<Time> mTimeList;
+	private final HashMap<Float, Time> mTimeMap = new HashMap<Float, Time>(); //maps time with the place it is in time
 
 	private Tab(String tabName, boolean complex, int tempo,
 			List<String> signatures, List<Time> timeList) {
@@ -28,6 +30,13 @@ public final class Tab implements Serializable{
 		mTempo = tempo;
 		mSignatures = signatures;
 		mTimeList = timeList;
+		
+		float clock = 0;
+		for (int i = 0; i < timeList.size(); i++) {
+			double dur = Duration.valueOf(timeList.get(i).getDuration()).getDuration();
+			mTimeMap.put(Float.valueOf((float) (clock+dur)), timeList.get(i));
+			clock += dur;
+		}
 	}
 
 	public static Tab parseTabFromJSON(JSONObject jsonTab) throws JSONException {
@@ -79,5 +88,8 @@ public final class Tab implements Serializable{
 	public Time getTime(int index) {
 		return mTimeList.get(index);
 	}
-
+	
+	public Time getTimeAt(float time) {
+		return mTimeMap.get(Float.valueOf(time));
+	}
 }

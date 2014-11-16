@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="headerRatio">1</integer>
+    <integer name="bodyRatio">9</integer>
+    <integer name="musicWraperRatio">9</integer>
+    <integer name="footerRatio">1</integer>
+    <integer name="musicSheetRatio">4</integer>
+    <integer name="tablatureRatio">6</integer>
+    
+</resources>
