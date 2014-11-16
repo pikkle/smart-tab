@@ -22,8 +22,8 @@ public class MusicSheetView extends View{
 	 * @param context
 	 * @param attrs
 	 */
-	public MusicSheetView(Context context, AttributeSet attrs) {
-		super(context, attrs);
+	public MusicSheetView(Context context) {
+		super(context);
 		paint = new Paint();
 	}
 
