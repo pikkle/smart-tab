@@ -8,6 +8,7 @@ import ch.epfl.sweng.smartTabs.gfx.CursorView;
 import ch.epfl.sweng.smartTabs.gfx.FooterView;
 import ch.epfl.sweng.smartTabs.gfx.HeaderView;
 import ch.epfl.sweng.smartTabs.gfx.MusicSheetView;
+import ch.epfl.sweng.smartTabs.gfx.ScrollingView;
 import ch.epfl.sweng.smartTabs.gfx.TablatureView;
 import ch.epfl.sweng.smartTabs.music.Height;
 import ch.epfl.sweng.smartTabs.music.Instrument;
@@ -38,8 +39,7 @@ import android.widget.RelativeLayout;
 public class TestActivity extends Activity {
 	private HeaderView headerView;
 	private FooterView footerView;
-	private MusicSheetView musicSheetView;
-	private TablatureView tablatureView;
+	private ScrollingView scrollingView;
 	private CursorView cursorView;
 	
 	private RelativeLayout wrapper;
@@ -80,12 +80,11 @@ public class TestActivity extends Activity {
 		
 		headerView = new HeaderView(getBaseContext(), tab.getTabName());
 		footerView = new FooterView(getBaseContext());
-		musicSheetView = new MusicSheetView(getBaseContext());
-		tablatureView = new TablatureView(getBaseContext(), tab, Instrument.GUITAR, PACE);
+		
+		scrollingView = new ScrollingView(getBaseContext(), tab, Instrument.GUITAR, PACE);
 		cursorView = new CursorView(getBaseContext());
 		
-		musicWrapper.addView(musicSheetView, weight(4));
-		musicWrapper.addView(tablatureView, weight(6));
+		musicWrapper.addView(scrollingView, weight(1));
 		bodyWrapper.addView(footerView, weight(1));
 		contentWrapper.addView(headerView, 0, weight(1));
 		wrapper.addView(cursorView);
@@ -96,8 +95,8 @@ public class TestActivity extends Activity {
 			@Override
 			public void run() {
 				while(true) {
-					if (running && !tablatureView.isTerminated()) {
-						tablatureView.scrollBy(1, 0);
+					if (running && !scrollingView.isTerminated()) {
+						scrollingView.scrollBy(1, 0);
 						playingPosition++;		//increment the position at which we want to look for a time to play
 					}
 					
