@@ -30,6 +30,8 @@ public class TablatureView extends View{
 	private Context context;
 	private int pace = 200;
 	private int endOfTab;
+	private final int startingPos = 100; //Display initially starts at 100px
+	private final int firstNotePos = startingPos + 100; //First note's position
 	
 	/**
 	 * @param context
@@ -42,6 +44,7 @@ public class TablatureView extends View{
 		this.tab = tab;
 		this.instr = instr;
 		this.pace = pace;
+		tab.initTimeMap(firstNotePos);
 		this.setBackgroundColor(Color.WHITE);
 		invalidate();
 		endOfTab = ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getWidth();
@@ -52,7 +55,6 @@ public class TablatureView extends View{
 		super.onDraw(canvas);
 		
 		float textSize = canvas.getHeight()*0.1f;
-		int startingPos = canvas.getWidth()*1/4; //Display initially starts at 1/4 of the screen width
 		int tabLineMargin = (int) (canvas.getHeight()/(instr.getNumOfStrings()+1));
 		paint.setColor(Color.BLACK);
 		paint.setStrokeWidth(THIN_LINE_WIDTH);
@@ -74,7 +76,7 @@ public class TablatureView extends View{
 		}
 		
 		//Adds notes to the grid
-		int pos = startingPos + 100;
+		int pos = firstNotePos;
 		Rect noteRect = new Rect();
 		for (int i = 0; i < tab.length(); i++) {
 			double noteDuration = Duration.valueOf(tab.getTime(i).getDuration()).getDuration();
@@ -90,7 +92,7 @@ public class TablatureView extends View{
 				}
 			}
 		}
-		endOfTab = pos + 100;
+		endOfTab = pos + 200;
     }
 	
 	public boolean isTerminated() {

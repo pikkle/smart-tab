@@ -8,6 +8,7 @@ import ch.epfl.sweng.smartTabs.gfx.CursorView;
 import ch.epfl.sweng.smartTabs.gfx.FooterView;
 import ch.epfl.sweng.smartTabs.gfx.HeaderView;
 import ch.epfl.sweng.smartTabs.gfx.MusicSheetView;
+import ch.epfl.sweng.smartTabs.gfx.ScrollingView;
 import ch.epfl.sweng.smartTabs.gfx.TablatureView;
 import ch.epfl.sweng.smartTabs.music.Height;
 import ch.epfl.sweng.smartTabs.music.Instrument;
@@ -38,8 +39,7 @@ import android.widget.RelativeLayout;
 public class TestActivity extends Activity {
 	private HeaderView headerView;
 	private FooterView footerView;
-	private MusicSheetView musicSheetView;
-	private TablatureView tablatureView;
+	private ScrollingView scrollingView;
 	private CursorView cursorView;
 	
 	private RelativeLayout wrapper;
@@ -57,6 +57,8 @@ public class TestActivity extends Activity {
 	private boolean backPressedOnce = false;
 	private SoundPool pool = new SoundPool(50, AudioManager.STREAM_MUSIC, 0);
 	private static final int DELAY = 2000;
+	
+	private int playingPosition = 125; //Position of the time to play (Intital value corresponds to the future cursor position)
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -78,12 +80,11 @@ public class TestActivity extends Activity {
 		
 		headerView = new HeaderView(getBaseContext(), tab.getTabName());
 		footerView = new FooterView(getBaseContext());
-		musicSheetView = new MusicSheetView(getBaseContext(), tab);
-		tablatureView = new TablatureView(getBaseContext(), tab, Instrument.GUITAR, PACE);
+		
+		scrollingView = new ScrollingView(getBaseContext(), tab, Instrument.GUITAR, PACE);
 		cursorView = new CursorView(getBaseContext());
 		
-		musicWrapper.addView(musicSheetView, weight(4));
-		musicWrapper.addView(tablatureView, weight(6));
+		musicWrapper.addView(scrollingView, weight(1));
 		bodyWrapper.addView(footerView, weight(1));
 		contentWrapper.addView(headerView, 0, weight(1));
 		wrapper.addView(cursorView);
@@ -94,9 +95,9 @@ public class TestActivity extends Activity {
 			@Override
 			public void run() {
 				while(true) {
-					if (running && !tablatureView.isTerminated()) {
-						tablatureView.scrollBy(1, 0);
-						
+					if (running && !scrollingView.isTerminated()) {
+						scrollingView.scrollBy(1, 0);
+						playingPosition++;		//increment the position at which we want to look for a time to play
 					}
 					
 					try {
@@ -121,8 +122,8 @@ public class TestActivity extends Activity {
 			@Override
 			public void run() {
 				while(true) {
-					if (tablatureView.getScrollX() % (PACE*SMALLEST_DURATION)== 0) {
-						Time t = tab.getTimeAt(tablatureView.getScrollX()/(PACE*SMALLEST_DURATION));
+					if (tab.timeMapContains(playingPosition)) {
+						Time t = tab.getTimeAt(playingPosition);
 						if (t != null) {
 							for (int i = 0; i < (Instrument.GUITAR).getNumOfStrings(); i++) {
 								String fret = t.getNote(i);
@@ -188,7 +189,7 @@ public class TestActivity extends Activity {
 			pool.release();
 		} else {
 			backPressedOnce = true;
-			Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+			Toast.makeText(this, "Press BACK again to exit", Toast.LENGTH_SHORT).show();
 			
 			new Handler().postDelayed(new Runnable() {
 
