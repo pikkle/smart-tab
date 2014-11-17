@@ -2,9 +2,11 @@ package ch.epfl.sweng.smartTabs.gfx;
 
 import ch.epfl.sweng.smartTabs.gfx.MusicSheetView;
 import ch.epfl.sweng.smartTabs.gfx.TablatureView;
+import ch.epfl.sweng.smartTabs.music.Instrument;
+import ch.epfl.sweng.smartTabs.music.Tab;
 import android.content.Context;
+import android.graphics.Canvas;
 import android.graphics.Point;
-import android.graphics.PointF;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.support.v4.view.GestureDetectorCompat;
@@ -16,6 +18,12 @@ import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.widget.OverScroller;
 
+/**
+ * Hypothetic class to implementing methods to make the part scrollable.
+ * 
+ * @author Jad
+ * 
+ */
 public class ManualScrollingView extends View {
 
 	private TablatureView tablatureView;
@@ -24,12 +32,8 @@ public class ManualScrollingView extends View {
 	private ScaleGestureDetector mScaleGestureDetector;
 	private GestureDetectorCompat mGestureDetector;
 	private OverScroller mScroller;
-	private PointF mZoomFocalPoint = new PointF();
-	private RectF mScrollerStartViewport = new RectF(); // Used only for zooms
-														// and flings.
-
-	
-	//TODO: initialize 
+	private RectF mScrollerStartViewport = new RectF();
+	// TODO: initialize those two
 	private RectF mCurrentViewport = new RectF();
 	private Rect mContentRect = new Rect();
 
@@ -43,8 +47,7 @@ public class ManualScrollingView extends View {
 	private boolean mEdgeEffectLeftActive;
 	private boolean mEdgeEffectRightActive;
 
-	
-	//TODO: find out how to adapt that to our views
+	// TODO: find out how to adapt that to our views
 	private static final float AXIS_X_MIN = -1f;
 	private static final float AXIS_X_MAX = 1f;
 	private static final float AXIS_Y_MIN = -1f;
@@ -52,8 +55,11 @@ public class ManualScrollingView extends View {
 
 	private Point mSurfaceSizeBuffer = new Point();
 
-	public ManualScrollingView(Context context) {
+	public ManualScrollingView(Context context, Tab tab, Instrument instr,
+			int pace) {
 		super(context);
+		tablatureView = new TablatureView(context, tab, instr, pace);
+		musicSheetView = new MusicSheetView(context, tab);
 
 	}
 
@@ -255,6 +261,18 @@ public class ManualScrollingView extends View {
 
 		mCurrentViewport.set(x, y - curHeight, x + curWidth, y);
 		ViewCompat.postInvalidateOnAnimation(this);
+	}
+
+	public boolean isTerminated() {
+		return tablatureView.isTerminated();
+	}
+
+	@Override
+	protected void onDraw(Canvas canvas) {
+		super.onDraw(canvas);
+		musicSheetView.draw(canvas);
+		tablatureView.draw(canvas);
+		
 	}
 
 }
