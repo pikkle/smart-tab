@@ -17,6 +17,7 @@ import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
+
 import android.widget.Toast;
 import ch.epfl.sweng.smartTabs.R;
 import ch.epfl.sweng.smartTabs.gfx.CursorView;
@@ -45,8 +46,10 @@ public class TestActivity extends Activity {
 	private Tab tab;
 	
 	private boolean running;
+
 	private static final int PACE = 200;
-	private static final float SMALLEST_DURATION = 0.25f;
+	private static final float SMALLEST_DURATION = 0.25f; //double croche
+	private static final double millisInMin = 60000.0;			//number of millis in one min
 	
 	private boolean backPressedOnce = false;
 	private SoundPool pool = new SoundPool(65, AudioManager.STREAM_MUSIC, 0);
@@ -54,9 +57,12 @@ public class TestActivity extends Activity {
 	
 	private int playingPosition = 270; //Position of the time to play (Intital value corresponds to the future cursor position)
 	private int delay = 5;
+
+	private int speed;
 	private TablatureView tablatureView;
 	private MusicSheetView musicSheetView;
 	private HorizontalScrollView scroller;
+	private int threshold = 200;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +77,8 @@ public class TestActivity extends Activity {
 		Intent intent = getIntent();
 		final Tab tab = (Tab) intent.getExtras().getSerializable("tab");
 
+		speed = computeSpeed(tab.getTempo(), PACE, delay, millisInMin);
+				
 		setContentView(R.layout.activity_test);
 		
 		wrapper = (LinearLayout) (this.findViewById(R.id.wrapper));
@@ -83,6 +91,7 @@ public class TestActivity extends Activity {
 		tablatureView 	= new TablatureView(getBaseContext(), tab, Instrument.GUITAR, PACE);
 		musicSheetView 	= new MusicSheetView(getBaseContext(), tab);
 		cursorView 		= new CursorView(getBaseContext());
+
 		
 		
 		musicWrapper.addView(musicSheetView, weight(3));
@@ -103,6 +112,9 @@ public class TestActivity extends Activity {
 		
 		// Basic scrolling
 		Thread t = new Thread(new Runnable() {
+
+			private int ptr = 0;
+
 			
 			Note[] tuning = {
 					new Note(Height.E, 3), new Note(Height.B, 2),
@@ -143,6 +155,7 @@ public class TestActivity extends Activity {
 					
 					try {
 						Thread.sleep(delay, 0);
+						Thread.sleep((int)delay, 0);
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -153,6 +166,18 @@ public class TestActivity extends Activity {
 		t.start();
 	}
 	
+	/**
+	 * This method computes the number of pixels to scroll by.
+	 * @param tempo
+	 * @param pace
+	 * @param delay
+	 * @param millisinmin
+	 * @return the speed
+	 */
+	private int computeSpeed(double tempo, double pace, double delay, double millisinmin) {
+		return (int) (tempo*PACE*delay/millisInMin);
+	}
+
 	private LinearLayout.LayoutParams weight(int i) {
 		return new LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0, i);
 	}

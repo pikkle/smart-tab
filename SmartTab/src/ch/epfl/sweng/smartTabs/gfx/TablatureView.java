@@ -26,6 +26,7 @@ public class TablatureView extends View{
 	private float padding;
 	private int startingPos; //Display initially starts at 100px
 	private int firstNotePos ; //First note's position
+
 	
 	/**
 	 * @param context

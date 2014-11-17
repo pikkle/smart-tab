@@ -12,7 +12,6 @@ import android.view.View;
 public class HeaderView extends View{
 	private Paint paint;
 	private String mTitle;
-	
 
 	/**
 	 * Contains the title of the song.

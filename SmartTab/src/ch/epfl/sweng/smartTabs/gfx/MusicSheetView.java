@@ -1,7 +1,9 @@
 package ch.epfl.sweng.smartTabs.gfx;
 
 import ch.epfl.sweng.smartTabs.R;
-import ch.epfl.sweng.smartTabs.music.Instrument;
+
+import ch.epfl.sweng.smartTabs.music.Height;
+import ch.epfl.sweng.smartTabs.music.Note;
 import ch.epfl.sweng.smartTabs.music.Tab;
 import ch.epfl.sweng.smartTabs.music.Duration;
 import android.content.Context;
@@ -69,6 +71,7 @@ public class MusicSheetView extends View{
 		ronde = Bitmap.createScaledBitmap(ronde, noteWidth, noteHeight(ronde, noteWidth), false);
 		
 		//to do : create the grid
+
 		
 		lineMargin = (int) (canvas.getHeight()/(6));
 		
@@ -82,12 +85,23 @@ public class MusicSheetView extends View{
 		for (int i = 0; i < mTab.length(); i++) {
 			double noteDuration = Duration.valueOf(mTab.getTime(i).getDuration()).getDuration();
 			pos += pace*noteDuration;
-			int noteHeightPos = lineMargin + lineMargin/2;
-			if (pos-getScrollX() > 0 && pos-getScrollX() < getWidth()) { 
-				//Draws only what is necessary
-				for (int j = 0; j < 5; j++) {
+
+			int noteHeightPos = lineMargin + lineMargin * 4;
+			if (pos-getScrollX() > 0 && pos-getScrollX() < getWidth()) { //Draws only what is necessary
+				for (int j = 0; j < 6; j++) {
 					if(mTab.getTime(i).getPartitionNote(j) != null) {
-						canvas.drawBitmap(noire, pos, noteHeightPos + j*lineMargin - noteHeight(noire, noteWidth), paint);
+						Bitmap currNoteImage = getNoteWithDuration(mTab.getTime(i).getDuration());
+						int noteCenter = getNoteCenter(currNoteImage);
+						Note currNote = mTab.getTime(i).getPartitionNote(j);
+						System.out.println("note at time " + i + " for chord " + j + " : " + currNote);
+						Boolean sharpNote = currNote != isSharp(currNote);
+						System.out.println("note is sharp : " + sharpNote);
+						currNote = isSharp(currNote);
+						System.out.println("note after isSharp : " + currNote.getHeight());
+						System.out.println("note height : " + noteHeight(currNoteImage, currNoteImage.getWidth()));
+						System.out.println("note center : " + noteCenter);
+						System.out.println("note height pos : " + getNoteHeightPosition(currNote) + ", note width pos : " + pos);
+						canvas.drawBitmap(currNoteImage, pos, noteHeightPos - getNoteCenter(currNoteImage)  - lineMargin/2 * getNoteHeightPosition(currNote), paint);
 					}
 				}
 			}
@@ -103,6 +117,76 @@ public class MusicSheetView extends View{
 		for (int i = 1; i <= 5; i++) {	
 			canvas.drawLine(startingPos ,i * y  , endOfTab, i * y , paint);
 		}	
+	}
+
+	private int getNoteCenter (Bitmap note) {
+		int center = 7 * note.getHeight() / 8;
+		if (note == ronde) {
+			center = note.getHeight() / 2;
+		}
+		return center;
+	}
+	
+	private Bitmap getNoteWithDuration(String duration) {
+		Bitmap note = noire;
+		if(duration.equals("doubleCroche")) {
+			note = doubleCroche;
+		} else if(duration.equals("croche")) {
+			note = croche;
+		} else if(duration.equals("blanche")) {
+			note = blanche;
+		} else if(duration.equals("ronde")) {
+			note = ronde;
+		}
+		return note;
+	}
+	
+	public Note isSharp(Note note) {
+		Note sharpNote = note;
+		if(note.getHeight() == Height.CD) {
+			sharpNote = new Note(Height.C, note.getOctave());
+		} else if(note.getHeight() == Height.DD) {
+			sharpNote = new Note(Height.D, note.getOctave());
+		} else if(note.getHeight() == Height.FD) {
+			sharpNote = new Note(Height.F, note.getOctave());
+		} else if(note.getHeight() == Height.GD) {
+			sharpNote = new Note(Height.G, note.getOctave());
+		} else if(note.getHeight() == Height.AD) {
+			sharpNote = new Note(Height.A, note.getOctave());
+		}
+		return sharpNote;
+	}
+	
+	public int getNoteHeightPosition(Note note) {
+		int height = -1;
+		switch(note.getHeight()) {
+		case E :
+			height = 0;
+			break;
+		case F :
+			height = 1;
+			break;
+		case G :
+			height = 2;
+			break;
+		case A :
+			height = 3;
+			break;
+		case B :
+			height = 4;
+			break;
+		case C :
+			height = 5;
+			break;
+		case D :
+			height = 6;
+			break;
+		
+		}
+		if((note.getOctave() > 1) && (height < 2)) {
+			height += 7;
+		}
+		return height;
 	}
 	
 	private void drawVerticalLineOnTab(Canvas canvas, int x, int y) {
