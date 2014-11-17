@@ -6,16 +6,15 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.view.View;
 
-
 /**
- * @author pikkle
- *
+ *	The footer has various options such as a slider to change the speed.
  */
-public class FooterView extends View{
+public class FooterView extends View {
 	private boolean displayed = true;
 	private Paint paint;
 
 	/**
+	 * Draws the support
 	 * @param context
 	 * @param attrs
 	 */

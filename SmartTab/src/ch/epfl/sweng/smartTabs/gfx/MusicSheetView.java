@@ -80,12 +80,22 @@ public class MusicSheetView extends View{
 		
 		
 //		//adding notes to the grid
-		int pos = startingPos + 100;
+		int pos = startingPos-100;
 		Rect noteRect = new Rect();
+		double temp = 0;
+		int mes = 1;
 		for (int i = 0; i < mTab.length(); i++) {
 			double noteDuration = Duration.valueOf(mTab.getTime(i).getDuration()).getDuration();
 			pos += pace*noteDuration;
 
+			temp += noteDuration;
+			if(temp % 4d == 0d){
+				temp = 0;
+				paint.setStrokeWidth(3);
+				drawVerticalLineOnTab(canvas, pos + pace/2, lineMargin);
+				paint.setStrokeWidth(1);
+			}
+			
 			int noteHeightPos = lineMargin + lineMargin * 4;
 			if (pos-getScrollX() > 0 && pos-getScrollX() < getWidth()) { //Draws only what is necessary
 				for (int j = 0; j < 6; j++) {
@@ -93,20 +103,17 @@ public class MusicSheetView extends View{
 						Bitmap currNoteImage = getNoteWithDuration(mTab.getTime(i).getDuration());
 						int noteCenter = getNoteCenter(currNoteImage);
 						Note currNote = mTab.getTime(i).getPartitionNote(j);
-						System.out.println("note at time " + i + " for chord " + j + " : " + currNote);
 						Boolean sharpNote = currNote != isSharp(currNote);
-						System.out.println("note is sharp : " + sharpNote);
 						currNote = isSharp(currNote);
-						System.out.println("note after isSharp : " + currNote.getHeight());
-						System.out.println("note height : " + noteHeight(currNoteImage, currNoteImage.getWidth()));
-						System.out.println("note center : " + noteCenter);
-						System.out.println("note height pos : " + getNoteHeightPosition(currNote) + ", note width pos : " + pos);
 						canvas.drawBitmap(currNoteImage, pos, noteHeightPos - getNoteCenter(currNoteImage)  - lineMargin/2 * getNoteHeightPosition(currNote), paint);
 					}
 				}
 			}
 		}
 		endOfTab = pos + 200;
+		
+		drawVerticalLineOnTab(canvas, startingPos, lineMargin);
+		drawVerticalLineOnTab(canvas, endOfTab, lineMargin);
 	}
 	
 	private int noteHeight(Bitmap note, int noteWidth) {
@@ -191,7 +198,7 @@ public class MusicSheetView extends View{
 	
 	private void drawVerticalLineOnTab(Canvas canvas, int x, int y) {
 		paint.setStrokeWidth(2);
-		canvas.drawLine(x, y , x, 6*y , paint);
+		canvas.drawLine(x, y , x, 5*y , paint);
 		paint.setStrokeWidth(1);
 	}
 }
