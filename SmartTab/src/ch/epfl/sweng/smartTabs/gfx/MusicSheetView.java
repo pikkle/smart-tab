@@ -56,7 +56,7 @@ public class MusicSheetView extends View{
 		canvas.drawRect(0, 0, canvas.getWidth(), canvas.getHeight(), paint);
 		paint.setColor(Color.BLACK);
 		//canvas.drawLine(0, 0, 100000, 6000, paint);
-		int noteWidth = (int) (canvas.getWidth()/100);
+		int noteWidth = (int) (canvas.getWidth()/35);
 		//create the bitmaps
 		doubleCroche = Bitmap.createScaledBitmap(doubleCroche, noteWidth, noteHeight(doubleCroche, noteWidth), false);
 		croche = Bitmap.createScaledBitmap(croche, noteWidth, noteHeight(croche, noteWidth), false);
@@ -66,24 +66,40 @@ public class MusicSheetView extends View{
 		
 		//to do : create the grid
 		int startingPos = canvas.getWidth()*1/4;
-		int tabLineMargin = (int) (canvas.getHeight()/(6));
+		int lineMargin = (int) (canvas.getHeight()/(6));
 		
 		for (int i = 1; i <= 5; i++) { //Draws the grid
 			paint.setStrokeWidth(1);
 			canvas.drawLine(
 					startingPos, 
-					i * tabLineMargin, 
+					i * lineMargin, 
 					endOfTab, //TODO: calculate size of tab
-					i * tabLineMargin, 
+					i * lineMargin, 
 					paint);
 			
 		}
 		//adding notes to the grid
-		
+		int pos = startingPos + 100;
+		Rect noteRect = new Rect();
+		for (int i = 0; i < mTab.length(); i++) {
+			double noteDuration = Duration.valueOf(mTab.getTime(i).getDuration()).getDuration();
+			pos += pace*noteDuration;
+			int noteHeightPos = lineMargin + lineMargin/2;
+			if (pos-getScrollX() > 0 && pos-getScrollX() < getWidth()) { //Draws only what is necessary
+				for (int j = 0; j < 5; j++) {
+					if(mTab.getTime(i).getPartitionNote(j) != null) {
+						System.out.println("note : " + mTab.getTime(i).getPartitionNote(j).getHeight().name());
+						canvas.drawBitmap(noire, pos, noteHeightPos + j*lineMargin - noteHeight(noire, noteWidth), paint);
+					}
+				}
+			}
+		}
+		endOfTab = pos + 100;
 	}
 	
 	private int noteHeight(Bitmap note, int noteWidth) {
 		return note.getHeight() * noteWidth / note.getWidth();
 	}
+	
 	
 }
