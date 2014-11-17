@@ -1,22 +1,5 @@
 package ch.epfl.sweng.smartTabs.activity;
 
-import ch.epfl.sweng.smartTabs.R;
-import ch.epfl.sweng.smartTabs.R.id;
-import ch.epfl.sweng.smartTabs.R.layout;
-import ch.epfl.sweng.smartTabs.R.menu;
-import ch.epfl.sweng.smartTabs.gfx.CursorView;
-import ch.epfl.sweng.smartTabs.gfx.FooterView;
-import ch.epfl.sweng.smartTabs.gfx.HeaderView;
-import ch.epfl.sweng.smartTabs.gfx.MusicSheetView;
-import ch.epfl.sweng.smartTabs.gfx.ScrollingView;
-import ch.epfl.sweng.smartTabs.gfx.TablatureView;
-import ch.epfl.sweng.smartTabs.music.Height;
-import ch.epfl.sweng.smartTabs.music.Instrument;
-import ch.epfl.sweng.smartTabs.music.Note;
-import ch.epfl.sweng.smartTabs.music.NotePlaybackThread;
-import ch.epfl.sweng.smartTabs.music.SampleMap;
-import ch.epfl.sweng.smartTabs.music.Tab;
-import ch.epfl.sweng.smartTabs.music.Time;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -33,9 +16,22 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
+import ch.epfl.sweng.smartTabs.R;
+import ch.epfl.sweng.smartTabs.gfx.CursorView;
+import ch.epfl.sweng.smartTabs.gfx.FooterView;
+import ch.epfl.sweng.smartTabs.gfx.HeaderView;
+import ch.epfl.sweng.smartTabs.gfx.MusicSheetView;
+import ch.epfl.sweng.smartTabs.gfx.ScrollingView;
+import ch.epfl.sweng.smartTabs.gfx.TablatureView;
+import ch.epfl.sweng.smartTabs.music.Height;
+import ch.epfl.sweng.smartTabs.music.Instrument;
+import ch.epfl.sweng.smartTabs.music.Note;
+import ch.epfl.sweng.smartTabs.music.SampleMap;
+import ch.epfl.sweng.smartTabs.music.Tab;
+import ch.epfl.sweng.smartTabs.music.Time;
 
 public class TestActivity extends Activity {
 	private HeaderView headerView;
@@ -56,10 +52,11 @@ public class TestActivity extends Activity {
 	private static final float SMALLEST_DURATION = 0.25f; //double croche
 	
 	private boolean backPressedOnce = false;
-	private SoundPool pool = new SoundPool(50, AudioManager.STREAM_MUSIC, 0);
+	private SoundPool pool = new SoundPool(65, AudioManager.STREAM_MUSIC, 0);
 	private static final int DELAY = 2000;
 	
-	private int playingPosition = 125; //Position of the time to play (Intital value corresponds to the future cursor position)
+	private int playingPosition = 120; //Position of the time to play (Intital value corresponds to the future cursor position)
+	private int delay = 5;
 	private TablatureView tablatureView;
 	private MusicSheetView musicSheetView;
 	private HorizontalScrollView scroller;
@@ -67,6 +64,8 @@ public class TestActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		System.out.println("Initîalising TestActivity");
 		
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
@@ -100,16 +99,44 @@ public class TestActivity extends Activity {
 		// Basic scrolling
 		Thread t = new Thread(new Runnable() {
 			
+			Note[] tuning = {
+					new Note(Height.E, 3), new Note(Height.B, 2),
+					new Note(Height.G, 2), new Note(Height.D, 2), 
+					new Note(Height.A, 1), new Note(Height.E, 1)
+			};
+			SampleMap map = new SampleMap(getApplicationContext(),pool, tuning);
+			
 			@Override
 			public void run() {
 				while(true) {
-					if (running && tablatureView.isTerminated()) {
-						tablatureView.scrollBy(1, 0);
-						playingPosition++;		//increment the position at which we want to look for a time to play
+					if (running && !tablatureView.isTerminated()) {
+						tablatureView.scrollBy(2, 0);
+						playingPosition += 2;		//increment the position at which we want to look for a time to play
+					}
+					
+					if (tab.timeMapContains(playingPosition)) {
+						final Time t = tab.getTimeAt(playingPosition);
+						if (t != null) {
+						new Thread(new Runnable() {
+							
+							@Override
+							public void run() {
+								for (int i = 0; i < (Instrument.GUITAR).getNumOfStrings(); i++) {
+									String fret = t.getNote(i);
+									if (!fret.equals("")) {
+										int fretNumber = Integer.parseInt(fret);
+										final Note note = tuning[i].addHalfTones(fretNumber);
+										pool.play(map.getSampleId(note), 1, 1, 1, 0, 1);
+									}
+								}
+								
+							}
+						}).start();
+						}
 					}
 					
 					try {
-						Thread.sleep(2, 0);
+						Thread.sleep(delay, 0);
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -118,55 +145,6 @@ public class TestActivity extends Activity {
 			}
 		});
 		t.start();
-		
-		Thread t2 = new Thread(new Runnable() {
-			
-			Note[] tuning = {
-					new Note(Height.E, 3), new Note(Height.B, 2),
-					new Note(Height.G, 2), new Note(Height.D, 2), 
-					new Note(Height.A, 1), new Note(Height.E, 1)
-			};
-			SampleMap map = new SampleMap(getApplicationContext(),pool, tuning);
-			@Override
-			public void run() {
-				while(true) {
-					if (tab.timeMapContains(playingPosition)) {
-						Time t = tab.getTimeAt(playingPosition);
-						if (t != null) {
-							for (int i = 0; i < (Instrument.GUITAR).getNumOfStrings(); i++) {
-								String fret = t.getNote(i);
-								if (!fret.equals("")) {
-									int fretNumber = Integer.parseInt(fret);
-									final Note note = tuning[i].addHalfTones(fretNumber);
-									new Thread(new Runnable() {
-										
-										@Override
-										public void run() {
-											pool.play(map.getSampleId(note), 1, 1, 1, 0, 1);
-											try {
-												Thread.sleep(2000);
-												pool.resume(map.getSampleId(note));
-											} catch (InterruptedException e) {
-												// TODO Auto-generated catch block
-												e.printStackTrace();
-											}
-										}
-									}).start();
-									
-								}
-							}
-						}
-					}
-					try {
-						Thread.sleep(2);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-			}
-		});
-		t2.start();
 	}
 	
 	private LinearLayout.LayoutParams weight(int i) {
