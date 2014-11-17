@@ -31,7 +31,7 @@ public class TablatureView extends View{
 	private int pace = 200;
 	private int endOfTab;
 	private final int startingPos = 100; //Display initially starts at 100px
-	private final int firstNotePos = startingPos + 100; //First note's position
+	private final int firstNotePos = 2*pace; //First note's position
 	
 	/**
 	 * @param context
