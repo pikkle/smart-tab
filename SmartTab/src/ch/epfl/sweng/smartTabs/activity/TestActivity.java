@@ -55,7 +55,7 @@ public class TestActivity extends Activity {
 	private SoundPool pool = new SoundPool(65, AudioManager.STREAM_MUSIC, 0);
 	private static final int DELAY = 2000;
 	
-	private int playingPosition = 270; //Position of the time to play (Intital value corresponds to the future cursor position)
+	private int playingPosition = 136; //Position of the time to play (Intital value corresponds to the future cursor position)
 	private int delay = 5;
 
 	private int speed;
@@ -155,7 +155,6 @@ public class TestActivity extends Activity {
 					
 					try {
 						Thread.sleep(delay, 0);
-						Thread.sleep((int)delay, 0);
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
