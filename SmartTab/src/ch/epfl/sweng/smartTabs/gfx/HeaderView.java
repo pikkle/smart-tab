@@ -1,48 +1,36 @@
 package ch.epfl.sweng.smartTabs.gfx;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Rect;
 import android.view.View;
 
 /**
- * @author pikkle
- * 
+ * The top view containing the title and the metronome.
  */
 public class HeaderView extends View{
-	private Resources res;
 	private Paint paint;
 	private String mTitle;
 	
+
 	/**
+	 * Contains the title of the song.
 	 * @param context
-	 * @param attrs
+	 * @param title
 	 */
 	public HeaderView(Context context, String title) {
-		super(context);
-		paint = new Paint();
-		res = context.getResources();
-		mTitle = title;
+		super(context);	
+		this.paint = new Paint();
+		this.setBackgroundColor(Color.WHITE);
+		this.mTitle = title;
 	}
 	
 	@Override
     protected void onDraw(Canvas canvas) {
-		drawDebugBox(canvas);
-		float textSize = canvas.getHeight()*0.6f;
-		paint.setTextSize(textSize);
+		paint.setTextSize(canvas.getHeight()*0.5f);
 		paint.setAlpha(255);
 		paint.setColor(Color.GRAY);
-		Rect textRect = new Rect();
-		paint.getTextBounds(mTitle, 0, mTitle.length(), textRect);
-		canvas.drawText(mTitle, 0, canvas.getHeight()/2-textRect.centerY(), paint);
-		
+		canvas.drawText(mTitle, canvas.getWidth()/16, canvas.getHeight()/2, paint);	
     }
-	private void drawDebugBox(Canvas canvas) {
-		paint.setColor(Color.RED);
-		paint.setAlpha(100);
-		canvas.drawRect(0, 0, canvas.getWidth(), canvas.getHeight(), paint);
-	}
 }
