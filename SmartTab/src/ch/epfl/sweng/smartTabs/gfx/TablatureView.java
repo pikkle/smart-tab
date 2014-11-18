@@ -18,7 +18,6 @@ import ch.epfl.sweng.smartTabs.music.Tab;
  */
 public class TablatureView extends View{
 	private final Paint paint = new Paint();
-	private final Height[] stantardTuning = {Height.E, Height.B, Height.G, Height.D, Height.A, Height.E}; //TODO: add a parameter in tab that contains its tuning
 	private Instrument instr;
 	private Tab tab;
 	private int pace = 200;
@@ -125,14 +124,8 @@ public class TablatureView extends View{
 	 * @param y
 	 */
 	private void drawGrid(Canvas canvas, float y) {
-		Rect textRect = new Rect();
 		for (int i = 1; i <= instr.getNumOfStrings(); i++) {	
-			canvas.drawLine(startingPos,i * y  + padding, endOfTab, i * y + padding, paint);
-			paint.getTextBounds(stantardTuning[i-1].toString(), 0, stantardTuning[i-1].toString().length(), textRect);
-			canvas.drawText(stantardTuning[i-1].toString(),
-					startingPos - canvas.getHeight()*0.1f , 
-					i * y - textRect.centerY() + padding, 
-					paint);
+			canvas.drawLine(startingPos, i * y  + padding, endOfTab, i * y + padding, paint);
 		}	
 	}
 
@@ -149,6 +142,6 @@ public class TablatureView extends View{
 	}
 	
 	public boolean isTerminated() {
-		return getScrollX() > endOfTab-getWidth()*1/5;
+		return getScrollX() > endOfTab-135;
 	}
 }

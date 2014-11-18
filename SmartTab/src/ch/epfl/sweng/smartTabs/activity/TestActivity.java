@@ -63,6 +63,9 @@ public class TestActivity extends Activity {
 	private MusicSheetView musicSheetView;
 	private HorizontalScrollView scroller;
 	private int threshold = 200;
+	private float lastX;
+	private float lastY;
+	private float newX;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -183,8 +186,18 @@ public class TestActivity extends Activity {
 	
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
+		
+	    final float x = event.getX();
+	    
 		if (MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_DOWN){
 			running = !running;
+			this.lastX = x;
+		}
+		if (MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_UP) {
+			this.newX = x;
+			tablatureView.scrollBy((int) (newX - lastX), 0);
+			musicSheetView.scrollBy((int) (newX - lastX), 0);
+			
 		}
 		return true;
 	}
