@@ -66,7 +66,7 @@ public class HeaderView extends View{
 	
 	public void incPct(){
 		if(mPct <= 0.975){
-			mPct += 0.0125;			
+			mPct += 0.025;			
 		} else {
 			mPct = 1;
 		}
@@ -76,7 +76,7 @@ public class HeaderView extends View{
 	
 	public void decPct(){
 		if(mPct >= 0.5){
-			mPct -= 0.0125;			
+			mPct -= 0.025;			
 		} else {
 			mPct = 0.5;
 		}

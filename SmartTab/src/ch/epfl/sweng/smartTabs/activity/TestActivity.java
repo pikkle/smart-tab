@@ -62,7 +62,7 @@ public class TestActivity extends Activity {
 	private TablatureView tablatureView;
 	private MusicSheetView musicSheetView;
 	private HorizontalScrollView scroller;
-	private int threshold = 200;
+	private int threshold = 100;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
