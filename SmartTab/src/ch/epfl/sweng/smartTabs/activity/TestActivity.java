@@ -189,7 +189,7 @@ public class TestActivity extends Activity {
 		
 	    final float x = event.getX();
 	    
-		if (MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_DOWN){
+		if (MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_DOWN) {
 			running = !running;
 			this.lastX = x;
 		}
