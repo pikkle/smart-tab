@@ -13,7 +13,7 @@ import android.test.AndroidTestCase;
  */
 public class TimeTest extends AndroidTestCase{
 	String [] notes = {"7", "", "0"};
-	Time time = new Time(notes, 5 , 1, true, 2);
+	Time time = new Time(notes, "5" , 1, true, 2);
 	
 	public void testNote(){
 	assertEquals(notes[0], time.getNote(0));

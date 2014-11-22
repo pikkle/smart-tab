@@ -1,9 +1,6 @@
 package ch.epfl.sweng.smartTabs.activity;
 
 import ch.epfl.sweng.smartTabs.R;
-import ch.epfl.sweng.smartTabs.R.id;
-import ch.epfl.sweng.smartTabs.R.layout;
-import ch.epfl.sweng.smartTabs.R.menu;
 import ch.epfl.sweng.smartTabs.gfx.CursorView;
 import ch.epfl.sweng.smartTabs.gfx.FooterView;
 import ch.epfl.sweng.smartTabs.gfx.HeaderView;
@@ -12,7 +9,6 @@ import ch.epfl.sweng.smartTabs.gfx.TablatureView;
 import ch.epfl.sweng.smartTabs.music.Height;
 import ch.epfl.sweng.smartTabs.music.Instrument;
 import ch.epfl.sweng.smartTabs.music.Note;
-import ch.epfl.sweng.smartTabs.music.NotePlaybackThread;
 import ch.epfl.sweng.smartTabs.music.SampleMap;
 import ch.epfl.sweng.smartTabs.music.Tab;
 import ch.epfl.sweng.smartTabs.music.Time;
