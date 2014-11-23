@@ -13,7 +13,9 @@ import android.view.View;
 public class CursorView extends View {
 
 	private Paint paint;
-	
+	private final int cursorSize = 5;
+	private final int cursorColor = Color.rgb(255 , 165 , 0);
+	private final int cursorPosition = 8;
 	/**
 	 * Draw the cursor
 	 * @param context
@@ -26,8 +28,9 @@ public class CursorView extends View {
 	
 	@Override
     protected void onDraw(Canvas canvas) {
-		paint.setStrokeWidth(5);
-		paint.setColor(Color.rgb(255,165,0));
-		canvas.drawLine(canvas.getWidth()/8, 0, canvas.getWidth()/8, canvas.getHeight(), paint);
+		paint.setStrokeWidth(cursorSize);
+		paint.setColor(cursorColor);
+		canvas.drawLine(canvas.getWidth()/cursorPosition, 0,
+				canvas.getWidth()/cursorPosition, canvas.getHeight(), paint);
     }
 }

@@ -12,6 +12,9 @@ import android.view.View;
 public class HeaderView extends View{
 	private Paint paint;
 	private String mTitle;
+	
+	private final int titleAlpha = 255;
+	private final float titleSizeRatio = 0.5f;
 
 	/**
 	 * Contains the title of the song.
@@ -27,8 +30,8 @@ public class HeaderView extends View{
 	
 	@Override
     protected void onDraw(Canvas canvas) {
-		paint.setTextSize(canvas.getHeight()*0.5f);
-		paint.setAlpha(255);
+		paint.setTextSize(canvas.getHeight()*titleSizeRatio);
+		paint.setAlpha(titleAlpha);
 		paint.setColor(Color.GRAY);
 		canvas.drawText(mTitle, canvas.getWidth()/16, canvas.getHeight()/2, paint);	
     }
