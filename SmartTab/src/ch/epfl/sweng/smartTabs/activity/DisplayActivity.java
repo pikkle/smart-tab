@@ -43,7 +43,7 @@ import ch.epfl.sweng.smartTabs.music.Time;
  * @author fatonramadani
  *
  */
-public class TestActivity extends Activity {
+public class DisplayActivity extends Activity {
 	private HeaderView headerView;
 	private FooterView footerView;
 	private ScrollingView scrollingView;
