@@ -19,7 +19,7 @@ public class Time implements Serializable {
 	private final boolean mTernary;
 	private final int mStep;
 	private final static int NUMCHORDS = 6;
-	private final static Note[] tuning = {
+	private final static Note[] TUNING = {
 		new Note(Height.E, 3), new Note(Height.B, 2),
 		new Note(Height.G, 2), new Note(Height.D, 2), 
 		new Note(Height.A, 1), new Note(Height.E, 1)
@@ -43,9 +43,9 @@ public class Time implements Serializable {
 		for (int i = 1; i <= NUMCHORDS; i++) {
 			String corde = "string_" + i;
 			jsonNotes[i - 1] = jsonTime.getString(corde);
-			if(!jsonNotes[i - 1].equals("")) {
+			if (!jsonNotes[i - 1].equals("")) {
 				int fretNumber = Integer.parseInt(jsonNotes[i - 1]);
-				partitionNotes[i - 1] = tuning[i - 1].addHalfTones(fretNumber);
+				partitionNotes[i - 1] = TUNING[i - 1].addHalfTones(fretNumber);
 			}
 		}
 		String jsonDuration;

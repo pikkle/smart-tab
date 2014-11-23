@@ -15,6 +15,9 @@ public class TabAnimationThread extends Thread {
 	private final int threshold = 5;
 
 	public TabAnimationThread(NoteView noteview) {
+		if (noteview == null) {
+			throw new IllegalArgumentException();
+		}
 		myNoteview = noteview;
 		this.running = true;
 	}

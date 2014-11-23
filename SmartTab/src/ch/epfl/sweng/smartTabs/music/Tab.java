@@ -65,13 +65,15 @@ public final class Tab implements Serializable {
 	 *  with the position of the first time in TablatureView
 	 * @param firstPos the position of the first time in the TablatureView
 	 */
-	public void initTimeMap(int firstPos){
-		float timePos = firstPos; 							//Position of the time (initial value equal to the position of the first time)
+	public void initTimeMap(int firstPos) {
+		//Position of the time (initial value equal to the position of the first time)
+		float timePos = firstPos;
 		System.out.println("Filling timeMap !");
 		mTimeMap.put(timePos, mTimeList.get(0)); 			//init the first item of the map
 		for (int i = 1; i < mTimeList.size(); i++) {
 			double dur = Duration.valueOf(mTimeList.get(i-1).getDuration()).getDuration();
-			timePos += dur*pace;							//Position of the current time is the pos. of the previous time + the distance between them (dur*pace)
+			//Position of the current time is the pos. of the previous time + the distance between them (dur*pace)
+			timePos += dur*pace;
 			mTimeMap.put(Float.valueOf((float) timePos), mTimeList.get(i));
 		}
 	}

@@ -6,7 +6,7 @@ import ch.epfl.sweng.smartTabs.music.Note;
 import junit.framework.TestCase;
 
 /**
- * @author fatonramadani
+ * @author Faton Ramadani
  * Test for Note class
  */
 public class NoteTest extends TestCase{
@@ -74,14 +74,4 @@ public class NoteTest extends TestCase{
 		);
 		
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }  
