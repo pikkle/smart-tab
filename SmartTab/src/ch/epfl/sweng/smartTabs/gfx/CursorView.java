@@ -10,7 +10,7 @@ import android.view.WindowManager;
 
 /**
  * @author pikkle
- *
+ * Draws the orange cursor, on top on the tablature view and the music sheet view.
  */
 public class CursorView extends View {
 

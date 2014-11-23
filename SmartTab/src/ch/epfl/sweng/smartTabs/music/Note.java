@@ -12,16 +12,25 @@ import android.annotation.SuppressLint;
 public class Note implements Serializable {
 	private final int myOctave;
 	private final Height myHeight;
-	@SuppressWarnings("unused")
 	private final Duration myDuration;
 	
 	public Note(Height height, int octave, Duration duration) {
+		if (height == null) {
+			throw new NullPointerException();
+		}
+		if (duration == null) {
+			throw new NullPointerException();
+		}
+		
 		myOctave = octave;
 		myHeight = height;
 		myDuration = duration;
 	}
 	
 	public Note(Height height, int octave) {
+		if (height == null) {
+			throw new NullPointerException();
+		}
 		myOctave = octave;
 		myHeight = height;
 		// by default
@@ -31,7 +40,7 @@ public class Note implements Serializable {
 	public Note addHalfTones(int delta) {
 		int index = this.myHeight.getIndex();
 		int newOct = myOctave + ((index + delta) / Height.getMax());
-		Height height =  this.myHeight.get((index + delta) % Height.getMax());		
+		Height height =  Height.get((index + delta) % Height.getMax());		
 		return new Note(height, newOct);	
 	}
 	
@@ -42,8 +51,11 @@ public class Note implements Serializable {
 	public int getOctave() {
 		return myOctave;
 	}
-	// TODO : fix this
-	@SuppressLint("DefaultLocale") 
+	
+	public Duration getDuration() {
+		return myDuration;
+	}
+
 	public String toString() { 
 		return myHeight.name().toLowerCase()+myOctave;
 	}
