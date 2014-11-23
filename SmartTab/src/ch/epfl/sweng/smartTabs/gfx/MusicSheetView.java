@@ -38,7 +38,8 @@ public class MusicSheetView extends View{
 	private Bitmap blanche = BitmapFactory.decodeResource(getResources(), R.raw.noire);
 	private Bitmap ronde = BitmapFactory.decodeResource(getResources(), R.raw.noire);
 	private Bitmap cleDeSol = BitmapFactory.decodeResource(getResources(), R.raw.cledesol);
-	int startingPos;int lineMargin;
+	private int startingPos;
+	private int lineMargin;
 	private int padding;
 	
 	/**
@@ -80,7 +81,7 @@ public class MusicSheetView extends View{
 		
 		
 //		//adding notes to the grid
-		int pos = startingPos-100;
+		int pos = startingPos+2*pace;
 		Rect noteRect = new Rect();
 		double temp = 0;
 		int mes = 1;

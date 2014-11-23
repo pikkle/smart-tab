@@ -9,8 +9,8 @@ public class Metronome {
 
 	public Metronome() {
 		mPaint = new Paint();
-		mPaint.setColor(Color.BLACK);
-		mPaint.setStyle(Paint.Style.STROKE);
+		mPaint.setColor(Color.rgb(255, 165, 0));
+//		mPaint.setStyle(Paint.Style.STROKE);
 	}
 	
 

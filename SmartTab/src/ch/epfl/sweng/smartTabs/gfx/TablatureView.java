@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
 import ch.epfl.sweng.smartTabs.music.Duration;
@@ -39,7 +40,15 @@ public class TablatureView extends View{
 		this.pace = pace;
 		this.setBackgroundColor(Color.WHITE);
 		
+		WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+		Display display = wm.getDefaultDisplay();
+		padding = display.getWidth()/8;
+		startingPos = display.getWidth()/8;
+		firstNotePos = startingPos + 2*pace;
+		
+		
 		tab.initTimeMap(firstNotePos);
+		
 		// TODO : Can be a field in the JSON
 		endOfTab = ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getWidth();
 	}
@@ -47,9 +56,9 @@ public class TablatureView extends View{
 	@Override
     protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
-		padding = canvas.getHeight()/8;
-		startingPos = canvas.getWidth()/8;
-		firstNotePos = startingPos-100;
+//		padding = canvas.getHeight()/8;
+//		startingPos = canvas.getWidth()/8;
+//		firstNotePos = startingPos+2*pace;
 		int tabLineMargin = (int) (6*canvas.getHeight()/8/(instr.getNumOfStrings()+1));
 		float textSize = canvas.getHeight()*0.1f;
 		

@@ -54,21 +54,26 @@ public class TestActivity extends Activity {
 	private boolean running;
 
 	private static final int PACE = 200;
-	private static final float SMALLEST_DURATION = 0.25f; //double croche
-	private static final double millisInMin = 60000.0;			//number of millis in one min
+	private static final float SMALLEST_DURATION = 0.25f; // double croche
+	private static final double millisInMin = 60000.0; // number of millis in one min
+
 
 	private boolean backPressedOnce = false;
-	private SoundPool pool = new SoundPool(65, AudioManager.STREAM_MUSIC, 0);
+	private SoundPool pool = new SoundPool(50, AudioManager.STREAM_MUSIC, 0);
 	private static final int DELAY = 2000;
 
-	private int playingPosition = 136; //Position of the time to play (Intital value corresponds to the future cursor position)
+	private int playingPosition; // Position of the time to play (Intital
+										// value corresponds to the future
+										// cursor position)
+
 	private int delay = 5;
 
 	private int speed;
 	private TablatureView tablatureView;
 	private MusicSheetView musicSheetView;
 	private HorizontalScrollView scroller;
-	private int threshold = 200;
+	private int threshold = 100;
+
 	private float lastX;
 	private float lastY;
 	private float newX;
@@ -76,8 +81,10 @@ public class TestActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
 		System.out.println("Initîalising TestActivity");
 		checkDialog(this);
+		
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 		this.getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -99,8 +106,9 @@ public class TestActivity extends Activity {
 		tablatureView 	= new TablatureView(getBaseContext(), tab, Instrument.GUITAR, PACE);
 		musicSheetView 	= new MusicSheetView(getBaseContext(), tab);
 		cursorView 		= new CursorView(getBaseContext());
-
-
+		
+		
+		playingPosition = cursorView.getPosX() - 50;
 
 		musicWrapper.addView(musicSheetView, weight(3));
 		musicWrapper.addView(tablatureView, weight(7));
@@ -112,10 +120,9 @@ public class TestActivity extends Activity {
 		testWrapper.addView(cursorView, new FrameLayout.LayoutParams(
 				FrameLayout.LayoutParams.MATCH_PARENT,
 				FrameLayout.LayoutParams.MATCH_PARENT));
-
-
+		
 		wrapper.addView(headerView, weight(1));
-		wrapper.addView(testWrapper, weight(8));	
+		wrapper.addView(testWrapper, weight(8));
 		wrapper.addView(footerView, weight(1));
 
 		// Basic scrolling
@@ -123,21 +130,38 @@ public class TestActivity extends Activity {
 
 			private int ptr = 0;
 
+			Note[] tuning = { new Note(Height.E, 3), new Note(Height.B, 2),
+					new Note(Height.G, 2), new Note(Height.D, 2),
+					new Note(Height.A, 1), new Note(Height.E, 1) };
+			SampleMap map = new SampleMap(getApplicationContext(), pool, tuning);
 
-			Note[] tuning = {
-					new Note(Height.E, 3), new Note(Height.B, 2),
-					new Note(Height.G, 2), new Note(Height.D, 2), 
-					new Note(Height.A, 1), new Note(Height.E, 1)
-			};
-			SampleMap map = new SampleMap(getApplicationContext(),pool, tuning);
 
 			@Override
 			public void run() {
-				while(true) {
+				while (true) {
 					if (running && !tablatureView.isTerminated()) {
-						tablatureView.scrollBy(2, 0);
-						musicSheetView.scrollBy(2, 0);
-						playingPosition += 2;		//increment the position at which we want to look for a time to play
+						tablatureView.scrollBy(speed, 0);
+						musicSheetView.scrollBy(speed, 0);
+						
+						playingPosition += speed; // increment the position at
+													// which we want to look for
+													// a time to play
+
+						if (ptr > 0 && ptr < threshold * 1 / 5) {
+							headerView.decPct();
+						} else if (ptr >= threshold * 4 / 5 && ptr < threshold) {
+							headerView.incPct();
+						} else if (ptr == threshold) {
+							System.out.println("NOTE !");
+							headerView.setPct(1);
+							ptr = 0;
+						} else if (ptr == 0) {
+							headerView.setPct(1);
+						} else {
+							headerView.setPct(0.5);
+						}
+						headerView.postInvalidate();
+						ptr++;
 					}
 
 					if (tab.timeMapContains(playingPosition)) {
@@ -172,18 +196,18 @@ public class TestActivity extends Activity {
 		});
 		t.start();
 	}
-
-
 	/**
 	 * This method computes the number of pixels to scroll by.
+	 * 
 	 * @param tempo
 	 * @param pace
 	 * @param delay
 	 * @param millisinmin
 	 * @return the speed
 	 */
-	private int computeSpeed(double tempo, double pace, double delay, double millisinmin) {
-		return (int) (tempo*PACE*delay/millisInMin);
+	private int computeSpeed(double tempo, double pace, double delay,
+			double millisinmin) {
+		return (int) (tempo * PACE * delay / millisInMin);
 	}
 
 	private LinearLayout.LayoutParams weight(int i) {
@@ -201,9 +225,9 @@ public class TestActivity extends Activity {
 		}
 		if (MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_UP) {
 			this.newX = x;
-			tablatureView.scrollBy((int) (newX - lastX), 0);
-			musicSheetView.scrollBy((int) (newX - lastX), 0);
-
+			
+			tablatureView.scrollBy((int) (lastX - newX), 0);
+			musicSheetView.scrollBy((int) (lastX - newX), 0);
 		}
 		return true;
 	}
@@ -216,6 +240,7 @@ public class TestActivity extends Activity {
 			pool.release();
 		} else {
 			backPressedOnce = true;
+
 			Toast.makeText(this, "Press BACK again to exit", Toast.LENGTH_SHORT).show();
 
 			new Handler().postDelayed(new Runnable() {
