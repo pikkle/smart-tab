@@ -1,51 +1,39 @@
-/**
- * 
- */
 package ch.epfl.sweng.smartTabs.gfx;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Rect;
-import android.util.AttributeSet;
 import android.view.View;
 
 /**
- * @author pikkle
- * 
+ * The top view containing the title and the metronome.
  */
 public class HeaderView extends View{
-	private Resources res;
 	private Paint paint;
 	private String mTitle;
 	private Metronome metronome;
 	private double mPct;
-	
+
 	/**
+	 * Contains the title of the song.
 	 * @param context
-	 * @param attrs
+	 * @param title
 	 */
 	public HeaderView(Context context, String title) {
-		super(context);
-		paint = new Paint();
-		res = context.getResources();
-		mTitle = title;
-		mPct = 1.0;
+		super(context);	
+		this.paint = new Paint();
+		this.setBackgroundColor(Color.WHITE);
+		this.mTitle = title;
 		metronome = new Metronome();
 	}
 	
 	@Override
     protected void onDraw(Canvas canvas) {
-		drawDebugBox(canvas);
-		float textSize = canvas.getHeight()*0.6f;
-		paint.setTextSize(textSize);
+		paint.setTextSize(canvas.getHeight()*0.5f);
 		paint.setAlpha(255);
 		paint.setColor(Color.GRAY);
-		Rect textRect = new Rect();
-		paint.getTextBounds(mTitle, 0, mTitle.length(), textRect);
-		canvas.drawText(mTitle, 0, canvas.getHeight()/2-textRect.centerY(), paint);
+		canvas.drawText(mTitle, canvas.getWidth()/16, canvas.getHeight()/2, paint);	
 		
 		
 		//Drawing the Metronome
@@ -54,10 +42,8 @@ public class HeaderView extends View{
 		int posX = canvas.getWidth() - (canvas.getHeight() - 2*padding)/2 - padding/2;
 		int posY = canvas.getHeight()/2;
 		int alpha = (int) (mPct*255);
-//		System.out.println("Radius : " + radius + " Alpha : " + alpha);
 		metronome.draw(canvas, posX, posY, radius, alpha);
-		
-    }
+	}
 	private void drawDebugBox(Canvas canvas) {
 		paint.setColor(Color.RED);
 		paint.setAlpha(100);
@@ -70,8 +56,6 @@ public class HeaderView extends View{
 		} else {
 			mPct = 1;
 		}
-//		System.out.println("Incrementing : " + mPct);
-
 	}
 	
 	public void decPct(){
@@ -80,7 +64,6 @@ public class HeaderView extends View{
 		} else {
 			mPct = 0.5;
 		}
-//		System.out.println("Decrementing : " + mPct);
 	}
 	
 	public void setPct(double pct){

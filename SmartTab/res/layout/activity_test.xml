@@ -1,39 +1,10 @@
-<RelativeLayout
+<LinearLayout 
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/wrapper"
-	android:layout_width="match_parent"
-	android:layout_height="match_parent"
-	tools:context="${relativePackage}.${activityClass}" >
-	
-	<LinearLayout 
-	    android:id="@+id/contentWrapper"
-	    android:layout_width="match_parent"
-	    android:layout_height="match_parent"
-	    android:layout_alignParentLeft="true"
-	    android:orientation="vertical" >
-		
-	    <LinearLayout
-	        android:id="@+id/bodyWrapper"
-	        android:layout_width="fill_parent"
-	        android:layout_height="0dp"
-	        android:layout_weight="@integer/bodyRatio"
-	        android:orientation="vertical"
-	        tools:ignore="UselessParent" >
-	    	
-	            
-		        <LinearLayout
-		            android:id="@+id/musicWrapper"
-		            android:layout_width="wrap_content"
-		            android:layout_height="fill_parent"
-		            android:orientation="vertical"
-		            tools:ignore="NestedWeights" >
-		
-				</LinearLayout>
-				
-			
-	    </LinearLayout>
-	    
-	</LinearLayout>
-	
-</RelativeLayout>
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="${relativePackage}.${activityClass}" >
+
+</LinearLayout>

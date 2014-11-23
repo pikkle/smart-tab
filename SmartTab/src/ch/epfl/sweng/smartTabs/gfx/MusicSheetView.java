@@ -1,13 +1,11 @@
-/**
- * 
- */
 package ch.epfl.sweng.smartTabs.gfx;
 
 import ch.epfl.sweng.smartTabs.R;
-import ch.epfl.sweng.smartTabs.music.Duration;
+
 import ch.epfl.sweng.smartTabs.music.Height;
 import ch.epfl.sweng.smartTabs.music.Note;
 import ch.epfl.sweng.smartTabs.music.Tab;
+import ch.epfl.sweng.smartTabs.music.Duration;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -16,7 +14,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.util.AttributeSet;
 import android.view.View;
 import android.view.WindowManager;
 
@@ -30,6 +27,9 @@ public class MusicSheetView extends View{
 	private Tab mTab;
 	private int pace = 200;
 	private int endOfTab;
+	
+	
+	
 	//Bitmap factories to create Bitmap
 	private Bitmap noire = BitmapFactory.decodeResource(getResources(), R.raw.noire);
 	//to do : update with right resources
@@ -37,7 +37,10 @@ public class MusicSheetView extends View{
 	private Bitmap croche = BitmapFactory.decodeResource(getResources(), R.raw.noire);
 	private Bitmap blanche = BitmapFactory.decodeResource(getResources(), R.raw.noire);
 	private Bitmap ronde = BitmapFactory.decodeResource(getResources(), R.raw.noire);
-
+	private Bitmap cleDeSol = BitmapFactory.decodeResource(getResources(), R.raw.cledesol);
+	private int startingPos;
+	private int lineMargin;
+	private int padding;
 	
 	/**
 	 * @param context
@@ -46,6 +49,7 @@ public class MusicSheetView extends View{
 	public MusicSheetView(Context context, Tab tab) {
 		super(context);
 		paint = new Paint();
+		this.setBackgroundColor(Color.WHITE);
 		this.mTab = tab;
 		endOfTab = ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getWidth();
 	}
@@ -53,9 +57,10 @@ public class MusicSheetView extends View{
 	@Override
     protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
-		paint.setColor(Color.CYAN);
-		paint.setAlpha(100);
-		canvas.drawRect(0, 0, canvas.getWidth(), canvas.getHeight(), paint);
+		padding = canvas.getHeight()/8;
+		startingPos = canvas.getWidth()/8;
+		
+		
 		paint.setColor(Color.BLACK);
 		//canvas.drawLine(0, 0, 100000, 6000, paint);
 		int noteWidth = (int) (canvas.getWidth()/35);
@@ -67,25 +72,31 @@ public class MusicSheetView extends View{
 		ronde = Bitmap.createScaledBitmap(ronde, noteWidth, noteHeight(ronde, noteWidth), false);
 		
 		//to do : create the grid
-		int startingPos = 100;
-		int lineMargin = (int) (canvas.getHeight()/(6));
+
 		
-		for (int i = 1; i <= 5; i++) { //Draws the grid
-			paint.setStrokeWidth(1);
-			canvas.drawLine(
-					startingPos, 
-					i * lineMargin, 
-					endOfTab, //TODO: calculate size of tab
-					i * lineMargin, 
-					paint);
-			
-		}
-		//adding notes to the grid
-		int pos = startingPos + 100;
+		lineMargin = (int) (canvas.getHeight()/(6));
+		
+		// Draws the grid
+		drawGrid(canvas, lineMargin);
+		
+		
+//		//adding notes to the grid
+		int pos = startingPos+2*pace;
 		Rect noteRect = new Rect();
+		double temp = 0;
+		int mes = 1;
 		for (int i = 0; i < mTab.length(); i++) {
 			double noteDuration = Duration.valueOf(mTab.getTime(i).getDuration()).getDuration();
 			pos += pace*noteDuration;
+
+			temp += noteDuration;
+			if(temp % 4d == 0d){
+				temp = 0;
+				paint.setStrokeWidth(3);
+				drawVerticalLineOnTab(canvas, pos + pace/2, lineMargin);
+				paint.setStrokeWidth(1);
+			}
+			
 			int noteHeightPos = lineMargin + lineMargin * 4;
 			if (pos-getScrollX() > 0 && pos-getScrollX() < getWidth()) { //Draws only what is necessary
 				for (int j = 0; j < 6; j++) {
@@ -93,26 +104,29 @@ public class MusicSheetView extends View{
 						Bitmap currNoteImage = getNoteWithDuration(mTab.getTime(i).getDuration());
 						int noteCenter = getNoteCenter(currNoteImage);
 						Note currNote = mTab.getTime(i).getPartitionNote(j);
-						System.out.println("note at time " + i + " for chord " + j + " : " + currNote);
 						Boolean sharpNote = currNote != isSharp(currNote);
-						System.out.println("note is sharp : " + sharpNote);
 						currNote = isSharp(currNote);
-						System.out.println("note after isSharp : " + currNote.getHeight());
-						System.out.println("note height : " + noteHeight(currNoteImage, currNoteImage.getWidth()));
-						System.out.println("note center : " + noteCenter);
-						System.out.println("note height pos : " + getNoteHeightPosition(currNote) + ", note width pos : " + pos);
 						canvas.drawBitmap(currNoteImage, pos, noteHeightPos - getNoteCenter(currNoteImage)  - lineMargin/2 * getNoteHeightPosition(currNote), paint);
 					}
 				}
 			}
 		}
-		endOfTab = pos + 100;
+		endOfTab = pos + 200;
+		
+		drawVerticalLineOnTab(canvas, startingPos, lineMargin);
+		drawVerticalLineOnTab(canvas, endOfTab, lineMargin);
 	}
 	
 	private int noteHeight(Bitmap note, int noteWidth) {
 		return note.getHeight() * noteWidth / note.getWidth();
 	}
 	
+	private void drawGrid(Canvas canvas, float y) {
+		for (int i = 1; i <= 5; i++) {	
+			canvas.drawLine(startingPos ,i * y  , endOfTab, i * y , paint);
+		}	
+	}
+
 	private int getNoteCenter (Bitmap note) {
 		int center = 7 * note.getHeight() / 8;
 		if (note == ronde) {
@@ -183,4 +197,9 @@ public class MusicSheetView extends View{
 		return height;
 	}
 	
+	private void drawVerticalLineOnTab(Canvas canvas, int x, int y) {
+		paint.setStrokeWidth(2);
+		canvas.drawLine(x, y , x, 5*y , paint);
+		paint.setStrokeWidth(1);
+	}
 }
