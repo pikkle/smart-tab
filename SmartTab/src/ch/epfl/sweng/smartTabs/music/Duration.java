@@ -17,7 +17,14 @@ public enum Duration {
 		myDuration = duration;
 	}
 	
+	/**
+	 * @return The integer that represents the duration
+	 */
 	public double getDuration() {
+		// In case, we call the getDuration with a null
+		if (this == null) {
+			throw new NullPointerException();
+		}
 		return myDuration;
 	}
 }
