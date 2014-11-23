@@ -34,7 +34,7 @@ public class CursorView extends View {
     protected void onDraw(Canvas canvas) {
 		paint.setStrokeWidth(5);
 		paint.setColor(Color.rgb(255,165,0));
-		canvas.drawLine(posX, 0, canvas.getWidth()/8, canvas.getHeight(), paint);
+		canvas.drawLine(posX, 0, posX, canvas.getHeight(), paint);
     }
 	
 	public int getPosX(){

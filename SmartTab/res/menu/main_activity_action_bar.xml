@@ -18,7 +18,7 @@
     <!-- Settings, will always show in overflow -->
     <item
         android:id="@+id/action_settings"
-        android:showAsAction="never"
+        android:showAsAction="ifRoom"
         android:icon="@drawable/settings"
         android:title="@string/action_settings"/>
 

@@ -1,17 +1,25 @@
 package ch.epfl.sweng.smartTabs.activity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Point;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.CheckBox;
+import android.widget.LinearLayout;
 import android.widget.Toast;
+import ch.epfl.sweng.smartTabs.R;
 import ch.epfl.sweng.smartTabs.gfx.GridViewDraw;
 import ch.epfl.sweng.smartTabs.gfx.NoteView;
 import ch.epfl.sweng.smartTabs.gfx.TabAnimationThread;
@@ -57,18 +65,18 @@ public class DisplayActivity extends Activity {
 		display.getSize(size);
 		int width = size.x;
 		int height = size.y;
-		
-		
+
+
 		mDrawable = new GridViewDraw(width, height, Instrument.GUITAR, tab, getResources());
 
 		n = new NoteView(this, tab, Instrument.GUITAR, mDrawable);
 		pool = new SoundPool(maxStreams, AudioManager.STREAM_MUSIC, 0);
-		
+
 		setContentView(n);
 
 		// TODO : The new thread was useless
 		map = new SampleMap(getApplicationContext(),
-						pool, n.getTuning());
+				pool, n.getTuning());
 
 
 		thread = new TabAnimationThread(n);
@@ -76,6 +84,8 @@ public class DisplayActivity extends Activity {
 	}
 
 
+	
+	
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 		if (event.getAction() == MotionEvent.ACTION_DOWN) {
@@ -93,7 +103,7 @@ public class DisplayActivity extends Activity {
 		} else {
 			backPressedOnce = true;
 			Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
-			
+
 			new Handler().postDelayed(new Runnable() {
 
 				@Override
@@ -112,4 +122,5 @@ public class DisplayActivity extends Activity {
 		playbackThread = new NotePlaybackThread(pool, map, time, tuning);
 		playbackThread.start();
 	}
+
 }

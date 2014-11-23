@@ -1,18 +1,24 @@
 package ch.epfl.sweng.smartTabs.activity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.v4.view.MotionEventCompat;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.CheckBox;
 import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
@@ -49,8 +55,8 @@ public class TestActivity extends Activity {
 
 	private static final int PACE = 200;
 	private static final float SMALLEST_DURATION = 0.25f; // double croche
-	private static final double millisInMin = 60000.0; // number of millis in
-														// one min
+	private static final double millisInMin = 60000.0; // number of millis in one min
+
 
 	private boolean backPressedOnce = false;
 	private SoundPool pool = new SoundPool(50, AudioManager.STREAM_MUSIC, 0);
@@ -59,6 +65,7 @@ public class TestActivity extends Activity {
 	private int playingPosition; // Position of the time to play (Intital
 										// value corresponds to the future
 										// cursor position)
+
 	private int delay = 5;
 
 	private int speed;
@@ -76,7 +83,8 @@ public class TestActivity extends Activity {
 		super.onCreate(savedInstanceState);
 
 		System.out.println("Initîalising TestActivity");
-
+		checkDialog(this);
+		
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 		this.getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -85,8 +93,6 @@ public class TestActivity extends Activity {
 		final Tab tab = (Tab) intent.getExtras().getSerializable("tab");
 
 		speed = computeSpeed(tab.getTempo(), PACE, delay, millisInMin);
-		
-//		scroller = new HorizontalScrollView(getApplicationContext());
 
 		setContentView(R.layout.activity_test);
 
@@ -95,28 +101,26 @@ public class TestActivity extends Activity {
 		musicWrapper.setOrientation(LinearLayout.VERTICAL);
 		testWrapper = new FrameLayout(getBaseContext());
 
-		headerView = new HeaderView(getBaseContext(), tab.getTabName());
-		footerView = new FooterView(getBaseContext());
-		tablatureView = new TablatureView(getBaseContext(), tab,
-				Instrument.GUITAR, PACE);
-		musicSheetView = new MusicSheetView(getBaseContext(), tab);
-		cursorView = new CursorView(getBaseContext());
+		headerView 		= new HeaderView(getBaseContext(), tab.getTabName());
+		footerView 		= new FooterView(getBaseContext());
+		tablatureView 	= new TablatureView(getBaseContext(), tab, Instrument.GUITAR, PACE);
+		musicSheetView 	= new MusicSheetView(getBaseContext(), tab);
+		cursorView 		= new CursorView(getBaseContext());
 		
-		playingPosition = cursorView.getPosX();
+		
+		playingPosition = cursorView.getPosX() - 50;
 
 		musicWrapper.addView(musicSheetView, weight(3));
 		musicWrapper.addView(tablatureView, weight(7));
-		
-//		scroller.addView(musicWrapper);
 
 		testWrapper.addView(musicWrapper, new FrameLayout.LayoutParams(
 				FrameLayout.LayoutParams.MATCH_PARENT,
-				FrameLayout.LayoutParams.MATCH_PARENT));
+				FrameLayout.LayoutParams.MATCH_PARENT));	
 
 		testWrapper.addView(cursorView, new FrameLayout.LayoutParams(
 				FrameLayout.LayoutParams.MATCH_PARENT,
 				FrameLayout.LayoutParams.MATCH_PARENT));
-
+		
 		wrapper.addView(headerView, weight(1));
 		wrapper.addView(testWrapper, weight(8));
 		wrapper.addView(footerView, weight(1));
@@ -130,6 +134,7 @@ public class TestActivity extends Activity {
 					new Note(Height.G, 2), new Note(Height.D, 2),
 					new Note(Height.A, 1), new Note(Height.E, 1) };
 			SampleMap map = new SampleMap(getApplicationContext(), pool, tuning);
+
 
 			@Override
 			public void run() {
@@ -166,17 +171,12 @@ public class TestActivity extends Activity {
 
 								@Override
 								public void run() {
-									for (int i = 0; i < (Instrument.GUITAR)
-											.getNumOfStrings(); i++) {
+									for (int i = 0; i < (Instrument.GUITAR).getNumOfStrings(); i++) {
 										String fret = t.getNote(i);
 										if (!fret.equals("")) {
-											int fretNumber = Integer
-													.parseInt(fret);
-											final Note note = tuning[i]
-													.addHalfTones(fretNumber);
-											pool.play(map.getSampleId(note), 1,
-													1, 1, 0, 1);
-											System.out.println("CursorPosition : " + cursorView.getPosX() +  " NotePosition : " + playingPosition);
+											int fretNumber = Integer.parseInt(fret);
+											final Note note = tuning[i].addHalfTones(fretNumber);
+											pool.play(map.getSampleId(note), 1, 1, 1, 0, 1);
 										}
 									}
 
@@ -196,7 +196,6 @@ public class TestActivity extends Activity {
 		});
 		t.start();
 	}
-
 	/**
 	 * This method computes the number of pixels to scroll by.
 	 * 
@@ -226,9 +225,9 @@ public class TestActivity extends Activity {
 		}
 		if (MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_UP) {
 			this.newX = x;
+			
 			tablatureView.scrollBy((int) (lastX - newX), 0);
 			musicSheetView.scrollBy((int) (lastX - newX), 0);
-
 		}
 		return true;
 	}
@@ -241,8 +240,8 @@ public class TestActivity extends Activity {
 			pool.release();
 		} else {
 			backPressedOnce = true;
-			Toast.makeText(this, "Press BACK again to exit", Toast.LENGTH_SHORT)
-					.show();
+
+			Toast.makeText(this, "Press BACK again to exit", Toast.LENGTH_SHORT).show();
 
 			new Handler().postDelayed(new Runnable() {
 
@@ -272,4 +271,44 @@ public class TestActivity extends Activity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
+
+	/**
+	 * Author: Raphael Khoury
+	 * Method that creates Dialog Box, showing help.
+	 */
+
+	private void checkDialog(Context cont) {
+		SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(cont);
+		Boolean showHelp = pref.getBoolean("pref_show_help", true);
+		if (showHelp){
+			createDialog(this);
+		}
+		
+	}
+
+	public void createDialog(final Context cont) {
+		final CheckBox checkBox = new CheckBox(cont);
+		checkBox.setText(R.string.show_help);
+		checkBox.setEnabled(true);
+		LinearLayout linLayout = new LinearLayout(cont);
+		linLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+				LinearLayout.LayoutParams.MATCH_PARENT));
+		linLayout.addView(checkBox);
+
+		AlertDialog.Builder adBuilder = new AlertDialog.Builder(cont);
+		adBuilder.setView(linLayout);
+		adBuilder.setTitle(R.string.title_help);
+		adBuilder.setMessage(R.string.help_content);
+		adBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface arg0, int arg1) {
+				SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(cont);
+				SharedPreferences.Editor editor = pref.edit();
+				editor.putBoolean("pref_show_help", checkBox.isChecked()).commit();
+				Toast.makeText(cont, "Saved new preferences.", Toast.LENGTH_SHORT).show();
+			}
+		});
+		adBuilder.create().show();
+	}
+
+
 }

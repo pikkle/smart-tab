@@ -32,6 +32,13 @@ public class PreferencesActivity extends PreferenceActivity {
 	 */
 	public static class PreferencesFrag extends PreferenceFragment{
 		
+		
+		
+		
+		
+		
+		
+		
 		@Override
 		public void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);

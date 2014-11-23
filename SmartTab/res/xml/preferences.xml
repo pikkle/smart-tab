@@ -7,8 +7,8 @@
             android:key="pref_help"></Preference>
 
         <CheckBoxPreference
-            android:defaultValue="true"
-            android:key="pref_sync"
+            android:defaultValue="True"
+            android:key="pref_show_help"
             android:summaryOff="@string/show_help_on_startup_no"
             android:summaryOn="@string/show_help_on_startup_yes"
             android:title="@string/show_help" />
