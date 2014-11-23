@@ -39,6 +39,10 @@ import ch.epfl.sweng.smartTabs.music.SampleMap;
 import ch.epfl.sweng.smartTabs.music.Tab;
 import ch.epfl.sweng.smartTabs.music.Time;
 
+/**
+ * @author fatonramadani
+ *
+ */
 public class TestActivity extends Activity {
 	private HeaderView headerView;
 	private FooterView footerView;
