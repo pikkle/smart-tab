@@ -30,7 +30,6 @@ import ch.epfl.sweng.smartTabs.gfx.CursorView;
 import ch.epfl.sweng.smartTabs.gfx.FooterView;
 import ch.epfl.sweng.smartTabs.gfx.HeaderView;
 import ch.epfl.sweng.smartTabs.gfx.MusicSheetView;
-import ch.epfl.sweng.smartTabs.gfx.ScrollingView;
 import ch.epfl.sweng.smartTabs.gfx.TablatureView;
 import ch.epfl.sweng.smartTabs.music.Height;
 import ch.epfl.sweng.smartTabs.music.Instrument;
@@ -39,6 +38,7 @@ import ch.epfl.sweng.smartTabs.music.SampleMap;
 import ch.epfl.sweng.smartTabs.music.Tab;
 import ch.epfl.sweng.smartTabs.music.Time;
 
+
 /**
  * @author fatonramadani
  *
@@ -46,7 +46,6 @@ import ch.epfl.sweng.smartTabs.music.Time;
 public class DisplayActivity extends Activity {
 	private HeaderView headerView;
 	private FooterView footerView;
-	private ScrollingView scrollingView;
 	private CursorView cursorView;
 
 	private LinearLayout wrapper;
@@ -58,7 +57,6 @@ public class DisplayActivity extends Activity {
 	private boolean running;
 
 	private static final int PACE = 200;
-	private static final float SMALLEST_DURATION = 0.25f; // double croche
 	private static final double millisInMin = 60000.0; // number of millis in one min
 
 
@@ -86,7 +84,7 @@ public class DisplayActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		System.out.println("Initîalising TestActivity");
+		//System.out.println("Initîalising TestActivity");
 		checkDialog(this);
 		
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -156,7 +154,7 @@ public class DisplayActivity extends Activity {
 						} else if (ptr >= threshold * 4 / 5 && ptr < threshold) {
 							headerView.incPct();
 						} else if (ptr == threshold) {
-							System.out.println("NOTE !");
+							//System.out.println("NOTE !");
 							headerView.setPct(1);
 							ptr = 0;
 						} else if (ptr == 0) {
@@ -284,7 +282,7 @@ public class DisplayActivity extends Activity {
 	private void checkDialog(Context cont) {
 		SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(cont);
 		Boolean showHelp = pref.getBoolean("pref_show_help", true);
-		if (showHelp){
+		if (showHelp) {
 			createDialog(this);
 		}
 		
@@ -313,6 +311,4 @@ public class DisplayActivity extends Activity {
 		});
 		adBuilder.create().show();
 	}
-
-
 }

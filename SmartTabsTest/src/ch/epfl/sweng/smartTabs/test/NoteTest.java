@@ -12,13 +12,19 @@ import junit.framework.TestCase;
 public class NoteTest extends TestCase{
 	private Height nullHeight = null;
 	private Duration nullDuration = null;
+	private Note test3 = new Note(Height.C, 1, Duration.Noir);
+	private Note test4 = new Note(Height.C, 1);
+	@SuppressWarnings("unused")
+	private Note test1;
+	@SuppressWarnings("unused")
+	private Note test2;
 	
 	/**
 	 * Test whether the constructor catches null arguments.
 	 */
 	public void noteConstructorTest() {
 		try {
-			Note test1 = new Note(nullHeight,0,nullDuration);
+			test1 = new Note(nullHeight,0,nullDuration);
 			fail("Should have thrown an NullPointerException");
 		} catch (NullPointerException e) {
 			// success
@@ -30,15 +36,14 @@ public class NoteTest extends TestCase{
 	 */
 	public void noteConstructorWithoutDurationTest() {
 		try {
-			Note test2 = new Note(nullHeight,0);
+			test2 = new Note(nullHeight,0);
 			fail("Should have thrown an NullPointerException");
 		} catch (NullPointerException e) {
 			// success
 		}
 	}
 	
-	private Note test3 = new Note(Height.C, 1, Duration.Noir);
-	private Note test4 = new Note(Height.C, 1);
+	
 	
 	/**
 	 * Check whether the two constructor set the correct duration.

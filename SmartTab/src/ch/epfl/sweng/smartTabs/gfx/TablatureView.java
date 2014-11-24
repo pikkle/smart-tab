@@ -1,8 +1,10 @@
 package ch.epfl.sweng.smartTabs.gfx;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.view.Display;
@@ -25,7 +27,8 @@ public class TablatureView extends View{
 	private float padding;
 	private int startingPos; //Display initially starts at 100px
 	private int firstNotePos; //First note's position
-
+	private Bitmap bmp;
+	private boolean firstDraw =true;
 	
 	/**
 	 * @param context
@@ -41,7 +44,7 @@ public class TablatureView extends View{
 		
 		WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
 		Display display = wm.getDefaultDisplay();
-		padding = display.getWidth()/8;
+		padding = display.getHeight()/8;
 		startingPos = display.getWidth()/8;
 		firstNotePos = startingPos + 2*pace;
 		
@@ -59,18 +62,27 @@ public class TablatureView extends View{
 		int tabLineMargin = (int) (6*canvas.getHeight()/8/(myInstr.getNumOfStrings()+1));
 		float textSize = canvas.getHeight()*0.1f;
 		
-		// Basic Canvas configuration
-		paint.setColor(Color.BLACK);
-		paint.setStrokeWidth(1);
-		paint.setTextSize(textSize);
-		
-		// Vertical lines at the beginning and the end.
-		drawVerticalLineOnTab(canvas, startingPos, tabLineMargin);
-		drawVerticalLineOnTab(canvas, endOfTab, tabLineMargin);
-		//Draws the grid and the tuning
-		drawGrid(canvas, tabLineMargin);
-		// Draws the notes
-		drawNotes(canvas);	
+		if (firstDraw) {
+			paint.setColor(Color.BLACK);
+			paint.setStrokeWidth(1);
+			paint.setTextSize(textSize);
+			
+			bmp = Bitmap.createBitmap((int) canvas.getWidth(),(int) canvas.getHeight(), Bitmap.Config.ARGB_8888);
+			Canvas c = new Canvas(bmp);
+			drawVerticalLineOnTab(c, startingPos, tabLineMargin);
+			drawVerticalLineOnTab(c, endOfTab, tabLineMargin);
+			//Draws the grid and the tuning
+			drawGrid(c, tabLineMargin);
+			// Draws the notes
+			drawNotes(c);
+			c.setBitmap(bmp);
+			firstDraw = false;
+			
+			canvas.drawBitmap(bmp, 0, 0 ,null);
+		}
+		else {
+			canvas.drawBitmap(bmp, 0 ,0, null);
+		}
     }
 		
 	
@@ -97,7 +109,7 @@ public class TablatureView extends View{
 				paint.setTextSize(canvas.getHeight()*0.08f);
 				paint.setStrokeWidth(3);
 				drawVerticalLineOnTab(canvas, pos + myPace/2, (int) (6*canvas.getHeight()/8/(myInstr.getNumOfStrings()+1)));
-				paint.setStrokeWidth(1);
+				paint.setStrokeWidth(1); 
 			}
 			
 			paint.setTextSize(canvas.getHeight()*0.09f);
@@ -125,7 +137,7 @@ public class TablatureView extends View{
 	 * @param y
 	 */
 	private void drawGrid(Canvas canvas, float y) {
-		for (int i = 1; i <= myInstr.getNumOfStrings(); i++) {	
+		for (int i = 1; i <= myInstr.getNumOfStrings() ; i++) {	
 			canvas.drawLine(startingPos, i * y  + padding, endOfTab, i * y + padding, paint);
 		}	
 	}

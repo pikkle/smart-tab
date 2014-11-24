@@ -2,7 +2,6 @@ package ch.epfl.sweng.smartTabs.music;
 
 import java.io.Serializable;
 
-import android.annotation.SuppressLint;
 
 /**
  * @author Faton Ramadani
@@ -10,6 +9,8 @@ import android.annotation.SuppressLint;
  */
 
 public class Note implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 	private final int myOctave;
 	private final Height myHeight;
 	private final Duration myDuration;
