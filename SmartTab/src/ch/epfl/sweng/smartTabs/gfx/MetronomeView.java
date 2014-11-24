@@ -9,22 +9,21 @@ import android.view.View;
 import ch.epfl.sweng.smartTabs.music.Tab;
 
 public class MetronomeView extends View {
-	private int mTempo;
-	private Paint mPaint;
-	private Context mContext;
+    private int mTempo;
+    private Paint mPaint;
+    private Context mContext;
 
-	public MetronomeView(Context context, Tab tab) {
-		super(context);
-		mContext = context;
-		mTempo = tab.getTempo();
-	}
-	
-	protected void onDraw(Canvas canvas) {
-		super.onDraw(canvas);
-		mPaint = new Paint();
-		mPaint.setColor(Color.RED);
-		
-	}
+    public MetronomeView(Context context, Tab tab) {
+        super(context);
+        mContext = context;
+        mTempo = tab.getTempo();
+    }
 
-	
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+        mPaint = new Paint();
+        mPaint.setColor(Color.RED);
+
+    }
+
 }
