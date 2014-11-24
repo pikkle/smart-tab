@@ -68,7 +68,6 @@ public final class Tab implements Serializable {
 	public void initTimeMap(int firstPos) {
 		//Position of the time (initial value equal to the position of the first time)
 		float timePos = firstPos;
-		System.out.println("Filling timeMap !");
 		mTimeMap.put(timePos, mTimeList.get(0)); 			//init the first item of the map
 		for (int i = 1; i < mTimeList.size(); i++) {
 			double dur = Duration.valueOf(mTimeList.get(i-1).getDuration()).getDuration();

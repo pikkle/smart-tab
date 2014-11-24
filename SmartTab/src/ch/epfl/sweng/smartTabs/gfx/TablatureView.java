@@ -56,9 +56,7 @@ public class TablatureView extends View{
 	@Override
     protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
-//		padding = canvas.getHeight()/8;
-//		startingPos = canvas.getWidth()/8;
-//		firstNotePos = startingPos+2*pace;
+		
 		int tabLineMargin = (int) (6*canvas.getHeight()/8/(instr.getNumOfStrings()+1));
 		float textSize = canvas.getHeight()*0.1f;
 		

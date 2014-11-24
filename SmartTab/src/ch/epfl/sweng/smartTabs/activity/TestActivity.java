@@ -1,5 +1,7 @@
 package ch.epfl.sweng.smartTabs.activity;
 
+import java.util.concurrent.ThreadPoolExecutor;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -48,6 +50,7 @@ public class TestActivity extends Activity {
 	private LinearLayout wrapper;
 	private LinearLayout musicWrapper;
 	private FrameLayout testWrapper;
+	
 
 	private Tab tab;
 
@@ -152,7 +155,6 @@ public class TestActivity extends Activity {
 						} else if (ptr >= threshold * 4 / 5 && ptr < threshold) {
 							headerView.incPct();
 						} else if (ptr == threshold) {
-							System.out.println("NOTE !");
 							headerView.setPct(1);
 							ptr = 0;
 						} else if (ptr == 0) {
@@ -225,9 +227,16 @@ public class TestActivity extends Activity {
 		}
 		if (MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_UP) {
 			this.newX = x;
+			float delta = lastX - newX;
 			
-			tablatureView.scrollBy((int) (lastX - newX), 0);
-			musicSheetView.scrollBy((int) (lastX - newX), 0);
+			if(delta != 0){				
+				running = !running;
+			}
+			
+			tablatureView.scrollBy((int) (delta), 0);
+			musicSheetView.scrollBy((int) (delta), 0);
+			
+			playingPosition += (int) delta;
 		}
 		return true;
 	}
