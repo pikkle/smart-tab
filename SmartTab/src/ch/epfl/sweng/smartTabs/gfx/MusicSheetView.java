@@ -1,11 +1,5 @@
 package ch.epfl.sweng.smartTabs.gfx;
 
-import ch.epfl.sweng.smartTabs.R;
-
-import ch.epfl.sweng.smartTabs.music.Height;
-import ch.epfl.sweng.smartTabs.music.Note;
-import ch.epfl.sweng.smartTabs.music.Tab;
-import ch.epfl.sweng.smartTabs.music.Duration;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -16,6 +10,11 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.view.View;
 import android.view.WindowManager;
+import ch.epfl.sweng.smartTabs.R;
+import ch.epfl.sweng.smartTabs.music.Duration;
+import ch.epfl.sweng.smartTabs.music.Height;
+import ch.epfl.sweng.smartTabs.music.Note;
+import ch.epfl.sweng.smartTabs.music.Tab;
 
 /**
  * @author pikkle
