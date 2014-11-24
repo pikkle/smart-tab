@@ -1,13 +1,11 @@
 package ch.epfl.sweng.smartTabs.gfx;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Rect;
 import android.view.View;
 import android.view.WindowManager;
 import ch.epfl.sweng.smartTabs.R;
@@ -22,7 +20,6 @@ import ch.epfl.sweng.smartTabs.music.Tab;
  */
 public class MusicSheetView extends View {
     private Paint paint;
-    private Resources res;
     private Tab mTab;
     private int pace = 200;
     private int endOfTab;
@@ -39,8 +36,6 @@ public class MusicSheetView extends View {
             R.raw.noire);
     private Bitmap ronde = BitmapFactory.decodeResource(getResources(),
             R.raw.noire);
-    private Bitmap cleDeSol = BitmapFactory.decodeResource(getResources(),
-            R.raw.cledesol);
     private int startingPos;
     private int lineMargin;
     private int padding;
@@ -76,16 +71,7 @@ public class MusicSheetView extends View {
             // canvas.drawLine(0, 0, 100000, 6000, paint);
             int noteWidth = (int) (c.getWidth() / 35);
             // create the bitmaps
-            doubleCroche = Bitmap.createScaledBitmap(doubleCroche, noteWidth,
-                    noteHeight(doubleCroche, noteWidth), false);
-            croche = Bitmap.createScaledBitmap(croche, noteWidth,
-                    noteHeight(croche, noteWidth), false);
-            noire = Bitmap.createScaledBitmap(noire, noteWidth,
-                    noteHeight(noire, noteWidth), false);
-            blanche = Bitmap.createScaledBitmap(blanche, noteWidth,
-                    noteHeight(blanche, noteWidth), false);
-            ronde = Bitmap.createScaledBitmap(ronde, noteWidth,
-                    noteHeight(ronde, noteWidth), false);
+            initializeBitmaps(noteWidth);
 
             // to do : create the grid
 
@@ -96,44 +82,7 @@ public class MusicSheetView extends View {
 
             // //adding notes to the grid
             int pos = startingPos + 2 * pace;
-            Rect noteRect = new Rect();
-            double temp = 0;
-            int mes = 1;
-            for (int i = 0; i < mTab.length(); i++) {
-                double noteDuration = Duration.valueOf(
-                        mTab.getTime(i).getDuration()).getDuration();
-                pos += pace * noteDuration;
-
-                temp += noteDuration;
-                if (temp % 4d == 0d) {
-                    temp = 0;
-                    paint.setStrokeWidth(3);
-                    drawVerticalLineOnTab(c, pos + pace / 2, lineMargin);
-                    paint.setStrokeWidth(1);
-                }
-
-                int noteHeightPos = lineMargin + lineMargin * 4;
-                if (pos - getScrollX() > 0 && pos - getScrollX() < getWidth()) { // Draws
-                                                                                 // only
-                                                                                 // what
-                                                                                 // is
-                                                                                 // necessary
-                    for (int j = 0; j < 6; j++) {
-                        if (mTab.getTime(i).getPartitionNote(j) != null) {
-                            Bitmap currNoteImage = getNoteWithDuration(mTab
-                                    .getTime(i).getDuration());
-                            int noteCenter = getNoteCenter(currNoteImage);
-                            Note currNote = mTab.getTime(i).getPartitionNote(j);
-                            Boolean sharpNote = currNote != isSharp(currNote);
-                            currNote = isSharp(currNote);
-                            c.drawBitmap(currNoteImage, pos, noteHeightPos
-                                    - getNoteCenter(currNoteImage) - lineMargin
-                                    / 2 * getNoteHeightPosition(currNote),
-                                    paint);
-                        }
-                    }
-                }
-            }
+            drawNotes(c, pos);
             endOfTab = pos + 200;
 
             drawVerticalLineOnTab(c, startingPos, lineMargin);
@@ -146,6 +95,46 @@ public class MusicSheetView extends View {
             canvas.drawBitmap(bmp, 0, 0, null);
         }
 
+    }
+    
+    public void drawNotes(Canvas c, int pos) {
+        //Rect noteRect = new Rect();
+        double temp = 0;
+        //int mes = 1;
+        for (int i = 0; i < mTab.length(); i++) {
+            double noteDuration = Duration.valueOf(
+                    mTab.getTime(i).getDuration()).getDuration();
+            pos += pace * noteDuration;
+
+            temp += noteDuration;
+            if (temp % 4d == 0d) {
+                temp = 0;
+                paint.setStrokeWidth(3);
+                drawVerticalLineOnTab(c, pos + pace / 2, lineMargin);
+                paint.setStrokeWidth(1);
+            }
+
+            int noteHeightPos = lineMargin + lineMargin * 4;
+            if (pos - getScrollX() > 0 && pos - getScrollX() < getWidth()) { // Draws
+                                                                             // only
+                                                                             // what
+                                                                             // is
+                                                                             // necessary
+                for (int j = 0; j < 6; j++) {
+                    if (mTab.getTime(i).getPartitionNote(j) != null) {
+                        Bitmap currNoteImage = getNoteWithDuration(mTab
+                                .getTime(i).getDuration());
+                        Note currNote = mTab.getTime(i).getPartitionNote(j);
+                        Boolean sharpNote = currNote != isSharp(currNote);
+                        currNote = isSharp(currNote);
+                        c.drawBitmap(currNoteImage, pos, noteHeightPos
+                                - getNoteCenter(currNoteImage) - lineMargin
+                                / 2 * getNoteHeightPosition(currNote),
+                                paint);
+                    }
+                }
+            }
+        }
     }
 
     private int noteHeight(Bitmap note, int noteWidth) {
@@ -181,19 +170,27 @@ public class MusicSheetView extends View {
     }
 
     public Note isSharp(Note note) {
-        Note sharpNote = note;
-        if (note.getHeight() == Height.CD) {
-            sharpNote = new Note(Height.C, note.getOctave());
-        } else if (note.getHeight() == Height.DD) {
-            sharpNote = new Note(Height.D, note.getOctave());
-        } else if (note.getHeight() == Height.FD) {
-            sharpNote = new Note(Height.F, note.getOctave());
-        } else if (note.getHeight() == Height.GD) {
-            sharpNote = new Note(Height.G, note.getOctave());
-        } else if (note.getHeight() == Height.AD) {
-            sharpNote = new Note(Height.A, note.getOctave());
+        switch (note.getHeight()) {
+        case CD:
+        	return new Note(Height.C, note.getOctave());
+        	
+        case DD:
+        	return new Note(Height.D, note.getOctave());
+        	
+        case FD:
+        	return new Note(Height.F, note.getOctave());
+        	
+        case GD:
+        	return new Note(Height.G, note.getOctave());
+        	
+        case AD:
+        	return new Note(Height.A, note.getOctave());
+        	
+        default:
+        	return note;
+        	
         }
-        return sharpNote;
+        
     }
 
     public int getNoteHeightPosition(Note note) {
@@ -220,6 +217,7 @@ public class MusicSheetView extends View {
         case D:
             height = 6;
             break;
+         default:
 
         }
         if ((note.getOctave() > 1) && (height < 2)) {
@@ -232,5 +230,18 @@ public class MusicSheetView extends View {
         paint.setStrokeWidth(2);
         canvas.drawLine(x, y, x, 5 * y, paint);
         paint.setStrokeWidth(1);
+    }
+    
+    private void initializeBitmaps(int noteWidth) {
+    	doubleCroche = Bitmap.createScaledBitmap(doubleCroche, noteWidth,
+                noteHeight(doubleCroche, noteWidth), false);
+        croche = Bitmap.createScaledBitmap(croche, noteWidth,
+                noteHeight(croche, noteWidth), false);
+        noire = Bitmap.createScaledBitmap(noire, noteWidth,
+                noteHeight(noire, noteWidth), false);
+        blanche = Bitmap.createScaledBitmap(blanche, noteWidth,
+                noteHeight(blanche, noteWidth), false);
+        ronde = Bitmap.createScaledBitmap(ronde, noteWidth,
+                noteHeight(ronde, noteWidth), false);
     }
 }
