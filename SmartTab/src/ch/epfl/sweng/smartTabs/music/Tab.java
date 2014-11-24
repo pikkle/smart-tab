@@ -109,4 +109,12 @@ public final class Tab implements Serializable {
 	public boolean timeMapContains(float key) {
 		return mTimeMap.containsKey(key);
 	}
+	public double getTotalDuration(){
+		double total = 0;
+		for (Time t: mTimeList){
+			total = total + Duration.valueOf(t.getDuration()).getDuration();
+		}
+		return total*pace;
+		
+	}
 }
