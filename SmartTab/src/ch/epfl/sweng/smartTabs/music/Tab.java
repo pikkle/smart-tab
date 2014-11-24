@@ -21,15 +21,7 @@ public final class Tab implements Serializable {
     private final int mTempo;
     private final List<String> mSignatures;
     private final List<Time> mTimeList;
-    private final HashMap<Float, Time> mTimeMap = new HashMap<Float, Time>(); // maps
-                                                                              // time
-                                                                              // with
-                                                                              // the
-                                                                              // place
-                                                                              // it
-                                                                              // is
-                                                                              // in
-                                                                              // time
+    private final HashMap<Float, Time> mTimeMap = new HashMap<Float, Time>();
     private final int pace = 200;
 
     private Tab(String tabName, boolean complex, int tempo,

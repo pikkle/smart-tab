@@ -66,7 +66,7 @@ public class TablatureView extends View {
         if (firstDraw) {
             initBmp(canvas);
         }
-        canvas.drawBitmap(bmp, 0, 0, null);
+        canvas.drawBitmap(bmp, 500, 500, null);
     }
 
     /**
@@ -112,14 +112,15 @@ public class TablatureView extends View {
         paint.setColor(Color.BLACK);
         paint.setStrokeWidth(1);
         paint.setTextSize(textSize);
-        bmp = Bitmap.createBitmap(3000, (int) canvas.getHeight(),
-                Bitmap.Config.ARGB_8888);
+        bmp = Bitmap.createBitmap(3000, (int) canvas.getHeight(), Bitmap.Config.ARGB_8888);
+        
         Canvas c = new Canvas(bmp);
         drawVerticalLineOnTab(c, startingPos, tabLineMargin, paint);
         drawVerticalLineOnTab(c, endOfTab, tabLineMargin, paint);
         drawGrid(c, tabLineMargin);
         drawNotes(c);
         c.setBitmap(bmp);
+        
         firstDraw = false;
     }
 
@@ -159,11 +160,7 @@ public class TablatureView extends View {
 
             paint.setTextSize(canvas.getHeight() * 0.09f);
 
-            if (pos - getScrollX() > 0 && pos - getScrollX() < getWidth()) { // Draws
-                                                                             // only
-                                                                             // what
-                                                                             // is
-                                                                             // necessary
+            if (pos - getScrollX() > 0 && pos - getScrollX() < getWidth()) { 
                 for (int j = 0; j < myInstr.getNumOfStrings(); j++) {
                     paint.getTextBounds(myTab.getTime(i).getNote(j), 0, myTab
                             .getTime(i).getNote(j).length(), noteRect);
