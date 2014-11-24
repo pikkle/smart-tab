@@ -1,9 +1,5 @@
-/**
- * 
- */
 package ch.epfl.sweng.smartTabs.test;
 
-import ch.epfl.sweng.smartTabs.music.Note;
 import ch.epfl.sweng.smartTabs.music.Time;
 import android.test.AndroidTestCase;
 
