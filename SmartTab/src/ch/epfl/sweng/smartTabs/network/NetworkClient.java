@@ -31,8 +31,8 @@ public class NetworkClient {
 	}
 
 	/**
-	 * @param url that contains link to all tablatures
-	 * @return String that will be converted to JSON that contains tablatures. Parsing from JSON will be done later.
+	 * @param url The URL that contains link to all tablatures
+	 * @return String The String that will be converted to JSON that contains tablatures. Parsing from JSON will be done later.
 	 */
 	public String downloadContent(URL url) throws IOException {
 		InputStream is = null;

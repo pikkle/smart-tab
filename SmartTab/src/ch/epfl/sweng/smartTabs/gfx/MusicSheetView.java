@@ -1,11 +1,5 @@
 package ch.epfl.sweng.smartTabs.gfx;
 
-import ch.epfl.sweng.smartTabs.R;
-
-import ch.epfl.sweng.smartTabs.music.Height;
-import ch.epfl.sweng.smartTabs.music.Note;
-import ch.epfl.sweng.smartTabs.music.Tab;
-import ch.epfl.sweng.smartTabs.music.Duration;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -16,6 +10,11 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.view.View;
 import android.view.WindowManager;
+import ch.epfl.sweng.smartTabs.R;
+import ch.epfl.sweng.smartTabs.music.Duration;
+import ch.epfl.sweng.smartTabs.music.Height;
+import ch.epfl.sweng.smartTabs.music.Note;
+import ch.epfl.sweng.smartTabs.music.Tab;
 
 /**
  * @author pikkle
@@ -41,6 +40,8 @@ public class MusicSheetView extends View{
 	private int startingPos;
 	private int lineMargin;
 	private int padding;
+	private boolean firstDraw = true;
+	private Bitmap bmp;
 	
 	/**
 	 * @param context
@@ -60,61 +61,74 @@ public class MusicSheetView extends View{
 		padding = canvas.getHeight()/8;
 		startingPos = canvas.getWidth()/8;
 		
-		
-		paint.setColor(Color.BLACK);
-		//canvas.drawLine(0, 0, 100000, 6000, paint);
-		int noteWidth = (int) (canvas.getWidth()/35);
-		//create the bitmaps
-		doubleCroche = Bitmap.createScaledBitmap(doubleCroche, noteWidth, noteHeight(doubleCroche, noteWidth), false);
-		croche = Bitmap.createScaledBitmap(croche, noteWidth, noteHeight(croche, noteWidth), false);
-		noire = Bitmap.createScaledBitmap(noire, noteWidth, noteHeight(noire, noteWidth), false);
-		blanche = Bitmap.createScaledBitmap(blanche, noteWidth, noteHeight(blanche, noteWidth), false);
-		ronde = Bitmap.createScaledBitmap(ronde, noteWidth, noteHeight(ronde, noteWidth), false);
-		
-		//to do : create the grid
-
-		
-		lineMargin = (int) (canvas.getHeight()/(6));
-		
-		// Draws the grid
-		drawGrid(canvas, lineMargin);
-		
-		
-//		//adding notes to the grid
-		int pos = startingPos+2*pace;
-		Rect noteRect = new Rect();
-		double temp = 0;
-		int mes = 1;
-		for (int i = 0; i < mTab.length(); i++) {
-			double noteDuration = Duration.valueOf(mTab.getTime(i).getDuration()).getDuration();
-			pos += pace*noteDuration;
-
-			temp += noteDuration;
-			if(temp % 4d == 0d){
-				temp = 0;
-				paint.setStrokeWidth(3);
-				drawVerticalLineOnTab(canvas, pos + pace/2, lineMargin);
-				paint.setStrokeWidth(1);
-			}
+		if (firstDraw) {
 			
-			int noteHeightPos = lineMargin + lineMargin * 4;
-			if (pos-getScrollX() > 0 && pos-getScrollX() < getWidth()) { //Draws only what is necessary
-				for (int j = 0; j < 6; j++) {
-					if(mTab.getTime(i).getPartitionNote(j) != null) {
-						Bitmap currNoteImage = getNoteWithDuration(mTab.getTime(i).getDuration());
-						int noteCenter = getNoteCenter(currNoteImage);
-						Note currNote = mTab.getTime(i).getPartitionNote(j);
-						Boolean sharpNote = currNote != isSharp(currNote);
-						currNote = isSharp(currNote);
-						canvas.drawBitmap(currNoteImage, pos, noteHeightPos - getNoteCenter(currNoteImage)  - lineMargin/2 * getNoteHeightPosition(currNote), paint);
+			bmp = Bitmap.createBitmap((int) canvas.getWidth(),(int) canvas.getHeight(), Bitmap.Config.ARGB_8888);
+			Canvas c = new Canvas(bmp);
+			paint.setColor(Color.BLACK);
+			//canvas.drawLine(0, 0, 100000, 6000, paint);
+			int noteWidth = (int) (c.getWidth()/35);
+			//create the bitmaps
+			doubleCroche = Bitmap.createScaledBitmap(doubleCroche, noteWidth, noteHeight(doubleCroche, noteWidth), false);
+			croche = Bitmap.createScaledBitmap(croche, noteWidth, noteHeight(croche, noteWidth), false);
+			noire = Bitmap.createScaledBitmap(noire, noteWidth, noteHeight(noire, noteWidth), false);
+			blanche = Bitmap.createScaledBitmap(blanche, noteWidth, noteHeight(blanche, noteWidth), false);
+			ronde = Bitmap.createScaledBitmap(ronde, noteWidth, noteHeight(ronde, noteWidth), false);
+			
+			//to do : create the grid
+
+			
+			lineMargin = (int) (c.getHeight()/(6));
+			
+			// Draws the grid
+			drawGrid(c, lineMargin);
+			
+			
+//			//adding notes to the grid
+			int pos = startingPos+2*pace;
+			Rect noteRect = new Rect();
+			double temp = 0;
+			int mes = 1;
+			for (int i = 0; i < mTab.length(); i++) {
+				double noteDuration = Duration.valueOf(mTab.getTime(i).getDuration()).getDuration();
+				pos += pace*noteDuration;
+
+				temp += noteDuration;
+				if(temp % 4d == 0d){
+					temp = 0;
+					paint.setStrokeWidth(3);
+					drawVerticalLineOnTab(c, pos + pace/2, lineMargin);
+					paint.setStrokeWidth(1);
+				}
+				
+				int noteHeightPos = lineMargin + lineMargin * 4;
+				if (pos-getScrollX() > 0 && pos-getScrollX() < getWidth()) { //Draws only what is necessary
+					for (int j = 0; j < 6; j++) {
+						if(mTab.getTime(i).getPartitionNote(j) != null) {
+							Bitmap currNoteImage = getNoteWithDuration(mTab.getTime(i).getDuration());
+							int noteCenter = getNoteCenter(currNoteImage);
+							Note currNote = mTab.getTime(i).getPartitionNote(j);
+							Boolean sharpNote = currNote != isSharp(currNote);
+							currNote = isSharp(currNote);
+							c.drawBitmap(currNoteImage, pos, noteHeightPos - getNoteCenter(currNoteImage)  - lineMargin/2 * getNoteHeightPosition(currNote), paint);
+						}
 					}
 				}
 			}
+			endOfTab = pos + 200;
+			
+			drawVerticalLineOnTab(c, startingPos, lineMargin);
+			drawVerticalLineOnTab(c, endOfTab, lineMargin);
+			c.setBitmap(bmp);
+			firstDraw = false;
+			
+			canvas.drawBitmap(bmp, 0, 0 ,null);
 		}
-		endOfTab = pos + 200;
+		else {
+			canvas.drawBitmap(bmp, 0 ,0, null);
+		}
 		
-		drawVerticalLineOnTab(canvas, startingPos, lineMargin);
-		drawVerticalLineOnTab(canvas, endOfTab, lineMargin);
+		
 	}
 	
 	private int noteHeight(Bitmap note, int noteWidth) {

@@ -1,7 +1,5 @@
 package ch.epfl.sweng.smartTabs.activity;
 
-import java.util.concurrent.ThreadPoolExecutor;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -11,6 +9,7 @@ import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.media.AudioManager;
 import android.media.SoundPool;
+import android.opengl.Visibility;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
@@ -18,6 +17,7 @@ import android.support.v4.view.MotionEventCompat;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.CheckBox;
@@ -25,14 +25,12 @@ import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
-
 import android.widget.Toast;
 import ch.epfl.sweng.smartTabs.R;
 import ch.epfl.sweng.smartTabs.gfx.CursorView;
 import ch.epfl.sweng.smartTabs.gfx.FooterView;
 import ch.epfl.sweng.smartTabs.gfx.HeaderView;
 import ch.epfl.sweng.smartTabs.gfx.MusicSheetView;
-import ch.epfl.sweng.smartTabs.gfx.ScrollingView;
 import ch.epfl.sweng.smartTabs.gfx.TablatureView;
 import ch.epfl.sweng.smartTabs.music.Height;
 import ch.epfl.sweng.smartTabs.music.Instrument;
@@ -41,10 +39,14 @@ import ch.epfl.sweng.smartTabs.music.SampleMap;
 import ch.epfl.sweng.smartTabs.music.Tab;
 import ch.epfl.sweng.smartTabs.music.Time;
 
-public class TestActivity extends Activity {
+
+/**
+ * @author fatonramadani
+ *
+ */
+public class DisplayActivity extends Activity {
 	private HeaderView headerView;
 	private FooterView footerView;
-	private ScrollingView scrollingView;
 	private CursorView cursorView;
 
 	private LinearLayout wrapper;
@@ -57,7 +59,6 @@ public class TestActivity extends Activity {
 	private boolean running;
 
 	private static final int PACE = 200;
-	private static final float SMALLEST_DURATION = 0.25f; // double croche
 	private static final double millisInMin = 60000.0; // number of millis in one min
 
 
@@ -74,7 +75,9 @@ public class TestActivity extends Activity {
 	private int speed;
 	private TablatureView tablatureView;
 	private MusicSheetView musicSheetView;
-	private HorizontalScrollView scroller;
+	private HorizontalScrollView sheetScroller;
+	private HorizontalScrollView tabScroller;
+
 	private int threshold = 100;
 
 	private float lastX;
@@ -85,7 +88,7 @@ public class TestActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		System.out.println("Initîalising TestActivity");
+		//System.out.println("Initîalising TestActivity");
 		checkDialog(this);
 		
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -96,8 +99,11 @@ public class TestActivity extends Activity {
 		final Tab tab = (Tab) intent.getExtras().getSerializable("tab");
 
 		speed = computeSpeed(tab.getTempo(), PACE, delay, millisInMin);
+		
+		tabScroller = new HorizontalScrollView(this);
+		sheetScroller = new HorizontalScrollView(this);
 
-		setContentView(R.layout.activity_test);
+		setContentView(R.layout.activity_display);
 
 		wrapper = (LinearLayout) (this.findViewById(R.id.wrapper));
 		musicWrapper = new LinearLayout(getBaseContext());
@@ -112,9 +118,14 @@ public class TestActivity extends Activity {
 		
 		
 		playingPosition = cursorView.getPosX() - 50;
+		
+//		sheetScroller.addView(musicSheetView);
+//		tabScroller.addView(tablatureView);
 
 		musicWrapper.addView(musicSheetView, weight(3));
 		musicWrapper.addView(tablatureView, weight(7));
+		
+//		scroller.addView(musicWrapper, WindowManager.LayoutParams.MATCH_PARENT);
 
 		testWrapper.addView(musicWrapper, new FrameLayout.LayoutParams(
 				FrameLayout.LayoutParams.MATCH_PARENT,
@@ -289,7 +300,7 @@ public class TestActivity extends Activity {
 	private void checkDialog(Context cont) {
 		SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(cont);
 		Boolean showHelp = pref.getBoolean("pref_show_help", true);
-		if (showHelp){
+		if (showHelp) {
 			createDialog(this);
 		}
 		
@@ -318,6 +329,4 @@ public class TestActivity extends Activity {
 		});
 		adBuilder.create().show();
 	}
-
-
 }
