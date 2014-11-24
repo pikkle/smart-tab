@@ -29,13 +29,13 @@ public class MusicSheetView extends View {
             R.raw.noire);
     // to do : update with right resources
     private Bitmap doubleCroche = BitmapFactory.decodeResource(getResources(),
-            R.raw.noire);
+            R.raw.double_croche);
     private Bitmap croche = BitmapFactory.decodeResource(getResources(),
-            R.raw.noire);
+            R.raw.croche);
     private Bitmap blanche = BitmapFactory.decodeResource(getResources(),
-            R.raw.noire);
+            R.raw.blanche);
     private Bitmap ronde = BitmapFactory.decodeResource(getResources(),
-            R.raw.noire);
+            R.raw.ronde);
     private int startingPos;
     private int lineMargin;
     private int padding;
