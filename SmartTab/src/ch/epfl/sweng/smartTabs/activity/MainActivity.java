@@ -8,6 +8,7 @@ import org.json.JSONException;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
@@ -44,7 +45,7 @@ public class MainActivity extends Activity {
 
         ActionBar actionBar = getActionBar();
         actionBar.setTitle(getString(R.string.title_app_home));
-
+        
         netClient = new NetworkClient();
         ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = connMgr.getActiveNetworkInfo();
@@ -164,6 +165,7 @@ public class MainActivity extends Activity {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view,
                         int position, long id) {
+                    
                     String item = (String) listV.getAdapter().getItem(position);
                     URL url = map.get(item);
                     new DownloadTabs(url).execute();
@@ -176,13 +178,23 @@ public class MainActivity extends Activity {
      * @author Faton Ramadani
      */
     private class DownloadTabs extends AsyncTask<Void, Void, Tab> {
-
         private URL myUrl;
+        private ProgressDialog dialog;
 
         public DownloadTabs(final URL url) {
             myUrl = url;
         }
 
+        @Override
+        protected void onPreExecute() {
+        	dialog = new ProgressDialog(MainActivity.this);
+            dialog.setMessage("Loading requested song...");
+            dialog.setIndeterminate(true);
+            dialog.setCancelable(false);
+            dialog.show();
+            dialog.getCurrentFocus();
+        }
+        
         @Override
         protected Tab doInBackground(Void... params) {
             try {
@@ -200,6 +212,7 @@ public class MainActivity extends Activity {
             Intent i = new Intent(MainActivity.this, DisplayActivity.class);
             i.putExtra("tab", tab);
             startActivity(i);
+            dialog.dismiss();
         }
     }
 }
