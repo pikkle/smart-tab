@@ -10,6 +10,7 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.HorizontalScrollView;
 import ch.epfl.sweng.smartTabs.R;
 import ch.epfl.sweng.smartTabs.music.Duration;
 import ch.epfl.sweng.smartTabs.music.Height;
@@ -130,6 +131,7 @@ public class MusicSheetView extends View{
 		
 		
 	}
+	
 	
 	private int noteHeight(Bitmap note, int noteWidth) {
 		return note.getHeight() * noteWidth / note.getWidth();

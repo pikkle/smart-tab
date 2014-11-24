@@ -9,7 +9,6 @@ import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.media.AudioManager;
 import android.media.SoundPool;
-import android.opengl.Visibility;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
@@ -17,7 +16,6 @@ import android.support.v4.view.MotionEventCompat;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.CheckBox;
@@ -88,7 +86,6 @@ public class DisplayActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		//System.out.println("Initîalising TestActivity");
 		checkDialog(this);
 		
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -119,14 +116,9 @@ public class DisplayActivity extends Activity {
 		
 		playingPosition = cursorView.getPosX() - 50;
 		
-//		sheetScroller.addView(musicSheetView);
-//		tabScroller.addView(tablatureView);
-
 		musicWrapper.addView(musicSheetView, weight(3));
 		musicWrapper.addView(tablatureView, weight(7));
 		
-//		scroller.addView(musicWrapper, WindowManager.LayoutParams.MATCH_PARENT);
-
 		testWrapper.addView(musicWrapper, new FrameLayout.LayoutParams(
 				FrameLayout.LayoutParams.MATCH_PARENT,
 				FrameLayout.LayoutParams.MATCH_PARENT));	
@@ -226,6 +218,8 @@ public class DisplayActivity extends Activity {
 	private LinearLayout.LayoutParams weight(int i) {
 		return new LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0, i);
 	}
+	
+	
 
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
@@ -236,19 +230,22 @@ public class DisplayActivity extends Activity {
 			running = !running;
 			this.lastX = x;
 		}
-		if (MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_UP) {
+		
+		if(MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_MOVE) {
+			running = false;
 			this.newX = x;
-			float delta = lastX - newX;
-			
-			if(delta != 0){				
-				running = !running;
+			if(lastX < newX){
+				tablatureView.scrollBy(-10, 0);
+				musicSheetView.scrollBy(-10, 0);
+				playingPosition += -10;
+			} else if (lastX > newX) {
+				tablatureView.scrollBy(10, 0);
+				musicSheetView.scrollBy(10, 0);
+				playingPosition += 10;
+
 			}
-			
-			tablatureView.scrollBy((int) (delta), 0);
-			musicSheetView.scrollBy((int) (delta), 0);
-			
-			playingPosition += (int) delta;
 		}
+		
 		return true;
 	}
 
