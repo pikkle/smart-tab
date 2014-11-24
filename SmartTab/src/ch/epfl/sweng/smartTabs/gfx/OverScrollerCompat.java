@@ -5,7 +5,8 @@ import android.os.Build;
 import android.widget.OverScroller;
 
 /**
- * A utility class for using {@link android.widget.OverScroller} in a backward-compatible fashion.
+ * A utility class for using {@link android.widget.OverScroller} in a
+ * backward-compatible fashion.
  */
 public class OverScrollerCompat {
     /**
