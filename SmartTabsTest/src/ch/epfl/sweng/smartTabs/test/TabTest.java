@@ -60,6 +60,18 @@ public class TabTest extends AndroidTestCase{
 		assertFalse(falseTempo == parsedTab.getTempo());
 	}
 
+	public void testEmptyJSONParsing() throws JSONException{
+		try {
+            Tab.parseTabFromJSON(new JSONObject());
+            fail("Parsed empty JSON");
+        } catch (JSONException e) {
+            // success
+        }
+	}
+	
+	
+	
+	
 	 public void testMissingFields() throws JSONException {
 	        for (String field: jsonFields) {
 	            JSONObject jsonObject = new JSONObject(goodTabString);

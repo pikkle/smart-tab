@@ -45,7 +45,20 @@ public class NetworkClient {
 			conn.connect();
 			is = conn.getInputStream();
 
+			int response = conn.getResponseCode();
+			if (response == 404){
+				throw new IOException("Could not connect, check internet connection");
+			}
 			String stringContent = readStream(is);
+			try{
+				JSONObject jsonObj = new JSONObject(stringContent);
+				if (jsonObj.length() == 0 || jsonObj.names()==null){
+					throw new Exception("Invalid content.");
+					}
+			} catch (Exception e){
+				e.printStackTrace();
+				System.err.println("Invalid content.");
+			}
 			return stringContent;
 		} finally {
 			if (is != null) {

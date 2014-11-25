@@ -19,7 +19,7 @@ public class TimeTest extends AndroidTestCase{
 	}
 	
 	public void testDuration(){
-		assertEquals((double)5, time.getDuration());
+		assertEquals(5, time.getDuration());
 	}
 	
 	public void testTernary(){
