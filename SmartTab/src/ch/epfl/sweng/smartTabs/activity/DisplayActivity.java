@@ -23,7 +23,6 @@ import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
-
 import android.widget.Toast;
 import ch.epfl.sweng.smartTabs.R;
 import ch.epfl.sweng.smartTabs.gfx.CursorView;
@@ -51,6 +50,7 @@ public class DisplayActivity extends Activity {
 	private LinearLayout wrapper;
 	private LinearLayout musicWrapper;
 	private FrameLayout testWrapper;
+	
 
 	private Tab tab;
 
@@ -73,7 +73,9 @@ public class DisplayActivity extends Activity {
 	private int speed;
 	private TablatureView tablatureView;
 	private MusicSheetView musicSheetView;
-	private HorizontalScrollView scroller;
+	private HorizontalScrollView sheetScroller;
+	private HorizontalScrollView tabScroller;
+
 	private int threshold = 100;
 
 	private float lastX;
@@ -84,7 +86,6 @@ public class DisplayActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		//System.out.println("Initîalising TestActivity");
 		checkDialog(this);
 		
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -95,8 +96,11 @@ public class DisplayActivity extends Activity {
 		final Tab tab = (Tab) intent.getExtras().getSerializable("tab");
 
 		speed = computeSpeed(tab.getTempo(), PACE, delay, millisInMin);
+		
+		tabScroller = new HorizontalScrollView(this);
+		sheetScroller = new HorizontalScrollView(this);
 
-		setContentView(R.layout.activity_test);
+		setContentView(R.layout.activity_display);
 
 		wrapper = (LinearLayout) (this.findViewById(R.id.wrapper));
 		musicWrapper = new LinearLayout(getBaseContext());
@@ -111,10 +115,10 @@ public class DisplayActivity extends Activity {
 		
 		
 		playingPosition = cursorView.getPosX() - 50;
-
+		
 		musicWrapper.addView(musicSheetView, weight(3));
 		musicWrapper.addView(tablatureView, weight(7));
-
+		
 		testWrapper.addView(musicWrapper, new FrameLayout.LayoutParams(
 				FrameLayout.LayoutParams.MATCH_PARENT,
 				FrameLayout.LayoutParams.MATCH_PARENT));	
@@ -154,7 +158,6 @@ public class DisplayActivity extends Activity {
 						} else if (ptr >= threshold * 4 / 5 && ptr < threshold) {
 							headerView.incPct();
 						} else if (ptr == threshold) {
-							//System.out.println("NOTE !");
 							headerView.setPct(1);
 							ptr = 0;
 						} else if (ptr == 0) {
@@ -215,6 +218,8 @@ public class DisplayActivity extends Activity {
 	private LinearLayout.LayoutParams weight(int i) {
 		return new LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0, i);
 	}
+	
+	
 
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
@@ -225,12 +230,22 @@ public class DisplayActivity extends Activity {
 			running = !running;
 			this.lastX = x;
 		}
-		if (MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_UP) {
+		
+		if(MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_MOVE) {
+			running = false;
 			this.newX = x;
-			
-			tablatureView.scrollBy((int) (lastX - newX), 0);
-			musicSheetView.scrollBy((int) (lastX - newX), 0);
+			if(lastX < newX){
+				tablatureView.scrollBy(-10, 0);
+				musicSheetView.scrollBy(-10, 0);
+				playingPosition += -10;
+			} else if (lastX > newX) {
+				tablatureView.scrollBy(10, 0);
+				musicSheetView.scrollBy(10, 0);
+				playingPosition += 10;
+
+			}
 		}
+		
 		return true;
 	}
 
