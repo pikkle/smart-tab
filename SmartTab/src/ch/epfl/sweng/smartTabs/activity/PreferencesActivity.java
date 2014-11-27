@@ -10,7 +10,8 @@ import android.preference.PreferenceFragment;
 import ch.epfl.sweng.smartTabs.R;
 
 /**
- * TODO : Javadoc
+ * Author: Raphael Khoury
+ * Class that creates Preferences
  */
 public class PreferencesActivity extends PreferenceActivity {
 
@@ -18,7 +19,7 @@ public class PreferencesActivity extends PreferenceActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getFragmentManager().beginTransaction()
-                .replace(android.R.id.content, new PreferencesFrag()).commit();
+                .replace(android.R.id.content, new SmartTabsPreferences()).commit();
 
         ActionBar actionBar = getActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -27,9 +28,9 @@ public class PreferencesActivity extends PreferenceActivity {
     }
 
     /**
-     * TODO : Javadoc
+     * Preference Fragment, creates the buttons and 
      */
-    public static class PreferencesFrag extends PreferenceFragment {
+    public static class SmartTabsPreferences extends PreferenceFragment {
 
         @Override
         public void onCreate(Bundle savedInstanceState) {
