@@ -239,15 +239,9 @@ public class DisplayActivity extends Activity {
 			running = false;
 			if(Math.abs(delta) >= 30) {
 				scrolled = true;
-				if(lastX < newX){
-					tablatureView.scrollTo(newPosX + delta, 0);
-					musicSheetView.scrollTo(newPosX + delta, 0);
-					playingPosition += newPosX + delta;
-				} else if (lastX > newX) {
-					tablatureView.scrollTo(newPosX + delta, 0);
-					musicSheetView.scrollTo(newPosX + delta, 0);
-					playingPosition += newPosX + delta;
-				}
+				tablatureView.scrollTo(newPosX + delta, 0);
+				musicSheetView.scrollTo(newPosX + delta, 0);
+				playingPosition += newPosX + delta;
 			} else {
 				scrolled = false;
 			}
