@@ -291,7 +291,8 @@ public class DisplayActivity extends Activity {
 
 	/**
 	 * Author: Raphael Khoury
-	 * Method that creates Dialog Box, showing help.
+	 * Initialize shared preferences and sync with preferences fragment
+	 * Call to method that actually create dialog (createDialog(Context))
 	 */
 
 	private void checkDialog(Context cont) {
@@ -302,7 +303,11 @@ public class DisplayActivity extends Activity {
 		}
 		
 	}
-
+/**
+ * Author: 
+ * @param Context
+ * Create dialog box and display it
+ */
 	public void createDialog(final Context cont) {
 		final CheckBox checkBox = new CheckBox(cont);
 		checkBox.setText(R.string.show_help);
