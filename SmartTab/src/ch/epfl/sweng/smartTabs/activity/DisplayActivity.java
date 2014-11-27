@@ -81,6 +81,8 @@ public class DisplayActivity extends Activity {
 	private float lastX;
 	private float lastY;
 	private float newX;
+	private int newPosX;
+	private boolean scrolled = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -225,29 +227,43 @@ public class DisplayActivity extends Activity {
 	public boolean onTouchEvent(MotionEvent event) {
 
 		final float x = event.getX();
-
+		
 		if (MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_DOWN) {
-			running = !running;
+			newPosX = tablatureView.getScrollX();
 			this.lastX = x;
-		}
+		} 
 		
 		if(MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_MOVE) {
+			this.newX = event.getX();
+			int delta = (int) (lastX - newX);
 			running = false;
-			this.newX = x;
-			if(lastX < newX){
-				tablatureView.scrollBy(-10, 0);
-				musicSheetView.scrollBy(-10, 0);
-				playingPosition += -10;
-			} else if (lastX > newX) {
-				tablatureView.scrollBy(10, 0);
-				musicSheetView.scrollBy(10, 0);
-				playingPosition += 10;
-
+			if(Math.abs(delta) >= 30) {
+				scrolled = true;
+				if(lastX < newX){
+					tablatureView.scrollTo(newPosX + delta, 0);
+					musicSheetView.scrollTo(newPosX + delta, 0);
+					playingPosition += newPosX + delta;
+				} else if (lastX > newX) {
+					tablatureView.scrollTo(newPosX + delta, 0);
+					musicSheetView.scrollTo(newPosX + delta, 0);
+					playingPosition += newPosX + delta;
+				}
+			} else {
+				scrolled = false;
+			}
+		}		
+		
+		if(MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_UP) {
+			if(scrolled){
+				running = false;
+			} else {
+				running = !running;
 			}
 		}
 		
 		return true;
 	}
+	
 
 	@Override
 	public void onBackPressed() {
