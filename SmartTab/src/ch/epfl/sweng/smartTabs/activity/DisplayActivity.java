@@ -68,9 +68,9 @@ public class DisplayActivity extends Activity {
 										// value corresponds to the future
 										// cursor position)
 
-	private int delay = 5;
+	private double delay;
 
-	private int speed;
+	private int speed = 1;
 	private TablatureView tablatureView;
 	private MusicSheetView musicSheetView;
 	private HorizontalScrollView sheetScroller;
@@ -97,7 +97,9 @@ public class DisplayActivity extends Activity {
 		Intent intent = getIntent();
 		final Tab tab = (Tab) intent.getExtras().getSerializable("tab");
 
-		speed = computeSpeed(tab.getTempo(), PACE, delay, millisInMin);
+		delay = computeDelay(tab.getTempo(), PACE, speed, millisInMin);
+		
+		System.out.println("SPEED : " + speed);
 		
 		tabScroller = new HorizontalScrollView(this);
 		sheetScroller = new HorizontalScrollView(this);
@@ -193,32 +195,47 @@ public class DisplayActivity extends Activity {
 					}
 
 					try {
-						Thread.sleep(delay, 0);
+						Thread.sleep((int) delay, decimalPart(delay));
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
 			}
+
 		});
 		t.start();
 	}
 	/**
-	 * This method computes the number of pixels to scroll by.
+	 * This method computes the delay for which the thread has to sleep
 	 * 
 	 * @param tempo
 	 * @param pace
-	 * @param delay
+	 * @param speed
 	 * @param millisinmin
-	 * @return the speed
+	 * @return the delay
 	 */
-	private int computeSpeed(double tempo, double pace, double delay,
+	private double computeDelay(double tempo, double pace, double speed,
 			double millisinmin) {
-		return (int) (tempo * PACE * delay / millisInMin);
+		return (speed*millisinmin/(tempo*pace));
 	}
 
 	private LinearLayout.LayoutParams weight(int i) {
 		return new LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0, i);
+	}
+	
+	/**
+	 * This method computes the decimal part of the delay and returns it as an integer,
+	 * which is the number of nanosecs the thread has to sleep for.
+	 * @param delay
+	 * @return the number of nanosecs
+	 */
+	private int decimalPart(double delay) {
+		double decimal = delay % 1;
+		while(decimal%1 != 0){
+			decimal *= 10;
+		}
+		return (int) decimal;
 	}
 	
 	
@@ -231,19 +248,19 @@ public class DisplayActivity extends Activity {
 		if (MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_DOWN) {
 			newPosX = tablatureView.getScrollX();
 			this.lastX = x;
+			scrolled = false;
 		} 
 		
 		if(MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_MOVE) {
 			this.newX = event.getX();
 			int delta = (int) (lastX - newX);
-			running = false;
 			if(Math.abs(delta) >= 30) {
-				scrolled = true;
-				tablatureView.scrollTo(newPosX + delta, 0);
-				musicSheetView.scrollTo(newPosX + delta, 0);
-				playingPosition += newPosX + delta;
-			} else {
-				scrolled = false;
+				if(lastX != newX){
+					scrolled = true;
+					tablatureView.scrollTo(newPosX + delta, 0);
+					musicSheetView.scrollTo(newPosX + delta, 0);
+					playingPosition = (int) (tablatureView.getScrollX() + cursorView.getX()) + 50;
+				}
 			}
 		}		
 		
