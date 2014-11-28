@@ -63,7 +63,7 @@ public class DisplayActivity extends Activity {
 	private boolean backPressedOnce = false;
 	private SoundPool pool = new SoundPool(50, AudioManager.STREAM_MUSIC, 0);
 	private static final int DELAY = 2000;
-
+	
 	private int playingPosition; // Position of the time to play (Intital
 										// value corresponds to the future
 										// cursor position)
@@ -81,7 +81,7 @@ public class DisplayActivity extends Activity {
 	private float lastX;
 	private float lastY;
 	private float newX;
-	private int newPosX;
+	private int tabPosX;
 	private boolean scrolled = false;
 
 	@Override
@@ -98,9 +98,7 @@ public class DisplayActivity extends Activity {
 		final Tab tab = (Tab) intent.getExtras().getSerializable("tab");
 
 		delay = computeDelay(tab.getTempo(), PACE, speed, millisInMin);
-		
-		System.out.println("SPEED : " + speed);
-		
+				
 		tabScroller = new HorizontalScrollView(this);
 		sheetScroller = new HorizontalScrollView(this);
 
@@ -118,7 +116,7 @@ public class DisplayActivity extends Activity {
 		cursorView 		= new CursorView(getBaseContext());
 		
 		
-		playingPosition = cursorView.getPosX() - 50;
+		playingPosition = cursorView.getPosX();
 		
 		musicWrapper.addView(musicSheetView, weight(3));
 		musicWrapper.addView(tablatureView, weight(7));
@@ -175,7 +173,7 @@ public class DisplayActivity extends Activity {
 
 					if (tab.timeMapContains(playingPosition)) {
 						final Time t = tab.getTimeAt(playingPosition);
-						if (t != null) {
+						if (t != null && running) {
 							new Thread(new Runnable() {
 
 								@Override
@@ -246,28 +244,29 @@ public class DisplayActivity extends Activity {
 		final float x = event.getX();
 		
 		if (MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_DOWN) {
-			newPosX = tablatureView.getScrollX();
+			tabPosX = tablatureView.getScrollX();
 			this.lastX = x;
 			scrolled = false;
 		} 
 		
 		if(MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_MOVE) {
-			this.newX = event.getX();
+			this.newX = x;
 			int delta = (int) (lastX - newX);
+			
 			if(Math.abs(delta) >= 30) {
-				if(lastX != newX){
-					scrolled = true;
-					tablatureView.scrollTo(newPosX + delta, 0);
-					musicSheetView.scrollTo(newPosX + delta, 0);
-					playingPosition = (int) (tablatureView.getScrollX() + cursorView.getX()) + 50;
+				running = false;
+				scrolled = true;
+				int newPosX = tabPosX + delta;
+				if(lastX != newX && newPosX >= 0 && newPosX <= tablatureView.getEndOfTab()){
+					tablatureView.scrollTo(newPosX, 0);
+					musicSheetView.scrollTo(newPosX, 0);
+					playingPosition = (int) (tablatureView.getScrollX() + cursorView.getX() + 50);
 				}
 			}
-		}		
+		} 
 		
 		if(MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_UP) {
-			if(scrolled){
-				running = false;
-			} else {
+			if(!scrolled){
 				running = !running;
 			}
 		}
