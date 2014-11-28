@@ -58,6 +58,7 @@ public class DisplayActivity extends Activity {
 
 	private static final int PACE = 200;
 	private static final double millisInMin = 60000.0; // number of millis in one min
+	private static final int OFFSET = 50;
 
 
 	private boolean backPressedOnce = false;
@@ -260,7 +261,7 @@ public class DisplayActivity extends Activity {
 				if(lastX != newX && newPosX >= 0 && newPosX <= tablatureView.getEndOfTab()){
 					tablatureView.scrollTo(newPosX, 0);
 					musicSheetView.scrollTo(newPosX, 0);
-					playingPosition = (int) (tablatureView.getScrollX() + cursorView.getX() + 50);
+					playingPosition = (int) (tablatureView.getScrollX() + cursorView.getX() + OFFSET);
 				}
 			}
 		} 
