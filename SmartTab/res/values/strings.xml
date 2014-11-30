@@ -26,7 +26,7 @@
     <string name="title_activity_about_app">AboutAppActivity</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_about_devs">AboutDevsActivity</string>
-    <string name="title_app_home">Smart Tabs</string>
+    <string name="title_app_home">SmartTabs</string>
     <string name="title_activity_test">Test</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
