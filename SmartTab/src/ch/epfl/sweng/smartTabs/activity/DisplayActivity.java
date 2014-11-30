@@ -65,9 +65,7 @@ public class DisplayActivity extends Activity {
 	private SoundPool pool = new SoundPool(50, AudioManager.STREAM_MUSIC, 0);
 	private static final int DELAY = 2000;
 	
-	private int playingPosition; // Position of the time to play (Intital
-										// value corresponds to the future
-										// cursor position)
+	private int playingPosition; // Position of the time to play (Intital value corresponds to the future cursor position)
 
 	private double delay;
 
@@ -117,7 +115,7 @@ public class DisplayActivity extends Activity {
 		cursorView 		= new CursorView(getBaseContext());
 		
 		
-		playingPosition = cursorView.getPosX();
+		playingPosition = tablatureView.getScrollX() + cursorView.getPosX();
 		
 		musicWrapper.addView(musicSheetView, weight(3));
 		musicWrapper.addView(tablatureView, weight(7));
@@ -261,7 +259,7 @@ public class DisplayActivity extends Activity {
 				if(lastX != newX && newPosX >= 0 && newPosX <= tablatureView.getEndOfTab()){
 					tablatureView.scrollTo(newPosX, 0);
 					musicSheetView.scrollTo(newPosX, 0);
-					playingPosition = (int) (tablatureView.getScrollX() + cursorView.getX() + OFFSET);
+					playingPosition = (int) (tablatureView.getScrollX() + cursorView.getX() + 2*OFFSET);
 				}
 			}
 		} 
