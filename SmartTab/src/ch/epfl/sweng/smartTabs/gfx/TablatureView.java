@@ -190,4 +190,8 @@ public class TablatureView extends View {
         }
         endOfTab = pos + 200;
     }
+    
+    public int getEndOfTab() {
+        return endOfTab;
+    }
 }
