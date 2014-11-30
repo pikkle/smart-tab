@@ -250,30 +250,14 @@ public class MainActivity extends Activity {
 			dialog.dismiss();
 		}
 	}
-/**
- * Author : Raph
- * method that is called when there is no internet connection, creates a dialogbox and shows it.
- * Better than toast because requires user interaction, and can't be spammed.
- */
-	/*public void noConnDialog(){
-		AlertDialog.Builder adb = new AlertDialog.Builder(this);
-		adb.setTitle("No Network!")
-		.setMessage("Internet Connection is required.")
-		.setCancelable(false)
-		.setPositiveButton("No",new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog,int id) {
-				dialog.cancel();
-			}
-		});		
-		AlertDialog dialog = adb.create();
-		dialog.show();
-	}*/
+	
+	
 	/**
-	 * Autor: Raph
+	 * Author: Raphael Khoury
 	 * Method that sets the menu in MainActivity to contain only 1 element, to show that
 	 * there is no network available. 
-	 * Better than Toast (because list is restored once there's a connection available)
-	 * Better than Dialog (because doesn't persist when network is restored).
+	 * Better than Toast (list is restored once there's a connection available and doesn't stack)
+	 * Better than Dialog (doesn't persist when network is restored)
 	 */
 	public void setNoNetworkList(){
 		String[] values = {"No Network Connection"};
@@ -286,6 +270,7 @@ public class MainActivity extends Activity {
 	/**
 	 * Autor: Raph
 	 * @return true if there is a network connection available.
+	 * Should call this method when we want internet access, it refreshes the network info.
 	 */
 	public boolean checkNetworkStatus(){
 		connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);

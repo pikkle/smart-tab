@@ -19,17 +19,13 @@
         <!-- Main Activity -->
         <activity
             android:name=".activity.MainActivity"
-            android:label="@string/title_activity_main" >
+            android:label="@string/title_activity_main"
+            android:parentActivityName=".activity.MainActivity" >
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value=".SearchResultsActivity" />
-
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
+        
         <!-- Display Activity -->
         <activity
             android:name=".activity.DisplayActivity"
@@ -37,33 +33,46 @@
             android:screenOrientation="landscape"
             android:theme="@android:style/Theme.NoTitleBar" >
         </activity>
+        
         <!-- Help Activity -->
         <activity
             android:name=".activity.HelpActivity"
             android:label="@string/title_activity_help"
             android:parentActivityName=".activity.PreferencesActivity" >
         </activity>
+        
         <!-- Settings Activity -->
         <activity
             android:name=".activity.PreferencesActivity"
             android:label="@string/title_activity_preference"
             android:parentActivityName=".activity.MainActivity" >
         </activity>
+        
         <!-- About App Activity -->
         <activity
             android:name=".activity.AboutAppActivity"
             android:label="@string/title_activity_about_app"
             android:parentActivityName=".activity.PreferencesActivity" >
         </activity>
+        
         <!-- About Developers Activity -->
         <activity
             android:name=".activity.AboutDevsActivity"
             android:label="@string/title_activity_about_devs"
             android:parentActivityName=".activity.PreferencesActivity" >
         </activity>
+        
+        <!-- Splash Activity -->
         <activity
-            android:name="ch.epfl.sweng.smartTabs.activity.TestActivity"
-            android:label="@string/title_activity_test" >
+            android:name="ch.epfl.sweng.smartTabs.activity.SplashActivity"
+            android:label="@string/title_activity_splash"
+            android:theme="@android:style/Theme.Holo.NoActionBar.Fullscreen"
+            android:noHistory="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 
