@@ -11,7 +11,8 @@ export SCRIPTS_DIR=$REPO_DIR/scripts
 # Run android tests
 ant_cmd="ant clean emma debug install test"
 cd $REPO_DIR
-android update project --path $PROJECT_NAME
+android update project --path $PROJECT_NAME --target android-18
+android update project --path $TEST_PROJECT --target android-18
 android update test-project --path $TEST_PROJECT --main ../$PROJECT_NAME
 cd $REPO_DIR/$TEST_PROJECT
 # The following dirty hack is due to the fact that ant returns 0 EVEN IF TESTS FAIL
