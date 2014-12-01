@@ -7,10 +7,10 @@
     <string name="title_activity_display">DisplayActivity</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="search_hint">Tab Name</string>
-    <string name="serverURL">http://mpikkle.com/getTabs/</string>
     <string name="serverURLQuery">http://mpikkle.com/getTabs/?query=</string>
     <string name="action_refresh">Refresh</string>
     <string name="action_search">Search</string>
+    <string name="splash_screen">Splash Screen </string>
     <string name="action_settings">Settings</string>
     <string name="show_help">Show Help on Startup</string>
     <string name="show_help_on_startup_no">Never</string>
@@ -26,9 +26,11 @@
     <string name="title_activity_about_app">AboutAppActivity</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_about_devs">AboutDevsActivity</string>
-    <string name="title_app_home">Smart Tabs</string>
+    <string name="title_app_home">SmartTabs</string>
     <string name="title_activity_test">Test</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="title_dialog">Tutorial</string>
+    <string name="title_activity_splash">SplashActivity</string>
 
 </resources>

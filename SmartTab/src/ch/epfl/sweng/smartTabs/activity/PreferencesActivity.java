@@ -10,66 +10,69 @@ import android.preference.PreferenceFragment;
 import ch.epfl.sweng.smartTabs.R;
 
 /**
- * TODO : Javadoc
+ * Author: Raphael Khoury
+ * Class that creates Preferences
  */
 public class PreferencesActivity extends PreferenceActivity {
 
-	
-	
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		getFragmentManager().beginTransaction().replace(android.R.id.content, new PreferencesFrag()).commit();
-		
-		ActionBar actionBar = getActionBar();
-		actionBar.setDisplayHomeAsUpEnabled(true);
-		actionBar.setTitle(getString(R.string.title_settings));
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        getFragmentManager().beginTransaction()
+                .replace(android.R.id.content, new SmartTabsPreferences()).commit();
 
-	}
-	
-	/**
-	 * TODO : Javadoc
-	 */
-	public static class PreferencesFrag extends PreferenceFragment{
-		
-		@Override
-		public void onCreate(Bundle savedInstanceState) {
-			super.onCreate(savedInstanceState);
-			addPreferencesFromResource(R.xml.preferences);
-			Preference helpPref = (Preference) findPreference("pref_help");
-			helpPref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-				
-				@Override
-				public boolean onPreferenceClick(Preference preference) {
-					Intent i = new Intent(getActivity(), HelpActivity.class);
-					startActivity(i);
-					return false;
-				}
-			});
-			
-			Preference abtDevPref = (Preference) findPreference("pref_abt_dev");
-			abtDevPref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-				
-				@Override
-				public boolean onPreferenceClick(Preference preference) {
-					Intent i = new Intent(getActivity(), AboutDevsActivity.class);
-					startActivity(i);
-					return false;
-				}
-			});
-			
-			Preference abtAppPref = (Preference) findPreference("pref_abt_app");
-			abtAppPref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-				
-				
-				@Override
-				public boolean onPreferenceClick(Preference preference) {
-					Intent i = new Intent(getActivity(), AboutAppActivity.class);
-					startActivity(i);
-					return false;
-				}
-			});
-		}
-	}
+        ActionBar actionBar = getActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setTitle(getString(R.string.title_settings));
+
+    }
+
+    /**
+     * Preference Fragment, creates the buttons and 
+     */
+    public static class SmartTabsPreferences extends PreferenceFragment {
+
+        @Override
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            addPreferencesFromResource(R.xml.preferences);
+            Preference helpPref = (Preference) findPreference("pref_help");
+            helpPref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    Intent i = new Intent(getActivity(), HelpActivity.class);
+                    startActivity(i);
+                    return false;
+                }
+            });
+
+            Preference abtDevPref = (Preference) findPreference("pref_abt_dev");
+            abtDevPref
+                    .setOnPreferenceClickListener(new OnPreferenceClickListener() {
+
+                        @Override
+                        public boolean onPreferenceClick(Preference preference) {
+                            Intent i = new Intent(getActivity(),
+                                    AboutDevsActivity.class);
+                            startActivity(i);
+                            return false;
+                        }
+                    });
+
+            Preference abtAppPref = (Preference) findPreference("pref_abt_app");
+            abtAppPref
+                    .setOnPreferenceClickListener(new OnPreferenceClickListener() {
+
+                        @Override
+                        public boolean onPreferenceClick(Preference preference) {
+                            Intent i = new Intent(getActivity(),
+                                    AboutAppActivity.class);
+                            startActivity(i);
+                            return false;
+                        }
+                    });
+        }
+    }
 
 }

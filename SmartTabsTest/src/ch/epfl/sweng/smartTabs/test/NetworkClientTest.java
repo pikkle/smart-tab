@@ -50,4 +50,3 @@ public class NetworkClientTest extends AndroidTestCase{
 	}
 
 }
-
