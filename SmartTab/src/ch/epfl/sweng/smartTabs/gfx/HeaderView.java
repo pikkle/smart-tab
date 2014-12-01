@@ -16,7 +16,7 @@ public class HeaderView extends View {
     private final int titleAlpha = 255;
     private final float titleSizeRatio = 0.5f;
     private Metronome metronome;
-    private double mPct;
+    private double myRatio = 0.1;
 
     /**
      * Contains the title of the song.
@@ -42,12 +42,13 @@ public class HeaderView extends View {
 
         // Drawing the Metronome
         int padding = 4;
-        int radius = (int) (mPct * (canvas.getHeight() - 2 * padding) / 2);
+        int radius = (int) (myRatio * (canvas.getHeight() - 2 * padding) / 2);
         int posX = canvas.getWidth() - (canvas.getHeight() - 2 * padding) / 2
                 - padding / 2;
         int posY = canvas.getHeight() / 2;
-        int alpha = (int) (mPct * 255);
+        int alpha = (int) (myRatio * 255);
         metronome.draw(canvas, posX, posY, radius, alpha);
+        
     }
 
     private void drawDebugBox(Canvas canvas) {
@@ -56,23 +57,26 @@ public class HeaderView extends View {
         canvas.drawRect(0, 0, canvas.getWidth(), canvas.getHeight(), paint);
     }
 
-    public void incPct() {
-        if (mPct <= 0.975) {
-            mPct += 0.025;
-        } else {
-            mPct = 1;
+    /**
+     * Compute the ratio of the metronome displayed
+     * 
+     * @param position
+     * @param pace
+     * @return
+     */
+    public void computeRatio(int position, int pace) {
+        double percentage = ((double) position % (double) pace) / (double) pace;
+        if(percentage ==  0){
+            System.out.println("Percentage = "+percentage+ ", playingPosition = "+ position);
         }
-    }
-
-    public void decPct() {
-        if (mPct >= 0.5) {
-            mPct -= 0.025;
-        } else {
-            mPct = 0.5;
+        if (percentage >= 0.0 && percentage <= 0.2) {
+            myRatio = (-2.5) * percentage + 1;
+        } else if (percentage > 0.2 && percentage < 0.8) {
+            myRatio = 0.5;
+        } else if (percentage >= 0.8 && percentage < 1) {
+            myRatio = (2.5) * percentage - 1.5;
         }
-    }
-
-    public void setPct(double pct) {
-        mPct = pct;
-    }
+     }
+    
+    
 }

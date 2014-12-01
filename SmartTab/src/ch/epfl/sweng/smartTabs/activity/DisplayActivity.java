@@ -135,8 +135,6 @@ public class DisplayActivity extends Activity {
 		// Basic scrolling
 		Thread t = new Thread(new Runnable() {
 
-			private int ptr = 0;
-
 			Note[] tuning = { new Note(Height.E, 3), new Note(Height.B, 2),
 					new Note(Height.G, 2), new Note(Height.D, 2),
 					new Note(Height.A, 1), new Note(Height.E, 1) };
@@ -154,20 +152,9 @@ public class DisplayActivity extends Activity {
 													// which we want to look for
 													// a time to play
 
-						if (ptr > 0 && ptr < threshold * 1 / 5) {
-							headerView.decPct();
-						} else if (ptr >= threshold * 4 / 5 && ptr < threshold) {
-							headerView.incPct();
-						} else if (ptr == threshold) {
-							headerView.setPct(1);
-							ptr = 0;
-						} else if (ptr == 0) {
-							headerView.setPct(1);
-						} else {
-							headerView.setPct(0.5);
-						}
+						headerView.computeRatio(playingPosition, PACE);
 						headerView.postInvalidate();
-						ptr++;
+					
 					}
 
 					if (tab.timeMapContains(playingPosition)) {
