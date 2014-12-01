@@ -46,6 +46,7 @@ public class MainActivity extends Activity {
 	private DrawerLayout mDrawerLayout;
 	private ListView mDrawerList;
 	private ActionBarDrawerToggle mDrawerToggle;
+	private ArrayAdapter<String> adap;
 
 
 	@Override
@@ -55,17 +56,19 @@ public class MainActivity extends Activity {
 		
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		mDrawerList = (ListView) findViewById(R.id.right_drawer);
-		mDrawerToggle = initDrawerToggle();
+		mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.drawable.ic_drawer, 0, 0);
 		
 		mDrawerLayout.setDrawerListener(mDrawerToggle);
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.RELATIVE_HORIZONTAL_GRAVITY_MASK);
+        
 
 		
 		String [] items = {"Favorites", "History", "Settings"};
 		
-		ArrayAdapter<String> adap = new ArrayAdapter<String>(this, R.layout.listview_layout, items);
+		adap = new ArrayAdapter<String>(this, R.layout.drawer_list_layout, items);
 		
 		mDrawerList.setAdapter(adap);
+		mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 		
 		listV = (ListView) findViewById(R.id.list);
 		ActionBar actionBar = getActionBar();
@@ -129,6 +132,11 @@ public class MainActivity extends Activity {
 		// Handle presses on the action bar items
 		switch (item.getItemId()) {
 		case R.id.action_drawer:
+			if(mDrawerLayout.isDrawerOpen(mDrawerList)){
+				mDrawerLayout.closeDrawer(mDrawerList);				
+			} else {
+				mDrawerLayout.openDrawer(mDrawerList);
+			}
 			return true;
 		case R.id.action_refresh:
 			if (checkNetworkStatus()) {
@@ -153,26 +161,6 @@ public class MainActivity extends Activity {
 		default:
 			return super.onOptionsItemSelected(item);
 		}
-	}
-	
-	public ActionBarDrawerToggle initDrawerToggle(){
-		ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.drawable.ic_drawer, 0, 0) {
-			public void onDrawerClosed(View drawerView) {
-				super.onDrawerClosed(drawerView);
-				/*
-				 * Show action  bar items
-				 */
-			};
-			
-			public void onDrawerOpened(View drawerView) {
-				super.onDrawerOpened(drawerView);
-				/*
-				 * Hide action  bar items
-				 */
-			};
-		};
-		
-		return toggle;
 	}
 
 	/**
@@ -319,6 +307,21 @@ public class MainActivity extends Activity {
 		connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 		netInfo = connMgr.getActiveNetworkInfo();
 		return netInfo != null && netInfo.isConnected();
+	}
+	
+	private class DrawerItemClickListener implements ListView.OnItemClickListener {
+	    @Override
+	    public void onItemClick(AdapterView parent, View view, int position, long id) {
+	        selectItem(position);
+	    }
+	}
+
+
+	public void selectItem(int position) {
+		
+		if(position == 2){
+			startActivity(new Intent(MainActivity.this, PreferencesActivity.class));
+		}
 	}
 
 }

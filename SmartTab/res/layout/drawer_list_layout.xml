@@ -9,4 +9,4 @@
     android:padding="5sp"
     android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
     android:paddingStart="?android:attr/listPreferredItemPaddingStart"
-    android:textColor="#23332f" />
+    android:textColor="#d3d3d3" />

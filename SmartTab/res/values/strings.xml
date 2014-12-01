@@ -31,7 +31,7 @@
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="title_dialog">Tutorial</string>
-    <string name="title_activity_splash">SplashActivity</string>
+    <string name="title_activity_splash">SmartTabs</string>
     <string name="drawer_open"></string>
     <string name="drawer_close"/>
     <string name="action_settings">Settings</string>
