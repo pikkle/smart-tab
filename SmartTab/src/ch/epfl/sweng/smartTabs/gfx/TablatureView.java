@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Point;
 import android.graphics.Rect;
 import android.view.Display;
 import android.view.View;
@@ -22,8 +23,7 @@ public class TablatureView extends View {
     private Tab myTab;
     private int myPace;
     private int endOfTab;
-
-	private float padding;
+    private float padding;
     private int startingPos; // Display initially starts at 100px
     private int firstNotePos; // First note's position
     private Bitmap bmp;
@@ -48,17 +48,22 @@ public class TablatureView extends View {
         // TODO : clean with non deprecated methods
         WindowManager wm = (WindowManager) context
                 .getSystemService(Context.WINDOW_SERVICE);
-        Display display = wm.getDefaultDisplay();
-        padding = display.getHeight() / 8;
-        startingPos = display.getWidth() / 8;
+
+        Point size = new Point();
+        wm.getDefaultDisplay().getSize(size);
+        int width = size.x;
+        int height = size.y;
+        padding = height / 8;
+        startingPos = width / 8;
         firstNotePos = startingPos + 2 * pace;
 
         tab.initTimeMap(firstNotePos);
 
         // TODO : Can be a field in the JSON
-        endOfTab = ((WindowManager) context
-                .getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay()
-                .getWidth();
+        Point end = new Point();
+        ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE))
+                .getDefaultDisplay().getSize(end);
+        endOfTab = end.y;
     }
 
     @Override
@@ -67,7 +72,7 @@ public class TablatureView extends View {
         if (firstDraw) {
             initBmp(canvas);
         }
-        canvas.drawBitmap(bmp, 0, 0, null);
+        canvas.drawBitmap(bmp, 500, 500, null);
     }
 
     /**
@@ -187,6 +192,6 @@ public class TablatureView extends View {
     }
     
     public int getEndOfTab() {
-    	return endOfTab;
+        return endOfTab;
     }
 }
