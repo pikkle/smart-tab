@@ -8,8 +8,8 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <uses-sdk
-        android:minSdkVersion="19"
-        android:targetSdkVersion="19" />
+        android:minSdkVersion="18"
+        android:targetSdkVersion="18" />
 
     <application
         android:allowBackup="true"
@@ -21,8 +21,6 @@
         <activity
             android:name=".activity.MainActivity"
             android:parentActivityName=".activity.MainActivity" >
-
-
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value=".SearchResultsActivity" />
@@ -67,13 +65,11 @@
         <!-- Splash Activity -->
         <activity
             android:name="ch.epfl.sweng.smartTabs.activity.SplashActivity"
-            android:label="@string/title_activity_splash"
             android:noHistory="true"
             android:theme="@android:style/Theme.Holo.NoActionBar.Fullscreen" >
             
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

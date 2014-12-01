@@ -72,7 +72,7 @@ public class TablatureView extends View {
         if (firstDraw) {
             initBmp(canvas);
         }
-        canvas.drawBitmap(bmp, 500, 500, null);
+        canvas.drawBitmap(bmp, 0, 0, null);
     }
 
     /**
