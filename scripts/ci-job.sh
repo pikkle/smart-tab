@@ -5,7 +5,7 @@ TEST_PROJECT=SmartTabsTest
 
 export ANDROID_HOME=/home/jenkins/tools/android-sdk
 export PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools
-export REPO_DIR=/home/jenkins/workspace/2014-sweng-team-bookie
+export REPO_DIR=/home/jenkins/workspace/2014-sweng-team-swag-sweng
 export SCRIPTS_DIR=$REPO_DIR/scripts
 
 # Run android tests
