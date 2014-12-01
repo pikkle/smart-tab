@@ -3,3 +3,9 @@ SmartTab/.settings/
 SmartTab/.loadpath
 SmartTab/bin/*
 SmartTab/gen/*
+SmartTabTest/local.properties
+SmartTabTest/.settings/
+SmartTabTest/.loadpath
+SmartTabTest/bin/*
+SmartTabTest/gen/*
+
