@@ -115,7 +115,7 @@ public class DisplayActivity extends Activity {
 		cursorView 		= new CursorView(getBaseContext());
 		
 		
-		playingPosition = tablatureView.getScrollX() + cursorView.getPosX();
+		playingPosition = cursorView.getPosX();
 		
 		musicWrapper.addView(musicSheetView, weight(3));
 		musicWrapper.addView(tablatureView, weight(7));

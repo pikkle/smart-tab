@@ -16,6 +16,9 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -40,15 +43,36 @@ public class MainActivity extends Activity {
 	private ConnectivityManager connMgr;
 	private NetworkInfo netInfo;
 	private ListView listV;
+	private DrawerLayout mDrawerLayout;
+	private ListView mDrawerList;
+	private ActionBarDrawerToggle mDrawerToggle;
 
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
+		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+		mDrawerList = (ListView) findViewById(R.id.right_drawer);
+		mDrawerToggle = initDrawerToggle();
+		
+		mDrawerLayout.setDrawerListener(mDrawerToggle);
+        mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.RELATIVE_HORIZONTAL_GRAVITY_MASK);
+
+		
+		String [] items = {"Favorites", "History", "Settings"};
+		
+		ArrayAdapter<String> adap = new ArrayAdapter<String>(this, R.layout.listview_layout, items);
+		
+		mDrawerList.setAdapter(adap);
+		
 		listV = (ListView) findViewById(R.id.list);
 		ActionBar actionBar = getActionBar();
 		actionBar.setTitle(getString(R.string.title_app_home));
+		
+		actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeButtonEnabled(true);
 
 		connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 		netInfo = connMgr.getActiveNetworkInfo();
@@ -104,8 +128,7 @@ public class MainActivity extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle presses on the action bar items
 		switch (item.getItemId()) {
-		case R.id.action_settings:
-			startActivity(new Intent(this, PreferencesActivity.class));
+		case R.id.action_drawer:
 			return true;
 		case R.id.action_refresh:
 			if (checkNetworkStatus()) {
@@ -130,6 +153,26 @@ public class MainActivity extends Activity {
 		default:
 			return super.onOptionsItemSelected(item);
 		}
+	}
+	
+	public ActionBarDrawerToggle initDrawerToggle(){
+		ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.drawable.ic_drawer, 0, 0) {
+			public void onDrawerClosed(View drawerView) {
+				super.onDrawerClosed(drawerView);
+				/*
+				 * Show action  bar items
+				 */
+			};
+			
+			public void onDrawerOpened(View drawerView) {
+				super.onDrawerOpened(drawerView);
+				/*
+				 * Hide action  bar items
+				 */
+			};
+		};
+		
+		return toggle;
 	}
 
 	/**
@@ -181,7 +224,7 @@ public class MainActivity extends Activity {
 
 			ArrayAdapter<String> adap = new ArrayAdapter<String>(
 					getApplicationContext(),
-					android.R.layout.simple_list_item_1, values);
+					R.layout.listview_layout, values);
 			listV.setAdapter(adap);
 			listV.setOnItemClickListener(new OnItemClickListener() {
 
@@ -263,7 +306,7 @@ public class MainActivity extends Activity {
 		String[] values = {"No Network Connection"};
 		ArrayAdapter<String> adap = new ArrayAdapter<String>(
 				getApplicationContext(),
-				android.R.layout.simple_list_item_1, values);
+				R.layout.listview_layout, values);
 		listV.setAdapter(adap);
 
 	}
