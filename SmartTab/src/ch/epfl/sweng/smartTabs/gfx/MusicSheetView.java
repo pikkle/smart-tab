@@ -51,9 +51,7 @@ public class MusicSheetView extends View {
         this.paint = new Paint();
         this.setBackgroundColor(Color.WHITE);
         this.mTab = tab;
-        endOfTab = ((WindowManager) context
-                .getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay()
-                .getWidth();
+        endOfTab = ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getWidth();
     }
 
     @Override
@@ -62,38 +60,28 @@ public class MusicSheetView extends View {
         padding = canvas.getHeight() / 8;
         startingPos = canvas.getWidth() / 8;
 
-        if (firstDraw) {
 
-            bmp = Bitmap.createBitmap((int) canvas.getWidth(),
-                    (int) canvas.getHeight(), Bitmap.Config.ARGB_8888);
-            Canvas c = new Canvas(bmp);
             paint.setColor(Color.BLACK);
             // canvas.drawLine(0, 0, 100000, 6000, paint);
-            int noteWidth = (int) (c.getWidth() / 35);
+            int noteWidth = (int) (canvas.getWidth() / 35);
             // create the bitmaps
             initializeBitmaps(noteWidth);
 
             // to do : create the grid
 
-            lineMargin = (int) (c.getHeight() / (6));
+            lineMargin = (int) (canvas.getHeight() / (6));
 
             // Draws the grid
-            drawGrid(c, lineMargin);
+            drawGrid(canvas, lineMargin);
 
             // //adding notes to the grid
             int pos = startingPos + 2 * pace;
-            drawNotes(c, pos);
-            endOfTab = pos + 200;
+            drawNotes(canvas, pos);
 
-            drawVerticalLineOnTab(c, startingPos, lineMargin);
-            drawVerticalLineOnTab(c, endOfTab, lineMargin);
-            c.setBitmap(bmp);
-            firstDraw = false;
+            drawVerticalLineOnTab(canvas, startingPos, lineMargin);
+            drawVerticalLineOnTab(canvas, endOfTab, lineMargin);
 
-            canvas.drawBitmap(bmp, 0, 0, null);
-        } else {
-            canvas.drawBitmap(bmp, 0, 0, null);
-        }
+           
 
     }
     
@@ -107,19 +95,9 @@ public class MusicSheetView extends View {
             pos += pace * noteDuration;
 
             temp += noteDuration;
-            if (temp % 4d == 0d) {
-                temp = 0;
-                paint.setStrokeWidth(3);
-                drawVerticalLineOnTab(c, pos + pace / 2, lineMargin);
-                paint.setStrokeWidth(1);
-            }
 
             int noteHeightPos = lineMargin + lineMargin * 4;
-            if (pos - getScrollX() > 0 && pos - getScrollX() < getWidth()) { // Draws
-                                                                             // only
-                                                                             // what
-                                                                             // is
-                                                                             // necessary
+            if (pos - getScrollX() > 0 && pos - getScrollX() < getWidth()) { 
                 for (int j = 0; j < 6; j++) {
                     if (mTab.getTime(i).getPartitionNote(j) != null) {
                         Bitmap currNoteImage = getNoteWithDuration(mTab
@@ -135,6 +113,7 @@ public class MusicSheetView extends View {
                 }
             }
         }
+        endOfTab = pos + 200;
     }
 
     private int noteHeight(Bitmap note, int noteWidth) {
