@@ -136,13 +136,13 @@ public class MusicSheetView extends View {
 
     private Bitmap getNoteWithDuration(String duration) {
         Bitmap note = noire;
-        if (duration.equals("doubleCroche")) {
+        if (duration.equals("DoubleCroche")) {
             note = doubleCroche;
-        } else if (duration.equals("croche")) {
+        } else if (duration.equals("Croche")) {
             note = croche;
-        } else if (duration.equals("blanche")) {
+        } else if (duration.equals("Blanche")) {
             note = blanche;
-        } else if (duration.equals("ronde")) {
+        } else if (duration.equals("Ronde")) {
             note = ronde;
         }
         return note;
