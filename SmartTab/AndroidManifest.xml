@@ -14,19 +14,13 @@
     <application
         android:allowBackup="true"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" 
+        android:theme="@style/AppTheme"
         android:icon="@drawable/icon" >
 
         <!-- Main Activity -->
         <activity
             android:name=".activity.MainActivity"
             android:parentActivityName=".activity.MainActivity" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-				<category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value=".SearchResultsActivity" />
@@ -71,9 +65,13 @@
         <!-- Splash Activity -->
         <activity
             android:name="ch.epfl.sweng.smartTabs.activity.SplashActivity"
-            android:label="@string/title_activity_splash"
             android:noHistory="true"
             android:theme="@android:style/Theme.Holo.NoActionBar.Fullscreen" >
+            
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 

@@ -11,7 +11,7 @@
     <string name="action_refresh">Refresh</string>
     <string name="action_search">Search</string>
     <string name="splash_screen">Splash Screen </string>
-    <string name="action_settings">Settings</string>
+    <string name="action_drawer">Navigation</string>
     <string name="show_help">Show Help on Startup</string>
     <string name="show_help_on_startup_no">Never</string>
     <string name="show_help_on_startup_yes">Always</string>
@@ -31,6 +31,9 @@
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="title_dialog">Tutorial</string>
-    <string name="title_activity_splash">SplashActivity</string>
+    <string name="title_activity_splash">SmartTabs</string>
+    <string name="drawer_open"></string>
+    <string name="drawer_close"/>
+    <string name="action_settings">Settings</string>
 
 </resources>

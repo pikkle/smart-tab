@@ -16,11 +16,19 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AbsListView;
+import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
@@ -36,17 +44,31 @@ import ch.epfl.sweng.smartTabs.network.NetworkClient;
  * and start the displayActivity with the tab
  */
 public class MainActivity extends Activity {
+	private static final long DELAY = 2000;
 	private NetworkClient netClient;
 	private ConnectivityManager connMgr;
 	private NetworkInfo netInfo;
 	private ListView listV;
+	private DrawerLayout mDrawerLayout;
+	private ListView mDrawerList;
+	private ActionBarDrawerToggle mDrawerToggle;
+	private ArrayAdapter<String> adap;
+	private SwipeRefreshLayout swipeView;
+	
+	private boolean backPressedOnce = false;
 
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		listV = (ListView) findViewById(R.id.list);
+		
+		initDrawerLayout();
+		
+		initSwipeView();
+		
+		initListView();
+		
 		ActionBar actionBar = getActionBar();
 		actionBar.setTitle(getString(R.string.title_app_home));
 
@@ -104,21 +126,14 @@ public class MainActivity extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle presses on the action bar items
 		switch (item.getItemId()) {
-		case R.id.action_settings:
-			startActivity(new Intent(this, PreferencesActivity.class));
-			return true;
-		case R.id.action_refresh:
-			if (checkNetworkStatus()) {
-				Log.d("INTO REFRESH", "BLABLABLA");
-				Toast.makeText(getApplicationContext(), "Refreshing Tab List.",
-						Toast.LENGTH_SHORT).show();
-				new DownloadTabListTask().execute("");
-				Toast.makeText(getApplicationContext(), "Tab List Fetched.",
-						Toast.LENGTH_SHORT).show();
+		case R.id.action_drawer:
+			if(mDrawerLayout.isDrawerOpen(mDrawerList)){
+				mDrawerLayout.closeDrawer(mDrawerList);				
 			} else {
-				setNoNetworkList();
+				mDrawerLayout.openDrawer(mDrawerList);
 			}
 			return true;
+
 		case R.id.action_search:
 			// Get action bar item, get query, execute
 			if (checkNetworkStatus()) {
@@ -130,6 +145,105 @@ public class MainActivity extends Activity {
 		default:
 			return super.onOptionsItemSelected(item);
 		}
+	}
+	
+	@Override
+	public void onBackPressed() {
+		if(mDrawerLayout.isDrawerOpen(mDrawerList)){
+			mDrawerLayout.closeDrawer(mDrawerList);
+		} else {			
+			if (backPressedOnce) {
+				super.onBackPressed();
+			} else {
+				backPressedOnce = true;
+
+				Toast.makeText(this, "Press BACK again to exit", Toast.LENGTH_SHORT).show();
+
+				new Handler().postDelayed(new Runnable() {
+
+					@Override
+					public void run() {
+						backPressedOnce = false;
+					}
+				}, DELAY);
+			}
+		}
+	}
+	
+	/**
+	 * This method is used to initialize the drawer layout, and the drawer list
+	 */
+	public void initDrawerLayout(){
+		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+		mDrawerList = (ListView) findViewById(R.id.right_drawer);
+		mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.drawable.ic_drawer, 0, 0);
+		
+		mDrawerLayout.setDrawerListener(mDrawerToggle);
+        mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.RELATIVE_HORIZONTAL_GRAVITY_MASK);
+        
+		String [] items = {"Favorites", "History", "Settings"};
+		
+		adap = new ArrayAdapter<String>(this, R.layout.drawer_list_layout, items);
+		
+		mDrawerList.setAdapter(adap);
+		mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+	}
+	
+	/**
+	 * This method is used to initialize swipeView, which is a wrapper
+	 * containing listV, which allows the swipe down to refresh functionnality
+	 */
+	public void initSwipeView() {
+		swipeView = (SwipeRefreshLayout) findViewById(R.id.swipe_container);
+		swipeView.setEnabled(false);
+		
+			
+		swipeView.setColorScheme(android.R.color.holo_blue_dark, android.R.color.holo_blue_light, android.R.color.holo_green_light, android.R.color.holo_green_light);
+		swipeView.setOnRefreshListener(new OnRefreshListener() {
+			
+			@Override
+			public void onRefresh() {
+				swipeView.setRefreshing(true);
+				new Handler().postDelayed(new Runnable() {
+	                @Override
+	                public void run() {
+	                	if (checkNetworkStatus()) {
+	    					Log.d("INTO REFRESH", "BLABLABLA");
+	    					new DownloadTabListTask().execute("");
+
+	    				} else {
+	    					setNoNetworkList();
+	    				}
+	                    swipeView.setRefreshing(false);
+	                }
+	            }, 3000);
+								
+			}
+		}); 
+	}
+	
+	/**
+	 * This method is used to initialize the listView containing the list of tabs
+	 */
+	public void initListView() {
+		listV = (ListView) findViewById(R.id.list);
+		listV.setOnScrollListener(new OnScrollListener() {
+			
+			@Override
+			public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+			}
+			
+			@Override
+			public void onScroll(AbsListView view, int firstVisibleItem,
+					int visibleItemCount, int totalItemCount) {
+
+				if (firstVisibleItem == 0)
+                    swipeView.setEnabled(true);
+                else
+                    swipeView.setEnabled(false);
+			}
+		});
 	}
 
 	/**
@@ -181,7 +295,7 @@ public class MainActivity extends Activity {
 
 			ArrayAdapter<String> adap = new ArrayAdapter<String>(
 					getApplicationContext(),
-					android.R.layout.simple_list_item_1, values);
+					R.layout.listview_layout, values);
 			listV.setAdapter(adap);
 			listV.setOnItemClickListener(new OnItemClickListener() {
 
@@ -263,7 +377,7 @@ public class MainActivity extends Activity {
 		String[] values = {"No Network Connection"};
 		ArrayAdapter<String> adap = new ArrayAdapter<String>(
 				getApplicationContext(),
-				android.R.layout.simple_list_item_1, values);
+				R.layout.listview_layout, values);
 		listV.setAdapter(adap);
 
 	}
@@ -276,6 +390,21 @@ public class MainActivity extends Activity {
 		connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 		netInfo = connMgr.getActiveNetworkInfo();
 		return netInfo != null && netInfo.isConnected();
+	}
+	
+	private class DrawerItemClickListener implements ListView.OnItemClickListener {
+	    @Override
+	    public void onItemClick(AdapterView parent, View view, int position, long id) {
+	        selectItem(position);
+	    }
+	}
+
+
+	public void selectItem(int position) {
+		
+		if(position == 2){
+			startActivity(new Intent(MainActivity.this, PreferencesActivity.class));
+		}
 	}
 
 }

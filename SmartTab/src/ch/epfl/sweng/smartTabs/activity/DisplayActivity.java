@@ -65,9 +65,7 @@ public class DisplayActivity extends Activity {
 	private SoundPool pool = new SoundPool(50, AudioManager.STREAM_MUSIC, 0);
 	private static final int DELAY = 2000;
 	
-	private int playingPosition; // Position of the time to play (Intital
-										// value corresponds to the future
-										// cursor position)
+	private int playingPosition; // Position of the time to play (Intital value corresponds to the future cursor position)
 
 	private double delay;
 
@@ -137,8 +135,6 @@ public class DisplayActivity extends Activity {
 		// Basic scrolling
 		Thread t = new Thread(new Runnable() {
 
-			private int ptr = 0;
-
 			Note[] tuning = { new Note(Height.E, 3), new Note(Height.B, 2),
 					new Note(Height.G, 2), new Note(Height.D, 2),
 					new Note(Height.A, 1), new Note(Height.E, 1) };
@@ -156,20 +152,9 @@ public class DisplayActivity extends Activity {
 													// which we want to look for
 													// a time to play
 
-						if (ptr > 0 && ptr < threshold * 1 / 5) {
-							headerView.decPct();
-						} else if (ptr >= threshold * 4 / 5 && ptr < threshold) {
-							headerView.incPct();
-						} else if (ptr == threshold) {
-							headerView.setPct(1);
-							ptr = 0;
-						} else if (ptr == 0) {
-							headerView.setPct(1);
-						} else {
-							headerView.setPct(0.5);
-						}
+						headerView.computeRatio(playingPosition, PACE);
 						headerView.postInvalidate();
-						ptr++;
+					
 					}
 
 					if (tab.timeMapContains(playingPosition)) {
@@ -261,7 +246,7 @@ public class DisplayActivity extends Activity {
 				if(lastX != newX && newPosX >= 0 && newPosX <= tablatureView.getEndOfTab()){
 					tablatureView.scrollTo(newPosX, 0);
 					musicSheetView.scrollTo(newPosX, 0);
-					playingPosition = (int) (tablatureView.getScrollX() + cursorView.getX() + OFFSET);
+					playingPosition = (int) (tablatureView.getScrollX() + cursorView.getX() + 2*OFFSET);
 				}
 			}
 		} 

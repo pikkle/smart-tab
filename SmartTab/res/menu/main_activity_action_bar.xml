@@ -8,18 +8,11 @@
         android:title="@string/action_search"
         android:actionViewClass="android.widget.SearchView"/>
 
-    <!-- Refresh, will show if there is room -->
-    <item
-        android:id="@+id/action_refresh"
-        android:icon="@drawable/refresh"
-        android:showAsAction="ifRoom"
-        android:title="@string/action_refresh"/>
-
     <!-- Settings, will always show in overflow -->
     <item
-        android:id="@+id/action_settings"
-        android:showAsAction="ifRoom"
-        android:icon="@drawable/settings"
-        android:title="@string/action_settings"/>
+        android:id="@+id/action_drawer"
+        android:showAsAction="always"
+        android:icon="@drawable/ic_drawer"
+        android:title="@string/action_drawer"/>
 
 </menu>
