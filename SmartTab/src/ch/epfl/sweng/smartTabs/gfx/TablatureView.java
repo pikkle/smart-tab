@@ -99,9 +99,10 @@ public class TablatureView extends View{
         
         drawVerticalLineOnTab(canvas, startingPos);
         drawVerticalLineOnTab(canvas, endOfTab);
-        drawMesure(canvas);
+        
         drawGrid(canvas);
-        drawNotes(canvas);  
+        drawNotes(canvas); 
+        drawMesure(canvas);
         firstDraw = false;
     }
 
@@ -157,8 +158,11 @@ public class TablatureView extends View{
         }   
     }
     private void drawMesure(Canvas canvas) {
+        final Paint mesurePaint = new Paint();
+        mesurePaint.setTextSize(24);
         for (int i = 0 ; i < mesure.size(); i++) {  
             drawVerticalLineOnTab(canvas, mesure.get(i));
+            canvas.drawText(i+"", mesure.get(i), 0, mesurePaint);
         }   
     }
 

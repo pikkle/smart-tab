@@ -254,6 +254,7 @@ public class DisplayActivity extends Activity {
 		if(MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_UP) {
 			if(!scrolled){
 				running = !running;
+				footerView.playPause();
 			}
 		}
 		

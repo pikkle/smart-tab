@@ -13,6 +13,7 @@ public class FooterView extends View {
 	private boolean displayed = true;
 	@SuppressWarnings("unused")
 	private Paint paint;
+	private Boolean running = false;
 
 	/**
 	 * Draws the support
@@ -29,10 +30,32 @@ public class FooterView extends View {
 	@Override
     protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
-		
+		if (running) {
+		    drawPlay(canvas);
+		}
+		else {
+		    drawPause(canvas);
+		}
     }
 
-	public boolean isDisplayed() {
+	private void drawPause(Canvas canvas) {
+        // TODO Auto-generated method stub
+        
+    }
+
+
+    private void drawPlay(Canvas canvas) {
+        // TODO Auto-generated method stub
+        
+    }
+
+
+    public boolean isDisplayed() {
 		return displayed;
 	}
+
+
+    public void playPause() {
+        running = !running;
+    }
 }

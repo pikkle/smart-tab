@@ -73,15 +73,18 @@ public class MusicSheetView extends View {
             startingPos = canvas.getWidth() / 8;
             lineMargin = (int) (canvas.getHeight() / (6));
             paint.setColor(Color.BLACK);
-            firstDraw = false;
+            
             pos = startingPos + 2 * pace;
         }
-        drawMesure(canvas);
+        
+        
 
         drawGrid(canvas, lineMargin);
         drawNotes(canvas, pos);
+        drawMesure(canvas);
         drawVerticalLineOnTab(canvas, startingPos, lineMargin);
         drawVerticalLineOnTab(canvas, endOfTab, lineMargin);
+        firstDraw = false;
 
     }
     
@@ -118,7 +121,7 @@ public class MusicSheetView extends View {
                 }
             }
         }
-        endOfTab = pos + 200;
+        endOfTab = pos + pace;
     }
 
     private int noteHeight(Bitmap note, int noteWidth) {
