@@ -45,6 +45,7 @@ public class Time implements Serializable {
             if (!jsonNotes[i - 1].equals("")) {
                 int fretNumber = Integer.parseInt(jsonNotes[i - 1]);
                 partitionNotes[i - 1] = TUNING[i - 1].addHalfTones(fretNumber);
+                
             }
         }
         String jsonDuration;
