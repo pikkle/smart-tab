@@ -37,7 +37,7 @@ public class HeaderView extends View {
         paint.setTextSize(canvas.getHeight() * titleSizeRatio);
         paint.setAlpha(titleAlpha);
         paint.setColor(Color.GRAY);
-        canvas.drawText(mTitle, canvas.getWidth() / 16, canvas.getHeight() / 2,
+        canvas.drawText(mTitle, canvas.getWidth() / 32, canvas.getHeight() / 2,
                 paint);
 
         // Drawing the Metronome

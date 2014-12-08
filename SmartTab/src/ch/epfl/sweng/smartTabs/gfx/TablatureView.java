@@ -25,6 +25,7 @@ public class TablatureView extends View{
     private final Paint paint = new Paint();
     private final Instrument instrument;
     private final Tab tab;
+    private final List<Integer> mesure = new ArrayList<Integer>();
     
     private final int HEIGHTSCALE = 10;
     
@@ -46,7 +47,7 @@ public class TablatureView extends View{
     private float textHeight ;
     private float textSize;
     private Time time;
-    private List<Integer> mesure = new ArrayList<Integer>();
+   
     
     
     /**

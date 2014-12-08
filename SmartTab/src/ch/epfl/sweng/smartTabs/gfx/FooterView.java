@@ -39,14 +39,14 @@ public class FooterView extends View {
     }
 
 	private void drawPause(Canvas canvas) {
-        // TODO Auto-generated method stub
-        
+	    paint.setColor(Color.RED);
+	    canvas.drawCircle(50, 50, 20, paint);
     }
 
 
     private void drawPlay(Canvas canvas) {
-        // TODO Auto-generated method stub
-        
+        paint.setColor(Color.BLUE);
+        canvas.drawCircle(50, 50, 20, paint);
     }
 
 
@@ -57,5 +57,6 @@ public class FooterView extends View {
 
     public void playPause() {
         running = !running;
+        this.invalidate();
     }
 }
