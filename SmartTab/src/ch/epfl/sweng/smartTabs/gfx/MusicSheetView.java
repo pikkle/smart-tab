@@ -69,9 +69,10 @@ public class MusicSheetView extends View {
 
             // to do : create the grid
 
-            lineMargin = (int) (canvas.getHeight() / (6));
+            lineMargin = (int) (canvas.getHeight() / (10));
 
             // Draws the grid
+            canvas.translate(0, 4*lineMargin);
             drawGrid(canvas, lineMargin);
 
             // //adding notes to the grid
@@ -128,9 +129,9 @@ public class MusicSheetView extends View {
 
     private int getNoteCenter(Bitmap note) {
         int center = 7 * note.getHeight() / 8;
-        if (note == ronde) {
-            center = note.getHeight() / 2;
-        }
+        //if (note == ronde) {
+         //   center = 5 * note.getHeight() / 8;
+        //}
         return center;
     }
 
