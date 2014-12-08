@@ -5,7 +5,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.view.View;
 import android.view.WindowManager;
@@ -16,8 +15,8 @@ import ch.epfl.sweng.smartTabs.music.Note;
 import ch.epfl.sweng.smartTabs.music.Tab;
 
 /**
- * @author lounjut
- *
+ * @author pikkle
+ * 
  */
 public class MusicSheetView extends View {
     private Paint paint;
@@ -70,7 +69,7 @@ public class MusicSheetView extends View {
 
             // to do : create the grid
 
-            lineMargin = (int) (canvas.getHeight() / (10));
+            lineMargin = (int) (canvas.getHeight() / (6));
 
             // Draws the grid
             drawGrid(canvas, lineMargin);
@@ -104,17 +103,11 @@ public class MusicSheetView extends View {
                         Bitmap currNoteImage = getNoteWithDuration(mTab
                                 .getTime(i).getDuration());
                         Note currNote = mTab.getTime(i).getPartitionNote(j);
-                        Boolean sharpNote = currNote != isSharp(currNote);// *** TODO METTRE LES # ***
+                        Boolean sharpNote = currNote != isSharp(currNote);
                         currNote = isSharp(currNote);
-                        int noteHeight = getNoteHeightPosition(currNote, currNoteImage);
-                        int center = getNoteCenter(currNoteImage);
-                        if(noteHeight > 3 && checkIfReverseNote(mTab.getTime(i).getPartition())) {
-                        	currNoteImage = rotateImage(currNoteImage);
-                        	center = currNoteImage.getHeight() - center;
-                        }
                         c.drawBitmap(currNoteImage, pos, noteHeightPos
-                                - center - lineMargin
-                                / 2 * noteHeight,
+                                - getNoteCenter(currNoteImage) - lineMargin
+                                / 2 * getNoteHeightPosition(currNote),
                                 paint);
                     }
                 }
@@ -179,7 +172,7 @@ public class MusicSheetView extends View {
         
     }
 
-    public int getNoteHeightPosition(Note note, Bitmap noteImage) {
+    public int getNoteHeightPosition(Note note) {
         int height = -1;
         switch (note.getHeight()) {
         case E:
@@ -218,12 +211,6 @@ public class MusicSheetView extends View {
         paint.setStrokeWidth(1);
     }
     
-    public Bitmap rotateImage(Bitmap noteImage) {
-    	Matrix matrix = new Matrix();
-    	matrix.postRotate(180);
-    	return Bitmap.createBitmap(noteImage, 0, 0, noteImage.getWidth(), noteImage.getHeight(), matrix, true);
-    }
-    
     private void initializeBitmaps(int noteWidth) {
     	doubleCroche = Bitmap.createScaledBitmap(doubleCroche, noteWidth,
                 noteHeight(doubleCroche, noteWidth), false);
@@ -235,31 +222,5 @@ public class MusicSheetView extends View {
                 noteHeight(blanche, noteWidth), false);
         ronde = Bitmap.createScaledBitmap(ronde, noteWidth,
                 noteHeight(ronde, noteWidth), false);
-    }
-    
-    private Boolean checkIfReverseNote(Note[] notes) {
-    	return (checkLowNote(notes) && !checkHighNote(notes)) || (!checkLowNote(notes) && checkHighNote(notes));
-    }
-    
-    private Boolean checkLowNote(Note[] notes) {
-    	for (int i = 0; i < notes.length; i++) {
-    		if(notes[i].getHeight().getIndex() > 5) {
-    			return true;
-    		} else if (notes[i].getHeight().getIndex() > 3 && notes[i].getOctave() > 0) {
-    			return true;
-    		}
-    	}
-    	return false;
-    }
-    
-    private Boolean checkHighNote(Note[] notes) {
-    	for (int i = 0; i < notes.length; i++) {
-    		if(notes[i].getHeight().getIndex() < 4) {
-    			return true;
-    		} else if (notes[i].getHeight().getIndex() < 7 && notes[i].getOctave() > 0) {
-    			return true;
-    		}
-    	}
-    	return false;
     }
 }
