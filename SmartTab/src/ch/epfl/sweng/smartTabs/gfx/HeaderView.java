@@ -67,7 +67,7 @@ public class HeaderView extends View {
     public void computeRatio(int position, int pace) {
         double percentage = ((double) position % (double) pace) / (double) pace;
         if(percentage ==  0){
-            System.out.println("Percentage = "+percentage+ ", playingPosition = "+ position);
+            //System.out.println("Percentage = "+percentage+ ", playingPosition = "+ position);
         }
         if (percentage >= 0.0 && percentage <= 0.2) {
             myRatio = (-2.5) * percentage + 1;

@@ -44,7 +44,7 @@ public class CursorView extends View {
 
     }
 
-    public int getPosX() {
+    public int getPosX(){
         return posX;
     }
 }

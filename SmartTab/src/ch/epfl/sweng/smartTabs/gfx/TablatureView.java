@@ -1,6 +1,10 @@
 package ch.epfl.sweng.smartTabs.gfx;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.content.Context;
+
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -11,6 +15,7 @@ import android.view.WindowManager;
 import ch.epfl.sweng.smartTabs.music.Duration;
 import ch.epfl.sweng.smartTabs.music.Instrument;
 import ch.epfl.sweng.smartTabs.music.Tab;
+import ch.epfl.sweng.smartTabs.music.Time;
 
 /**
  * @author pikkle
@@ -18,55 +23,86 @@ import ch.epfl.sweng.smartTabs.music.Tab;
  */
 public class TablatureView extends View{
     private final Paint paint = new Paint();
-    private Instrument myInstr;
-    private Tab myTab;
-    private int myPace;
+    private final Instrument instrument;
+    private final Tab tab;
+    
+    private final int HEIGHTSCALE = 10;
+    
+    private int pace;
     private int endOfTab;
     private float padding;
-    private int startingPos; //Display initially starts at 100px
-    private int firstNotePos; //First note's position
+    private int startingPos; 
+    private int firstNotePos;
+    private boolean firstDraw;
+    private int tabLineMargin;
 
-
+    
+    private int width;
+    private int height;
+    private final Rect noteRect;
+    private String note;
+    private int pos;
+    private double noteDuration;
+    private float textHeight ;
+    private float textSize;
+    private Time time;
+    private List<Integer> mesure = new ArrayList<Integer>();
+    
+    
     /**
      * @param context
      * @param attrs
      */
-    public TablatureView(Context context, Tab tab, Instrument instr, int pace) {
+    public TablatureView(Context context, Tab tab, Instrument instrument, int pace) {
         super(context);
 
-        this.myTab = tab;
-        this.myInstr = instr;
-        this.myPace = pace;
+        // Constructor attribut
+        this.tab = tab;
+        this.instrument = instrument;
+        this.pace = pace;
+       
+        // Prior settings before any drawing
         this.setBackgroundColor(Color.WHITE);
 
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         Display display = wm.getDefaultDisplay();
-        padding = display.getWidth()/8;
+        padding = display.getWidth()/9;
         startingPos = display.getWidth()/8;
         firstNotePos = startingPos + 2*pace;
-
-
+        tabLineMargin = 0;
+        firstDraw = true;
+        
+        noteRect = new Rect();
         tab.initTimeMap(firstNotePos);
 
-        // TODO : Can be a field in the JSON
-        endOfTab = ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getWidth();
+        endOfTab = display.getWidth();
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-
-        int tabLineMargin = (int) (6*canvas.getHeight()/8/(myInstr.getNumOfStrings()+2));
-        float textSize = canvas.getHeight()*0.1f;
-
-        paint.setColor(Color.BLACK);
-        paint.setStrokeWidth(1);
-        paint.setTextSize(textSize);
-
-        drawVerticalLineOnTab(canvas, startingPos, tabLineMargin);
-        drawVerticalLineOnTab(canvas, endOfTab, tabLineMargin);
-        drawGrid(canvas, tabLineMargin);
+        
+        canvas.translate(0, padding);
+        
+        if (firstDraw) {
+            
+            width =  canvas.getWidth();
+            height = canvas.getHeight();
+            
+            tabLineMargin = height/HEIGHTSCALE;
+            textSize = height/HEIGHTSCALE;
+            
+            paint.setColor(Color.BLACK);
+            paint.setStrokeWidth(1);
+            paint.setTextSize(textSize);
+        }
+        
+        drawVerticalLineOnTab(canvas, startingPos);
+        drawVerticalLineOnTab(canvas, endOfTab);
+        drawMesure(canvas);
+        drawGrid(canvas);
         drawNotes(canvas);  
+        firstDraw = false;
     }
 
 
@@ -75,29 +111,36 @@ public class TablatureView extends View{
      * @param canvas
      */
     private void drawNotes(Canvas canvas) {
-        int pos = firstNotePos;
-        Rect noteRect = new Rect();
+        pos = firstNotePos;
+        
+        if (firstDraw) {
+            paint.setColor(Color.BLACK);
+        }
+        double temp = 0d;
+        for (int i = 0 ; i < tab.length(); i++) {
+            
+            if (firstDraw) {
+                temp += noteDuration;
+                if (temp % 4 == 0d) {
+                    //drawVerticalLineOnTab(canvas, (int) (pos + pace*noteDuration / 2));
+                    mesure.add((int) (pos + pace*noteDuration / 2));
+                }
+            }
+            
+            noteDuration = Duration.valueOf(tab.getTime(i).getDuration()).getDuration();
+            pos += pace*noteDuration;
+            
+            
 
-        for (int i = 0; i < myTab.length(); i++) {
-            double noteDuration = Duration.valueOf(myTab.getTime(i).getDuration()).getDuration();
-
-
-            pos += myPace*noteDuration;
-
-            paint.setTextSize(canvas.getHeight()*0.09f);
-
-            if (pos-getScrollX() > 0 && pos-getScrollX() < getWidth()) { //Draws only what is necessary
-                for (int j = 0; j < myInstr.getNumOfStrings(); j++) {
-                    paint.getTextBounds(myTab.getTime(i).getNote(j), 0, myTab.getTime(i).getNote(j).length(), noteRect);
-                    float textHeight = (j+1) * (int) (6*canvas.getHeight()/8/(myInstr.getNumOfStrings()+1)) + canvas.getHeight()*0.1f/3 +padding;
-
-                    // Draws the rectangle under the note
-                    paint.setColor(Color.WHITE);
-                    canvas.drawRect(pos, textHeight-canvas.getHeight()*0.1f , pos+noteRect.right, textHeight, paint);
-
-                    // Draws the note itself
-                    paint.setColor(Color.BLACK);
-                    canvas.drawText(myTab.getTime(i).getNote(j), pos, textHeight, paint);
+            if (pos-getScrollX() > 0 && pos-getScrollX() < width) {
+                
+                time = tab.getTime(i);
+                
+                for (int j = 0; j < instrument.getNumOfStrings(); j++) {
+                    note = time.getNote(j);
+                    paint.getTextBounds(note, 0, note.length(), noteRect);
+                    textHeight = (j+1) * tabLineMargin + height*0.1f/3;
+                    canvas.drawText(note, pos, textHeight, paint);
                 }
             }
         }
@@ -108,9 +151,14 @@ public class TablatureView extends View{
      * @param canvas
      * @param y
      */
-    private void drawGrid(Canvas canvas, float y) {
-        for (int i = 1; i <= myInstr.getNumOfStrings(); i++) {  
-            canvas.drawLine(startingPos, i * y  + padding, endOfTab, i * y + padding, paint);
+    private void drawGrid(Canvas canvas) {
+        for (int i = 1; i <= instrument.getNumOfStrings(); i++) {  
+            canvas.drawLine(startingPos, i * tabLineMargin , endOfTab, i * tabLineMargin , paint);
+        }   
+    }
+    private void drawMesure(Canvas canvas) {
+        for (int i = 0 ; i < mesure.size(); i++) {  
+            drawVerticalLineOnTab(canvas, mesure.get(i));
         }   
     }
 
@@ -120,15 +168,14 @@ public class TablatureView extends View{
      * @param x
      * @param y
      */
-    private void drawVerticalLineOnTab(Canvas canvas, int x, int y) {
-        paint.setStrokeWidth(2);
-        canvas.drawLine(x, y  + padding, x, (float) myInstr.getNumOfStrings()*y  + padding, paint);
-        paint.setStrokeWidth(1);
+    private void drawVerticalLineOnTab(Canvas canvas, int x) {
+        canvas.drawLine(x, tabLineMargin , x, (float) instrument.getNumOfStrings()*tabLineMargin , paint);
     }
 
     public boolean isTerminated() {
-        return getScrollX() > endOfTab-135;
+        return getScrollX() > endOfTab;
     }
+
     public int getEndOfTab() {
         return endOfTab;
     }
