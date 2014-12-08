@@ -82,6 +82,7 @@ public class MusicSheetView extends View {
         drawNotes(canvas, pos);
         drawVerticalLineOnTab(canvas, startingPos, lineMargin);
         drawVerticalLineOnTab(canvas, endOfTab, lineMargin);
+
     }
     
     public void drawNotes(Canvas c, int pos) {
@@ -138,9 +139,9 @@ public class MusicSheetView extends View {
 
     private int getNoteCenter(Bitmap note) {
         int center = 7 * note.getHeight() / 8;
-        if (note == ronde) {
-            center = note.getHeight() / 2;
-        }
+        //if (note == ronde) {
+         //   center = 5 * note.getHeight() / 8;
+        //}
         return center;
     }
 
