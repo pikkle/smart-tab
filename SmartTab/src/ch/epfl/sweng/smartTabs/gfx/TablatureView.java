@@ -19,6 +19,7 @@ import ch.epfl.sweng.smartTabs.music.Time;
 
 /**
  * @author pikkle
+ * 
  *
  */
 public class TablatureView extends View{
