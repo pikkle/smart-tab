@@ -124,7 +124,6 @@ public class TablatureView extends View{
             if (firstDraw) {
                 temp += noteDuration;
                 if (temp % 4 == 0d) {
-                    //drawVerticalLineOnTab(canvas, (int) (pos + pace*noteDuration / 2));
                     mesure.add((int) (pos + pace*noteDuration / 2));
                 }
             }
@@ -146,7 +145,7 @@ public class TablatureView extends View{
                 }
             }
         }
-        endOfTab = pos + 200;
+        endOfTab = pos + pace;
     }
 
     /**
