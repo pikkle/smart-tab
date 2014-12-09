@@ -60,6 +60,7 @@ public class TablatureView extends View{
 
         // Constructor attribut
         this.tab = tab;
+        
         this.instrument = instrument;
         this.pace = pace;
        
