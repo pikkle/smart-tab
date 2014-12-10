@@ -99,7 +99,6 @@ public class MusicSheetView extends View {
                 }
             }
             noteDuration = Duration.valueOf(mTab.getTime(i).getDuration()).getDuration();
-            pos += pace * noteDuration;
 
             int noteHeightPos = lineMargin * 5;
             if (pos - getScrollX() > 0 && pos - getScrollX() < getWidth()) { 
@@ -120,6 +119,7 @@ public class MusicSheetView extends View {
                     }
                 }
             }
+            pos += pace * noteDuration;
         }
         endOfTab = pos + pace;
     }

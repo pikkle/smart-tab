@@ -73,15 +73,20 @@ public final class Tab implements Serializable {
         // Position of the time (initial value equal to the position of the
         // first time)
         float timePos = firstPos;
-        mTimeMap.put(timePos, mTimeList.get(0)); // init the first item of the
-                                                 // map
-        for (int i = 1; i < mTimeList.size(); i++) {
-            double dur = Duration.valueOf(mTimeList.get(i - 1).getDuration())
-                    .getDuration();
-            // Position of the current time is the pos. of the previous time +
-            // the distance between them (dur*pace)
-            timePos += dur * pace;
-            mTimeMap.put(Float.valueOf((float) timePos), mTimeList.get(i));
+        int ptr = 0;
+        while(mTimeList.get(ptr).isEmpty()){
+        	ptr++;
+        }
+        mTimeMap.put(timePos, mTimeList.get(ptr++)); // init the first item of the map
+        for (int i = ptr; i < mTimeList.size(); i++) {
+        	if(!mTimeList.get(i).isEmpty()){
+	            double dur = Duration.valueOf(mTimeList.get(i - 1).getDuration())
+	                    .getDuration();
+	            // Position of the current time is the pos. of the previous time +
+	            // the distance between them (dur*pace)
+	            timePos += dur * pace;
+	            mTimeMap.put(timePos, mTimeList.get(i));
+        	}
         }
     }
 
@@ -96,7 +101,7 @@ public final class Tab implements Serializable {
     public boolean isComplex() {
         return mComplex;
     }
-
+    
     public int getTempo() {
         return mTempo;
     }

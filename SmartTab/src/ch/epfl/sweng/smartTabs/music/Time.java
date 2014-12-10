@@ -106,6 +106,16 @@ public class Time implements Serializable {
     public int getStep() {
         return mStep;
     }
+    
+    public boolean isEmpty(){
+    	for (int i = 0; i < mTabNotes.length; i++) {
+			if(!mTabNotes[i].equals("")){
+				return false;
+			}
+		}
+    	return true;
+    	
+    }
 
     public String toString() {
         String s = "";

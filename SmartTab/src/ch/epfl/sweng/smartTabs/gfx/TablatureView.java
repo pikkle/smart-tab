@@ -130,7 +130,6 @@ public class TablatureView extends View{
             }
             
             noteDuration = Duration.valueOf(tab.getTime(i).getDuration()).getDuration();
-            pos += pace*noteDuration;
             
             
 
@@ -145,6 +144,7 @@ public class TablatureView extends View{
                     canvas.drawText(note, pos, textHeight, paint);
                 }
             }
+            pos += pace*noteDuration;
         }
         endOfTab = pos + 200;
     }
