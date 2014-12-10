@@ -63,6 +63,7 @@ public class DisplayActivity extends Activity {
 
 	private boolean backPressedOnce = false;
 	private SoundPool pool = new SoundPool(50, AudioManager.STREAM_MUSIC, 0);
+	private static final long SAMPLE_TIME = 1000;
 	private static final int DELAY = 2000;
 	
 	private int playingPosition; // Position of the time to play (Intital value corresponds to the future cursor position)
@@ -164,7 +165,21 @@ public class DisplayActivity extends Activity {
 								if (!fret.equals("")) {
 									int fretNumber = Integer.parseInt(fret);
 									final Note note = tuning[i].addHalfTones(fretNumber);
-									pool.play(map.getSampleId(note), 1, 1, 1, 0, 1);
+									final int sampleId = pool.play(map.getSampleId(note), 1, 1, 1, 0, 1);
+									new Thread(new Runnable() {
+										
+										@Override
+										public void run() {
+											try {
+												Thread.sleep(SAMPLE_TIME);
+											} catch (InterruptedException e) {
+												// TODO Auto-generated catch block
+												e.printStackTrace();
+											}
+											pool.stop(sampleId);
+										}
+									}).start();
+									
 								}
 							}
 							
