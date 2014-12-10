@@ -20,7 +20,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.CheckBox;
 import android.widget.FrameLayout;
-import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.Toast;
@@ -51,9 +50,6 @@ public class DisplayActivity extends Activity {
 	private LinearLayout musicWrapper;
 	private FrameLayout testWrapper;
 	
-
-	private Tab tab;
-
 	private boolean running;
 
 	private static final int PACE = 200;
@@ -73,14 +69,16 @@ public class DisplayActivity extends Activity {
 	private int speed = 1;
 	private TablatureView tablatureView;
 	private MusicSheetView musicSheetView;
-	private HorizontalScrollView sheetScroller;
-	private HorizontalScrollView tabScroller;
 
 	private float lastX;
-	private float lastY;
 	private float newX;
 	private int tabPosX;
 	private boolean scrolled = false;
+	private SampleMap map;
+	private final Note[] tuning = { new Note(Height.E, 3), new Note(Height.B, 2),
+			new Note(Height.G, 2), new Note(Height.D, 2),
+			new Note(Height.A, 1), new Note(Height.E, 1) };
+			
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -96,9 +94,6 @@ public class DisplayActivity extends Activity {
 		final Tab tab = (Tab) intent.getExtras().getSerializable("tab");
 
 		delay = computeDelay(tab.getTempo(), PACE, speed, millisInMin);
-				
-		tabScroller = new HorizontalScrollView(this);
-		sheetScroller = new HorizontalScrollView(this);
 
 		setContentView(R.layout.activity_display);
 
@@ -130,14 +125,14 @@ public class DisplayActivity extends Activity {
 		wrapper.addView(headerView, weight(1));
 		wrapper.addView(testWrapper, weight(8));
 		wrapper.addView(footerView, weight(1));
+		
+		
+		map = new SampleMap(getApplicationContext(), pool, tuning);
 
 		// Basic scrolling
 		Thread t = new Thread(new Runnable() {
 
-			Note[] tuning = { new Note(Height.E, 3), new Note(Height.B, 2),
-					new Note(Height.G, 2), new Note(Height.D, 2),
-					new Note(Height.A, 1), new Note(Height.E, 1) };
-			SampleMap map = new SampleMap(getApplicationContext(), pool, tuning);
+			
 
 
 			@Override
@@ -182,22 +177,6 @@ public class DisplayActivity extends Activity {
 									
 								}
 							}
-							
-//							new Thread(new Runnable() {
-//
-//								@Override
-//								public void run() {
-//									for (int i = 0; i < (Instrument.GUITAR).getNumOfStrings(); i++) {
-//										String fret = t.getNote(i);
-//										if (!fret.equals("")) {
-//											int fretNumber = Integer.parseInt(fret);
-//											final Note note = tuning[i].addHalfTones(fretNumber);
-//											pool.play(map.getSampleId(note), 1, 1, 1, 0, 1);
-//										}
-//									}
-//
-//								}
-//							}).start();
 						}
 					}
 

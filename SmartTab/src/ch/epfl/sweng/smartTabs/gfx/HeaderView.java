@@ -51,11 +51,6 @@ public class HeaderView extends View {
         
     }
 
-    private void drawDebugBox(Canvas canvas) {
-        paint.setColor(Color.RED);
-        paint.setAlpha(100);
-        canvas.drawRect(0, 0, canvas.getWidth(), canvas.getHeight(), paint);
-    }
 
     /**
      * Compute the ratio of the metronome displayed

@@ -38,9 +38,7 @@ public class MusicSheetView extends View {
     
     private int startingPos;
     private int lineMargin;
-    private int padding;
     private boolean firstDraw = true;
-    private Bitmap bmp;
     double noteDuration;
     Bitmap currNoteImage;
     int pos;
@@ -67,10 +65,8 @@ public class MusicSheetView extends View {
         
         if (firstDraw) {
             int width = canvas.getWidth();
-            int height = canvas.getHeight();
             int noteWidth = width / 35;
             initializeBitmaps(noteWidth);
-            padding = canvas.getHeight() / 8;
             startingPos = canvas.getWidth() / 8;
             lineMargin = (int) (canvas.getHeight() / (6));
             paint.setColor(Color.BLACK);
@@ -115,7 +111,6 @@ public class MusicSheetView extends View {
                     if (time.getPartitionNote(j) != null) {
                         
                         Note currNote = time.getPartitionNote(j);
-                        Boolean sharpNote = currNote != isSharp(currNote);
                         currNote = isSharp(currNote);
                         c.drawBitmap(currNoteImage, pos, noteHeightPos
                                 - getNoteCenter(currNoteImage) - lineMargin
