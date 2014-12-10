@@ -55,7 +55,9 @@ public final class Tab implements Serializable {
         for (int i = 0; i < jsonTimeList.length(); i++) {
             Time jsonTime = Time.parseTimeFromJson(jsonTimeList
                     .getJSONObject(i));
-            parsedTimeList.add(jsonTime);
+            if(!jsonTime.isEmpty()){
+            	parsedTimeList.add(jsonTime);
+            }
         }
         return new Tab(jsonTabName, jsonComplex, jsonTempo, parsedSignatures,
                 parsedTimeList);

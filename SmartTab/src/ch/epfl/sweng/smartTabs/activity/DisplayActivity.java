@@ -244,7 +244,7 @@ public class DisplayActivity extends Activity {
 				if(lastX != newX && newPosX >= 0 && newPosX <= tablatureView.getEndOfTab()){
 					tablatureView.scrollTo(newPosX, 0);
 					musicSheetView.scrollTo(newPosX, 0);
-					playingPosition = (int) (tablatureView.getScrollX() + cursorView.getX() + 2*OFFSET);
+					playingPosition = (int) (tablatureView.getScrollX() + cursorView.getX());
 				}
 			}
 		} 
