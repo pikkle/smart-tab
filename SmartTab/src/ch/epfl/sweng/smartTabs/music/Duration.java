@@ -5,7 +5,7 @@ package ch.epfl.sweng.smartTabs.music;
  *         duration of a note.
  */
 public enum Duration {
-    DoubleCroche(0.25), Croche(0.5), Noir(1), Blanche(2), Ronde(4);
+    DoubleCroche(0.25), Croche(0.5), Noire(1), Blanche(2), Ronde(4);
 
     private double myDuration;
 
