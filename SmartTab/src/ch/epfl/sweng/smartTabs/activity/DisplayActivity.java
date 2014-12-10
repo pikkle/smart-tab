@@ -158,21 +158,31 @@ public class DisplayActivity extends Activity {
 					if (tab.timeMapContains(playingPosition)) {
 						final Time t = tab.getTimeAt(playingPosition);
 						if (t != null && running) {
-							new Thread(new Runnable() {
-
-								@Override
-								public void run() {
-									for (int i = 0; i < (Instrument.GUITAR).getNumOfStrings(); i++) {
-										String fret = t.getNote(i);
-										if (!fret.equals("")) {
-											int fretNumber = Integer.parseInt(fret);
-											final Note note = tuning[i].addHalfTones(fretNumber);
-											pool.play(map.getSampleId(note), 1, 1, 1, 0, 1);
-										}
-									}
-
+							
+							for (int i = 0; i < (Instrument.GUITAR).getNumOfStrings(); i++) {
+								String fret = t.getNote(i);
+								if (!fret.equals("")) {
+									int fretNumber = Integer.parseInt(fret);
+									final Note note = tuning[i].addHalfTones(fretNumber);
+									pool.play(map.getSampleId(note), 1, 1, 1, 0, 1);
 								}
-							}).start();
+							}
+							
+//							new Thread(new Runnable() {
+//
+//								@Override
+//								public void run() {
+//									for (int i = 0; i < (Instrument.GUITAR).getNumOfStrings(); i++) {
+//										String fret = t.getNote(i);
+//										if (!fret.equals("")) {
+//											int fretNumber = Integer.parseInt(fret);
+//											final Note note = tuning[i].addHalfTones(fretNumber);
+//											pool.play(map.getSampleId(note), 1, 1, 1, 0, 1);
+//										}
+//									}
+//
+//								}
+//							}).start();
 						}
 					}
 
@@ -264,8 +274,8 @@ public class DisplayActivity extends Activity {
 	public void onBackPressed() {
 		if (backPressedOnce) {
 			super.onBackPressed();
-			running = !running;
 			pool.release();
+			running = !running;
 		} else {
 			backPressedOnce = true;
 
