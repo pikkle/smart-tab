@@ -75,8 +75,6 @@ public class DisplayActivity extends Activity {
 	private HorizontalScrollView sheetScroller;
 	private HorizontalScrollView tabScroller;
 
-	private int threshold = 100;
-
 	private float lastX;
 	private float lastY;
 	private float newX;
