@@ -12,7 +12,7 @@ import junit.framework.TestCase;
 public class NoteTest extends TestCase{
 	private Height nullHeight = null;
 	private Duration nullDuration = null;
-	private Note test3 = new Note(Height.C, 1, Duration.Noir);
+	private Note test3 = new Note(Height.C, 1, Duration.Noire);
 	private Note test4 = new Note(Height.C, 1);
 	@SuppressWarnings("unused")
 	private Note test1;
@@ -71,11 +71,11 @@ public class NoteTest extends TestCase{
 	 * Test, adding tone in various manners.
 	 */
 	public void addHalfTones() {
-		assertEquals("Mismatched notes", test3.addHalfTones(2), new Note(Height.D, 1, Duration.Noir));
+		assertEquals("Mismatched notes", test3.addHalfTones(2), new Note(Height.D, 1, Duration.Noire));
 		assertEquals(
 				"Mismatched notes", 
-				(new Note(Height.B, 1, Duration.Noir)).addHalfTones(1), 
-				new Note(Height.C, 2, Duration.Noir)
+				(new Note(Height.B, 1, Duration.Noire)).addHalfTones(1), 
+				new Note(Height.C, 2, Duration.Noire)
 		);
 		
 	}
