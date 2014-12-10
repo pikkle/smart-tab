@@ -10,7 +10,7 @@ import android.media.SoundPool;
  * @author imani92 Ismail Imani
  */
 public class SampleMap {
-    private final int frets = 12;
+    private final int frets = 13;
     private final Map<String, Integer> samples = new HashMap<String, Integer>();
 
     public SampleMap(Context context, SoundPool pool, Note[] tuning) {
