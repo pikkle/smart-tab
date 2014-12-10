@@ -11,7 +11,6 @@ import android.view.View;
  */
 public class FooterView extends View {
 	private boolean displayed = true;
-	@SuppressWarnings("unused")
 	private Paint paint;
 	private Boolean running = false;
 
