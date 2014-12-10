@@ -8,6 +8,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Point;
 import android.graphics.Rect;
 import android.view.Display;
 import android.view.View;
@@ -19,6 +20,7 @@ import ch.epfl.sweng.smartTabs.music.Time;
 
 /**
  * @author pikkle
+ * 
  *
  */
 public class TablatureView extends View{
@@ -59,16 +61,20 @@ public class TablatureView extends View{
 
         // Constructor attribut
         this.tab = tab;
+        
         this.instrument = instrument;
         this.pace = pace;
        
         // Prior settings before any drawing
         this.setBackgroundColor(Color.WHITE);
-
-        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-        Display display = wm.getDefaultDisplay();
-        padding = display.getWidth()/9;
-        startingPos = display.getWidth()/8;
+        WindowManager wm = (WindowManager) context
+                .getSystemService(Context.WINDOW_SERVICE);
+        Point size = new Point();
+        wm.getDefaultDisplay().getSize(size);
+        int width = size.x;
+        int height = size.y;
+        padding = height / 8;
+        startingPos = width / 8;
         firstNotePos = startingPos + 2*pace;
         tabLineMargin = 0;
         firstDraw = true;
@@ -76,7 +82,10 @@ public class TablatureView extends View{
         noteRect = new Rect();
         tab.initTimeMap(firstNotePos);
 
-        endOfTab = display.getWidth();
+        Point end = new Point();
+        ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE))
+                .getDefaultDisplay().getSize(end);
+        endOfTab = end.y;
     }
 
     @Override
@@ -124,7 +133,6 @@ public class TablatureView extends View{
             if (firstDraw) {
                 temp += noteDuration;
                 if (temp % 4 == 0d) {
-                    //drawVerticalLineOnTab(canvas, (int) (pos + pace*noteDuration / 2));
                     mesure.add((int) (pos + pace*noteDuration / 2));
                 }
             }
@@ -146,7 +154,7 @@ public class TablatureView extends View{
             }
             pos += pace*noteDuration;
         }
-        endOfTab = pos + 200;
+        endOfTab = pos + pace;
     }
 
     /**

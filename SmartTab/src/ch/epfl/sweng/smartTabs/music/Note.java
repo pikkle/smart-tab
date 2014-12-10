@@ -34,7 +34,7 @@ public class Note implements Serializable {
         myOctave = octave;
         myHeight = height;
         // by default
-        myDuration = Duration.Noir;
+        myDuration = Duration.Noire;
     }
 
     public Note addHalfTones(int delta) {

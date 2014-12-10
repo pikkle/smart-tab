@@ -39,14 +39,25 @@ public class FooterView extends View {
     }
 
 	private void drawPause(Canvas canvas) {
-	    paint.setColor(Color.RED);
-	    canvas.drawCircle(50, 50, 20, paint);
+	    paint.setColor(Color.BLACK);
+	    drawEmptyRect(canvas,50, canvas.getHeight()/4, 70,  3*canvas.getHeight()/4);
+	    drawEmptyRect(canvas,80, canvas.getHeight()/4, 100, 3*canvas.getHeight()/4);	    
+    }
+
+
+    private void drawEmptyRect(Canvas canvas, int left, int top, int right, int down) {
+        canvas.drawLine(left, top, right, top, paint);
+        canvas.drawLine(right, top, right, down, paint);
+        canvas.drawLine(right, down, left, down, paint);
+        canvas.drawLine(left, down, left, top, paint);
     }
 
 
     private void drawPlay(Canvas canvas) {
-        paint.setColor(Color.BLUE);
-        canvas.drawCircle(50, 50, 20, paint);
+        paint.setColor(Color.BLACK);
+        canvas.drawLine(50, canvas.getHeight()/4, 100, canvas.getHeight()/2, paint);
+        canvas.drawLine(100, canvas.getHeight()/2,50, 3*canvas.getHeight()/4,  paint);
+        canvas.drawLine(50, 3*canvas.getHeight()/4, 50, canvas.getHeight()/4, paint);
     }
 
 

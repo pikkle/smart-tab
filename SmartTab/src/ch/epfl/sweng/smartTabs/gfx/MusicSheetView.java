@@ -34,6 +34,7 @@ public class MusicSheetView extends View {
     private Bitmap croche = BitmapFactory.decodeResource(getResources(), R.raw.croche);
     private Bitmap blanche = BitmapFactory.decodeResource(getResources(), R.raw.blanche);
     private Bitmap ronde = BitmapFactory.decodeResource(getResources(), R.raw.ronde);
+    private Bitmap cle = BitmapFactory.decodeResource(getResources(), R.raw.cledesol);
     
     private int startingPos;
     private int lineMargin;
@@ -77,7 +78,7 @@ public class MusicSheetView extends View {
             pos = startingPos + 2 * pace;
         }
         
-        
+        drawCle(canvas);
 
         drawGrid(canvas, lineMargin);
         drawNotes(canvas, pos);
@@ -88,6 +89,10 @@ public class MusicSheetView extends View {
 
     }
     
+    private void drawCle(Canvas canvas) {
+        canvas.drawBitmap(cle, 300, 60,paint);
+    }
+
     public void drawNotes(Canvas c, int pos) {
         double temp = 0d;
         for (int i = 0; i < mTab.length(); i++) {
@@ -234,5 +239,7 @@ public class MusicSheetView extends View {
                 noteHeight(blanche, noteWidth), false);
         ronde = Bitmap.createScaledBitmap(ronde, noteWidth,
                 noteHeight(ronde, noteWidth), false);
+        cle = Bitmap.createScaledBitmap(cle, noteWidth,
+                noteHeight(cle, noteWidth), false);
     }
 }
