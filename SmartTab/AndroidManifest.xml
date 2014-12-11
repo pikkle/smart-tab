@@ -73,8 +73,7 @@
             android:name="ch.epfl.sweng.smartTabs.activity.SplashActivity"
             android:screenOrientation="portrait"
             android:noHistory="true"
-            android:theme="@android:style/Theme.Holo.NoActionBar.Fullscreen"
-            android:screenOrientation="portrait" >
+            android:theme="@android:style/Theme.Holo.NoActionBar.Fullscreen">
             
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
