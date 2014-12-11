@@ -4,6 +4,8 @@
 package ch.epfl.sweng.smartTabs.test;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
@@ -12,6 +14,7 @@ import java.util.Map;
 import junit.framework.Assert;
 
 import org.json.JSONException;
+import org.mockito.Mockito;
 
 import android.test.AndroidTestCase;
 import ch.epfl.sweng.smartTabs.network.NetworkClient;
@@ -23,8 +26,26 @@ import ch.epfl.sweng.smartTabs.network.NetworkClient;
  * 212765
  */
 public class NetworkClientTest extends AndroidTestCase{
-	NetworkClient netClient = new NetworkClient();
+	private NetworkClient netClient = new NetworkClient();
+	private HttpURLConnection connection;
 
+    protected void setUp() throws Exception {
+    	super.setUp();
+    	connection = Mockito.mock(HttpURLConnection.class);
+    	Mockito.doReturn(connection).when(netClient).getConnection(Mockito.any(URL.class));
+    	
+    }
+
+	
+    public void configureCrash(int status) throws IOException {
+    	InputStream dataStream = Mockito.mock(InputStream.class);
+    	Mockito.when(dataStream.read()).thenReturn(0x20, 0x20, 0x20, 0x20).thenThrow(new IOException());
+    	
+    	Mockito.doReturn(status).when(connection).getResponseCode();
+    	Mockito.doReturn(dataStream).when(connection).getInputStream();
+    }
+
+	
 
 	public void testJSONParsing() throws JSONException, MalformedURLException{
 		Map <String, URL> map = new HashMap<String, URL> ();
