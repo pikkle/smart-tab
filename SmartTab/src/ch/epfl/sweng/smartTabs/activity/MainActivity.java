@@ -255,7 +255,7 @@ public class MainActivity extends Activity {
 		protected Map<String, URL> doInBackground(String... params) {
 			try {
 				if (checkNetworkStatus()) {
-					return netClient.fetchTabMap(getString(R.string.serverURLQuery)+params[0]);
+					return netClient.fetchTabMap(getString(R.string.serverURLQuery)+params[0].replaceAll("[^\\w\\s-]", ""));
 				}
 				else {
 					setNoNetworkList();

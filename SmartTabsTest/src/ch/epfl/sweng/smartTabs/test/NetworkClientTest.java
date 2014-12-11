@@ -35,7 +35,6 @@ public class NetworkClientTest extends AndroidTestCase{
 	}
 
 	public void testConnectionAndParsing() throws MalformedURLException, IOException{
-		//TODO: Input Test URL here.
 		final String url = "http://mpikkle.com/getTabsTest";
 		assertNotNull(netClient.downloadContent(new URL(url)));
 

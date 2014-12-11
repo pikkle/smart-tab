@@ -18,6 +18,7 @@ import org.json.JSONObject;
 import android.content.Context;
 import android.widget.Toast;
 
+import ch.epfl.sweng.smartTabs.activity.MainActivity;
 import ch.epfl.sweng.smartTabs.music.Tab;
 
 /**
@@ -26,12 +27,7 @@ import ch.epfl.sweng.smartTabs.music.Tab;
 public class NetworkClient {
 	private final int readTimeout = 10000;
 	private final int connectTimeout = 15000;
-	private final Context appCont;
 	private final int badURL = 404;
-	
-	public NetworkClient(Context applicationContext) {
-		this.appCont = applicationContext;
-	}
 
 	public Map<String, URL> fetchTabMap(String url) throws IOException,
 	JSONException {
@@ -66,7 +62,7 @@ public class NetworkClient {
 					throw new JSONException("Invalid content.");
 				}
 			} catch (JSONException e) {
-				Toast.makeText(appCont, "Please retry fetching Tab", Toast.LENGTH_SHORT).show();
+				//Toast.makeText(appCont, "Please retry fetching Tab", Toast.LENGTH_SHORT).show();
 			}
 			return stringContent;
 		} finally {
