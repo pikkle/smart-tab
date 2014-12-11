@@ -1,7 +1,5 @@
 package ch.epfl.sweng.smartTabs.music;
 
-import java.io.ByteArrayOutputStream;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,19 +17,22 @@ public final class Tab implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private final String mTabName;
+    private final String mTabArtist;
     private final int mTempo;
     private final List<Time> mTimeList;
     private final HashMap<Float, Time> mTimeMap = new HashMap<Float, Time>();
     private final int pace = 200;
 
-    private Tab(String tabName, int tempo, List<Time> timeList) {
+    private Tab(String tabName,String tabArtist, int tempo, List<Time> timeList) {
         mTabName = tabName;
+        mTabArtist = tabArtist;
         mTempo = tempo;
         mTimeList = timeList;
     }
 
     public static Tab parseTabFromJSON(JSONObject jsonTab) throws JSONException {
         String jsonTabName = jsonTab.getString("name");
+        String jsonTabArtist = jsonTab.getString("artist");
         int jsonTempo = jsonTab.getInt("tempo");
 
         JSONArray jsonTimeList = jsonTab.getJSONArray("partition");
@@ -46,7 +47,7 @@ public final class Tab implements Serializable {
             	parsedTimeList.add(jsonTime);
             }
         }
-        return new Tab(jsonTabName, jsonTempo, parsedTimeList);
+        return new Tab(jsonTabName,jsonTabArtist, jsonTempo, parsedTimeList);
     }
 
     /**
@@ -80,6 +81,9 @@ public final class Tab implements Serializable {
 
     public String getTabName() {
         return mTabName;
+    }
+    public String getTabArtist(){
+    	return mTabArtist;
     }
 
     public int length() {
