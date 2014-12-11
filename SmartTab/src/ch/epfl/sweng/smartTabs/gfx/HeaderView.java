@@ -10,11 +10,6 @@ import android.view.View;
  * The top view containing the title and the metronome.
  */
 public class HeaderView extends View {
-    private Paint mPaint;
-    private String mTitle;
-    private String mArtist;
-    private  double mRatio;
-    private Metronome mMetronome;
 
     private final static int TITLEALPHA = 255;
     private final static float TITLESIZERATIO = 0.5f;
@@ -30,6 +25,13 @@ public class HeaderView extends View {
     private final static double MAXDECREASINGPOS = 0.2;
     private final static double MININCREASINGPOS = 0.8;
     private final static double MAXINCREASINGPOS = 1.0;
+   
+    private Paint mPaint;
+    private String mTitle;
+    private String mArtist;
+    private  double mRatio;
+    private Metronome mMetronome;
+
             
     
 

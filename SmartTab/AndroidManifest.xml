@@ -71,6 +71,7 @@
         <!-- Splash Activity -->
         <activity
             android:name="ch.epfl.sweng.smartTabs.activity.SplashActivity"
+            android:screenOrientation="portrait"
             android:noHistory="true"
             android:theme="@android:style/Theme.Holo.NoActionBar.Fullscreen" >
             
