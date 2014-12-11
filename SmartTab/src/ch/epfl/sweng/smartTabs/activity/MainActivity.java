@@ -54,7 +54,8 @@ public class MainActivity extends Activity {
 	private ActionBarDrawerToggle mDrawerToggle;
 	private ArrayAdapter<String> adap;
 	private SwipeRefreshLayout swipeView;
-
+	private final String noNetworkMessage = "No Network Connection";
+	private final String noSearchResultsAvail = "No Tabs to show";
 	private boolean backPressedOnce = false;
 
 
@@ -79,7 +80,7 @@ public class MainActivity extends Activity {
 		if (checkNetworkStatus()) {
 			new DownloadTabListTask().execute("");
 		} else {
-			setNoNetworkList();
+			setCustomAdapMessage(noNetworkMessage);
 		}
 	}
 
@@ -110,7 +111,7 @@ public class MainActivity extends Activity {
 				if (checkNetworkStatus()) {
 					new DownloadTabListTask().execute(query);
 				} else {
-					setNoNetworkList();
+					setCustomAdapMessage(noNetworkMessage);
 				}
 
 				return false;
@@ -139,7 +140,7 @@ public class MainActivity extends Activity {
 			if (checkNetworkStatus()) {
 				new DownloadTabListTask().execute("");
 			} else {
-				setNoNetworkList();
+				setCustomAdapMessage(noNetworkMessage);
 			}
 			return true;
 		default:
@@ -212,7 +213,7 @@ public class MainActivity extends Activity {
 							new DownloadTabListTask().execute("");
 
 						} else {
-							setNoNetworkList();
+							setCustomAdapMessage(noNetworkMessage);
 						}
 						swipeView.setRefreshing(false);
 					}
@@ -258,7 +259,7 @@ public class MainActivity extends Activity {
 					return netClient.fetchTabMap(getString(R.string.serverURLQuery)+params[0].replaceAll("[^\\w\\s-]", ""));
 				}
 				else {
-					setNoNetworkList();
+					setCustomAdapMessage(noNetworkMessage);
 				}
 			}
 			catch (IOException e) {
@@ -284,8 +285,8 @@ public class MainActivity extends Activity {
 			}
 			String[] values = new String[map.size()];
 			if (values.length == 0) {
-				Toast.makeText(getApplicationContext(), "No Tabs to show",
-						Toast.LENGTH_SHORT).show();
+				System.err.println("test1");
+				setCustomAdapMessage(noSearchResultsAvail);
 			}
 			int count = 0;
 			for (String key : map.keySet()) {
@@ -293,10 +294,10 @@ public class MainActivity extends Activity {
 				count++;
 			}
 
-			ArrayAdapter<String> adap = new ArrayAdapter<String>(
+			ArrayAdapter<String> madap = new ArrayAdapter<String>(
 					getApplicationContext(),
 					R.layout.listview_layout, values);
-			listV.setAdapter(adap);
+			listV.setAdapter(madap);
 			listV.setOnItemClickListener(new OnItemClickListener() {
 
 				@Override
@@ -337,7 +338,7 @@ public class MainActivity extends Activity {
 				if (checkNetworkStatus()) {
 					return netClient.fetchTab(myUrl);
 				} else {
-					setNoNetworkList();
+					setCustomAdapMessage(noNetworkMessage);
 				}
 
 			} catch (IOException e) {
@@ -368,23 +369,26 @@ public class MainActivity extends Activity {
 
 	/**
 	 * Author: Raphael Khoury
-	 * Method that sets the menu in MainActivity to contain only 1 element, to show that
-	 * there is no network available. 
+	 * Method that sets the menu in MainActivity to contain only 1 element, with custom message
+	 * to display a problem.
 	 * Better than Toast (list is restored once there's a connection available and doesn't stack)
 	 * Better than Dialog (doesn't persist when network is restored)
 	 */
-	public void setNoNetworkList(){
-		String[] values = {"No Network Connection"};
+	public void setCustomAdapMessage(String message){
+		System.err.println("test2");
+		String[] values = {message};
+		System.err.println("test3");
 		ArrayAdapter<String> adap = new ArrayAdapter<String>(
 				getApplicationContext(),
 				R.layout.listview_layout, values);
+		System.err.println("test4");
 		listV.setAdapter(adap);
-
+		System.err.println("test5");
 	}
 	/**
 	 * Autor: Raph
 	 * @return true if there is a network connection available.
-	 * Should call this method when we want internet access, it refreshes the network info.
+	 * Should call this method when we want internet access, to refreshes the network info.
 	 */
 	public boolean checkNetworkStatus(){
 		connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
