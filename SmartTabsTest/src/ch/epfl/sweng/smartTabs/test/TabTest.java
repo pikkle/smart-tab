@@ -44,7 +44,6 @@ public class TabTest extends AndroidTestCase {
 	}
 
 
-
 	public void testJSONTempo() throws JSONException {
 		JSONObject jObj = new JSONObject(goodTabString);
 		Tab parsedTab = Tab.parseTabFromJSON(jObj);

@@ -18,10 +18,6 @@ public class TimeTest extends AndroidTestCase{
 	assertEquals("0", time.getNote(2));
 	}
 	
-	public void testParsing(){
-		
-	}
-	
 	public void testMesure(){
 		assertEquals(1, time.getMesure());
 	}
