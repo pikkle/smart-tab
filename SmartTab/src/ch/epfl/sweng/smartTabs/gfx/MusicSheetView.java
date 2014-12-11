@@ -35,6 +35,7 @@ public class MusicSheetView extends View {
     private Bitmap blanche = BitmapFactory.decodeResource(getResources(), R.raw.blanche);
     private Bitmap ronde = BitmapFactory.decodeResource(getResources(), R.raw.ronde);
     private Bitmap cle = BitmapFactory.decodeResource(getResources(), R.raw.cledesol);
+    private Bitmap sharp = BitmapFactory.decodeResource(getResources(), R.raw.diese);
     
     private int startingPos;
     private int lineMargin;
@@ -66,9 +67,9 @@ public class MusicSheetView extends View {
         if (firstDraw) {
             int width = canvas.getWidth();
             int noteWidth = width / 35;
-            initializeBitmaps(noteWidth);
             startingPos = canvas.getWidth() / 8;
             lineMargin = (int) (canvas.getHeight() / (10));
+            initializeBitmaps(noteWidth);
             paint.setColor(Color.BLACK);
             
             pos = startingPos + 2 * pace;
@@ -112,11 +113,16 @@ public class MusicSheetView extends View {
                     if (time.getPartitionNote(j) != null) {
                         
                         Note currNote = time.getPartitionNote(j);
-                        currNote = isSharp(currNote);
-                        c.drawBitmap(currNoteImage, pos, noteHeightPos
+                        Note sharpNote = sharpNote(currNote);
+                        Boolean isSharp = sharpNote != currNote;
+                        currNote = sharpNote;
+                        int posHeight = noteHeightPos
                                 - getNoteCenter(currNoteImage) - lineMargin
-                                / 2 * getNoteHeightPosition(currNote),
+                                / 2 * getNoteHeightPosition(currNote);
+                        c.drawBitmap(currNoteImage, pos, posHeight,
                                 paint);
+                        if(isSharp)
+                        	c.drawBitmap(sharp, pos+currNoteImage.getWidth(), posHeight + currNoteImage.getHeight() - sharp.getHeight(), paint);
                     }
                 }
             }
@@ -163,7 +169,7 @@ public class MusicSheetView extends View {
         return note;
     }
 
-    public Note isSharp(Note note) {
+    public Note sharpNote(Note note) {
         switch (note.getHeight()) {
         case CD:
         	return new Note(Height.C, note.getOctave());
@@ -237,5 +243,6 @@ public class MusicSheetView extends View {
                 noteHeight(ronde, noteWidth), false);
         cle = Bitmap.createScaledBitmap(cle, noteWidth,
                 noteHeight(cle, noteWidth), false);
+        sharp = Bitmap.createScaledBitmap(sharp, sharp.getWidth() * 2 * lineMargin / sharp.getHeight(), 2 * lineMargin, false);
     }
 }
