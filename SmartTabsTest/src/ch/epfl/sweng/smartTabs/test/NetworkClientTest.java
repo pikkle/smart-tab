@@ -16,7 +16,6 @@ import junit.framework.Assert;
 import org.json.JSONException;
 import org.mockito.Mockito;
 
-import android.test.AndroidTestCase;
 import ch.epfl.sweng.smartTabs.network.NetworkClient;
 
 
@@ -25,18 +24,19 @@ import ch.epfl.sweng.smartTabs.network.NetworkClient;
  * Raphael El-Khoury
  * 212765
  */
-public class NetworkClientTest extends AndroidTestCase{
-	private NetworkClient netClient = new NetworkClient();
+public class NetworkClientTest extends MockTestCase {
+	private NetworkClient netClient;
 	private HttpURLConnection connection;
 
     protected void setUp() throws Exception {
     	super.setUp();
     	connection = Mockito.mock(HttpURLConnection.class);
+    	netClient = Mockito.mock(NetworkClient.class);
     	Mockito.doReturn(connection).when(netClient).getConnection(Mockito.any(URL.class));
     	
     }
 
-	
+	/*
     public void configureCrash(int status) throws IOException {
     	InputStream dataStream = Mockito.mock(InputStream.class);
     	Mockito.when(dataStream.read()).thenReturn(0x20, 0x20, 0x20, 0x20).thenThrow(new IOException());
@@ -44,7 +44,7 @@ public class NetworkClientTest extends AndroidTestCase{
     	Mockito.doReturn(status).when(connection).getResponseCode();
     	Mockito.doReturn(dataStream).when(connection).getInputStream();
     }
-
+*/
 	
 
 	public void testJSONParsing() throws JSONException, MalformedURLException{
