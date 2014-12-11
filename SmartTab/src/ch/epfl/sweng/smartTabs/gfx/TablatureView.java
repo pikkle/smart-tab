@@ -83,7 +83,8 @@ public class TablatureView extends View{
         Point end = new Point();
         ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE))
                 .getDefaultDisplay().getSize(end);
-        endOfTab = end.y;
+        endOfTab = ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE))
+                .getDefaultDisplay().getWidth();
     }
 
     @Override
@@ -98,7 +99,7 @@ public class TablatureView extends View{
             height = canvas.getHeight();
             
             tabLineMargin = height/HEIGHTSCALE;
-            textSize = height/HEIGHTSCALE;
+            textSize = 3*height/(4*HEIGHTSCALE);
             
             paint.setColor(Color.BLACK);
             paint.setStrokeWidth(1);

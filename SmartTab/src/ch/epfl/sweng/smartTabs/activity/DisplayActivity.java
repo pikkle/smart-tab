@@ -118,7 +118,7 @@ public class DisplayActivity extends Activity {
 		headerView 		= new HeaderView(getBaseContext(), tab.getTabName());
 		footerView 		= new FooterView(getBaseContext(), sharedPrefs.contains(tab.getTabName()));
 		tablatureView 	= new TablatureView(getBaseContext(), tab, Instrument.GUITAR, PACE);
-		musicSheetView 	= new MusicSheetView(getBaseContext(), tab);
+		musicSheetView 	= new MusicSheetView(getBaseContext(), tab, PACE);
 		cursorView 		= new CursorView(getBaseContext());
 		
 		
@@ -227,11 +227,7 @@ public class DisplayActivity extends Activity {
 	 * @return the number of nanosecs
 	 */
 	private int decimalPart(double delay) {
-		double decimal = delay % 1;
-		while(decimal%1 != 0){
-			decimal *= 10;
-		}
-		return (int) decimal;
+		return (int)(delay - Math.floor(delay));
 	}
 	
 	

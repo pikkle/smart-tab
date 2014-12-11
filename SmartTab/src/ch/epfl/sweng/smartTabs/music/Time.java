@@ -16,8 +16,6 @@ public class Time implements Serializable {
     private final String[] mTabNotes;
     private final Note[] mPartitionNotes;
     private final int mMesure;
-    private final boolean mTernary;
-    private final int mStep;
     private final static int NUMCHORDS = 6;
     private final static Note[] TUNING = { new Note(Height.E, 3),
             new Note(Height.B, 2), new Note(Height.G, 2),
@@ -26,12 +24,10 @@ public class Time implements Serializable {
     };
 
     public Time(String[] notes, Note[] partitionNotes, String duration,
-            int mesure, boolean ternary, int step) {
+            int mesure) {
         mTabNotes = notes;
         mDuration = duration;
         mMesure = mesure;
-        mTernary = ternary;
-        mStep = step;
         mPartitionNotes = partitionNotes;
     }
 
@@ -61,22 +57,8 @@ public class Time implements Serializable {
             // throw new JSONException("The measure value is not valid");
             jsonMesure = 0;
         }
-        boolean jsonTernary;
-        try {
-            jsonTernary = jsonTime.getBoolean("ternary");
-        } catch (JSONException e) {
-            // throw new JSONException("The ternary value is not valid");
-            jsonTernary = false;
-        }
-        int jsonStep;
-        try {
-            jsonStep = jsonTime.getInt("step");
-        } catch (JSONException e) {
-            throw new JSONException("The step value is not valid");
-        }
 
-        return new Time(jsonNotes, partitionNotes, jsonDuration, jsonMesure,
-                jsonTernary, jsonStep);
+        return new Time(jsonNotes, partitionNotes, jsonDuration, jsonMesure);
     }
 
     public String getNote(int string) {
@@ -97,14 +79,6 @@ public class Time implements Serializable {
 
     public int getMesure() {
         return mMesure;
-    }
-
-    public boolean isTernary() {
-        return mTernary;
-    }
-
-    public int getStep() {
-        return mStep;
     }
     
     public boolean isEmpty(){

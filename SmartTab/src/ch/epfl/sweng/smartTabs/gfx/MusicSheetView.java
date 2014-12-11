@@ -25,7 +25,7 @@ import ch.epfl.sweng.smartTabs.music.Time;
 public class MusicSheetView extends View {
     private final Paint paint;
     private final Tab mTab;
-    private int pace = 200;
+    private int pace;
     private int endOfTab;
     private final int PARTITIONLINES = 5;
 
@@ -49,11 +49,12 @@ public class MusicSheetView extends View {
      * @param context
      * @param attrs
      */
-    public MusicSheetView(Context context, Tab tab) {
+    public MusicSheetView(Context context, Tab tab, int pace) {
         super(context);
         this.paint = new Paint();
         this.setBackgroundColor(Color.WHITE);
         this.mTab = tab;
+        this.pace = pace;
         endOfTab = ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getWidth();
     }
 
@@ -62,17 +63,17 @@ public class MusicSheetView extends View {
         super.onDraw(canvas);
         
         
-        
         if (firstDraw) {
             int width = canvas.getWidth();
             int noteWidth = width / 35;
             initializeBitmaps(noteWidth);
             startingPos = canvas.getWidth() / 8;
-            lineMargin = (int) (canvas.getHeight() / (6));
+            lineMargin = (int) (canvas.getHeight() / (10));
             paint.setColor(Color.BLACK);
             
             pos = startingPos + 2 * pace;
         }
+        canvas.translate(0, lineMargin*3);
         
         drawCle(canvas);
 
@@ -86,7 +87,7 @@ public class MusicSheetView extends View {
     }
     
     private void drawCle(Canvas canvas) {
-        canvas.drawBitmap(cle, 300, 60,paint);
+        canvas.drawBitmap(cle, 300, 60-(2*lineMargin),paint);
     }
 
     public void drawNotes(Canvas c, int pos) {
@@ -96,7 +97,7 @@ public class MusicSheetView extends View {
             if (firstDraw) {
                 temp += noteDuration;
                 if (temp % 4 == 0d) {
-                    mesure.add((int) (pos + pace*noteDuration / 2));
+                    mesure.add((int) (pos + pace*noteDuration/2));
                 }
             }
             noteDuration = Duration.valueOf(mTab.getTime(i).getDuration()).getDuration();
