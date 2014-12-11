@@ -68,7 +68,7 @@ public class MusicSheetView extends View {
             int noteWidth = width / 35;
             initializeBitmaps(noteWidth);
             startingPos = canvas.getWidth() / 8;
-            lineMargin = (int) (canvas.getHeight() / (6));
+            lineMargin = (int) (canvas.getHeight() / (10));
             paint.setColor(Color.BLACK);
             
             pos = startingPos + 2 * pace;
