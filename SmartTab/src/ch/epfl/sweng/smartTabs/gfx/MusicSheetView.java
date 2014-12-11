@@ -9,9 +9,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Point;
 import android.view.View;
-import android.view.WindowManager;
 import ch.epfl.sweng.smartTabs.R;
 import ch.epfl.sweng.smartTabs.music.Duration;
 import ch.epfl.sweng.smartTabs.music.Height;
@@ -35,9 +33,9 @@ public class MusicSheetView extends View {
     private final static int TRANSLATIONVALUE = 3;
     private final static int KEYPOSLEFT = 300;
     private final static int KEYPOSTOP = 60;
-    private final static int TIMESINMEASURE = 60;
+    private final static int TIMESINMEASURE = 4;
     private final static int NUMOFLINES = 5;
-    private final static double CENTERRATIO = 0.875;
+    private final static double CENTERRATIO = 7/8;
     private final static double OCTAVESHIFT = 7;
     
     
@@ -69,10 +67,7 @@ public class MusicSheetView extends View {
         this.setBackgroundColor(Color.WHITE);
         this.mTab = tab;
         this.mPace = pace;
-        Point end = new Point();
-        ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE))
-            .getDefaultDisplay().getSize(end);
-        mEndOfTab = end.y;
+        mEndOfTab = context.getResources().getDisplayMetrics().widthPixels;
 
     }
 

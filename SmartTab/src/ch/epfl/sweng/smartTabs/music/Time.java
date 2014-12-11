@@ -45,6 +45,13 @@ public class Time implements Serializable {
         String jsonDuration;
         try {
             jsonDuration = jsonTime.getString("length");
+            if(!jsonDuration.equals("Noire")
+            		&& !jsonDuration.equals("Blanche")
+            		&& !jsonDuration.equals("Croche")
+            		&& !jsonDuration.equals("DoubleCroche")
+            		&& !jsonDuration.equals("Ronde")) {
+            	throw new JSONException("The duration is not valid");
+            }
         } catch (JSONException e) {
             throw new JSONException("The length value is not valid");
         }
