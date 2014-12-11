@@ -187,7 +187,7 @@ public class DisplayActivity extends Activity {
                                         @Override
                                         public void run() {
                                             try {
-                                                Thread.sleep(SAMPLE_TIME);
+                                                Thread.sleep((long) (SAMPLE_TIME*note.getDuration().getDuration()));
                                             } catch (InterruptedException e) {
                                                 // TODO Auto-generated catch
                                                 // block
