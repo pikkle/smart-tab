@@ -113,7 +113,8 @@ public class MusicSheetView extends View {
             mNoteDuration = Duration.valueOf(mTab.getTime(i).getDuration()).getDuration();
 
             int noteHeightPos = mLineMargin * NUMOFLINES;
-            if (pos - getScrollX() > 0 && pos - getScrollX() < getWidth()) { 
+			int imageWidth = getNoteWithDuration("Noire").getWidth();
+            if (pos - getScrollX() > -imageWidth && pos - getScrollX() < getWidth()+imageWidth) {
                 
                 mCurrNoteImage = getNoteWithDuration(mTab.getTime(i).getDuration());
                 
