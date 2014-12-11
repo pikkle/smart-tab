@@ -10,7 +10,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.view.View;
-import android.view.WindowManager;
 import ch.epfl.sweng.smartTabs.R;
 import ch.epfl.sweng.smartTabs.music.Duration;
 import ch.epfl.sweng.smartTabs.music.Height;
@@ -56,7 +55,7 @@ public class MusicSheetView extends View {
         this.setBackgroundColor(Color.WHITE);
         this.mTab = tab;
         this.pace = pace;
-        endOfTab = ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getWidth();
+        endOfTab = context.getResources().getDisplayMetrics().widthPixels;
     }
 
     @Override
