@@ -17,10 +17,9 @@ public class Time implements Serializable {
     private final Note[] mPartitionNotes;
     private final int mMesure;
     private final static int NUMCHORDS = 6;
-    private final static Note[] TUNING = { new Note(Height.E, 3),
-            new Note(Height.B, 2), new Note(Height.G, 2),
+    private final static Note[] TUNING = { 
+            new Note(Height.E, 3), new Note(Height.B, 2), new Note(Height.G, 2),
             new Note(Height.D, 2), new Note(Height.A, 1), new Note(Height.E, 1)
-
     };
 
     public Time(String[] notes, Note[] partitionNotes, String duration,
@@ -31,8 +30,7 @@ public class Time implements Serializable {
         mPartitionNotes = partitionNotes;
     }
 
-    public static Time parseTimeFromJson(JSONObject jsonTime)
-            throws JSONException {
+    public static Time parseTimeFromJson(JSONObject jsonTime)  throws JSONException {
         String[] jsonNotes = new String[NUMCHORDS];
         Note[] partitionNotes = new Note[NUMCHORDS];
         for (int i = 1; i <= NUMCHORDS; i++) {
@@ -81,9 +79,9 @@ public class Time implements Serializable {
         return mMesure;
     }
     
-    public boolean isEmpty(){
+    public boolean isEmpty() {
     	for (int i = 0; i < mTabNotes.length; i++) {
-			if(!mTabNotes[i].equals("")){
+			if (!mTabNotes[i].equals("")) {
 				return false;
 			}
 		}

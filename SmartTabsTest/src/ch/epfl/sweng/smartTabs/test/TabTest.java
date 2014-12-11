@@ -43,13 +43,7 @@ public class TabTest extends AndroidTestCase {
 		assertEquals("foo", jObj.getString("name"));
 	}
 
-	public void testJSONComplex() throws JSONException {
-		JSONObject jObj = new JSONObject(goodTabString);
-		Tab parsedTab = Tab.parseTabFromJSON(jObj);
-		System.out.println("isComplex : "+ parsedTab.isComplex());
-		assertEquals(false, parsedTab.isComplex());
-		
-	}
+
 
 	public void testJSONTempo() throws JSONException {
 		JSONObject jObj = new JSONObject(goodTabString);

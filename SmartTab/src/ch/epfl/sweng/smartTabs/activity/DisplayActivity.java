@@ -53,16 +53,20 @@ public class DisplayActivity extends Activity {
 	private boolean running;
 
 	private static final int PACE = 200;
-	private static final double millisInMin = 60000.0; // number of millis in one min
+	// number of millis in one min
+	private static final double MILLISINMIN = 60000.0;
 	private static final int OFFSET = 50;
+	private final int maxStream = 50;
 
 
 	private boolean backPressedOnce = false;
-	private SoundPool pool = new SoundPool(50, AudioManager.STREAM_MUSIC, 0);
+	private SoundPool pool = new SoundPool(maxStream, AudioManager.STREAM_MUSIC, 0);
 	private static final long SAMPLE_TIME = 1000;
 	private static final int DELAY = 2000;
+	private static final int THRESHOLDSCROLL = 30;
 	
-	private int playingPosition; // Position of the time to play (Intital value corresponds to the future cursor position)
+	// Position of the time to play (Intital value corresponds to the future cursor position)
+	private int playingPosition;
 
 	private double delay;
 
@@ -75,9 +79,10 @@ public class DisplayActivity extends Activity {
 	private int tabPosX;
 	private boolean scrolled = false;
 	private SampleMap map;
-	private final Note[] tuning = { new Note(Height.E, 3), new Note(Height.B, 2),
-			new Note(Height.G, 2), new Note(Height.D, 2),
-			new Note(Height.A, 1), new Note(Height.E, 1) };
+	private final Note[] tuning = {new Note(Height.E, 3), new Note(Height.B, 2), 
+	        new Note(Height.G, 2), new Note(Height.D, 2), new Note(Height.A, 1), 
+	        new Note(Height.E, 1) 
+	};
 			
 
 	@Override
@@ -93,7 +98,7 @@ public class DisplayActivity extends Activity {
 		Intent intent = getIntent();
 		final Tab tab = (Tab) intent.getExtras().getSerializable("tab");
 
-		delay = computeDelay(tab.getTempo(), PACE, speed, millisInMin);
+		delay = computeDelay(tab.getTempo(), PACE, speed, MILLISINMIN);
 
 		setContentView(R.layout.activity_display);
 
@@ -132,9 +137,6 @@ public class DisplayActivity extends Activity {
 		// Basic scrolling
 		Thread t = new Thread(new Runnable() {
 
-			
-
-
 			@Override
 			public void run() {
 				while (true) {
@@ -142,10 +144,7 @@ public class DisplayActivity extends Activity {
 						tablatureView.scrollBy(speed, 0);
 						musicSheetView.scrollBy(speed, 0);
 						
-						playingPosition += speed; // increment the position at
-													// which we want to look for
-													// a time to play
-
+						playingPosition += speed;
 						headerView.computeRatio(playingPosition, PACE);
 						headerView.postInvalidate();
 					
@@ -201,9 +200,9 @@ public class DisplayActivity extends Activity {
 	 * @param millisinmin
 	 * @return the delay
 	 */
-	private double computeDelay(double tempo, double pace, double speed,
+	private double computeDelay(double tempo, double pace, double mySpeed,
 			double millisinmin) {
-		return (speed*millisinmin/(tempo*pace));
+		return speed*millisinmin/(tempo*pace);
 	}
 
 	private LinearLayout.LayoutParams weight(int i) {
@@ -216,8 +215,8 @@ public class DisplayActivity extends Activity {
 	 * @param delay
 	 * @return the number of nanosecs
 	 */
-	private int decimalPart(double delay) {
-		return (int)(delay - Math.floor(delay));
+	private int decimalPart(double myDelay) {
+		return (int) (myDelay - Math.floor(myDelay));
 	}
 	
 	
@@ -233,15 +232,15 @@ public class DisplayActivity extends Activity {
 			scrolled = false;
 		} 
 		
-		if(MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_MOVE) {
+		if (MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_MOVE) {
 			this.newX = x;
 			int delta = (int) (lastX - newX);
 			
-			if(Math.abs(delta) >= 30) {
+			if (Math.abs(delta) >= THRESHOLDSCROLL) {
 				running = false;
 				scrolled = true;
 				int newPosX = tabPosX + delta;
-				if(lastX != newX && newPosX >= 0 && newPosX <= tablatureView.getEndOfTab()){
+				if (lastX != newX && newPosX >= 0 && newPosX <= tablatureView.getEndOfTab()) {
 					tablatureView.scrollTo(newPosX, 0);
 					musicSheetView.scrollTo(newPosX, 0);
 					playingPosition = (int) (tablatureView.getScrollX() + cursorView.getX() + 4*OFFSET);
@@ -249,8 +248,8 @@ public class DisplayActivity extends Activity {
 			}
 		} 
 		
-		if(MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_UP) {
-			if(!scrolled){
+		if (MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_UP) {
+			if (!scrolled) {
 				running = !running;
 				footerView.playPause();
 			}
