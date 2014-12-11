@@ -1,6 +1,7 @@
 package ch.epfl.sweng.smartTabs.activity;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.ObjectOutputStream;
 
 import android.app.Activity;
@@ -45,6 +46,7 @@ import ch.epfl.sweng.smartTabs.music.Time;
  * 
  */
 public class DisplayActivity extends Activity {
+
     private static final String PREFS_NAME = "MyPrefsFile";
     private HeaderView headerView;
     private FooterView footerView;
@@ -67,6 +69,9 @@ public class DisplayActivity extends Activity {
     private static final int NBOFSREAMS = 50;
     private static final int WEIGHT3 = 3;
     private static final int WEIGHT7 = 7;
+    private static final int WEIGHT8 = 8;
+    private static final int MINIMALSCROLL = 30;
+    private static final int SHIFTAFTERSCROLL = 4*OFFSET;
     
 
     private boolean backPressedOnce = false;
@@ -78,9 +83,9 @@ public class DisplayActivity extends Activity {
     private int playingPosition; // Position of the time to play
     // (Intital value corresponds to the future cursor position)
 
-    private double delay;
+    private double myDelay;
 
-    private int speed = 1;
+    private int dx = 1;
     private TablatureView tablatureView;
     private MusicSheetView musicSheetView;
 
@@ -106,7 +111,7 @@ public class DisplayActivity extends Activity {
         Intent intent = getIntent();
         tab = (Tab) intent.getExtras().getSerializable("tab");
 
-        delay = computeDelay(tab.getTempo(), PACE, speed, MILLISINMIN);
+        myDelay = computeDelay(tab.getTempo(), PACE, dx, MILLISINMIN);
 
         setContentView(R.layout.activity_display);
 
@@ -139,7 +144,7 @@ public class DisplayActivity extends Activity {
                 FrameLayout.LayoutParams.MATCH_PARENT));
 
         wrapper.addView(headerView, weight(1));
-        wrapper.addView(testWrapper, weight(8));
+        wrapper.addView(testWrapper, weight(WEIGHT8));
         wrapper.addView(footerView, weight(1));
 
         map = new SampleMap(getApplicationContext(), pool, tuning);
@@ -151,10 +156,10 @@ public class DisplayActivity extends Activity {
             public void run() {
                 while (true) {
                     if (running && !tablatureView.isTerminated()) {
-                        tablatureView.scrollBy(speed, 0);
-                        musicSheetView.scrollBy(speed, 0);
+                        tablatureView.scrollBy(dx, 0);
+                        musicSheetView.scrollBy(dx, 0);
 
-                        playingPosition += speed; // increment the position at
+                        playingPosition += dx; // increment the position at
                                                   // which we want to look for
                                                   // a time to play
 
@@ -198,7 +203,7 @@ public class DisplayActivity extends Activity {
                     }
 
                     try {
-                        Thread.sleep((int) delay, decimalPart(delay));
+                        Thread.sleep((int) myDelay, decimalPart(myDelay));
                     } catch (InterruptedException e) {
                         // TODO Auto-generated catch block
                         e.printStackTrace();
@@ -221,7 +226,7 @@ public class DisplayActivity extends Activity {
      */
     private double computeDelay(double tempo, double pace, double speed,
             double millisinmin) {
-        return (speed * millisinmin / (tempo * pace));
+        return speed * millisinmin / (tempo * pace);
     }
 
     private LinearLayout.LayoutParams weight(int i) {
@@ -273,7 +278,7 @@ public class DisplayActivity extends Activity {
                 this.newX = x;
                 int delta = (int) (lastX - newX);
 
-                if (Math.abs(delta) >= 30) {
+                if (Math.abs(delta) >= MINIMALSCROLL) {
                     running = false;
                     scrolled = true;
                     int newPosX = tabPosX + delta;
@@ -282,7 +287,7 @@ public class DisplayActivity extends Activity {
                         tablatureView.scrollTo(newPosX, 0);
                         musicSheetView.scrollTo(newPosX, 0);
                         playingPosition = (int) (tablatureView.getScrollX()
-                                + cursorView.getX() + 4 * OFFSET);
+                                + cursorView.getX() + SHIFTAFTERSCROLL);
                     }
                 }
             }
@@ -306,12 +311,9 @@ public class DisplayActivity extends Activity {
             running = !running;
         } else {
             backPressedOnce = true;
-
             Toast.makeText(this, "Press BACK again to exit", Toast.LENGTH_SHORT)
                     .show();
-
             new Handler().postDelayed(new Runnable() {
-
                 @Override
                 public void run() {
                     backPressedOnce = false;
@@ -362,7 +364,7 @@ public class DisplayActivity extends Activity {
             so.writeObject(t);
             so.flush();
             return new String(Base64.encode(bo.toByteArray(), Base64.DEFAULT));
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
             return "Error";
         }

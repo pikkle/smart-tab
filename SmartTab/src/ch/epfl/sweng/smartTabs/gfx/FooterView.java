@@ -19,6 +19,7 @@ public class FooterView extends View {
 	private Boolean running = false;
 	private Context mContext;
 	private FavoritesView favs;
+	private final static int LEFTPADDING = 50;
 	
 
 	/**
@@ -40,9 +41,8 @@ public class FooterView extends View {
 		super.onDraw(canvas);
 		favs.draw(canvas, paint);
 		if (running) {
-		    drawPlay(canvas);
-		}
-		else {
+		    drawPlay(canvas); 
+		} else {
 		    drawPause(canvas);
 		}
     }
@@ -50,13 +50,13 @@ public class FooterView extends View {
 	private void drawPause(Canvas canvas) {
 	    paint.setColor(Color.BLACK);
 	    Bitmap bmp = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.ic_action_pause);
-	    canvas.drawBitmap(bmp, 50, 0, paint);    
+	    canvas.drawBitmap(bmp, LEFTPADDING, 0, paint);    
     }
 
     private void drawPlay(Canvas canvas) {
         paint.setColor(Color.BLACK);
         Bitmap bmp = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.ic_action_play);
-	    canvas.drawBitmap(bmp, 50, 0, paint);    
+	    canvas.drawBitmap(bmp, LEFTPADDING, 0, paint);    
     }
 
 
@@ -64,11 +64,11 @@ public class FooterView extends View {
 		return displayed;
 	}
     
-    public int getFavPosX(){
+    public int getFavPosX() {
     	return favs.getFavPositonX();
     }
     
-    public FavoritesView getFav(){
+    public FavoritesView getFav() {
     	return favs;
     }
 
