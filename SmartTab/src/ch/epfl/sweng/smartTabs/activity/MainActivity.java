@@ -386,15 +386,10 @@ public class MainActivity extends Activity {
 	 * Better than Toast (list is restored once there's a connection available and doesn't stack)
 	 * Better than Dialog (doesn't persist when network is restored)
 	 */
-<<<<<<< HEAD
-	public void setNoNetworkList() {
-		String[] values = {"No Network Connection"};
-=======
 	public void setCustomAdapMessage(String message){
 		System.err.println("test2");
 		String[] values = {message};
 		System.err.println("test3");
->>>>>>> 4482334f49e6b2865e4cc58f3539942c90539b6c
 		ArrayAdapter<String> adap = new ArrayAdapter<String>(
 				getApplicationContext(),
 				R.layout.listview_layout, values);
