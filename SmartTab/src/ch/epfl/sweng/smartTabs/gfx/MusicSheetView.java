@@ -25,7 +25,7 @@ import ch.epfl.sweng.smartTabs.music.Time;
 public class MusicSheetView extends View {
     private final Paint paint;
     private final Tab mTab;
-    private int pace = 200;
+    private int pace;
     private int endOfTab;
     private final int PARTITIONLINES = 5;
 
@@ -49,18 +49,18 @@ public class MusicSheetView extends View {
      * @param context
      * @param attrs
      */
-    public MusicSheetView(Context context, Tab tab) {
+    public MusicSheetView(Context context, Tab tab, int pace) {
         super(context);
         this.paint = new Paint();
         this.setBackgroundColor(Color.WHITE);
         this.mTab = tab;
+        this.pace = pace;
         endOfTab = ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getWidth();
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        
         
         
         if (firstDraw) {
@@ -73,6 +73,7 @@ public class MusicSheetView extends View {
             
             pos = startingPos + 2 * pace;
         }
+        canvas.translate(0, lineMargin*3);
         
         drawCle(canvas);
 
@@ -86,7 +87,7 @@ public class MusicSheetView extends View {
     }
     
     private void drawCle(Canvas canvas) {
-        canvas.drawBitmap(cle, 300, 60,paint);
+        canvas.drawBitmap(cle, 300, 60-(2*lineMargin),paint);
     }
 
     public void drawNotes(Canvas c, int pos) {

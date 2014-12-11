@@ -52,7 +52,7 @@ public class DisplayActivity extends Activity {
 	
 	private boolean running;
 
-	private static final int PACE = 200;
+	private static final int PACE = 300;
 	private static final double millisInMin = 60000.0; // number of millis in one min
 	private static final int OFFSET = 50;
 
@@ -105,7 +105,7 @@ public class DisplayActivity extends Activity {
 		headerView 		= new HeaderView(getBaseContext(), tab.getTabName());
 		footerView 		= new FooterView(getBaseContext());
 		tablatureView 	= new TablatureView(getBaseContext(), tab, Instrument.GUITAR, PACE);
-		musicSheetView 	= new MusicSheetView(getBaseContext(), tab);
+		musicSheetView 	= new MusicSheetView(getBaseContext(), tab, PACE);
 		cursorView 		= new CursorView(getBaseContext());
 		
 		
@@ -217,11 +217,7 @@ public class DisplayActivity extends Activity {
 	 * @return the number of nanosecs
 	 */
 	private int decimalPart(double delay) {
-		double decimal = delay % 1;
-		while(decimal%1 != 0){
-			decimal *= 10;
-		}
-		return (int) decimal;
+		return (int)(delay - Math.floor(delay));
 	}
 	
 	
