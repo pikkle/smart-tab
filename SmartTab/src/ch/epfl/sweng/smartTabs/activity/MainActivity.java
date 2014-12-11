@@ -54,7 +54,7 @@ public class MainActivity extends Activity {
 	private ActionBarDrawerToggle mDrawerToggle;
 	private ArrayAdapter<String> adap;
 	private SwipeRefreshLayout swipeView;
-	
+
 	private boolean backPressedOnce = false;
 
 
@@ -62,13 +62,13 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		
+
 		initDrawerLayout();
-		
+
 		initSwipeView();
-		
+
 		initListView();
-		
+
 		ActionBar actionBar = getActionBar();
 		actionBar.setTitle(getString(R.string.title_app_home));
 
@@ -146,7 +146,7 @@ public class MainActivity extends Activity {
 			return super.onOptionsItemSelected(item);
 		}
 	}
-	
+
 	@Override
 	public void onBackPressed() {
 		if(mDrawerLayout.isDrawerOpen(mDrawerList)){
@@ -169,7 +169,7 @@ public class MainActivity extends Activity {
 			}
 		}
 	}
-	
+
 	/**
 	 * This method is used to initialize the drawer layout, and the drawer list
 	 */
@@ -177,18 +177,18 @@ public class MainActivity extends Activity {
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		mDrawerList = (ListView) findViewById(R.id.right_drawer);
 		mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.drawable.ic_drawer, 0, 0);
-		
+
 		mDrawerLayout.setDrawerListener(mDrawerToggle);
-        mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.RELATIVE_HORIZONTAL_GRAVITY_MASK);
-        
+		mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.RELATIVE_HORIZONTAL_GRAVITY_MASK);
+
 		String [] items = {"Favorites", "History", "Settings"};
-		
+
 		adap = new ArrayAdapter<String>(this, R.layout.drawer_list_layout, items);
-		
+
 		mDrawerList.setAdapter(adap);
 		mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 	}
-	
+
 	/**
 	 * This method is used to initialize swipeView, which is a wrapper
 	 * containing listV, which allows the swipe down to refresh functionnality
@@ -196,52 +196,52 @@ public class MainActivity extends Activity {
 	public void initSwipeView() {
 		swipeView = (SwipeRefreshLayout) findViewById(R.id.swipe_container);
 		swipeView.setEnabled(false);
-		
-			
+
+
 		swipeView.setColorScheme(android.R.color.holo_blue_dark, android.R.color.holo_blue_light, android.R.color.holo_green_light, android.R.color.holo_green_light);
 		swipeView.setOnRefreshListener(new OnRefreshListener() {
-			
+
 			@Override
 			public void onRefresh() {
 				swipeView.setRefreshing(true);
 				new Handler().postDelayed(new Runnable() {
-	                @Override
-	                public void run() {
-	                	if (checkNetworkStatus()) {
-	    					Log.d("INTO REFRESH", "BLABLABLA");
-	    					new DownloadTabListTask().execute("");
+					@Override
+					public void run() {
+						if (checkNetworkStatus()) {
+							Log.d("INTO REFRESH", "BLABLABLA");
+							new DownloadTabListTask().execute("");
 
-	    				} else {
-	    					setNoNetworkList();
-	    				}
-	                    swipeView.setRefreshing(false);
-	                }
-	            }, 3000);
-								
+						} else {
+							setNoNetworkList();
+						}
+						swipeView.setRefreshing(false);
+					}
+				}, 3000);
+
 			}
 		}); 
 	}
-	
+
 	/**
 	 * This method is used to initialize the listView containing the list of tabs
 	 */
 	public void initListView() {
 		listV = (ListView) findViewById(R.id.list);
 		listV.setOnScrollListener(new OnScrollListener() {
-			
+
 			@Override
 			public void onScrollStateChanged(AbsListView view, int scrollState) {
 
 			}
-			
+
 			@Override
 			public void onScroll(AbsListView view, int firstVisibleItem,
 					int visibleItemCount, int totalItemCount) {
 
 				if (firstVisibleItem == 0)
-                    swipeView.setEnabled(true);
-                else
-                    swipeView.setEnabled(false);
+					swipeView.setEnabled(true);
+				else
+					swipeView.setEnabled(false);
 			}
 		});
 	}
@@ -364,8 +364,8 @@ public class MainActivity extends Activity {
 			dialog.dismiss();
 		}
 	}
-	
-	
+
+
 	/**
 	 * Author: Raphael Khoury
 	 * Method that sets the menu in MainActivity to contain only 1 element, to show that
@@ -391,17 +391,17 @@ public class MainActivity extends Activity {
 		netInfo = connMgr.getActiveNetworkInfo();
 		return netInfo != null && netInfo.isConnected();
 	}
-	
+
 	private class DrawerItemClickListener implements ListView.OnItemClickListener {
-	    @Override
-	    public void onItemClick(AdapterView parent, View view, int position, long id) {
-	        selectItem(position);
-	    }
+		@Override
+		public void onItemClick(AdapterView parent, View view, int position, long id) {
+			selectItem(position);
+		}
 	}
 
 
 	public void selectItem(int position) {
-		
+
 		if(position == 2){
 			startActivity(new Intent(MainActivity.this, PreferencesActivity.class));
 		}
