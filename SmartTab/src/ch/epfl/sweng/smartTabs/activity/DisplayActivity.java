@@ -115,7 +115,7 @@ public class DisplayActivity extends Activity {
 		musicWrapper.setOrientation(LinearLayout.VERTICAL);
 		testWrapper = new FrameLayout(getBaseContext());
 
-		headerView 		= new HeaderView(getBaseContext(), tab.getTabName());
+		headerView 		= new HeaderView(getBaseContext(), tab.getTabName(), tab.getTabArtist());
 		footerView 		= new FooterView(getBaseContext(), sharedPrefs.contains(tab.getTabName()));
 		tablatureView 	= new TablatureView(getBaseContext(), tab, Instrument.GUITAR, PACE);
 		musicSheetView 	= new MusicSheetView(getBaseContext(), tab, PACE);
