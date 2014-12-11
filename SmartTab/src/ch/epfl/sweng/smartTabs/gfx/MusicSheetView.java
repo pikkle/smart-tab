@@ -37,6 +37,7 @@ public class MusicSheetView extends View {
     private final static int NUMOFLINES = 5;
     private final static double CENTERRATIO = 7/8;
     private final static double OCTAVESHIFT = 7;
+    private final static double NOTEHEIGHT = 1.5;
     
     
 
@@ -112,7 +113,7 @@ public class MusicSheetView extends View {
             }
             mNoteDuration = Duration.valueOf(mTab.getTime(i).getDuration()).getDuration();
 
-            int noteHeightPos = mLineMargin * NUMOFLINES;
+            int noteHeightPos = (int)(mLineMargin * NOTEHEIGHT);
 			int imageWidth = getNoteWithDuration("Noire").getWidth();
             if (pos - getScrollX() > -imageWidth && pos - getScrollX() < getWidth()+imageWidth) {
                 

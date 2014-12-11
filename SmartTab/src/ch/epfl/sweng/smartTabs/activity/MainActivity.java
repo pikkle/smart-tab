@@ -3,8 +3,6 @@ package ch.epfl.sweng.smartTabs.activity;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
 
 import org.json.JSONException;
 
@@ -38,6 +36,7 @@ import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Toast;
 import ch.epfl.sweng.smartTabs.R;
+import ch.epfl.sweng.smartTabs.music.Duration;
 import ch.epfl.sweng.smartTabs.music.Tab;
 import ch.epfl.sweng.smartTabs.network.NetworkClient;
 
@@ -60,7 +59,6 @@ public class MainActivity extends Activity {
 	private final String noNetworkMessage = "No Network Connection";
 	private final String noSearchResultsAvail = "No Tabs to show";
 	private boolean backPressedOnce = false;
-
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -98,7 +96,7 @@ public class MainActivity extends Activity {
 
 		SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
 		SearchView searchView = (SearchView) menu.findItem(R.id.action_search)
-		        .getActionView();
+				.getActionView();
 		if (null != searchView) {
 			searchView.setSearchableInfo(searchManager
 					.getSearchableInfo(getComponentName()));
@@ -132,7 +130,7 @@ public class MainActivity extends Activity {
 		switch (item.getItemId()) {
 		case R.id.action_drawer:
 			if (mDrawerLayout.isDrawerOpen(mDrawerList)) {
-				mDrawerLayout.closeDrawer(mDrawerList);				
+				mDrawerLayout.closeDrawer(mDrawerList);
 			} else {
 				mDrawerLayout.openDrawer(mDrawerList);
 			}
@@ -155,13 +153,14 @@ public class MainActivity extends Activity {
 	public void onBackPressed() {
 		if (mDrawerLayout.isDrawerOpen(mDrawerList)) {
 			mDrawerLayout.closeDrawer(mDrawerList);
-		} else {			
+		} else {
 			if (backPressedOnce) {
 				super.onBackPressed();
 			} else {
 				backPressedOnce = true;
 
-				Toast.makeText(this, "Press BACK again to exit", Toast.LENGTH_SHORT).show();
+				Toast.makeText(this, "Press BACK again to exit",
+						Toast.LENGTH_SHORT).show();
 
 				new Handler().postDelayed(new Runnable() {
 
@@ -180,14 +179,17 @@ public class MainActivity extends Activity {
 	public void initDrawerLayout() {
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		mDrawerList = (ListView) findViewById(R.id.right_drawer);
-		mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.drawable.ic_drawer, 0, 0);
+		mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
+				R.drawable.ic_drawer, 0, 0);
 
 		mDrawerLayout.setDrawerListener(mDrawerToggle);
-        mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.RELATIVE_HORIZONTAL_GRAVITY_MASK);
-        
-		String [] items = {"All Tabs", "Favorites", "Settings"};
+		mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow,
+				GravityCompat.RELATIVE_HORIZONTAL_GRAVITY_MASK);
 
-		myAdapter = new ArrayAdapter<String>(this, R.layout.drawer_list_layout, items);
+		String[] items = { "All Tabs", "Favorites", "Settings" };
+
+		myAdapter = new ArrayAdapter<String>(this, R.layout.drawer_list_layout,
+				items);
 
 		mDrawerList.setAdapter(myAdapter);
 		mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
@@ -201,9 +203,10 @@ public class MainActivity extends Activity {
 		swipeView = (SwipeRefreshLayout) findViewById(R.id.swipe_container);
 		swipeView.setEnabled(false);
 
-
-		swipeView.setColorSchemeResources(android.R.color.holo_blue_dark, android.R.color.holo_blue_light, 
-		        android.R.color.holo_green_light, android.R.color.holo_green_light);
+		swipeView.setColorSchemeResources(android.R.color.holo_blue_dark,
+				android.R.color.holo_blue_light,
+				android.R.color.holo_green_light,
+				android.R.color.holo_green_light);
 		swipeView.setOnRefreshListener(new OnRefreshListener() {
 
 			@Override
@@ -224,11 +227,12 @@ public class MainActivity extends Activity {
 				}, REFRESHDELAY);
 
 			}
-		}); 
+		});
 	}
 
 	/**
-	 * This method is used to initialize the listView containing the list of tabs
+	 * This method is used to initialize the listView containing the list of
+	 * tabs
 	 */
 	public void initListView() {
 		listV = (ListView) findViewById(R.id.list);
@@ -245,8 +249,7 @@ public class MainActivity extends Activity {
 
 				if (firstVisibleItem == 0) {
 					swipeView.setEnabled(true);
-				}
-				else {
+				} else {
 					swipeView.setEnabled(false);
 				}
 			}
@@ -257,19 +260,18 @@ public class MainActivity extends Activity {
 	 * This private class downloads JSONs from the server
 	 */
 	private class DownloadTabListTask extends
-	AsyncTask<String, Void, Map<String, URL>> {
+			AsyncTask<String, Void, Map<String, URL>> {
 		@Override
 		protected Map<String, URL> doInBackground(String... params) {
 			try {
 				if (checkNetworkStatus()) {
-					return netClient.fetchTabMap(getString(R.string.serverURLQuery) + 
-					        params[0].replaceAll("[^\\w\\s-]", ""));
-				}
-				else {
+					return netClient
+							.fetchTabMap(getString(R.string.serverURLQuery)
+									+ params[0].replaceAll("[^\\w\\s-]", ""));
+				} else {
 					setCustomAdapMessage(noNetworkMessage);
 				}
-			}
-			catch (IOException e) {
+			} catch (IOException e) {
 				e.printStackTrace();
 			} catch (JSONException e) {
 				e.printStackTrace();
@@ -283,31 +285,29 @@ public class MainActivity extends Activity {
 		// contents.
 		@Override
 		protected void onPostExecute(final Map<String, URL> map) {
-			if (map == null){
+			if (map == null) {
 				try {
-					throw new NullPointerException("Null Map <String, URL>. Fetch again.");
-				} catch(NullPointerException e) {
-				    e.printStackTrace();
-				    //TODO: I DUNOO !!
-				    
+					throw new NullPointerException(
+							"Null Map <String, URL>. Fetch again.");
+				} catch (NullPointerException e) {
+					e.printStackTrace();
+					// TODO: I DUNOO !!
+
 				}
 			}
 			String[] values = new String[map.size()];
 			if (values.length == 0) {
+				System.err.println("test1");
 				setCustomAdapMessage(noSearchResultsAvail);
 			}
-			Set<String> set = new TreeSet<String>(map.keySet());
-			
 			int count = 0;
-			for (String key : set) {
+			for (String key : map.keySet()) {
 				values[count] = key;
-				System.out.println(key);
 				count++;
 			}
 
 			ArrayAdapter<String> madap = new ArrayAdapter<String>(
-					getApplicationContext(),
-					R.layout.listview_layout, values);
+					getApplicationContext(), R.layout.listview_layout, values);
 			listV.setAdapter(madap);
 			listV.setOnItemClickListener(new OnItemClickListener() {
 
@@ -321,7 +321,7 @@ public class MainActivity extends Activity {
 			});
 		}
 	}
-	
+
 	public void startTab(URL tabURL) {
 		new DownloadTabsTask(tabURL);
 	}
@@ -349,93 +349,97 @@ public class MainActivity extends Activity {
 
 		@Override
 		protected Tab doInBackground(Void... params) {
+			Tab result = null;
 			try {
 				if (checkNetworkStatus()) {
-					return netClient.fetchTab(myUrl);
+					result = netClient.fetchTab(myUrl);
 				} else {
 					setCustomAdapMessage(noNetworkMessage);
 				}
 
 			} catch (IOException e) {
+				System.out.println("IOException lauched");
 				e.printStackTrace();
 			} catch (JSONException e) {
+				System.out.println("JSONException launched");
 				e.printStackTrace();
 			}
-			return null;
+			return result;
 		}
 
 		@Override
 		protected void onPostExecute(final Tab tab) {
 			if (tab == null) {
-				try {
-					throw new NullPointerException("Error in Tab parsing. Try again please. " 
-				+ "If problem persists, contact admins.");
-				} catch (NullPointerException e) {
-					e.printStackTrace();
-					//TODO: I DNOOOOOO
-				}
+				dialog.dismiss();
+				Toast.makeText(getApplicationContext(), "Invalid Tab",Toast.LENGTH_SHORT).show();
 			}
-			Intent i = new Intent(MainActivity.this, DisplayActivity.class);
-			i.putExtra("tab", tab);
-			startActivity(i);
-			dialog.dismiss();
+			if (tab != null) {
+				System.out.println("tab != null");
+				Intent i = new Intent(MainActivity.this, DisplayActivity.class);
+				i.putExtra("tab", tab);
+				startActivity(i);
+				dialog.dismiss();
+			}
 		}
 	}
 
-
 	/**
-	 * Author: Raphael Khoury
-	 * Method that sets the menu in MainActivity to contain only 1 element, with custom message
-	 * to display a problem.
-	 * Better than Toast (list is restored once there's a connection available and doesn't stack)
-	 * Better than Dialog (doesn't persist when network is restored)
+	 * Author: Raphael Khoury Method that sets the menu in MainActivity to
+	 * contain only 1 element, with custom message to display a problem. Better
+	 * than Toast (list is restored once there's a connection available and
+	 * doesn't stack) Better than Dialog (doesn't persist when network is
+	 * restored)
 	 */
-	public void setCustomAdapMessage(String message){
+	public void setCustomAdapMessage(String message) {
 		System.err.println("test2");
-		String[] values = {message};
+		String[] values = { message };
 		System.err.println("test3");
 		ArrayAdapter<String> adap = new ArrayAdapter<String>(
-				getApplicationContext(),
-				R.layout.listview_layout, values);
+				getApplicationContext(), R.layout.listview_layout, values);
 		System.err.println("test4");
 		listV.setAdapter(adap);
 		System.err.println("test5");
 	}
+
 	/**
 	 * Autor: Raph
-	 * @return true if there is a network connection available.
-	 * Should call this method when we want internet access, to refreshes the network info.
+	 * 
+	 * @return true if there is a network connection available. Should call this
+	 *         method when we want internet access, to refreshes the network
+	 *         info.
 	 */
-	public boolean checkNetworkStatus(){
+	public boolean checkNetworkStatus() {
 		connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 		netInfo = connMgr.getActiveNetworkInfo();
 		return netInfo != null && netInfo.isConnected();
 	}
 
 	/**
-	 * Implementation of the additional sliding menu 
-	 *
+	 * Implementation of the additional sliding menu
+	 * 
 	 */
-	private class DrawerItemClickListener implements ListView.OnItemClickListener {
+	private class DrawerItemClickListener implements
+			ListView.OnItemClickListener {
 		@Override
-		public void onItemClick(AdapterView parent, View view, int position, long id) {
+		public void onItemClick(AdapterView parent, View view, int position,
+				long id) {
 			selectItem(position);
 		}
 	}
 
-
 	public void selectItem(int position) {
-		switch (position){
-		case 0 : 
+		switch (position) {
+		case 0:
 			mDrawerLayout.closeDrawer(mDrawerList);
 			break;
-		case 1 :
+		case 1:
 			startActivity(new Intent(MainActivity.this, FavoritesActivity.class));
 			break;
-		case 2 :
-			startActivity(new Intent(MainActivity.this, PreferencesActivity.class));
+		case 2:
+			startActivity(new Intent(MainActivity.this,
+					PreferencesActivity.class));
 			break;
-		default :
+		default:
 			mDrawerLayout.closeDrawer(mDrawerList);
 			break;
 		}

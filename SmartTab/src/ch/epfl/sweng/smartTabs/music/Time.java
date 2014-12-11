@@ -11,100 +11,90 @@ import org.json.JSONObject;
  */
 public class Time implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    private final String mDuration;
-    private final String[] mTabNotes;
-    private final Note[] mPartitionNotes;
-    private final int mMesure;
-    private final static int NUMCHORDS = 6;
-    private final static Note[] TUNING = { 
-            new Note(Height.E, 3), new Note(Height.B, 2), new Note(Height.G, 2),
-            new Note(Height.D, 2), new Note(Height.A, 1), new Note(Height.E, 1)
-    };
+	private static final long serialVersionUID = 1L;
+	private final String mDuration;
+	private final String[] mTabNotes;
+	private final Note[] mPartitionNotes;
+	private final static int NUMCHORDS = 6;
+	private final static Note[] TUNING = { new Note(Height.E, 3),
+			new Note(Height.B, 2), new Note(Height.G, 2),
+			new Note(Height.D, 2), new Note(Height.A, 1), new Note(Height.E, 1) };
 
-    public Time(String[] notes, Note[] partitionNotes, String duration,
-            int mesure) {
-        mTabNotes = notes;
-        mDuration = duration;
-        mMesure = mesure;
-        mPartitionNotes = partitionNotes;
-    }
+	public Time(String[] notes, Note[] partitionNotes, String duration) {
+		mTabNotes = notes;
+		mDuration = duration;
+		mPartitionNotes = partitionNotes;
+	}
 
-    public static Time parseTimeFromJson(JSONObject jsonTime)  throws JSONException {
-        String[] jsonNotes = new String[NUMCHORDS];
-        Note[] partitionNotes = new Note[NUMCHORDS];
-        for (int i = 1; i <= NUMCHORDS; i++) {
-            String corde = "string_" + i;
-            jsonNotes[i - 1] = jsonTime.getString(corde);
-            if (!jsonNotes[i - 1].equals("")) {
-                int fretNumber = Integer.parseInt(jsonNotes[i - 1]);
-                partitionNotes[i - 1] = TUNING[i - 1].addHalfTones(fretNumber);
-                
-            }
-        }
-        String jsonDuration;
-        try {
-            jsonDuration = jsonTime.getString("length");
-            if(!jsonDuration.equals("Noire")
-            		&& !jsonDuration.equals("Blanche")
-            		&& !jsonDuration.equals("Croche")
-            		&& !jsonDuration.equals("DoubleCroche")
-            		&& !jsonDuration.equals("Ronde")) {
-            	throw new JSONException("The duration is not valid");
-            }
-        } catch (JSONException e) {
-            throw new JSONException("The length value is not valid");
-        }
-        int jsonMesure;
-        try {
-            jsonMesure = jsonTime.getInt("measure");
-        } catch (JSONException e) {
-            // throw new JSONException("The measure value is not valid");
-            jsonMesure = 0;
-        }
+	public static Time parseTimeFromJson(JSONObject jsonTime)
+			throws JSONException {
+		String[] jsonNotes = new String[NUMCHORDS];
+		Note[] partitionNotes = new Note[NUMCHORDS];
+		String jsonDuration = null;
+		try {
+			for (int i = 1; i <= NUMCHORDS; i++) {
+				String corde = "string_" + i;
+				jsonNotes[i - 1] = jsonTime.getString(corde);
+				if (!jsonNotes[i - 1].equals("")) {
+					int fretNumber = Integer.parseInt(jsonNotes[i - 1]);
+					if(fretNumber<0 && fretNumber>16){
+						throw new JSONException("fretNumber invalid");
+					}
+					partitionNotes[i - 1] = TUNING[i - 1]
+							.addHalfTones(fretNumber);
 
-        return new Time(jsonNotes, partitionNotes, jsonDuration, jsonMesure);
-    }
+				}
+			}
+			jsonDuration = jsonTime.getString("length");
+			if (!jsonDuration.equals("Noire")
+					&& !jsonDuration.equals("Blanche")
+					&& !jsonDuration.equals("Croche")
+					&& !jsonDuration.equals("DoubleCroche")
+					&& !jsonDuration.equals("Ronde")) {
+				throw new JSONException("The duration is not valid");
+			}
+		} catch (JSONException e) {
+			throw new JSONException("The length value is not valid");
+		}
 
-    public String getNote(int string) {
-        return mTabNotes[string];
-    }
-    
-    public Note[] getPartition() {
-    	return mPartitionNotes;
-    }
+		return new Time(jsonNotes, partitionNotes, jsonDuration);
+	}
 
-    public Note getPartitionNote(int index) {
-        return mPartitionNotes[index];
-    }
+	public String getNote(int string) {
+		return mTabNotes[string];
+	}
 
-    public String getDuration() {
-        return mDuration;
-    }
+	public Note[] getPartition() {
+		return mPartitionNotes;
+	}
 
-    public int getMesure() {
-        return mMesure;
-    }
-    
-    public boolean isEmpty() {
-    	for (int i = 0; i < mTabNotes.length; i++) {
+	public Note getPartitionNote(int index) {
+		return mPartitionNotes[index];
+	}
+
+	public String getDuration() {
+		return mDuration;
+	}
+
+	public boolean isEmpty() {
+		for (int i = 0; i < mTabNotes.length; i++) {
 			if (!mTabNotes[i].equals("")) {
 				return false;
 			}
 		}
-    	return true;
-    	
-    }
+		return true;
 
-    public String toString() {
-        String s = "";
-        for (String n : mTabNotes) {
-            if (n.equals("")) {
-                s += "-";
-            } else {
-                s += n;
-            }
-        }
-        return s;
-    }
+	}
+
+	public String toString() {
+		String s = "";
+		for (String n : mTabNotes) {
+			if (n.equals("")) {
+				s += "-";
+			} else {
+				s += n;
+			}
+		}
+		return s;
+	}
 }

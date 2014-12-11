@@ -31,7 +31,9 @@ public final class Tab implements Serializable {
     }
 
     public static Tab parseTabFromJSON(JSONObject jsonTab) throws JSONException {
-        String jsonTabName = jsonTab.getString("name");
+        try{
+        	
+    	String jsonTabName = jsonTab.getString("name");
         String jsonTabArtist = jsonTab.getString("artist");
         int jsonTempo = jsonTab.getInt("tempo");
 
@@ -48,6 +50,10 @@ public final class Tab implements Serializable {
             }
         }
         return new Tab(jsonTabName,jsonTabArtist, jsonTempo, parsedTimeList);
+        }
+        catch(JSONException e){
+        	throw new JSONException("Bad Json");
+        }
     }
 
     /**
