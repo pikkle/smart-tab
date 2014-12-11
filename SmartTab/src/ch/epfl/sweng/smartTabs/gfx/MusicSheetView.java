@@ -97,7 +97,7 @@ public class MusicSheetView extends View {
             if (firstDraw) {
                 temp += noteDuration;
                 if (temp % 4 == 0d) {
-                    mesure.add((int) (pos + pace*noteDuration / 2));
+                    mesure.add((int) (pos + pace*noteDuration/2));
                 }
             }
             noteDuration = Duration.valueOf(mTab.getTime(i).getDuration()).getDuration();

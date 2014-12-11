@@ -180,9 +180,9 @@ public class MainActivity extends Activity {
 		mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.drawable.ic_drawer, 0, 0);
 
 		mDrawerLayout.setDrawerListener(mDrawerToggle);
-		mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.RELATIVE_HORIZONTAL_GRAVITY_MASK);
-
-		String [] items = {"Favorites", "History", "Settings"};
+        mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.RELATIVE_HORIZONTAL_GRAVITY_MASK);
+        
+		String [] items = {"All Tabs", "Favorites", "Settings"};
 
 		adap = new ArrayAdapter<String>(this, R.layout.drawer_list_layout, items);
 
@@ -310,6 +310,10 @@ public class MainActivity extends Activity {
 			});
 		}
 	}
+	
+	public void startTab(URL tabURL) {
+		new DownloadTabsTask(tabURL);
+	}
 
 	/**
 	 * @author Faton Ramadani
@@ -405,9 +409,19 @@ public class MainActivity extends Activity {
 
 
 	public void selectItem(int position) {
-
-		if(position == 2){
+		switch (position){
+		case 0 : 
+			mDrawerLayout.closeDrawer(mDrawerList);
+			break;
+		case 1 :
+			startActivity(new Intent(MainActivity.this, FavoritesActivity.class));
+			break;
+		case 2 :
 			startActivity(new Intent(MainActivity.this, PreferencesActivity.class));
+			break;
+		default :
+			mDrawerLayout.closeDrawer(mDrawerList);
+			break;
 		}
 	}
 
