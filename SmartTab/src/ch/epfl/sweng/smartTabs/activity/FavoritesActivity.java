@@ -23,6 +23,8 @@ public class FavoritesActivity extends Activity {
 	private ListView listV;
 
 	private SharedPreferences sharedPrefs;
+	private ArrayAdapter<String> adap;
+	private Map<String, ?> favs;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -33,48 +35,60 @@ public class FavoritesActivity extends Activity {
 
 		sharedPrefs = getSharedPreferences(PREFS_NAME, 0);
 
-		Map<String, ?> favs = sharedPrefs.getAll();
-		
-		
-		ArrayAdapter<String> adap = new ArrayAdapter<String>(
-			getApplicationContext(),
-			R.layout.listview_layout);
-		
+		favs = sharedPrefs.getAll();
+
+		adap = new ArrayAdapter<String>(getApplicationContext(),
+				R.layout.listview_layout);
 
 		for (Map.Entry<String, ?> entry : favs.entrySet()) {
 			adap.add(entry.getKey());
 		}
-		
+
 		listV.setAdapter(adap);
 		listV.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				String tabName = (String)listV.getAdapter().getItem(position);
+				String tabName = (String) listV.getAdapter().getItem(position);
 				System.out.println(tabName);
 				String tabSerial = sharedPrefs.getString(tabName, "Error");
-				Intent i = new Intent(FavoritesActivity.this, DisplayActivity.class);
+				Intent i = new Intent(FavoritesActivity.this,
+						DisplayActivity.class);
 				i.putExtra("tab", deserialize(tabSerial));
 				startActivity(i);
 			}
-			
+
 		});
 	}
-	
-    public Tab deserialize(String s){
-   	 try {
-   	     byte[] b = Base64.decode(s.getBytes(), Base64.DEFAULT); 
-   	     ByteArrayInputStream bi = new ByteArrayInputStream(b);
-   	     ObjectInputStream si = new ObjectInputStream(bi);
-   	     return (Tab) si.readObject();
-   	 } catch (IOException e) {
-   		 e.printStackTrace();
-   		 return null; //a changer
-   	 } catch (ClassNotFoundException e) {
-		e.printStackTrace();
-		return null;
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		favs = sharedPrefs.getAll();
+		adap = new ArrayAdapter<String>(getApplicationContext(),
+				R.layout.listview_layout);
+
+		for (Map.Entry<String, ?> entry : favs.entrySet()) {
+			adap.add(entry.getKey());
+		}
+
+		listV.setAdapter(adap);
 	}
-   }
+
+	public Tab deserialize(String s) {
+		try {
+			byte[] b = Base64.decode(s.getBytes(), Base64.DEFAULT);
+			ByteArrayInputStream bi = new ByteArrayInputStream(b);
+			ObjectInputStream si = new ObjectInputStream(bi);
+			return (Tab) si.readObject();
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null; // a changer
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 
 }
