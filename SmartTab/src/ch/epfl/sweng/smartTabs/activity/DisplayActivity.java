@@ -52,7 +52,7 @@ public class DisplayActivity extends Activity {
 	
 	private boolean running;
 
-	private static final int PACE = 300;
+	private static final int PACE = 200;
 	private static final double millisInMin = 60000.0; // number of millis in one min
 	private static final int OFFSET = 50;
 
