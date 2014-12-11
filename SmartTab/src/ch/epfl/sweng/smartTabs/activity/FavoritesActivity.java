@@ -48,16 +48,8 @@ public class FavoritesActivity extends Activity {
 
 		sharedPrefs = getSharedPreferences(PREFS_NAME, 0);
 
-		favs = sharedPrefs.getAll();
+		refresh();
 
-		adap = new ArrayAdapter<String>(getApplicationContext(),
-				R.layout.listview_layout);
-
-		for (Map.Entry<String, ?> entry : favs.entrySet()) {
-			adap.add(entry.getKey());
-		}
-
-		listV.setAdapter(adap);
 		listV.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
@@ -102,6 +94,10 @@ public class FavoritesActivity extends Activity {
 	@Override
 	protected void onResume() {
 		super.onResume();
+		refresh();
+	}
+
+	private void refresh() {
 		favs = sharedPrefs.getAll();
 		adap = new ArrayAdapter<String>(getApplicationContext(),
 				R.layout.listview_layout);
