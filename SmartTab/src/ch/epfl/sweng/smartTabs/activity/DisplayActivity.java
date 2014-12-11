@@ -1,5 +1,9 @@
 package ch.epfl.sweng.smartTabs.activity;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -13,6 +17,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v4.view.MotionEventCompat;
+import android.util.Base64;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -36,309 +41,367 @@ import ch.epfl.sweng.smartTabs.music.SampleMap;
 import ch.epfl.sweng.smartTabs.music.Tab;
 import ch.epfl.sweng.smartTabs.music.Time;
 
-
 /**
  * @author fatonramadani
- *
+ * 
  */
 public class DisplayActivity extends Activity {
-	private HeaderView headerView;
-	private FooterView footerView;
-	private CursorView cursorView;
 
-	private LinearLayout wrapper;
-	private LinearLayout musicWrapper;
-	private FrameLayout testWrapper;
-	
-	private boolean running;
+    private static final String PREFS_NAME = "MyPrefsFile";
+    private HeaderView headerView;
+    private FooterView footerView;
+    private CursorView cursorView;
 
-	private static final int PACE = 200;
-	// number of millis in one min
-	private static final double MILLISINMIN = 60000.0;
-	private static final int OFFSET = 50;
-	private final int maxStream = 50;
+    private LinearLayout wrapper;
+    private LinearLayout musicWrapper;
+    private FrameLayout testWrapper;
 
+    private boolean running;
 
-	private boolean backPressedOnce = false;
-	private SoundPool pool = new SoundPool(maxStream, AudioManager.STREAM_MUSIC, 0);
-	private static final long SAMPLE_TIME = 1000;
-	private static final int DELAY = 2000;
-	private static final int THRESHOLDSCROLL = 30;
-	
-	// Position of the time to play (Intital value corresponds to the future cursor position)
-	private int playingPosition;
+    private SharedPreferences sharedPrefs;
 
-	private double delay;
+    private Tab tab;
 
-	private int speed = 1;
-	private TablatureView tablatureView;
-	private MusicSheetView musicSheetView;
+    private static final int PACE = 200;
+    private static final double MILLISINMIN = 60000.0; // number of millis in
+                                                       // one min
+    private static final int OFFSET = 50;
+    private static final int NBOFSREAMS = 50;
+    private static final int WEIGHT3 = 3;
+    private static final int WEIGHT7 = 7;
+    private static final int WEIGHT8 = 8;
+    private static final int MINIMALSCROLL = 30;
+    private static final int SHIFTAFTERSCROLL = 4*OFFSET;
+    
 
-	private float lastX;
-	private float newX;
-	private int tabPosX;
-	private boolean scrolled = false;
-	private SampleMap map;
-	private final Note[] tuning = {new Note(Height.E, 3), new Note(Height.B, 2), 
-	        new Note(Height.G, 2), new Note(Height.D, 2), new Note(Height.A, 1), 
-	        new Note(Height.E, 1) 
-	};
-			
+    private boolean backPressedOnce = false;
+    private SoundPool pool = new SoundPool(NBOFSREAMS,
+            AudioManager.STREAM_MUSIC, 0);
+    private static final long SAMPLE_TIME = 1000;
+    private static final int DELAY = 2000;
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+    private int playingPosition; // Position of the time to play
+    // (Intital value corresponds to the future cursor position)
 
-		checkDialog(this);
-		
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-		this.getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+    private double myDelay;
 
-		Intent intent = getIntent();
-		final Tab tab = (Tab) intent.getExtras().getSerializable("tab");
+    private int dx = 1;
+    private TablatureView tablatureView;
+    private MusicSheetView musicSheetView;
 
-		delay = computeDelay(tab.getTempo(), PACE, speed, MILLISINMIN);
+    private float lastX;
+    private float newX;
+    private int tabPosX;
+    private boolean scrolled = false;
+    private SampleMap map;
+    private final Note[] tuning = {new Note(Height.E, 3),
+        new Note(Height.B, 2), new Note(Height.G, 2),
+        new Note(Height.D, 2), new Note(Height.A, 1), new Note(Height.E, 1) };
 
-		setContentView(R.layout.activity_display);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-		wrapper = (LinearLayout) (this.findViewById(R.id.wrapper));
-		musicWrapper = new LinearLayout(getBaseContext());
-		musicWrapper.setOrientation(LinearLayout.VERTICAL);
-		testWrapper = new FrameLayout(getBaseContext());
+        checkDialog(this);
 
-		headerView 		= new HeaderView(getBaseContext(), tab.getTabName());
-		footerView 		= new FooterView(getBaseContext());
-		tablatureView 	= new TablatureView(getBaseContext(), tab, Instrument.GUITAR, PACE);
-		musicSheetView 	= new MusicSheetView(getBaseContext(), tab, PACE);
-		cursorView 		= new CursorView(getBaseContext());
-		
-		
-		playingPosition = cursorView.getPosX();
-		
-		musicWrapper.addView(musicSheetView, weight(3));
-		musicWrapper.addView(tablatureView, weight(7));
-		
-		testWrapper.addView(musicWrapper, new FrameLayout.LayoutParams(
-				FrameLayout.LayoutParams.MATCH_PARENT,
-				FrameLayout.LayoutParams.MATCH_PARENT));	
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        this.getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-		testWrapper.addView(cursorView, new FrameLayout.LayoutParams(
-				FrameLayout.LayoutParams.MATCH_PARENT,
-				FrameLayout.LayoutParams.MATCH_PARENT));
-		
-		wrapper.addView(headerView, weight(1));
-		wrapper.addView(testWrapper, weight(8));
-		wrapper.addView(footerView, weight(1));
-		
-		
-		map = new SampleMap(getApplicationContext(), pool, tuning);
+        Intent intent = getIntent();
+        tab = (Tab) intent.getExtras().getSerializable("tab");
 
-		// Basic scrolling
-		Thread t = new Thread(new Runnable() {
+        myDelay = computeDelay(tab.getTempo(), PACE, dx, MILLISINMIN);
 
-			@Override
-			public void run() {
-				while (true) {
-					if (running && !tablatureView.isTerminated()) {
-						tablatureView.scrollBy(speed, 0);
-						musicSheetView.scrollBy(speed, 0);
-						
-						playingPosition += speed;
-						headerView.computeRatio(playingPosition, PACE);
-						headerView.postInvalidate();
-					
-					}
+        setContentView(R.layout.activity_display);
 
-					if (tab.timeMapContains(playingPosition)) {
-						final Time t = tab.getTimeAt(playingPosition);
-						if (t != null && running) {
-							
-							for (int i = 0; i < (Instrument.GUITAR).getNumOfStrings(); i++) {
-								String fret = t.getNote(i);
-								if (!fret.equals("")) {
-									int fretNumber = Integer.parseInt(fret);
-									final Note note = tuning[i].addHalfTones(fretNumber);
-									final int sampleId = pool.play(map.getSampleId(note), 1, 1, 1, 0, 1);
-									new Thread(new Runnable() {
-										
-										@Override
-										public void run() {
-											try {
-												Thread.sleep(SAMPLE_TIME);
-											} catch (InterruptedException e) {
-												// TODO Auto-generated catch block
-												e.printStackTrace();
-											}
-											pool.stop(sampleId);
-										}
-									}).start();
-									
-								}
-							}
-						}
-					}
+        sharedPrefs = getSharedPreferences(PREFS_NAME, 0);
 
-					try {
-						Thread.sleep((int) delay, decimalPart(delay));
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-			}
+        wrapper = (LinearLayout) (this.findViewById(R.id.wrapper));
+        musicWrapper = new LinearLayout(getBaseContext());
+        musicWrapper.setOrientation(LinearLayout.VERTICAL);
+        testWrapper = new FrameLayout(getBaseContext());
 
-		});
-		t.start();
-	}
-	/**
-	 * This method computes the delay for which the thread has to sleep
-	 * 
-	 * @param tempo
-	 * @param pace
-	 * @param speed
-	 * @param millisinmin
-	 * @return the delay
-	 */
-	private double computeDelay(double tempo, double pace, double mySpeed,
-			double millisinmin) {
-		return speed*millisinmin/(tempo*pace);
-	}
+        headerView = new HeaderView(getBaseContext(), tab.getTabName(), tab.getTabArtist());
+        footerView = new FooterView(getBaseContext(), sharedPrefs.contains(tab
+                .getTabName()));
+        tablatureView = new TablatureView(getBaseContext(), tab,
+                Instrument.GUITAR, PACE);
+        musicSheetView = new MusicSheetView(getBaseContext(), tab, PACE);
+        cursorView = new CursorView(getBaseContext());
 
-	private LinearLayout.LayoutParams weight(int i) {
-		return new LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0, i);
-	}
-	
-	/**
-	 * This method computes the decimal part of the delay and returns it as an integer,
-	 * which is the number of nanosecs the thread has to sleep for.
-	 * @param delay
-	 * @return the number of nanosecs
-	 */
-	private int decimalPart(double myDelay) {
-		return (int) (myDelay - Math.floor(myDelay));
-	}
-	
-	
+        playingPosition = cursorView.getPosX();
 
-	@Override
-	public boolean onTouchEvent(MotionEvent event) {
+        musicWrapper.addView(musicSheetView, weight(WEIGHT3));
+        musicWrapper.addView(tablatureView, weight(WEIGHT7));
 
-		final float x = event.getX();
-		
-		if (MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_DOWN) {
-			tabPosX = tablatureView.getScrollX();
-			this.lastX = x;
-			scrolled = false;
-		} 
-		
-		if (MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_MOVE) {
-			this.newX = x;
-			int delta = (int) (lastX - newX);
-			
-			if (Math.abs(delta) >= THRESHOLDSCROLL) {
-				running = false;
-				scrolled = true;
-				int newPosX = tabPosX + delta;
-				if (lastX != newX && newPosX >= 0 && newPosX <= tablatureView.getEndOfTab()) {
-					tablatureView.scrollTo(newPosX, 0);
-					musicSheetView.scrollTo(newPosX, 0);
-					playingPosition = (int) (tablatureView.getScrollX() + cursorView.getX() + 4*OFFSET);
-				}
-			}
-		} 
-		
-		if (MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_UP) {
-			if (!scrolled) {
-				running = !running;
-				footerView.playPause();
-			}
-		}
-		
-		return true;
-	}
-	
+        testWrapper.addView(musicWrapper, new FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.MATCH_PARENT,
+                FrameLayout.LayoutParams.MATCH_PARENT));
 
-	@Override
-	public void onBackPressed() {
-		if (backPressedOnce) {
-			super.onBackPressed();
-			pool.release();
-			running = !running;
-		} else {
-			backPressedOnce = true;
+        testWrapper.addView(cursorView, new FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.MATCH_PARENT,
+                FrameLayout.LayoutParams.MATCH_PARENT));
 
-			Toast.makeText(this, "Press BACK again to exit", Toast.LENGTH_SHORT).show();
+        wrapper.addView(headerView, weight(1));
+        wrapper.addView(testWrapper, weight(WEIGHT8));
+        wrapper.addView(footerView, weight(1));
 
-			new Handler().postDelayed(new Runnable() {
+        map = new SampleMap(getApplicationContext(), pool, tuning);
 
-				@Override
-				public void run() {
-					backPressedOnce = false;
-				}
-			}, DELAY);
-		}
-	}
+        // Basic scrolling
+        Thread t = new Thread(new Runnable() {
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.test, menu);
-		return true;
-	}
+            @Override
+            public void run() {
+                while (true) {
+                    if (running && !tablatureView.isTerminated()) {
+                        tablatureView.scrollBy(dx, 0);
+                        musicSheetView.scrollBy(dx, 0);
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
-	}
+                        playingPosition += dx; // increment the position at
+                                                  // which we want to look for
+                                                  // a time to play
 
-	/**
-	 * Author: Raphael Khoury
-	 * Initialize shared preferences and sync with preferences fragment
-	 * Call to method that actually create dialog (createDialog(Context))
-	 */
+                        headerView.computeRatio(playingPosition, PACE);
+                        headerView.postInvalidate();
 
-	private void checkDialog(Context cont) {
-		SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(cont);
-		Boolean showHelp = pref.getBoolean("pref_show_help", true);
-		if (showHelp) {
-			createDialog(this);
-		}
-		
-	}
-/**
- * Author: 
- * @param Context
- * Create dialog box and display it
- */
-	public void createDialog(final Context cont) {
-		final CheckBox checkBox = new CheckBox(cont);
-		checkBox.setText(R.string.show_help);
-		checkBox.setEnabled(true);
-		LinearLayout linLayout = new LinearLayout(cont);
-		linLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-				LinearLayout.LayoutParams.MATCH_PARENT));
-		linLayout.addView(checkBox);
+                    }
 
-		AlertDialog.Builder adBuilder = new AlertDialog.Builder(cont);
-		adBuilder.setView(linLayout);
-		adBuilder.setTitle(R.string.title_help);
-		adBuilder.setMessage(R.string.help_content);
-		adBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface arg0, int arg1) {
-				SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(cont);
-				SharedPreferences.Editor editor = pref.edit();
-				editor.putBoolean("pref_show_help", checkBox.isChecked()).commit();
-				Toast.makeText(cont, "Saved new preferences.", Toast.LENGTH_SHORT).show();
-			}
-		});
-		adBuilder.create().show();
-	}
+                    if (tab.timeMapContains(playingPosition)) {
+                        final Time t = tab.getTimeAt(playingPosition);
+                        if (t != null && running) {
+
+                            for (int i = 0; i < (Instrument.GUITAR)
+                                    .getNumOfStrings(); i++) {
+                                String fret = t.getNote(i);
+                                if (!fret.equals("")) {
+                                    int fretNumber = Integer.parseInt(fret);
+                                    final Note note = tuning[i]
+                                            .addHalfTones(fretNumber);
+                                    final int sampleId = pool.play(
+                                            map.getSampleId(note), 1, 1, 1, 0,
+                                            1);
+                                    new Thread(new Runnable() {
+
+                                        @Override
+                                        public void run() {
+                                            try {
+                                                Thread.sleep(SAMPLE_TIME);
+                                            } catch (InterruptedException e) {
+                                                // TODO Auto-generated catch
+                                                // block
+                                                e.printStackTrace();
+                                            }
+                                            pool.stop(sampleId);
+                                        }
+                                    }).start();
+
+                                }
+                            }
+                        }
+                    }
+
+                    try {
+                        Thread.sleep((int) myDelay, decimalPart(myDelay));
+                    } catch (InterruptedException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+        });
+        t.start();
+    }
+
+    /**
+     * This method computes the delay for which the thread has to sleep
+     * 
+     * @param tempo
+     * @param pace
+     * @param speed
+     * @param millisinmin
+     * @return the delay
+     */
+    private double computeDelay(double tempo, double pace, double speed,
+            double millisinmin) {
+        return speed * millisinmin / (tempo * pace);
+    }
+
+    private LinearLayout.LayoutParams weight(int i) {
+        return new LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 0, i);
+    }
+
+    /**
+     * This method computes the decimal part of the delay and returns it as an
+     * integer, which is the number of nanosecs the thread has to sleep for.
+     * 
+     * @param delay
+     * @return the number of nanosecs
+     */
+    private int decimalPart(double delay) {
+        return (int) (delay - Math.floor(delay));
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+
+        final float x = event.getX();
+        final float y = event.getY();
+
+        if (x > footerView.getFavPosX()
+                && y > footerView.getY()
+                && MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_UP) {
+            footerView.getFav().setIsFav();
+            footerView.invalidate();
+            SharedPreferences.Editor editor = sharedPrefs.edit();
+            if (!sharedPrefs.contains(tab.getTabName())) {
+                editor.putString(tab.getTabName(), serialize(tab));
+                editor.commit();
+                Toast.makeText(this, "Added to favorites", Toast.LENGTH_SHORT)
+                        .show();
+            } else {
+                editor.remove(tab.getTabName());
+                editor.commit();
+                Toast.makeText(this, "Removed from favorites",
+                        Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            if (MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_DOWN) {
+                tabPosX = tablatureView.getScrollX();
+                this.lastX = x;
+                scrolled = false;
+            }
+
+            if (MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_MOVE) {
+                this.newX = x;
+                int delta = (int) (lastX - newX);
+
+                if (Math.abs(delta) >= MINIMALSCROLL) {
+                    running = false;
+                    scrolled = true;
+                    int newPosX = tabPosX + delta;
+                    if (lastX != newX && newPosX >= 0
+                            && newPosX <= tablatureView.getEndOfTab()) {
+                        tablatureView.scrollTo(newPosX, 0);
+                        musicSheetView.scrollTo(newPosX, 0);
+                        playingPosition = (int) (tablatureView.getScrollX()
+                                + cursorView.getX() + SHIFTAFTERSCROLL);
+                    }
+                }
+            }
+
+            if (MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_UP) {
+                if (!scrolled) {
+                    running = !running;
+                    footerView.playPause();
+                }
+            }
+        }
+
+        return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (backPressedOnce) {
+            super.onBackPressed();
+            pool.release();
+            running = !running;
+        } else {
+            backPressedOnce = true;
+            Toast.makeText(this, "Press BACK again to exit", Toast.LENGTH_SHORT)
+                    .show();
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    backPressedOnce = false;
+                }
+            }, DELAY);
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.test, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * Author: Raphael Khoury Initialize shared preferences and sync with
+     * preferences fragment Call to method that actually create dialog
+     * (createDialog(Context))
+     */
+
+    private void checkDialog(Context cont) {
+        SharedPreferences pref = PreferenceManager
+                .getDefaultSharedPreferences(cont);
+        Boolean showHelp = pref.getBoolean("pref_show_help", true);
+        if (showHelp) {
+            createDialog(this);
+        }
+
+    }
+
+    public String serialize(Tab t) {
+        try {
+            ByteArrayOutputStream bo = new ByteArrayOutputStream();
+            ObjectOutputStream so = new ObjectOutputStream(bo);
+            so.writeObject(t);
+            so.flush();
+            return new String(Base64.encode(bo.toByteArray(), Base64.DEFAULT));
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "Error";
+        }
+    }
+
+    /**
+     * Author:
+     * 
+     * @param Context
+     *            Create dialog box and display it
+     */
+    public void createDialog(final Context cont) {
+        final CheckBox checkBox = new CheckBox(cont);
+        checkBox.setText(R.string.show_help);
+        checkBox.setEnabled(true);
+        LinearLayout linLayout = new LinearLayout(cont);
+        linLayout.setLayoutParams(new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT));
+        linLayout.addView(checkBox);
+
+        AlertDialog.Builder adBuilder = new AlertDialog.Builder(cont);
+        adBuilder.setView(linLayout);
+        adBuilder.setTitle(R.string.title_help);
+        adBuilder.setMessage(R.string.help_content);
+        adBuilder.setPositiveButton("Ok",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        SharedPreferences pref = PreferenceManager
+                                .getDefaultSharedPreferences(cont);
+                        SharedPreferences.Editor editor = pref.edit();
+                        editor.putBoolean("pref_show_help",
+                                checkBox.isChecked()).commit();
+                        Toast.makeText(cont, "Saved new preferences.",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+        adBuilder.create().show();
+    }
 }

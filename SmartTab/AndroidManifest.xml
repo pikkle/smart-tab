@@ -33,6 +33,12 @@
             android:screenOrientation="landscape"
             android:theme="@android:style/Theme.NoTitleBar" >
         </activity>
+        
+        <!-- Favorites Activity -->
+        <activity
+            android:name=".activity.FavoritesActivity"
+            android:label="@string/title_favorites_display">
+        </activity>
 
         <!-- Help Activity -->
         <activity

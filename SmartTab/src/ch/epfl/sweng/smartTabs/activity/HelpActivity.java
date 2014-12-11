@@ -6,7 +6,7 @@ import android.os.Bundle;
 import ch.epfl.sweng.smartTabs.R;
 
 /**
- * TODO : Javadoc
+ * Display the help window
  */
 public class HelpActivity extends Activity {
 

@@ -45,6 +45,7 @@ import ch.epfl.sweng.smartTabs.network.NetworkClient;
  */
 public class MainActivity extends Activity {
 	private static final long DELAY = 2000;
+	private static final long REFRESHDELAY = 3000;
 	private NetworkClient netClient;
 	private ConnectivityManager connMgr;
 	private NetworkInfo netInfo;
@@ -52,9 +53,10 @@ public class MainActivity extends Activity {
 	private DrawerLayout mDrawerLayout;
 	private ListView mDrawerList;
 	private ActionBarDrawerToggle mDrawerToggle;
-	private ArrayAdapter<String> adap;
+	private ArrayAdapter<String> myAdapter;
 	private SwipeRefreshLayout swipeView;
-
+	private final String noNetworkMessage = "No Network Connection";
+	private final String noSearchResultsAvail = "No Tabs to show";
 	private boolean backPressedOnce = false;
 
 
@@ -79,7 +81,7 @@ public class MainActivity extends Activity {
 		if (checkNetworkStatus()) {
 			new DownloadTabListTask().execute("");
 		} else {
-			setNoNetworkList();
+			setCustomAdapMessage(noNetworkMessage);
 		}
 	}
 
@@ -94,7 +96,7 @@ public class MainActivity extends Activity {
 
 		SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
 		SearchView searchView = (SearchView) menu.findItem(R.id.action_search)
-				.getActionView();
+		        .getActionView();
 		if (null != searchView) {
 			searchView.setSearchableInfo(searchManager
 					.getSearchableInfo(getComponentName()));
@@ -110,7 +112,7 @@ public class MainActivity extends Activity {
 				if (checkNetworkStatus()) {
 					new DownloadTabListTask().execute(query);
 				} else {
-					setNoNetworkList();
+					setCustomAdapMessage(noNetworkMessage);
 				}
 
 				return false;
@@ -127,7 +129,7 @@ public class MainActivity extends Activity {
 		// Handle presses on the action bar items
 		switch (item.getItemId()) {
 		case R.id.action_drawer:
-			if(mDrawerLayout.isDrawerOpen(mDrawerList)){
+			if (mDrawerLayout.isDrawerOpen(mDrawerList)) {
 				mDrawerLayout.closeDrawer(mDrawerList);				
 			} else {
 				mDrawerLayout.openDrawer(mDrawerList);
@@ -139,7 +141,7 @@ public class MainActivity extends Activity {
 			if (checkNetworkStatus()) {
 				new DownloadTabListTask().execute("");
 			} else {
-				setNoNetworkList();
+				setCustomAdapMessage(noNetworkMessage);
 			}
 			return true;
 		default:
@@ -149,7 +151,7 @@ public class MainActivity extends Activity {
 
 	@Override
 	public void onBackPressed() {
-		if(mDrawerLayout.isDrawerOpen(mDrawerList)){
+		if (mDrawerLayout.isDrawerOpen(mDrawerList)) {
 			mDrawerLayout.closeDrawer(mDrawerList);
 		} else {			
 			if (backPressedOnce) {
@@ -173,19 +175,19 @@ public class MainActivity extends Activity {
 	/**
 	 * This method is used to initialize the drawer layout, and the drawer list
 	 */
-	public void initDrawerLayout(){
+	public void initDrawerLayout() {
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		mDrawerList = (ListView) findViewById(R.id.right_drawer);
 		mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.drawable.ic_drawer, 0, 0);
 
 		mDrawerLayout.setDrawerListener(mDrawerToggle);
-		mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.RELATIVE_HORIZONTAL_GRAVITY_MASK);
+        mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.RELATIVE_HORIZONTAL_GRAVITY_MASK);
+        
+		String [] items = {"All Tabs", "Favorites", "Settings"};
 
-		String [] items = {"Favorites", "History", "Settings"};
+		myAdapter = new ArrayAdapter<String>(this, R.layout.drawer_list_layout, items);
 
-		adap = new ArrayAdapter<String>(this, R.layout.drawer_list_layout, items);
-
-		mDrawerList.setAdapter(adap);
+		mDrawerList.setAdapter(myAdapter);
 		mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 	}
 
@@ -198,7 +200,8 @@ public class MainActivity extends Activity {
 		swipeView.setEnabled(false);
 
 
-		swipeView.setColorScheme(android.R.color.holo_blue_dark, android.R.color.holo_blue_light, android.R.color.holo_green_light, android.R.color.holo_green_light);
+		swipeView.setColorSchemeResources(android.R.color.holo_blue_dark, android.R.color.holo_blue_light, 
+		        android.R.color.holo_green_light, android.R.color.holo_green_light);
 		swipeView.setOnRefreshListener(new OnRefreshListener() {
 
 			@Override
@@ -212,11 +215,11 @@ public class MainActivity extends Activity {
 							new DownloadTabListTask().execute("");
 
 						} else {
-							setNoNetworkList();
+							setCustomAdapMessage(noNetworkMessage);
 						}
 						swipeView.setRefreshing(false);
 					}
-				}, 3000);
+				}, REFRESHDELAY);
 
 			}
 		}); 
@@ -238,10 +241,12 @@ public class MainActivity extends Activity {
 			public void onScroll(AbsListView view, int firstVisibleItem,
 					int visibleItemCount, int totalItemCount) {
 
-				if (firstVisibleItem == 0)
+				if (firstVisibleItem == 0) {
 					swipeView.setEnabled(true);
-				else
+				}
+				else {
 					swipeView.setEnabled(false);
+				}
 			}
 		});
 	}
@@ -255,10 +260,11 @@ public class MainActivity extends Activity {
 		protected Map<String, URL> doInBackground(String... params) {
 			try {
 				if (checkNetworkStatus()) {
-					return netClient.fetchTabMap(getString(R.string.serverURLQuery)+params[0].replaceAll("[^\\w\\s-]", ""));
+					return netClient.fetchTabMap(getString(R.string.serverURLQuery) + 
+					        params[0].replaceAll("[^\\w\\s-]", ""));
 				}
 				else {
-					setNoNetworkList();
+					setCustomAdapMessage(noNetworkMessage);
 				}
 			}
 			catch (IOException e) {
@@ -277,15 +283,17 @@ public class MainActivity extends Activity {
 		protected void onPostExecute(final Map<String, URL> map) {
 			if (map == null){
 				try {
-					throw new Exception("Null Map <String, URL>. Fetch again.");
-				} catch(Exception e){
-					e.printStackTrace();
+					throw new NullPointerException("Null Map <String, URL>. Fetch again.");
+				} catch(NullPointerException e) {
+				    e.printStackTrace();
+				    //TODO: I DUNOO !!
+				    
 				}
 			}
 			String[] values = new String[map.size()];
 			if (values.length == 0) {
-				Toast.makeText(getApplicationContext(), "No Tabs to show",
-						Toast.LENGTH_SHORT).show();
+				System.err.println("test1");
+				setCustomAdapMessage(noSearchResultsAvail);
 			}
 			int count = 0;
 			for (String key : map.keySet()) {
@@ -293,10 +301,10 @@ public class MainActivity extends Activity {
 				count++;
 			}
 
-			ArrayAdapter<String> adap = new ArrayAdapter<String>(
+			ArrayAdapter<String> madap = new ArrayAdapter<String>(
 					getApplicationContext(),
 					R.layout.listview_layout, values);
-			listV.setAdapter(adap);
+			listV.setAdapter(madap);
 			listV.setOnItemClickListener(new OnItemClickListener() {
 
 				@Override
@@ -308,6 +316,10 @@ public class MainActivity extends Activity {
 				}
 			});
 		}
+	}
+	
+	public void startTab(URL tabURL) {
+		new DownloadTabsTask(tabURL);
 	}
 
 	/**
@@ -337,7 +349,7 @@ public class MainActivity extends Activity {
 				if (checkNetworkStatus()) {
 					return netClient.fetchTab(myUrl);
 				} else {
-					setNoNetworkList();
+					setCustomAdapMessage(noNetworkMessage);
 				}
 
 			} catch (IOException e) {
@@ -350,12 +362,13 @@ public class MainActivity extends Activity {
 
 		@Override
 		protected void onPostExecute(final Tab tab) {
-			if (tab == null){
-				try{
-					throw new Exception("Error in Tab parsing. Try again please. " +
-							"If problem persists, contact admins.");
-				} catch (Exception e){
+			if (tab == null) {
+				try {
+					throw new NullPointerException("Error in Tab parsing. Try again please. " 
+				+ "If problem persists, contact admins.");
+				} catch (NullPointerException e) {
 					e.printStackTrace();
+					//TODO: I DNOOOOOO
 				}
 			}
 			Intent i = new Intent(MainActivity.this, DisplayActivity.class);
@@ -368,23 +381,31 @@ public class MainActivity extends Activity {
 
 	/**
 	 * Author: Raphael Khoury
-	 * Method that sets the menu in MainActivity to contain only 1 element, to show that
-	 * there is no network available. 
+	 * Method that sets the menu in MainActivity to contain only 1 element, with custom message
+	 * to display a problem.
 	 * Better than Toast (list is restored once there's a connection available and doesn't stack)
 	 * Better than Dialog (doesn't persist when network is restored)
 	 */
-	public void setNoNetworkList(){
+<<<<<<< HEAD
+	public void setNoNetworkList() {
 		String[] values = {"No Network Connection"};
+=======
+	public void setCustomAdapMessage(String message){
+		System.err.println("test2");
+		String[] values = {message};
+		System.err.println("test3");
+>>>>>>> 4482334f49e6b2865e4cc58f3539942c90539b6c
 		ArrayAdapter<String> adap = new ArrayAdapter<String>(
 				getApplicationContext(),
 				R.layout.listview_layout, values);
+		System.err.println("test4");
 		listV.setAdapter(adap);
-
+		System.err.println("test5");
 	}
 	/**
 	 * Autor: Raph
 	 * @return true if there is a network connection available.
-	 * Should call this method when we want internet access, it refreshes the network info.
+	 * Should call this method when we want internet access, to refreshes the network info.
 	 */
 	public boolean checkNetworkStatus(){
 		connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -392,6 +413,10 @@ public class MainActivity extends Activity {
 		return netInfo != null && netInfo.isConnected();
 	}
 
+	/**
+	 * Implementation of the additional sliding menu 
+	 *
+	 */
 	private class DrawerItemClickListener implements ListView.OnItemClickListener {
 		@Override
 		public void onItemClick(AdapterView parent, View view, int position, long id) {
@@ -401,9 +426,19 @@ public class MainActivity extends Activity {
 
 
 	public void selectItem(int position) {
-
-		if(position == 2){
+		switch (position){
+		case 0 : 
+			mDrawerLayout.closeDrawer(mDrawerList);
+			break;
+		case 1 :
+			startActivity(new Intent(MainActivity.this, FavoritesActivity.class));
+			break;
+		case 2 :
 			startActivity(new Intent(MainActivity.this, PreferencesActivity.class));
+			break;
+		default :
+			mDrawerLayout.closeDrawer(mDrawerList);
+			break;
 		}
 	}
 

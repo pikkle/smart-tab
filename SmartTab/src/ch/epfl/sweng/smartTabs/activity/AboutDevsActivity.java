@@ -6,7 +6,7 @@ import android.os.Bundle;
 import ch.epfl.sweng.smartTabs.R;
 
 /**
- * TODO : Javadoc
+ * Activity displaying the names of the developpers
  */
 public class AboutDevsActivity extends Activity {
 

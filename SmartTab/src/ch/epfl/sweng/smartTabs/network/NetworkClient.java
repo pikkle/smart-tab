@@ -15,10 +15,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.content.Context;
-import android.widget.Toast;
-
-import ch.epfl.sweng.smartTabs.activity.MainActivity;
 import ch.epfl.sweng.smartTabs.music.Tab;
 
 /**
@@ -44,7 +40,7 @@ public class NetworkClient {
 		InputStream is = null;
 
 		try {
-			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+			HttpURLConnection conn = getConnection(url);
 			conn.setReadTimeout(readTimeout);
 			conn.setConnectTimeout(connectTimeout);
 			conn.setRequestMethod("GET");
@@ -64,12 +60,17 @@ public class NetworkClient {
 			} catch (JSONException e) {
 				//Toast.makeText(appCont, "Please retry fetching Tab", Toast.LENGTH_SHORT).show();
 			}
+			
 			return stringContent;
 		} finally {
 			if (is != null) {
 				is.close();
 			}
 		}
+	}
+
+	public HttpURLConnection getConnection(URL url) throws IOException {
+		return (HttpURLConnection) url.openConnection();
 	}
 
 	private String readStream(InputStream is) {
