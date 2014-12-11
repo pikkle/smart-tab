@@ -19,62 +19,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="3" language="java" name="ch.epfl.sweng.smartTabs.activity.MainActivity.DownloadWebpageTask" 
-    project="SmartTabs" file="/SmartTabs/src/ch/epfl/sweng/smartTabs/activity/MainActivity.java" binary="false" 
-    corner="BOTTOM_RIGHT">    
-    <position height="116" width="263" x="650" y="247"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="4" language="java" name="ch.epfl.sweng.smartTabs.activity.MainActivity.DownloadTabs" project="SmartTabs" 
-    file="/SmartTabs/src/ch/epfl/sweng/smartTabs/activity/MainActivity.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="134" width="179" x="934" y="403"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="5" language="java" name="ch.epfl.sweng.smartTabs.gfx.NoteView" project="SmartTabs" 
-    file="/SmartTabs/src/ch/epfl/sweng/smartTabs/gfx/NoteView.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="332" width="307" x="240" y="1105"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="6" language="java" name="ch.epfl.sweng.smartTabs.gfx.TabAnimationThread" project="SmartTabs" 
-    file="/SmartTabs/src/ch/epfl/sweng/smartTabs/gfx/TabAnimationThread.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="242" width="202" x="304" y="823"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <enumeration id="7" language="java" name="ch.epfl.sweng.smartTabs.gfx.Box" project="SmartTabs" 
-    file="/SmartTabs/src/ch/epfl/sweng/smartTabs/gfx/Box.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="188" width="214" x="249" y="2641"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </enumeration>  
-  <class id="8" language="java" name="ch.epfl.sweng.smartTabs.gfx.GridViewDraw" project="SmartTabs" 
-    file="/SmartTabs/src/ch/epfl/sweng/smartTabs/gfx/GridViewDraw.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="1124" width="302" x="161" y="1477"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="9" language="java" name="ch.epfl.sweng.smartTabs.music.Tab" project="SmartTabs" 
+  <class id="3" language="java" name="ch.epfl.sweng.smartTabs.music.Tab" project="SmartTabs" 
     file="/SmartTabs/src/ch/epfl/sweng/smartTabs/music/Tab.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="296" width="282" x="768" y="2641"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
@@ -83,7 +28,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <enumeration id="10" language="java" name="ch.epfl.sweng.smartTabs.music.Height" project="SmartTabs" 
+  <enumeration id="4" language="java" name="ch.epfl.sweng.smartTabs.music.Height" project="SmartTabs" 
     file="/SmartTabs/src/ch/epfl/sweng/smartTabs/music/Height.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="386" width="162" x="545" y="2641"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
@@ -92,7 +37,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </enumeration>  
-  <enumeration id="11" language="java" name="ch.epfl.sweng.smartTabs.music.Instrument" project="SmartTabs" 
+  <enumeration id="5" language="java" name="ch.epfl.sweng.smartTabs.music.Instrument" project="SmartTabs" 
     file="/SmartTabs/src/ch/epfl/sweng/smartTabs/music/Instrument.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="170" width="168" x="41" y="2641"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
@@ -101,7 +46,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </enumeration>  
-  <class id="12" language="java" name="ch.epfl.sweng.smartTabs.music.Note" project="SmartTabs" 
+  <class id="6" language="java" name="ch.epfl.sweng.smartTabs.music.Note" project="SmartTabs" 
     file="/SmartTabs/src/ch/epfl/sweng/smartTabs/music/Note.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="188" width="162" x="608" y="1477"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
@@ -110,16 +55,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="13" language="java" name="ch.epfl.sweng.smartTabs.music.NotePlaybackThread" project="SmartTabs" 
-    file="/SmartTabs/src/ch/epfl/sweng/smartTabs/music/NotePlaybackThread.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="134" width="344" x="567" y="823"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="14" language="java" name="ch.epfl.sweng.smartTabs.music.SampleMap" project="SmartTabs" 
+  <class id="7" language="java" name="ch.epfl.sweng.smartTabs.music.SampleMap" project="SmartTabs" 
     file="/SmartTabs/src/ch/epfl/sweng/smartTabs/music/SampleMap.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="134" width="379" x="608" y="1105"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
@@ -128,7 +64,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <enumeration id="15" language="java" name="ch.epfl.sweng.smartTabs.music.Duration" project="SmartTabs" 
+  <enumeration id="8" language="java" name="ch.epfl.sweng.smartTabs.music.Duration" project="SmartTabs" 
     file="/SmartTabs/src/ch/epfl/sweng/smartTabs/music/Duration.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="206" width="159" x="728" y="3439"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
@@ -137,7 +73,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </enumeration>  
-  <class id="16" language="java" name="ch.epfl.sweng.smartTabs.music.Time" project="SmartTabs" 
+  <class id="9" language="java" name="ch.epfl.sweng.smartTabs.music.Time" project="SmartTabs" 
     file="/SmartTabs/src/ch/epfl/sweng/smartTabs/music/Time.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="332" width="243" x="859" y="3067"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
@@ -146,268 +82,76 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <association id="17">    
-    <end type="SOURCE" refId="8" navigable="false">      
-      <attribute id="18" name="myInstrument">        
-        <position height="18" width="81" x="1" y="2588"/>      
-      </attribute>      
-      <multiplicity id="19" minimum="0" maximum="1">        
-        <position height="16" width="25" x="125" y="2675"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="11" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="20">    
-    <end type="SOURCE" refId="5" navigable="false">      
-      <attribute id="21" name="mGridView"/>      
-      <multiplicity id="22" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="8" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="23">    
-    <end type="SOURCE" refId="12" navigable="false">      
-      <attribute id="24" name="myHeight"/>      
-      <multiplicity id="25" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="10" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="26">    
-    <bendpoint x="941" y="823"/>    
+  <association id="10">    
     <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="27" name="map"/>      
-      <multiplicity id="28" minimum="0" maximum="1"/>    
+      <attribute id="11" name="tab"/>      
+      <multiplicity id="12" minimum="0" maximum="1"/>    
     </end>    
-    <end type="TARGET" refId="14" navigable="true"/>    
+    <end type="TARGET" refId="3" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="29">    
-    <bendpoint x="514" y="1477"/>    
-    <bendpoint x="514" y="2641"/>    
-    <end type="SOURCE" refId="5" navigable="false">      
-      <attribute id="30" name="times"/>      
-      <multiplicity id="31" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="16" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <nesting id="32">    
-    <end type="SOURCE" refId="2"/>    
-    <end type="TARGET" refId="3"/>  
-  </nesting>  
-  <dependency id="33">    
-    <end type="SOURCE" refId="8"/>    
-    <end type="TARGET" refId="7"/>  
-  </dependency>  
-  <dependency id="34">    
-    <bendpoint x="1080" y="823"/>    
-    <bendpoint x="1080" y="1105"/>    
-    <bendpoint x="1122" y="1477"/>    
-    <bendpoint x="1122" y="2641"/>    
+  <dependency id="13">    
     <end type="SOURCE" refId="1"/>    
-    <end type="TARGET" refId="16"/>  
-  </dependency>  
-  <association id="35">    
-    <bendpoint x="88" y="823"/>    
-    <bendpoint x="88" y="1105"/>    
-    <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="36" name="mDrawable"/>      
-      <multiplicity id="37" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="8" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="38">    
-    <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="39" name="playbackThread"/>      
-      <multiplicity id="40" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="13" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <dependency id="41">    
-    <bendpoint x="1017" y="823"/>    
-    <bendpoint x="1017" y="1105"/>    
-    <end type="SOURCE" refId="1"/>    
-    <end type="TARGET" refId="12"/>  
-  </dependency>  
-  <dependency id="42">    
-    <bendpoint x="109" y="1105"/>    
-    <bendpoint x="109" y="1477"/>    
-    <end type="SOURCE" refId="13"/>    
-    <end type="TARGET" refId="11"/>  
-  </dependency>  
-  <association id="43">    
-    <end type="SOURCE" refId="6" navigable="false">      
-      <attribute id="44" name="myNoteview"/>      
-      <multiplicity id="45" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="5" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <dependency id="46">    
-    <bendpoint x="1101" y="577"/>    
-    <bendpoint x="1101" y="823"/>    
-    <bendpoint x="1101" y="1105"/>    
-    <bendpoint x="1101" y="1477"/>    
-    <end type="SOURCE" refId="4"/>    
-    <end type="TARGET" refId="9"/>  
-  </dependency>  
-  <dependency id="47">    
-    <bendpoint x="535" y="1477"/>    
-    <end type="SOURCE" refId="5"/>    
-    <end type="TARGET" refId="10"/>  
-  </dependency>  
-  <association id="48">    
-    <bendpoint x="737" y="2641"/>    
-    <bendpoint x="737" y="3067"/>    
-    <end type="SOURCE" refId="12" navigable="false">      
-      <attribute id="49" name="myDuration"/>      
-      <multiplicity id="50" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="15" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="51">    
-    <end type="SOURCE" refId="9" navigable="false">      
-      <attribute id="52" name="mTimeList"/>      
-      <multiplicity id="53" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="16" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="54">    
-    <bendpoint x="130" y="1477"/>    
-    <end type="SOURCE" refId="5" navigable="false">      
-      <attribute id="55" name="myInstrument">        
-        <position height="18" width="81" x="1" y="2651"/>      
-      </attribute>      
-      <multiplicity id="56" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="11" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="57">    
-    <end type="SOURCE" refId="13" navigable="false">      
-      <attribute id="58" name="mSamples"/>      
-      <multiplicity id="59" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="14" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <dependency id="60">    
-    <end type="SOURCE" refId="4"/>    
-    <end type="TARGET" refId="1"/>  
-  </dependency>  
-  <nesting id="61">    
-    <bendpoint x="943" y="247"/>    
-    <end type="SOURCE" refId="2"/>    
-    <end type="TARGET" refId="4"/>  
-  </nesting>  
-  <association id="62">    
-    <bendpoint x="1038" y="1105"/>    
-    <bendpoint x="1080" y="1477"/>    
-    <bendpoint x="1080" y="2641"/>    
-    <end type="SOURCE" refId="13" navigable="false">      
-      <attribute id="63" name="mTime"/>      
-      <multiplicity id="64" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="16" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="65">    
-    <bendpoint x="536" y="823"/>    
-    <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="66" name="n"/>      
-      <multiplicity id="67" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="5" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <dependency id="68">    
-    <bendpoint x="1059" y="823"/>    
-    <bendpoint x="1059" y="1105"/>    
-    <bendpoint x="1059" y="1477"/>    
-    <end type="SOURCE" refId="1"/>    
-    <end type="TARGET" refId="9"/>  
-  </dependency>  
-  <dependency id="69">    
-    <end type="SOURCE" refId="14"/>    
-    <end type="TARGET" refId="12"/>  
-  </dependency>  
-  <association id="70">    
-    <bendpoint x="556" y="1477"/>    
-    <end type="SOURCE" refId="5" navigable="false">      
-      <attribute id="71" name="myTab"/>      
-      <multiplicity id="72" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="9" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="73">    
-    <end type="SOURCE" refId="5" navigable="false">      
-      <attribute id="74" name="tuning"/>      
-      <multiplicity id="75" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="12" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="76">    
-    <end type="SOURCE" refId="8" navigable="false">      
-      <attribute id="77" name="myTab"/>      
-      <multiplicity id="78" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="9" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <dependency id="79">    
-    <bendpoint x="67" y="823"/>    
-    <bendpoint x="67" y="1105"/>    
-    <bendpoint x="67" y="1477"/>    
-    <end type="SOURCE" refId="1"/>    
-    <end type="TARGET" refId="11"/>  
-  </dependency>  
-  <association id="80">    
-    <bendpoint x="577" y="1105"/>    
-    <end type="SOURCE" refId="13" navigable="false">      
-      <attribute id="81" name="mTuning"/>      
-      <multiplicity id="82" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="12" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="83">    
-    <end type="SOURCE" refId="8" navigable="false">      
-      <attribute id="84" name="stantardTuning"/>      
-      <multiplicity id="85" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="10" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <dependency id="86">    
-    <end type="SOURCE" refId="3"/>    
     <end type="TARGET" refId="4"/>  
   </dependency>  
-  <association id="87">    
+  <association id="14">    
     <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="88" name="thread"/>      
-      <multiplicity id="89" minimum="0" maximum="1"/>    
+      <attribute id="15" name="tuning"/>      
+      <multiplicity id="16" minimum="0" maximum="2147483647"/>    
     </end>    
     <end type="TARGET" refId="6" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <dependency id="90">    
-    <end type="SOURCE" refId="16"/>    
-    <end type="TARGET" refId="15"/>  
+  <association id="17">    
+    <bendpoint x="737" y="2641"/>    
+    <bendpoint x="737" y="3067"/>    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="18" name="myDuration">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="19" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="8" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="20">    
+    <bendpoint x="941" y="823"/>    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="21" name="map">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="22" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="7" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="23">    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="24" name="myHeight">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="25" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="4" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <dependency id="26">    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="5"/>  
   </dependency>  
-  <dependency id="91">    
-    <bendpoint x="493" y="1477"/>    
-    <bendpoint x="493" y="2641"/>    
-    <bendpoint x="493" y="3067"/>    
-    <end type="SOURCE" refId="5"/>    
-    <end type="TARGET" refId="15"/>  
+  <dependency id="27">    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="9"/>  
+  </dependency>  
+  <dependency id="28">    
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="6"/>  
   </dependency>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="true" signature="true" 
     sort-features="false" accessors="true" visibility="true">    
