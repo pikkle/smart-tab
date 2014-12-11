@@ -15,18 +15,15 @@ public class Time implements Serializable {
     private final String mDuration;
     private final String[] mTabNotes;
     private final Note[] mPartitionNotes;
-    private final int mMesure;
     private final static int NUMCHORDS = 6;
     private final static Note[] TUNING = { 
             new Note(Height.E, 3), new Note(Height.B, 2), new Note(Height.G, 2),
             new Note(Height.D, 2), new Note(Height.A, 1), new Note(Height.E, 1)
     };
 
-    public Time(String[] notes, Note[] partitionNotes, String duration,
-            int mesure) {
+    public Time(String[] notes, Note[] partitionNotes, String duration) {
         mTabNotes = notes;
         mDuration = duration;
-        mMesure = mesure;
         mPartitionNotes = partitionNotes;
     }
 
@@ -55,15 +52,8 @@ public class Time implements Serializable {
         } catch (JSONException e) {
             throw new JSONException("The length value is not valid");
         }
-        int jsonMesure;
-        try {
-            jsonMesure = jsonTime.getInt("measure");
-        } catch (JSONException e) {
-            // throw new JSONException("The measure value is not valid");
-            jsonMesure = 0;
-        }
 
-        return new Time(jsonNotes, partitionNotes, jsonDuration, jsonMesure);
+        return new Time(jsonNotes, partitionNotes, jsonDuration);
     }
 
     public String getNote(int string) {
@@ -80,10 +70,6 @@ public class Time implements Serializable {
 
     public String getDuration() {
         return mDuration;
-    }
-
-    public int getMesure() {
-        return mMesure;
     }
     
     public boolean isEmpty() {
