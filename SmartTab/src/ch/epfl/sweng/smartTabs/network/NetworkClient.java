@@ -106,7 +106,13 @@ public class NetworkClient {
 	}
 
 	public Tab fetchTab(URL myUrl) throws IOException, JSONException {
+		try{
+			
 		return Tab.parseTabFromJSON(new JSONObject(downloadContent(myUrl)));
+		}
+		catch(JSONException e){
+			throw new JSONException("Bad JSON");
+		}
 	}
 
 }
