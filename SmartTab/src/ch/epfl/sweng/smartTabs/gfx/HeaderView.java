@@ -12,6 +12,7 @@ import android.view.View;
 public class HeaderView extends View {
     private Paint paint;
     private String mTitle;
+    private String mArtist;
 
     private final int titleAlpha = 255;
     private final float titleSizeRatio = 0.5f;
@@ -24,11 +25,12 @@ public class HeaderView extends View {
      * @param context
      * @param title
      */
-    public HeaderView(Context context, String title) {
+    public HeaderView(Context context, String title, String artist) {
         super(context);
         this.paint = new Paint();
         this.setBackgroundColor(Color.WHITE);
         this.mTitle = title;
+        this.mArtist = artist;
         metronome = new Metronome();
     }
 
@@ -37,7 +39,7 @@ public class HeaderView extends View {
         paint.setTextSize(canvas.getHeight() * titleSizeRatio);
         paint.setAlpha(titleAlpha);
         paint.setColor(Color.GRAY);
-        canvas.drawText(mTitle, canvas.getWidth() / 32, canvas.getHeight() / 2,
+        canvas.drawText(mTitle+" - "+mArtist, canvas.getWidth() / 32, canvas.getHeight() / 2,
                 paint);
 
         // Drawing the Metronome
