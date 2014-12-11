@@ -122,7 +122,7 @@ public class MusicSheetView extends View {
                         c.drawBitmap(currNoteImage, pos, posHeight,
                                 paint);
                         if(isSharp)
-                        	c.drawBitmap(sharp, pos+currNoteImage.getWidth(), posHeight + currNoteImage.getHeight() - sharp.getHeight(), paint);
+                        	c.drawBitmap(sharp, pos+currNoteImage.getWidth(), posHeight + currNoteImage.getHeight() - sharp.getHeight() +  (lineMargin / 2), paint);
                     }
                 }
             }
