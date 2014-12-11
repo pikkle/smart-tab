@@ -17,41 +17,26 @@ public final class Tab implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private final String mTabName;
-    private final boolean mComplex;
     private final int mTempo;
-    private final List<String> mSignatures;
     private final List<Time> mTimeList;
     private final HashMap<Float, Time> mTimeMap = new HashMap<Float, Time>();
     private final int pace = 200;
 
-    private Tab(String tabName, boolean complex, int tempo,
-            List<String> signatures, List<Time> timeList) {
+    private Tab(String tabName, int tempo, List<Time> timeList) {
         mTabName = tabName;
-        mComplex = complex;
         mTempo = tempo;
-        mSignatures = signatures;
         mTimeList = timeList;
     }
 
     public static Tab parseTabFromJSON(JSONObject jsonTab) throws JSONException {
         String jsonTabName = jsonTab.getString("name");
-        boolean jsonComplex = jsonTab.getBoolean("complex");
         int jsonTempo = jsonTab.getInt("tempo");
-        JSONArray jsonSignatures;
-        try {
-            jsonSignatures = jsonTab.getJSONArray("signatures");
-        } catch (JSONException e) {
-            jsonSignatures = new JSONArray();
-        }
 
         JSONArray jsonTimeList = jsonTab.getJSONArray("partition");
 
-        List<String> parsedSignatures = new ArrayList<String>();
         List<Time> parsedTimeList = new ArrayList<Time>();
 
-        for (int i = 0; i < jsonSignatures.length(); i++) {
-            parsedSignatures.add(jsonSignatures.getString(i));
-        }
+       
         for (int i = 0; i < jsonTimeList.length(); i++) {
             Time jsonTime = Time.parseTimeFromJson(jsonTimeList
                     .getJSONObject(i));
@@ -59,8 +44,7 @@ public final class Tab implements Serializable {
             	parsedTimeList.add(jsonTime);
             }
         }
-        return new Tab(jsonTabName, jsonComplex, jsonTempo, parsedSignatures,
-                parsedTimeList);
+        return new Tab(jsonTabName, jsonTempo, parsedTimeList);
     }
 
     /**
@@ -100,16 +84,9 @@ public final class Tab implements Serializable {
         return mTimeList.size();
     }
 
-    public boolean isComplex() {
-        return mComplex;
-    }
     
     public int getTempo() {
         return mTempo;
-    }
-
-    public String getSignatures(int index) {
-        return mSignatures.get(index);
     }
 
     public Time getTime(int index) {
