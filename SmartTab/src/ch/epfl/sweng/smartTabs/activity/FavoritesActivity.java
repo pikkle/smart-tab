@@ -9,7 +9,13 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.util.Base64;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -19,8 +25,13 @@ import ch.epfl.sweng.smartTabs.R;
 import ch.epfl.sweng.smartTabs.music.Tab;
 
 public class FavoritesActivity extends Activity {
+	
 	private static final String PREFS_NAME = "MyPrefsFile";
+	
 	private ListView listV;
+	private DrawerLayout mDrawerLayout;
+	private ListView mDrawerList;
+	private ActionBarDrawerToggle mDrawerToggle;
 
 	private SharedPreferences sharedPrefs;
 	private ArrayAdapter<String> adap;
@@ -30,6 +41,8 @@ public class FavoritesActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_favorites);
+		
+		initDrawerLayout();
 
 		listV = (ListView) findViewById(R.id.fav_list);
 
@@ -61,6 +74,30 @@ public class FavoritesActivity extends Activity {
 
 		});
 	}
+	
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle presses on the action bar items
+		switch (item.getItemId()) {
+		case R.id.fav_action_drawer:
+			if(mDrawerLayout.isDrawerOpen(mDrawerList)){
+				mDrawerLayout.closeDrawer(mDrawerList);				
+			} else {
+				mDrawerLayout.openDrawer(mDrawerList);
+			}
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+	}
+	
+	@Override
+	public void onBackPressed() {
+		if(mDrawerLayout.isDrawerOpen(mDrawerList)){
+			mDrawerLayout.closeDrawer(mDrawerList);
+		} else {			
+			super.onBackPressed();
+		}
+	}
 
 	@Override
 	protected void onResume() {
@@ -88,6 +125,56 @@ public class FavoritesActivity extends Activity {
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 			return null;
+		}
+	}
+	
+	public void initDrawerLayout(){
+		mDrawerLayout = (DrawerLayout) findViewById(R.id.fav_drawer_layout);
+		mDrawerList = (ListView) findViewById(R.id.fav_right_drawer);
+		mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.drawable.ic_drawer, 0, 0);
+
+		mDrawerLayout.setDrawerListener(mDrawerToggle);
+        mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.RELATIVE_HORIZONTAL_GRAVITY_MASK);
+        
+		String [] items = {"All Tabs", "Favorites", "Settings"};
+
+		adap = new ArrayAdapter<String>(this, R.layout.drawer_list_layout, items);
+
+		mDrawerList.setAdapter(adap);
+		mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+	}
+	
+	private class DrawerItemClickListener implements ListView.OnItemClickListener {
+		@Override
+		public void onItemClick(AdapterView parent, View view, int position, long id) {
+			selectItem(position);
+		}
+	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.fav_activity_action_bar, menu);
+
+		return super.onCreateOptionsMenu(menu);
+
+	}
+
+
+	public void selectItem(int position) {
+		switch (position){
+		case 0 : 
+			startActivity(new Intent(FavoritesActivity.this, MainActivity.class));
+			break;
+		case 1 :
+			mDrawerLayout.closeDrawer(mDrawerList);
+			break;
+		case 2 :
+			startActivity(new Intent(FavoritesActivity.this, PreferencesActivity.class));
+			break;
+		default :
+			mDrawerLayout.closeDrawer(mDrawerList);
+			break;
 		}
 	}
 
