@@ -83,8 +83,7 @@ public class TablatureView extends View{
         Point end = new Point();
         ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE))
                 .getDefaultDisplay().getSize(end);
-        endOfTab = ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE))
-                .getDefaultDisplay().getWidth();
+        endOfTab = context.getResources().getDisplayMetrics().widthPixels;
     }
 
     @Override

@@ -46,6 +46,7 @@ import ch.epfl.sweng.smartTabs.music.Time;
  * 
  */
 public class DisplayActivity extends Activity {
+
     private static final String PREFS_NAME = "MyPrefsFile";
     private HeaderView headerView;
     private FooterView footerView;

@@ -17,11 +17,6 @@ public class TimeTest extends AndroidTestCase{
 	assertEquals("", time.getNote(1));
 	assertEquals("0", time.getNote(2));
 	}
-	/*
-	public void testDuration(){
-		assertEquals(5, time.getDuration());
-	}
-	*/
 	
 	public void testMesure(){
 		assertEquals(1, time.getMesure());
