@@ -8,6 +8,10 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.view.View;
 
+/**
+ * View for the favorite tab
+ *
+ */
 public class FavoritesView extends View{
 	
 	private boolean isFavorite;
