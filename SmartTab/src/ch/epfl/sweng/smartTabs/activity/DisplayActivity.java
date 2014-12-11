@@ -1,5 +1,8 @@
 package ch.epfl.sweng.smartTabs.activity;
 
+import java.io.ByteArrayOutputStream;
+import java.io.ObjectOutputStream;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -13,6 +16,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v4.view.MotionEventCompat;
+import android.util.Base64;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -42,6 +46,7 @@ import ch.epfl.sweng.smartTabs.music.Time;
  *
  */
 public class DisplayActivity extends Activity {
+	private static final String PREFS_NAME = "MyPrefsFile";
 	private HeaderView headerView;
 	private FooterView footerView;
 	private CursorView cursorView;
@@ -51,6 +56,12 @@ public class DisplayActivity extends Activity {
 	private FrameLayout testWrapper;
 	
 	private boolean running;
+	
+    
+    private SharedPreferences sharedPrefs;
+    
+    private Tab tab;
+
 
 	private static final int PACE = 200;
 	private static final double millisInMin = 60000.0; // number of millis in one min
@@ -91,11 +102,13 @@ public class DisplayActivity extends Activity {
 		this.getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
 		Intent intent = getIntent();
-		final Tab tab = (Tab) intent.getExtras().getSerializable("tab");
+		tab = (Tab) intent.getExtras().getSerializable("tab");
 
 		delay = computeDelay(tab.getTempo(), PACE, speed, millisInMin);
 
 		setContentView(R.layout.activity_display);
+		
+		sharedPrefs = getSharedPreferences(PREFS_NAME, 0);
 
 		wrapper = (LinearLayout) (this.findViewById(R.id.wrapper));
 		musicWrapper = new LinearLayout(getBaseContext());
@@ -103,7 +116,7 @@ public class DisplayActivity extends Activity {
 		testWrapper = new FrameLayout(getBaseContext());
 
 		headerView 		= new HeaderView(getBaseContext(), tab.getTabName());
-		footerView 		= new FooterView(getBaseContext());
+		footerView 		= new FooterView(getBaseContext(), sharedPrefs.contains(tab.getTabName()));
 		tablatureView 	= new TablatureView(getBaseContext(), tab, Instrument.GUITAR, PACE);
 		musicSheetView 	= new MusicSheetView(getBaseContext(), tab);
 		cursorView 		= new CursorView(getBaseContext());
@@ -131,9 +144,6 @@ public class DisplayActivity extends Activity {
 
 		// Basic scrolling
 		Thread t = new Thread(new Runnable() {
-
-			
-
 
 			@Override
 			public void run() {
@@ -230,35 +240,53 @@ public class DisplayActivity extends Activity {
 	public boolean onTouchEvent(MotionEvent event) {
 
 		final float x = event.getX();
+		final float y = event.getY();
 		
-		if (MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_DOWN) {
-			tabPosX = tablatureView.getScrollX();
-			this.lastX = x;
-			scrolled = false;
-		} 
-		
-		if(MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_MOVE) {
-			this.newX = x;
-			int delta = (int) (lastX - newX);
+		if(x > footerView.getFavPosX() && y > footerView.getY() && MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_UP){
+			footerView.getFav().setIsFav();
+			footerView.invalidate();
+			SharedPreferences.Editor editor = sharedPrefs.edit();
+			if(!sharedPrefs.contains(tab.getTabName())){
+				editor.putString(tab.getTabName(), serialize(tab));
+				editor.commit();
+				Toast.makeText(this, "Added to favorites", Toast.LENGTH_SHORT).show();
+			} else {
+				editor.remove(tab.getTabName());
+				editor.commit();
+				Toast.makeText(this, "Removed from favorites", Toast.LENGTH_SHORT).show();
+			}	
+		} else {	
+			if (MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_DOWN) {
+				tabPosX = tablatureView.getScrollX();
+				this.lastX = x;
+				scrolled = false;
+			} 
 			
-			if(Math.abs(delta) >= 30) {
-				running = false;
-				scrolled = true;
-				int newPosX = tabPosX + delta;
-				if(lastX != newX && newPosX >= 0 && newPosX <= tablatureView.getEndOfTab()){
-					tablatureView.scrollTo(newPosX, 0);
-					musicSheetView.scrollTo(newPosX, 0);
-					playingPosition = (int) (tablatureView.getScrollX() + cursorView.getX() + 4*OFFSET);
+			if(MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_MOVE) {
+				this.newX = x;
+				int delta = (int) (lastX - newX);
+				
+				if(Math.abs(delta) >= 30) {
+					running = false;
+					scrolled = true;
+					int newPosX = tabPosX + delta;
+					if(lastX != newX && newPosX >= 0 && newPosX <= tablatureView.getEndOfTab()){
+						tablatureView.scrollTo(newPosX, 0);
+						musicSheetView.scrollTo(newPosX, 0);
+						playingPosition = (int) (tablatureView.getScrollX() + cursorView.getX() + 4*OFFSET);
+					}
+				}
+			} 
+			
+			if(MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_UP) {
+				if(!scrolled){
+					running = !running;
+					footerView.playPause();
 				}
 			}
-		} 
-		
-		if(MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_UP) {
-			if(!scrolled){
-				running = !running;
-				footerView.playPause();
-			}
 		}
+		
+		
 		
 		return true;
 	}
@@ -318,6 +346,20 @@ public class DisplayActivity extends Activity {
 		}
 		
 	}
+	
+    public String serialize(Tab t){
+   	 try {
+   	     ByteArrayOutputStream bo = new ByteArrayOutputStream();
+   	     ObjectOutputStream so = new ObjectOutputStream(bo);
+   	     so.writeObject(t);
+   	     so.flush();
+   	     return new String(Base64.encode(bo.toByteArray(), Base64.DEFAULT));
+   	 } catch (Exception e) {
+   		 e.printStackTrace();
+   		 return "Error";
+   	 }
+   }
+ 
 /**
  * Author: 
  * @param Context
