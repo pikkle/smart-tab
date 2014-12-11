@@ -78,11 +78,11 @@ public class HeaderView extends View {
     public void computeRatio(int position, int pace) {
         double percentage = ((double) position % (double) pace) / (double) pace;
         if (percentage >= MINDECREASINGPOS && percentage <= MAXDECREASINGPOS) {
-            mRatio = (SLOPE1) * percentage + VERTICALOFFSET1;
+            mRatio = SLOPE1 * percentage + VERTICALOFFSET1;
         } else if (percentage > MAXDECREASINGPOS && percentage < MININCREASINGPOS) {
             mRatio = STABLERATIO;
         } else if (percentage >= MININCREASINGPOS && percentage < MAXINCREASINGPOS) {
-            mRatio = (SLOPE2) * percentage - VERTICALOFFSET2;
+            mRatio = SLOPE2 * percentage + VERTICALOFFSET2;
         }
-     }
+    }
 }

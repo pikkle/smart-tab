@@ -14,12 +14,14 @@ import ch.epfl.sweng.smartTabs.R;
  *	The footer has various options such as a slider to change the speed.
  */
 public class FooterView extends View {
-	private boolean displayed = true;
-	private Paint paint;
-	private Boolean running = false;
+    
+    private final static int LEFTPADDING = 50;
+
+    private boolean mDisplayed = true;
+	private Paint mPaint;
+	private Boolean mRunning = false;
 	private Context mContext;
-	private FavoritesView favs;
-	private final static int LEFTPADDING = 50;
+	private FavoritesView mFavs;
 	
 
 	/**
@@ -30,17 +32,17 @@ public class FooterView extends View {
 	public FooterView(Context context, boolean isFav) {
 		super(context);
 		mContext = context;
-		paint = new Paint();
+		mPaint = new Paint();
 		this.setBackgroundColor(Color.WHITE);
-		favs = new FavoritesView(context, isFav);
+		mFavs = new FavoritesView(context, isFav);
 	}
 	
 	
 	@Override
     protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
-		favs.draw(canvas, paint);
-		if (running) {
+		mFavs.draw(canvas, mPaint);
+		if (mRunning) {
 		    drawPlay(canvas); 
 		} else {
 		    drawPause(canvas);
@@ -48,33 +50,32 @@ public class FooterView extends View {
     }
 
 	private void drawPause(Canvas canvas) {
-	    paint.setColor(Color.BLACK);
+	    mPaint.setColor(Color.BLACK);
 	    Bitmap bmp = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.ic_action_pause);
-	    canvas.drawBitmap(bmp, LEFTPADDING, 0, paint);    
+	    canvas.drawBitmap(bmp, LEFTPADDING, 0, mPaint);    
     }
 
     private void drawPlay(Canvas canvas) {
-        paint.setColor(Color.BLACK);
+        mPaint.setColor(Color.BLACK);
         Bitmap bmp = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.ic_action_play);
-	    canvas.drawBitmap(bmp, LEFTPADDING, 0, paint);    
+	    canvas.drawBitmap(bmp, LEFTPADDING, 0, mPaint);    
     }
 
-
     public boolean isDisplayed() {
-		return displayed;
+		return mDisplayed;
 	}
     
     public int getFavPosX() {
-    	return favs.getFavPositonX();
+    	return mFavs.getFavPositonX();
     }
     
     public FavoritesView getFav() {
-    	return favs;
+    	return mFavs;
     }
 
 
     public void playPause() {
-        running = !running;
+        mRunning = !mRunning;
         this.invalidate();
     }
 }

@@ -13,43 +13,46 @@ import android.view.View;
  *
  */
 public class FavoritesView extends View{
+
+    private final static int OFFSET = 50;
 	
-	private boolean isFavorite;
+	private boolean mIsFavorite;
 	private Context mContext;
-	private int posX;
-	private int posY;
+	private int mPosX;
+	private int mPosY;
 	
-	public FavoritesView(Context context, boolean favorite){
+	
+	public FavoritesView(Context context, boolean favorite) {
 		super(context);
 		mContext = context;
-		isFavorite=favorite;
+		mIsFavorite=favorite;
 	}
 	
-	public void draw(Canvas canvas, Paint paint){
+	public void draw(Canvas canvas, Paint paint) {
 		Bitmap bmp;
-		if(isFavorite){
+		if (mIsFavorite) {
 			bmp = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.btn_star_big_on);
 		} else {
 			bmp = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.btn_star_big_off);
 		}
-		posX = canvas.getWidth() - bmp.getWidth() - 50;
-		posY = 0;
-		canvas.drawBitmap(bmp, posX, posY, paint);   
+		mPosX = canvas.getWidth() - bmp.getWidth() - OFFSET;
+		mPosY = 0;
+		canvas.drawBitmap(bmp, mPosX, mPosY, paint);   
 	}
 	
 	public void setIsFav() {
-		isFavorite = !isFavorite;
+		mIsFavorite = !mIsFavorite;
 	}
 	
 	public boolean isFav() {
-		return isFavorite;
+		return mIsFavorite;
 	}
 	
-	public int getFavPositonX(){
-		return posX;
+	public int getFavPositonX() {
+		return mPosX;
 	}
 
-	public int getFavPositionY(){
-		return posY;
+	public int getFavPositionY() {
+		return mPosY;
 	}
 }

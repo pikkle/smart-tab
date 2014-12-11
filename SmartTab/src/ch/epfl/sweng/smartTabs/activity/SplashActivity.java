@@ -13,7 +13,8 @@ import ch.epfl.sweng.smartTabs.R;
  */
 
 public class SplashActivity extends Activity {
-    private final int delay = 1000;
+    
+    private final static int DELAY = 1000;
     private Thread background;
 
     @Override
@@ -23,7 +24,7 @@ public class SplashActivity extends Activity {
         background = new Thread() {
             public void run() {
                 try {
-                    sleep(delay);
+                    sleep(DELAY);
                 } catch (InterruptedException e) {
                     android.os.Process.killProcess(android.os.Process.myPid());
                 }
