@@ -387,7 +387,7 @@ public class DisplayActivity extends Activity {
         AlertDialog.Builder adBuilder = new AlertDialog.Builder(cont);
         adBuilder.setView(linLayout);
         adBuilder.setTitle(R.string.title_help);
-        adBuilder.setMessage(R.string.help_content);
+        adBuilder.setMessage(R.string.help_content_dialog);
         adBuilder.setPositiveButton("Ok",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface arg0, int arg1) {
