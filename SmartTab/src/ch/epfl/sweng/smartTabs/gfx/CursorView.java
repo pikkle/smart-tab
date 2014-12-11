@@ -4,9 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.view.Display;
 import android.view.View;
-import android.view.WindowManager;
 
 /**
  * @author pikkle Draws the orange cursor, on top on the tablature view and the
@@ -29,10 +27,7 @@ public class CursorView extends View {
     public CursorView(Context context) {
         super(context);
         paint = new Paint();
-        WindowManager wm = (WindowManager) context
-                .getSystemService(Context.WINDOW_SERVICE);
-        Display display = wm.getDefaultDisplay();
-        posX = display.getWidth() / 8;
+        posX = context.getResources().getDisplayMetrics().widthPixels / 8;
     }
 
     @Override

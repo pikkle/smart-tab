@@ -91,6 +91,7 @@ public class TablatureView extends View{
         ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE))
                 .getDefaultDisplay().getSize(end);
         mEndOfTab = end.y;
+
     }
 
     @Override

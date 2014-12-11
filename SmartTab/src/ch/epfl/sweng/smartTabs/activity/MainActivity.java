@@ -3,6 +3,8 @@ package ch.epfl.sweng.smartTabs.activity;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
 import org.json.JSONException;
 
@@ -292,12 +294,14 @@ public class MainActivity extends Activity {
 			}
 			String[] values = new String[map.size()];
 			if (values.length == 0) {
-				System.err.println("test1");
 				setCustomAdapMessage(noSearchResultsAvail);
 			}
+			Set<String> set = new TreeSet<String>(map.keySet());
+			
 			int count = 0;
-			for (String key : map.keySet()) {
+			for (String key : set) {
 				values[count] = key;
+				System.out.println(key);
 				count++;
 			}
 

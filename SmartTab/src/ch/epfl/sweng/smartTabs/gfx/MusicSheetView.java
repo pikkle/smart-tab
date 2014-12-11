@@ -71,16 +71,14 @@ public class MusicSheetView extends View {
         this.mPace = pace;
         Point end = new Point();
         ((WindowManager) context.getSystemService(Context.WINDOW_SERVICE))
-                .getDefaultDisplay().getSize(end);
+            .getDefaultDisplay().getSize(end);
         mEndOfTab = end.y;
-        
+
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        
-        
         if (mFirstDraw) {
             int width = canvas.getWidth();
             int noteWidth = width / IMAGERATIO; 
