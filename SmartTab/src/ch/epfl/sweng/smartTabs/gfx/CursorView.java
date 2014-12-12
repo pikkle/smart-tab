@@ -12,12 +12,11 @@ import android.view.View;
  */
 public class CursorView extends View {
 
-    private final static int CURSORSIZE = 5;
-    private final static int CURSORPOSITION = 8;
-    private final static int CURSORCOLOR = Color.rgb(255, 165, 0);
-
-    private Paint mPaint;
-    private int mPosX;
+    private Paint paint;
+    private final int cursorSize = 5;
+    private final int cursorColor = Color.rgb(255, 165, 0);
+    private final int cursorPosition = 8;
+    private int posX;
 
     /**
      * Draw the cursor
@@ -27,19 +26,20 @@ public class CursorView extends View {
      */
     public CursorView(Context context) {
         super(context);
-        mPaint = new Paint();
-        mPosX = context.getResources().getDisplayMetrics().widthPixels / CURSORPOSITION;
+        paint = new Paint();
+        posX = context.getResources().getDisplayMetrics().widthPixels / 8;
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
-        mPaint.setStrokeWidth(CURSORSIZE);
-        mPaint.setColor(CURSORCOLOR);
-        canvas.drawLine(canvas.getWidth() / CURSORPOSITION, 0,
-                canvas.getWidth() / CURSORPOSITION, canvas.getHeight(), mPaint);
+        paint.setStrokeWidth(cursorSize);
+        paint.setColor(cursorColor);
+        canvas.drawLine(canvas.getWidth() / cursorPosition, 0,
+                canvas.getWidth() / cursorPosition, canvas.getHeight(), paint);
+
     }
 
-    public int getPosX() {
-        return mPosX;
+    public int getPosX(){
+        return posX;
     }
 }

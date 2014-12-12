@@ -22,6 +22,10 @@ import ch.epfl.sweng.smartTabs.music.Time;
  *
  */
 public class TablatureView extends View{
+    private final Paint mPaint = new Paint();
+    private final Instrument mInstrument;
+    private final Tab mTab;
+    private final List<Integer> mMesure = new ArrayList<Integer>();
     
     private final static int HEIGHTSCALE = 10;
     private final static int PADDINGDIVISOR = 8;
@@ -39,10 +43,8 @@ public class TablatureView extends View{
     private int mFirstNotePos;
     private boolean mFirstDraw;
     private int mTabLineMargin;
-    private final Paint mPaint = new Paint();
-    private final Instrument mInstrument;
-    private final Tab mTab;
-    private final List<Integer> mMesure = new ArrayList<Integer>();
+
+    
     private int mWidth;
     private int mHeight;
     private final Rect mNoteRect;
@@ -62,6 +64,7 @@ public class TablatureView extends View{
     public TablatureView(Context context, Tab tab, Instrument instrument, int pace) {
         super(context);
 
+        // Constructor attribut
         mTab = tab;
         
         mInstrument = instrument;
@@ -189,7 +192,7 @@ public class TablatureView extends View{
     }
 
     public boolean isTerminated() {
-        return getScrollX() > mEndOfTab;
+        return getScrollX() > mEndOfTab - mPace;
     }
 
     public int getEndOfTab() {

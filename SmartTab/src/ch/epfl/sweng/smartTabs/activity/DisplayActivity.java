@@ -83,7 +83,9 @@ public class DisplayActivity extends Activity {
     private int playingPosition; // Position of the time to play
     // (Intital value corresponds to the future cursor position)
 
+    private double defaultDelay;
     private double myDelay;
+    private double mySpeedFactor;
 
     private int dx = 1;
     private TablatureView tablatureView;
@@ -109,7 +111,9 @@ public class DisplayActivity extends Activity {
         Intent intent = getIntent();
         tab = (Tab) intent.getExtras().getSerializable("tab");
 
-        myDelay = computeDelay(tab.getTempo(), PACE, dx, MILLISINMIN);
+        mySpeedFactor = 1;
+        defaultDelay = computeDelay(tab.getTempo(), PACE, dx, MILLISINMIN);
+        myDelay = defaultDelay;
 
         setContentView(R.layout.activity_display);
 
@@ -122,7 +126,7 @@ public class DisplayActivity extends Activity {
 
         headerView = new HeaderView(getBaseContext(), tab.getTabName(), tab.getTabArtist());
         footerView = new FooterView(getBaseContext(), sharedPrefs.contains(tab
-                .getTabName()));
+                .getTabName()), (int)(mySpeedFactor*100));
         tablatureView = new TablatureView(getBaseContext(), tab,
                 Instrument.GUITAR, PACE);
         musicSheetView = new MusicSheetView(getBaseContext(), tab, PACE);
@@ -265,6 +269,17 @@ public class DisplayActivity extends Activity {
                 Toast.makeText(this, "Removed from favorites",
                         Toast.LENGTH_SHORT).show();
             }
+        } else if (x >= footerView.getSpeedDownPosX() && x <= footerView.getSpeedDownPosX()+footerView.getSpeedIconWidth() && y >= footerView.getY() && MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_UP){
+        	decSpeed();
+        	footerView.setSpeedFactor((int)(mySpeedFactor*100));
+        	footerView.invalidate();
+//        	Toast.makeText(getApplicationContext(), "Speed : " + (int) (mySpeedFactor*100) + " %", Toast.LENGTH_SHORT).show();
+        }else if (x >= footerView.getSpeedUpPosX() && x <= footerView.getSpeedUpPosX()+footerView.getSpeedIconWidth() && y >= footerView.getY() && MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_UP){
+        	incSpeed();
+        	footerView.setSpeedFactor((int)(mySpeedFactor*100));
+        	footerView.invalidate();
+
+//        	Toast.makeText(getApplicationContext(), "Speed : " + (int) (mySpeedFactor*100) + " %", Toast.LENGTH_SHORT).show();
         } else {
             if (MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_DOWN) {
                 tabPosX = tablatureView.getScrollX();
@@ -279,6 +294,7 @@ public class DisplayActivity extends Activity {
                 if (Math.abs(delta) >= MINIMALSCROLL) {
                     running = false;
                     scrolled = true;
+                    footerView.setRunning(false);
                     int newPosX = tabPosX + delta;
                     if (lastX != newX && newPosX >= 0
                             && newPosX <= tablatureView.getEndOfTab()) {
@@ -301,7 +317,29 @@ public class DisplayActivity extends Activity {
         return true;
     }
 
-    @Override
+    private void decSpeed() {
+    	if(mySpeedFactor>=0.4){
+    		mySpeedFactor-=0.2;
+    	}
+    	updateThreadDelay();
+	}
+    
+    private void incSpeed() {
+    	if(mySpeedFactor<=1.4){
+    		mySpeedFactor+=0.2;
+    	}
+    	updateThreadDelay();
+	}
+    public void updateThreadDelay() {
+    	if(mySpeedFactor < 0.2){
+    		mySpeedFactor = 0.2;
+    	} else if (mySpeedFactor > 1.6){
+    		mySpeedFactor = 1.6;
+    	}
+    	myDelay = defaultDelay/mySpeedFactor;
+    }
+
+	@Override
     public void onBackPressed() {
         if (backPressedOnce) {
             super.onBackPressed();
@@ -319,6 +357,7 @@ public class DisplayActivity extends Activity {
             }, DELAY);
         }
     }
+    
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -387,7 +426,7 @@ public class DisplayActivity extends Activity {
         AlertDialog.Builder adBuilder = new AlertDialog.Builder(cont);
         adBuilder.setView(linLayout);
         adBuilder.setTitle(R.string.title_help);
-        adBuilder.setMessage(R.string.help_content_dialog);
+        adBuilder.setMessage(R.string.help_content);
         adBuilder.setPositiveButton("Ok",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface arg0, int arg1) {

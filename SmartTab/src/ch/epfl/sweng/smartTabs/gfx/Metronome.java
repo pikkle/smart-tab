@@ -9,11 +9,11 @@ import android.graphics.Paint;
  *
  */
 public class Metronome {
+    private Paint mPaint;
     private final static int RED = 255;
     private final static int GREEN = 165;
     private final static int BLUE = 0;
     
-    private Paint mPaint;
 
     public Metronome() {
         mPaint = new Paint();
