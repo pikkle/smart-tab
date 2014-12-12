@@ -116,6 +116,7 @@ public class DisplayActivity extends Activity {
         myDelay = defaultDelay;
 
         setContentView(R.layout.activity_display);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         sharedPrefs = getSharedPreferences(PREFS_NAME, 0);
 
