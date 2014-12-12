@@ -34,7 +34,6 @@ public class MusicSheetView extends View {
     private final static int KEYPOSLEFT = 300;
     private final static int KEYPOSTOP = 60;
     private final static int TIMESINMEASURE = 4;
-    private final static int NUMOFLINES = 5;
     private final static double CENTERRATIO = 7/8;
     private final static double OCTAVESHIFT = 7;
     private final static double NOTEHEIGHT = 1.5;

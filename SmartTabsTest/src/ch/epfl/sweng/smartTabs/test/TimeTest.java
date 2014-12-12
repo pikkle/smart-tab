@@ -10,7 +10,7 @@ import android.test.AndroidTestCase;
  */
 public class TimeTest extends AndroidTestCase{
 	String [] notes = {"7", "", "0"};
-	Time time = new Time(notes, null, "5" , 1);
+	Time time = new Time(notes, null, "5");
 	
 	public void testNote(){
 	assertEquals(notes[0], time.getNote(0));
@@ -18,7 +18,4 @@ public class TimeTest extends AndroidTestCase{
 	assertEquals("0", time.getNote(2));
 	}
 	
-	public void testMesure(){
-		assertEquals(1, time.getMesure());
-	}
 }
