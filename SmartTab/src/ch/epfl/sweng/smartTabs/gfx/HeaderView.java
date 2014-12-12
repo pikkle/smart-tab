@@ -10,28 +10,14 @@ import android.view.View;
  * The top view containing the title and the metronome.
  */
 public class HeaderView extends View {
-    private Paint mPaint;
+    private Paint paint;
     private String mTitle;
     private String mArtist;
-    private  double mRatio;
-    private Metronome mMetronome;
 
-    private final static int TITLEALPHA = 255;
-    private final static float TITLESIZERATIO = 0.5f;
-    private final static int PADDING = 4;
-    private final static int ALPHARATIO = 255;
-    private final static int TEXTPOSRATIO = 32;
-    private final static double  SLOPE1 = -2.5;
-    private final static double  VERTICALOFFSET1 = 1;
-    private final static double  SLOPE2 = 2.5;
-    private final static double  VERTICALOFFSET2 = -1.5;
-    private final static double STABLERATIO = 0.5;
-    private final static double MINDECREASINGPOS = 0.0;
-    private final static double MAXDECREASINGPOS = 0.2;
-    private final static double MININCREASINGPOS = 0.8;
-    private final static double MAXINCREASINGPOS = 1.0;
-            
-    
+    private final int titleAlpha = 255;
+    private final float titleSizeRatio = 0.5f;
+    private Metronome metronome;
+    private double myRatio = 0.1;
 
     /**
      * Contains the title of the song.
@@ -41,29 +27,29 @@ public class HeaderView extends View {
      */
     public HeaderView(Context context, String title, String artist) {
         super(context);
-        this.mPaint = new Paint();
+        this.paint = new Paint();
         this.setBackgroundColor(Color.WHITE);
         this.mTitle = title;
         this.mArtist = artist;
-        mMetronome = new Metronome();
+        metronome = new Metronome();
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
-        mPaint.setTextSize(canvas.getHeight() * TITLESIZERATIO);
-        mPaint.setAlpha(TITLEALPHA);
-        mPaint.setColor(Color.GRAY);
-        canvas.drawText(mTitle+" - "+mArtist, canvas.getWidth() / TEXTPOSRATIO, canvas.getHeight() / 2,
-                mPaint);
+        paint.setTextSize(canvas.getHeight() * titleSizeRatio);
+        paint.setAlpha(titleAlpha);
+        paint.setColor(Color.GRAY);
+        canvas.drawText(mTitle+" - "+mArtist, canvas.getWidth() / 32, canvas.getHeight() / 2,
+                paint);
 
         // Drawing the Metronome
-       
-        int radius = (int) (mRatio * (canvas.getHeight() - 2 * PADDING) / 2);
-        int posX = canvas.getWidth() - (canvas.getHeight() - 2 * PADDING) / 2
-                - PADDING / 2;
+        int padding = 4;
+        int radius = (int) (myRatio * (canvas.getHeight() - 2 * padding) / 2);
+        int posX = canvas.getWidth() - (canvas.getHeight() - 2 * padding) / 2
+                - padding / 2;
         int posY = canvas.getHeight() / 2;
-        int alpha = (int) (mRatio * ALPHARATIO);
-        mMetronome.draw(canvas, posX, posY, radius, alpha);
+        int alpha = (int) (myRatio * 255);
+        metronome.draw(canvas, posX, posY, radius, alpha);
         
     }
 
@@ -77,12 +63,17 @@ public class HeaderView extends View {
      */
     public void computeRatio(int position, int pace) {
         double percentage = ((double) position % (double) pace) / (double) pace;
-        if (percentage >= MINDECREASINGPOS && percentage <= MAXDECREASINGPOS) {
-            mRatio = SLOPE1 * percentage + VERTICALOFFSET1;
-        } else if (percentage > MAXDECREASINGPOS && percentage < MININCREASINGPOS) {
-            mRatio = STABLERATIO;
-        } else if (percentage >= MININCREASINGPOS && percentage < MAXINCREASINGPOS) {
-            mRatio = SLOPE2 * percentage + VERTICALOFFSET2;
+        if(percentage ==  0){
+            //System.out.println("Percentage = "+percentage+ ", playingPosition = "+ position);
         }
-    }
+        if (percentage >= 0.0 && percentage <= 0.2) {
+            myRatio = (-2.5) * percentage + 1;
+        } else if (percentage > 0.2 && percentage < 0.8) {
+            myRatio = 0.5;
+        } else if (percentage >= 0.8 && percentage < 1) {
+            myRatio = (2.5) * percentage - 1.5;
+        }
+     }
+    
+    
 }

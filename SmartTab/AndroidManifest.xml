@@ -19,8 +19,7 @@
 
         <!-- Main Activity -->
         <activity
-            android:name=".activity.MainActivity"
-            android:parentActivityName=".activity.MainActivity" >
+            android:name=".activity.MainActivity" >
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value=".SearchResultsActivity" />
@@ -37,7 +36,8 @@
         <!-- Favorites Activity -->
         <activity
             android:name=".activity.FavoritesActivity"
-            android:label="@string/title_favorites_display">
+            android:label="@string/title_favorites_display"
+            android:parentActivityName=".activity.MainActivity">
         </activity>
 
         <!-- Help Activity -->
@@ -72,8 +72,7 @@
         <activity
             android:name="ch.epfl.sweng.smartTabs.activity.SplashActivity"
             android:noHistory="true"
-            android:theme="@android:style/Theme.Holo.NoActionBar.Fullscreen"
-            android:screenOrientation="portrait" >
+            android:theme="@android:style/Theme.Holo.NoActionBar.Fullscreen" >
             
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

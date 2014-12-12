@@ -15,12 +15,15 @@ import ch.epfl.sweng.smartTabs.R;
  */
 public class FooterView extends View {
     
-    private final static int LEFTPADDING = 50;
-
     private boolean mDisplayed = true;
 	private Paint mPaint;
 	private Boolean mRunning = false;
 	private Context mContext;
+	private final static int LEFTPADDING = 50;
+	private int speedUpPosX;
+	private int speedDownPosX;
+	private int speedIconWidth;
+	private String speedFactor;
 	private FavoritesView mFavs;
 	
 
@@ -29,11 +32,13 @@ public class FooterView extends View {
 	 * @param context
 	 * @param attrs
 	 */
-	public FooterView(Context context, boolean isFav) {
+	public FooterView(Context context, boolean isFav, int factor) {
 		super(context);
 		mContext = context;
 		mPaint = new Paint();
 		this.setBackgroundColor(Color.WHITE);
+
+		speedFactor = ""+factor+"%";
 		mFavs = new FavoritesView(context, isFav);
 	}
 	
@@ -42,12 +47,41 @@ public class FooterView extends View {
     protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
 		mFavs.draw(canvas, mPaint);
+		drawSpeedDown(canvas);
+		drawSpeedUp(canvas);
+		drawSpeed(canvas);
 		if (mRunning) {
 		    drawPlay(canvas); 
 		} else {
 		    drawPause(canvas);
 		}
     }
+	
+	private void drawSpeedUp(Canvas canvas){
+		mPaint.setColor(Color.BLACK);
+	    Bitmap bmp = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.ic_action_fast_forward);
+	    setSpeedIconWidth(bmp.getWidth());
+	    speedUpPosX = canvas.getWidth()/2+50;
+	    canvas.drawBitmap(bmp, speedUpPosX, 0, mPaint);
+	}
+	
+	private void drawSpeed(Canvas canvas) {
+		mPaint.setColor(Color.BLACK);
+		mPaint.setTextSize(32);
+		canvas.drawText(speedFactor, canvas.getWidth()/2 -40, canvas.getHeight()
+				/2, mPaint);
+	}
+	
+	private void drawSpeedDown(Canvas canvas){
+		mPaint.setColor(Color.BLACK);
+	    Bitmap bmp = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.ic_action_rewind);
+	    speedDownPosX = canvas.getWidth()/2-(50+bmp.getWidth());
+	    canvas.drawBitmap(bmp, speedDownPosX, 0, mPaint);
+	}
+	
+	public void setSpeedFactor(int factor) {
+		speedFactor = ""+factor+"%";
+	}
 
 	private void drawPause(Canvas canvas) {
 	    mPaint.setColor(Color.BLACK);
@@ -61,6 +95,22 @@ public class FooterView extends View {
 	    canvas.drawBitmap(bmp, LEFTPADDING, 0, mPaint);    
     }
 
+    public int getSpeedUpPosX() {
+    	return speedUpPosX;
+    }
+    
+    public int getSpeedDownPosX() {
+    	return speedDownPosX;
+    }
+    
+    public int getSpeedIconWidth() {
+    	return speedIconWidth;
+    }
+    
+    public void setSpeedIconWidth(int width) {
+    	speedIconWidth = width;
+    }
+
     public boolean isDisplayed() {
 		return mDisplayed;
 	}
@@ -72,7 +122,11 @@ public class FooterView extends View {
     public FavoritesView getFav() {
     	return mFavs;
     }
-
+    
+    public void setRunning(boolean isRunning){
+    	mRunning = isRunning;
+    	this.invalidate();
+    }
 
     public void playPause() {
         mRunning = !mRunning;

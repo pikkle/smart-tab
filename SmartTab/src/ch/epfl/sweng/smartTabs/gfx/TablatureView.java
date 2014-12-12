@@ -192,7 +192,7 @@ public class TablatureView extends View{
     }
 
     public boolean isTerminated() {
-        return getScrollX() > mEndOfTab;
+        return getScrollX() > mEndOfTab - mPace;
     }
 
     public int getEndOfTab() {
