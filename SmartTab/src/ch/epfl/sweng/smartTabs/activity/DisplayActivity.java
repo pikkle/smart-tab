@@ -418,6 +418,7 @@ public class DisplayActivity extends Activity {
         final CheckBox checkBox = new CheckBox(cont);
         checkBox.setText(R.string.show_help);
         checkBox.setEnabled(true);
+        checkBox.setChecked(true);
         LinearLayout linLayout = new LinearLayout(cont);
         linLayout.setLayoutParams(new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
@@ -427,7 +428,7 @@ public class DisplayActivity extends Activity {
         AlertDialog.Builder adBuilder = new AlertDialog.Builder(cont);
         adBuilder.setView(linLayout);
         adBuilder.setTitle(R.string.title_help);
-        adBuilder.setMessage(R.string.help_content);
+        adBuilder.setMessage(R.string.help_content_dialog);
         adBuilder.setPositiveButton("Ok",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface arg0, int arg1) {
