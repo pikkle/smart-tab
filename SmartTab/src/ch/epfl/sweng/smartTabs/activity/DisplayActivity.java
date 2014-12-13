@@ -48,56 +48,49 @@ import ch.epfl.sweng.smartTabs.music.Time;
 public class DisplayActivity extends Activity {
 
     private static final String PREFS_NAME = "MyPrefsFile";
-    private HeaderView headerView;
-    private FooterView footerView;
-    private CursorView cursorView;
-
-    private LinearLayout wrapper;
-    private LinearLayout musicWrapper;
-    private FrameLayout testWrapper;
-
-    private boolean running;
-
-    private SharedPreferences sharedPrefs;
-
-    private Tab tab;
 
     private static final int PACE = 200;
-    private static final double MILLISINMIN = 60000.0; // number of millis in
-                                                       // one min
+    private static final double MILLISINMIN = 60000.0;
     private static final int OFFSET = 50;
     private static final int NBOFSREAMS = 50;
     private static final int WEIGHT3 = 3;
     private static final int WEIGHT7 = 7;
     private static final int WEIGHT8 = 8;
     private static final int MINIMALSCROLL = 30;
-    private static final int SHIFTAFTERSCROLL = 4*OFFSET;
-    
+    private static final int PERCENT = 100;
 
-    private boolean backPressedOnce = false;
-    private SoundPool pool = new SoundPool(NBOFSREAMS,
-            AudioManager.STREAM_MUSIC, 0);
+    private static final int SHIFTAFTERSCROLL = 4 * OFFSET;
     private static final long SAMPLE_TIME = 1000;
     private static final int DELAY = 2000;
+
+    private HeaderView mHeaderView;
+    private FooterView mFooterView;
+    private CursorView mCursorView;
+    private LinearLayout mWrapper;
+    private LinearLayout mMusicWrapper;
+    private FrameLayout mTestWrapper;
+    private boolean mRunning;
+    private SharedPreferences mSharedPrefs;
+    private Tab mTab;
+
+    private boolean mBackPressedOnce = false;
+    private SoundPool mPool = new SoundPool(NBOFSREAMS, AudioManager.STREAM_MUSIC, 0);
 
     private int playingPosition; // Position of the time to play
     // (Intital value corresponds to the future cursor position)
 
-    private double defaultDelay;
-    private double myDelay;
-    private double mySpeedFactor;
-
+    private double mDefaultDelay;
+    private double mDelay;
+    private double mSpeedFactor;
     private int dx = 1;
-    private TablatureView tablatureView;
-    private MusicSheetView musicSheetView;
-
-    private float lastX;
-    private float newX;
-    private int tabPosX;
-    private boolean scrolled = false;
-    private SampleMap map;
-    private final Note[] tuning = {new Note(Height.E, 3),
-        new Note(Height.B, 2), new Note(Height.G, 2),
+    private TablatureView mTablatureView;
+    private MusicSheetView mMusicSheetView;
+    private float mLastX;
+    private float mNewX;
+    private int mTabPosX;
+    private boolean mScrolled = false;
+    private SampleMap mSampleMap;
+    private final Note[] tuning = {new Note(Height.E, 3), new Note(Height.B, 2), new Note(Height.G, 2),
         new Note(Height.D, 2), new Note(Height.A, 1), new Note(Height.E, 1) };
 
     @Override
@@ -109,48 +102,45 @@ public class DisplayActivity extends Activity {
         this.getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         Intent intent = getIntent();
-        tab = (Tab) intent.getExtras().getSerializable("tab");
+        mTab = (Tab) intent.getExtras().getSerializable("tab");
 
-        mySpeedFactor = 1;
-        defaultDelay = computeDelay(tab.getTempo(), PACE, dx, MILLISINMIN);
-        myDelay = defaultDelay;
+        mSpeedFactor = 1;
+        mDefaultDelay = computeDelay(mTab.getTempo(), PACE, dx, MILLISINMIN);
+        mDelay = mDefaultDelay;
 
         setContentView(R.layout.activity_display);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
-        sharedPrefs = getSharedPreferences(PREFS_NAME, 0);
+        mSharedPrefs = getSharedPreferences(PREFS_NAME, 0);
 
-        wrapper = (LinearLayout) (this.findViewById(R.id.wrapper));
-        musicWrapper = new LinearLayout(getBaseContext());
-        musicWrapper.setOrientation(LinearLayout.VERTICAL);
-        testWrapper = new FrameLayout(getBaseContext());
+        mWrapper = (LinearLayout) (this.findViewById(R.id.wrapper));
+        mMusicWrapper = new LinearLayout(getBaseContext());
+        mMusicWrapper.setOrientation(LinearLayout.VERTICAL);
+        mTestWrapper = new FrameLayout(getBaseContext());
 
-        headerView = new HeaderView(getBaseContext(), tab.getTabName(), tab.getTabArtist());
-        footerView = new FooterView(getBaseContext(), sharedPrefs.contains(tab
-                .getTabName()), (int)(mySpeedFactor*100));
-        tablatureView = new TablatureView(getBaseContext(), tab,
-                Instrument.GUITAR, PACE);
-        musicSheetView = new MusicSheetView(getBaseContext(), tab, PACE);
-        cursorView = new CursorView(getBaseContext());
+        mHeaderView = new HeaderView(getBaseContext(), mTab.getTabName(), mTab.getTabArtist());
+        mFooterView = new FooterView(getBaseContext(), mSharedPrefs.contains(mTab.getTabName()),
+                (int) (mSpeedFactor * PERCENT));
+        mTablatureView = new TablatureView(getBaseContext(), mTab, Instrument.GUITAR, PACE);
+        mMusicSheetView = new MusicSheetView(getBaseContext(), mTab, PACE);
+        mCursorView = new CursorView(getBaseContext());
 
-        playingPosition = cursorView.getPosX();
+        playingPosition = mCursorView.getPosX();
 
-        musicWrapper.addView(musicSheetView, weight(WEIGHT3));
-        musicWrapper.addView(tablatureView, weight(WEIGHT7));
+        mMusicWrapper.addView(mMusicSheetView, weight(WEIGHT3));
+        mMusicWrapper.addView(mTablatureView, weight(WEIGHT7));
 
-        testWrapper.addView(musicWrapper, new FrameLayout.LayoutParams(
-                FrameLayout.LayoutParams.MATCH_PARENT,
+        mTestWrapper.addView(mMusicWrapper, new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
                 FrameLayout.LayoutParams.MATCH_PARENT));
 
-        testWrapper.addView(cursorView, new FrameLayout.LayoutParams(
-                FrameLayout.LayoutParams.MATCH_PARENT,
+        mTestWrapper.addView(mCursorView, new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
                 FrameLayout.LayoutParams.MATCH_PARENT));
 
-        wrapper.addView(headerView, weight(1));
-        wrapper.addView(testWrapper, weight(WEIGHT8));
-        wrapper.addView(footerView, weight(1));
+        mWrapper.addView(mHeaderView, weight(1));
+        mWrapper.addView(mTestWrapper, weight(WEIGHT8));
+        mWrapper.addView(mFooterView, weight(1));
 
-        map = new SampleMap(getApplicationContext(), pool, tuning);
+        mSampleMap = new SampleMap(getApplicationContext(), mPool, tuning);
 
         // Basic scrolling
         Thread t = new Thread(new Runnable() {
@@ -158,62 +148,51 @@ public class DisplayActivity extends Activity {
             @Override
             public void run() {
                 while (true) {
-                    if (running && !tablatureView.isTerminated()) {
-                        tablatureView.scrollBy(dx, 0);
-                        musicSheetView.scrollBy(dx, 0);
-
-                        playingPosition += dx; // increment the position at
-                                                  // which we want to look for
-                                                  // a time to play
-
-                        headerView.computeRatio(playingPosition, PACE);
-                        headerView.postInvalidate();
+                    if (mRunning && !mTablatureView.isTerminated()) {
+                        mTablatureView.scrollBy(dx, 0);
+                        mMusicSheetView.scrollBy(dx, 0);
+                        playingPosition += dx;
+                        mHeaderView.computeRatio(playingPosition, PACE);
+                        mHeaderView.postInvalidate();
 
                     }
+                    if (mTab.timeMapContains(playingPosition)) {
+                        final Time t = mTab.getTimeAt(playingPosition);
+                        if (t != null && mRunning) {
 
-                    if (tab.timeMapContains(playingPosition)) {
-                        final Time t = tab.getTimeAt(playingPosition);
-                        if (t != null && running) {
-
-                            for (int i = 0; i < (Instrument.GUITAR)
-                                    .getNumOfStrings(); i++) {
+                            for (int i = 0; i < (Instrument.GUITAR).getNumOfStrings(); i++) {
                                 String fret = t.getNote(i);
                                 if (!fret.equals("")) {
                                     int fretNumber = Integer.parseInt(fret);
-                                    final Note note = tuning[i]
-                                            .addHalfTones(fretNumber);
-                                    final int sampleId = pool.play(
-                                            map.getSampleId(note), 1, 1, 1, 0,
-                                            1);
+                                    final Note note = tuning[i].addHalfTones(fretNumber);
+                                    final int sampleId = mPool.play(mSampleMap.getSampleId(note), 1, 1, 1, 0, 1);
                                     new Thread(new Runnable() {
 
                                         @Override
                                         public void run() {
                                             try {
-                                                Thread.sleep((long) (SAMPLE_TIME*note.getDuration().getDuration()));
+                                                Thread.sleep((long) (SAMPLE_TIME * note.getDuration().getDuration()));
                                             } catch (InterruptedException e) {
                                                 // TODO Auto-generated catch
                                                 // block
                                                 e.printStackTrace();
                                             }
-                                            pool.stop(sampleId);
+                                            mPool.stop(sampleId);
                                         }
                                     }).start();
-
                                 }
                             }
                         }
                     }
 
                     try {
-                        Thread.sleep((int) myDelay, decimalPart(myDelay));
+                        Thread.sleep((int) mDelay, decimalPart(mDelay));
                     } catch (InterruptedException e) {
                         // TODO Auto-generated catch block
                         e.printStackTrace();
                     }
                 }
             }
-
         });
         t.start();
     }
@@ -227,8 +206,7 @@ public class DisplayActivity extends Activity {
      * @param millisinmin
      * @return the delay
      */
-    private double computeDelay(double tempo, double pace, double speed,
-            double millisinmin) {
+    private double computeDelay(double tempo, double pace, double speed, double millisinmin) {
         return speed * millisinmin / (tempo * pace);
     }
 
@@ -253,64 +231,65 @@ public class DisplayActivity extends Activity {
         final float x = event.getX();
         final float y = event.getY();
 
-        if (x > footerView.getFavPosX()
-                && y > footerView.getY()
+        if (x > mFooterView.getFavPosX() && y > mFooterView.getY()
                 && MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_UP) {
-            footerView.getFav().setIsFav();
-            footerView.invalidate();
-            SharedPreferences.Editor editor = sharedPrefs.edit();
-            if (!sharedPrefs.contains(tab.getTabName())) {
-                editor.putString(tab.getTabName(), serialize(tab));
+            mFooterView.getFav().setIsFav();
+            mFooterView.invalidate();
+            SharedPreferences.Editor editor = mSharedPrefs.edit();
+            if (!mSharedPrefs.contains(mTab.getTabName())) {
+                editor.putString(mTab.getTabName(), serialize(mTab));
                 editor.commit();
-                Toast.makeText(this, "Added to favorites", Toast.LENGTH_SHORT)
-                        .show();
+                Toast.makeText(this, "Added to favorites", Toast.LENGTH_SHORT).show();
             } else {
-                editor.remove(tab.getTabName());
+                editor.remove(mTab.getTabName());
                 editor.commit();
-                Toast.makeText(this, "Removed from favorites",
-                        Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Removed from favorites", Toast.LENGTH_SHORT).show();
             }
-        } else if (x >= footerView.getSpeedDownPosX() && x <= footerView.getSpeedDownPosX()+footerView.getSpeedIconWidth() && y >= footerView.getY() && MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_UP){
-        	decSpeed();
-        	footerView.setSpeedFactor((int)(mySpeedFactor*100));
-        	footerView.invalidate();
-//        	Toast.makeText(getApplicationContext(), "Speed : " + (int) (mySpeedFactor*100) + " %", Toast.LENGTH_SHORT).show();
-        }else if (x >= footerView.getSpeedUpPosX() && x <= footerView.getSpeedUpPosX()+footerView.getSpeedIconWidth() && y >= footerView.getY() && MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_UP){
-        	incSpeed();
-        	footerView.setSpeedFactor((int)(mySpeedFactor*100));
-        	footerView.invalidate();
+        } else if (x >= mFooterView.getSpeedDownPosX()
+                && x <= mFooterView.getSpeedDownPosX() + mFooterView.getSpeedIconWidth() && y >= mFooterView.getY()
+                && MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_UP) {
+            decSpeed();
+            mFooterView.setSpeedFactor((int) (mSpeedFactor * PERCENT));
+            mFooterView.invalidate();
+            // Toast.makeText(getApplicationContext(), "Speed : " + (int)
+            // (mySpeedFactor*100) + " %", Toast.LENGTH_SHORT).show();
+        } else if (x >= mFooterView.getSpeedUpPosX()
+                && x <= mFooterView.getSpeedUpPosX() + mFooterView.getSpeedIconWidth() && y >= mFooterView.getY()
+                && MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_UP) {
+            incSpeed();
+            mFooterView.setSpeedFactor((int) (mSpeedFactor * PERCENT));
+            mFooterView.invalidate();
 
-//        	Toast.makeText(getApplicationContext(), "Speed : " + (int) (mySpeedFactor*100) + " %", Toast.LENGTH_SHORT).show();
+            // Toast.makeText(getApplicationContext(), "Speed : " + (int)
+            // (mySpeedFactor*100) + " %", Toast.LENGTH_SHORT).show();
         } else {
             if (MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_DOWN) {
-                tabPosX = tablatureView.getScrollX();
-                this.lastX = x;
-                scrolled = false;
+                mTabPosX = mTablatureView.getScrollX();
+                this.mLastX = x;
+                mScrolled = false;
             }
 
             if (MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_MOVE) {
-                this.newX = x;
-                int delta = (int) (lastX - newX);
+                this.mNewX = x;
+                int delta = (int) (mLastX - mNewX);
 
                 if (Math.abs(delta) >= MINIMALSCROLL) {
-                    running = false;
-                    scrolled = true;
-                    footerView.setRunning(false);
-                    int newPosX = tabPosX + delta;
-                    if (lastX != newX && newPosX >= 0
-                            && newPosX <= tablatureView.getEndOfTab()) {
-                        tablatureView.scrollTo(newPosX, 0);
-                        musicSheetView.scrollTo(newPosX, 0);
-                        playingPosition = (int) (tablatureView.getScrollX()
-                                + cursorView.getX() + SHIFTAFTERSCROLL);
+                    mRunning = false;
+                    mScrolled = true;
+                    mFooterView.setRunning(false);
+                    int newPosX = mTabPosX + delta;
+                    if (mLastX != mNewX && newPosX >= 0 && newPosX <= mTablatureView.getEndOfTab()) {
+                        mTablatureView.scrollTo(newPosX, 0);
+                        mMusicSheetView.scrollTo(newPosX, 0);
+                        playingPosition = (int) (mTablatureView.getScrollX() + mCursorView.getX() + SHIFTAFTERSCROLL);
                     }
                 }
             }
 
             if (MotionEventCompat.getActionMasked(event) == MotionEvent.ACTION_UP) {
-                if (!scrolled) {
-                    running = !running;
-                    footerView.playPause();
+                if (!mScrolled) {
+                    mRunning = !mRunning;
+                    mFooterView.playPause();
                 }
             }
         }
@@ -319,46 +298,45 @@ public class DisplayActivity extends Activity {
     }
 
     private void decSpeed() {
-    	if(mySpeedFactor>=0.4){
-    		mySpeedFactor-=0.2;
-    	}
-    	updateThreadDelay();
-	}
-    
-    private void incSpeed() {
-    	if(mySpeedFactor<=1.4){
-    		mySpeedFactor+=0.2;
-    	}
-    	updateThreadDelay();
-	}
-    public void updateThreadDelay() {
-    	if(mySpeedFactor < 0.2){
-    		mySpeedFactor = 0.2;
-    	} else if (mySpeedFactor > 1.6){
-    		mySpeedFactor = 1.6;
-    	}
-    	myDelay = defaultDelay/mySpeedFactor;
+        if (mSpeedFactor >= 0.4) {
+            mSpeedFactor -= 0.2;
+        }
+        updateThreadDelay();
     }
 
-	@Override
+    private void incSpeed() {
+        if (mSpeedFactor <= 1.4) {
+            mSpeedFactor += 0.2;
+        }
+        updateThreadDelay();
+    }
+
+    public void updateThreadDelay() {
+        if (mSpeedFactor < 0.2) {
+            mSpeedFactor = 0.2;
+        } else if (mSpeedFactor > 1.6) {
+            mSpeedFactor = 1.6;
+        }
+        mDelay = mDefaultDelay / mSpeedFactor;
+    }
+
+    @Override
     public void onBackPressed() {
-        if (backPressedOnce) {
+        if (mBackPressedOnce) {
             super.onBackPressed();
-            pool.release();
-            running = !running;
+            mPool.release();
+            mRunning = !mRunning;
         } else {
-            backPressedOnce = true;
-            Toast.makeText(this, "Press BACK again to exit", Toast.LENGTH_SHORT)
-                    .show();
+            mBackPressedOnce = true;
+            Toast.makeText(this, "Press BACK again to exit", Toast.LENGTH_SHORT).show();
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    backPressedOnce = false;
+                    mBackPressedOnce = false;
                 }
             }, DELAY);
         }
     }
-    
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -386,8 +364,7 @@ public class DisplayActivity extends Activity {
      */
 
     private void checkDialog(Context cont) {
-        SharedPreferences pref = PreferenceManager
-                .getDefaultSharedPreferences(cont);
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(cont);
         Boolean showHelp = pref.getBoolean("pref_show_help", true);
         if (showHelp) {
             createDialog(this);
@@ -420,8 +397,7 @@ public class DisplayActivity extends Activity {
         checkBox.setEnabled(true);
         checkBox.setChecked(true);
         LinearLayout linLayout = new LinearLayout(cont);
-        linLayout.setLayoutParams(new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
+        linLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT));
         linLayout.addView(checkBox);
 
@@ -429,18 +405,14 @@ public class DisplayActivity extends Activity {
         adBuilder.setView(linLayout);
         adBuilder.setTitle(R.string.title_help);
         adBuilder.setMessage(R.string.help_content_dialog);
-        adBuilder.setPositiveButton("Ok",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface arg0, int arg1) {
-                        SharedPreferences pref = PreferenceManager
-                                .getDefaultSharedPreferences(cont);
-                        SharedPreferences.Editor editor = pref.edit();
-                        editor.putBoolean("pref_show_help",
-                                checkBox.isChecked()).commit();
-                        Toast.makeText(cont, "Saved new preferences.",
-                                Toast.LENGTH_SHORT).show();
-                    }
-                });
+        adBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface arg0, int arg1) {
+                SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(cont);
+                SharedPreferences.Editor editor = pref.edit();
+                editor.putBoolean("pref_show_help", checkBox.isChecked()).commit();
+                Toast.makeText(cont, "Saved new preferences.", Toast.LENGTH_SHORT).show();
+            }
+        });
         adBuilder.create().show();
     }
 }

@@ -6,7 +6,7 @@ import android.os.Bundle;
 import ch.epfl.sweng.smartTabs.R;
 
 /**
- * Activity detailing the version etc... of the app
+ * Activity detailing the version etc of the app
  */
 public class AboutAppActivity extends Activity {
 

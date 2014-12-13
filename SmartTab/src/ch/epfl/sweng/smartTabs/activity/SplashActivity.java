@@ -13,17 +13,17 @@ import ch.epfl.sweng.smartTabs.R;
  */
 
 public class SplashActivity extends Activity {
-    private final int delay = 1000;
-    private Thread background;
+    private final static int DELAY = 1000;
+    private Thread mBackground;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        background = new Thread() {
+        mBackground = new Thread() {
             public void run() {
                 try {
-                    sleep(delay);
+                    sleep(DELAY);
                 } catch (InterruptedException e) {
                     android.os.Process.killProcess(android.os.Process.myPid());
                 }
@@ -32,12 +32,12 @@ public class SplashActivity extends Activity {
 
             }
         };
-        background.start();
+        mBackground.start();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        background.interrupt();
+        mBackground.interrupt();
     }
 }
