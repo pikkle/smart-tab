@@ -90,8 +90,8 @@ public class DisplayActivity extends Activity {
     private int mTabPosX;
     private boolean mScrolled = false;
     private SampleMap mSampleMap;
-    private final Note[] tuning = {new Note(Height.E, 3), new Note(Height.B, 2), new Note(Height.G, 2),
-        new Note(Height.D, 2), new Note(Height.A, 1), new Note(Height.E, 1) };
+    private final Note[] tuning = { new Note(Height.E, 3), new Note(Height.B, 2), new Note(Height.G, 2),
+            new Note(Height.D, 2), new Note(Height.A, 1), new Note(Height.E, 1) };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

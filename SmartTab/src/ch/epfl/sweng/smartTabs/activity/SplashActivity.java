@@ -27,8 +27,7 @@ public class SplashActivity extends Activity {
                 } catch (InterruptedException e) {
                     android.os.Process.killProcess(android.os.Process.myPid());
                 }
-                startActivity(new Intent(getApplicationContext(),
-                        MainActivity.class));
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
 
             }
         };

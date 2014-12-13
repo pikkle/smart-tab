@@ -56,13 +56,11 @@ public class FavoritesActivity extends Activity {
         mListView.setOnItemClickListener(new OnItemClickListener() {
 
             @Override
-            public void onItemClick(AdapterView<?> parent, View view,
-                    int position, long id) {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String tabName = (String) mListView.getAdapter().getItem(position);
                 System.out.println(tabName);
                 String tabSerial = mSharedPrefs.getString(tabName, "Error");
-                Intent i = new Intent(FavoritesActivity.this,
-                        DisplayActivity.class);
+                Intent i = new Intent(FavoritesActivity.this, DisplayActivity.class);
                 i.putExtra("tab", deserialize(tabSerial));
                 startActivity(i);
             }
@@ -102,8 +100,7 @@ public class FavoritesActivity extends Activity {
 
     private void refresh() {
         mFavs = mSharedPrefs.getAll();
-        mAdapter = new ArrayAdapter<String>(getApplicationContext(),
-                R.layout.listview_layout);
+        mAdapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.listview_layout);
 
         for (Map.Entry<String, ?> entry : mFavs.entrySet()) {
             mAdapter.add(entry.getKey());
@@ -130,17 +127,14 @@ public class FavoritesActivity extends Activity {
     public void initDrawerLayout() {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.fav_drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.fav_right_drawer);
-        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
-                R.drawable.ic_drawer, 0, 0);
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.drawable.ic_drawer, 0, 0);
 
         mDrawerLayout.setDrawerListener(mDrawerToggle);
-        mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow,
-                GravityCompat.RELATIVE_HORIZONTAL_GRAVITY_MASK);
+        mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.RELATIVE_HORIZONTAL_GRAVITY_MASK);
 
-        String[] items = {"All Tabs", "Favorites", "Settings"};
+        String[] items = { "All Tabs", "Favorites", "Settings" };
 
-        mAdapter = new ArrayAdapter<String>(this, R.layout.drawer_list_layout,
-                items);
+        mAdapter = new ArrayAdapter<String>(this, R.layout.drawer_list_layout, items);
 
         mDrawerList.setAdapter(mAdapter);
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
@@ -148,13 +142,11 @@ public class FavoritesActivity extends Activity {
 
     /**
      * Listener for the button showing the favs menu
-     *
+     * 
      */
-    private class DrawerItemClickListener implements
-            ListView.OnItemClickListener {
+    private class DrawerItemClickListener implements ListView.OnItemClickListener {
         @Override
-        public void onItemClick(AdapterView parent, View view, int position,
-                long id) {
+        public void onItemClick(AdapterView parent, View view, int position, long id) {
             selectItem(position);
         }
     }
@@ -177,8 +169,7 @@ public class FavoritesActivity extends Activity {
                 mDrawerLayout.closeDrawer(mDrawerList);
                 break;
             case 2:
-                startActivity(new Intent(FavoritesActivity.this,
-                        PreferencesActivity.class));
+                startActivity(new Intent(FavoritesActivity.this, PreferencesActivity.class));
                 break;
             default:
                 mDrawerLayout.closeDrawer(mDrawerList);

@@ -91,11 +91,9 @@ public class MainActivity extends Activity {
         inflater.inflate(R.menu.main_activity_action_bar, menu);
 
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView = (SearchView) menu.findItem(R.id.action_search)
-                .getActionView();
+        SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
         if (null != searchView) {
-            searchView.setSearchableInfo(searchManager
-                    .getSearchableInfo(getComponentName()));
+            searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
             searchView.setIconifiedByDefault(true);
         }
 
@@ -131,7 +129,7 @@ public class MainActivity extends Activity {
                     mDrawerLayout.openDrawer(mDrawerList);
                 }
                 return true;
-    
+
             case R.id.action_search:
                 // Get action bar item, get query, execute
                 if (checkNetworkStatus()) {
@@ -155,8 +153,7 @@ public class MainActivity extends Activity {
             } else {
                 mBackPressedOnce = true;
 
-                Toast.makeText(this, "Press BACK again to exit",
-                        Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Press BACK again to exit", Toast.LENGTH_SHORT).show();
 
                 new Handler().postDelayed(new Runnable() {
 
@@ -175,17 +172,14 @@ public class MainActivity extends Activity {
     public void initDrawerLayout() {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.right_drawer);
-        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
-                R.drawable.ic_drawer, 0, 0);
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.drawable.ic_drawer, 0, 0);
 
         mDrawerLayout.setDrawerListener(mDrawerToggle);
-        mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow,
-                GravityCompat.RELATIVE_HORIZONTAL_GRAVITY_MASK);
+        mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.RELATIVE_HORIZONTAL_GRAVITY_MASK);
 
-        String[] items = {"All Tabs", "Favorites", "Settings"};
+        String[] items = { "All Tabs", "Favorites", "Settings" };
 
-        myAdapter = new ArrayAdapter<String>(this, R.layout.drawer_list_layout,
-                items);
+        myAdapter = new ArrayAdapter<String>(this, R.layout.drawer_list_layout, items);
 
         mDrawerList.setAdapter(myAdapter);
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
@@ -199,10 +193,8 @@ public class MainActivity extends Activity {
         mSwipeView = (SwipeRefreshLayout) findViewById(R.id.swipe_container);
         mSwipeView.setEnabled(false);
 
-        mSwipeView.setColorSchemeResources(android.R.color.holo_blue_dark,
-                android.R.color.holo_blue_light,
-                android.R.color.holo_green_light,
-                android.R.color.holo_green_light);
+        mSwipeView.setColorSchemeResources(android.R.color.holo_blue_dark, android.R.color.holo_blue_light,
+                android.R.color.holo_green_light, android.R.color.holo_green_light);
         mSwipeView.setOnRefreshListener(new OnRefreshListener() {
 
             @Override
@@ -240,8 +232,7 @@ public class MainActivity extends Activity {
             }
 
             @Override
-            public void onScroll(AbsListView view, int firstVisibleItem,
-                    int visibleItemCount, int totalItemCount) {
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
 
                 if (firstVisibleItem == 0) {
                     mSwipeView.setEnabled(true);
@@ -255,15 +246,13 @@ public class MainActivity extends Activity {
     /**
      * This private class downloads JSONs from the server
      */
-    private class DownloadTabListTask extends
-            AsyncTask<String, Void, Map<String, URL>> {
+    private class DownloadTabListTask extends AsyncTask<String, Void, Map<String, URL>> {
         @Override
         protected Map<String, URL> doInBackground(String... params) {
             try {
                 if (checkNetworkStatus()) {
-                    return mNetClient
-                            .fetchTabMap(getString(R.string.serverURLQuery)
-                                    + params[0].replaceAll("[^\\w\\s-]", ""));
+                    return mNetClient.fetchTabMap(getString(R.string.serverURLQuery)
+                            + params[0].replaceAll("[^\\w\\s-]", ""));
                 } else {
                     setCustomAdapMessage(NONETWORKMESSAGE);
                 }
@@ -283,8 +272,7 @@ public class MainActivity extends Activity {
         protected void onPostExecute(final Map<String, URL> map) {
             if (map == null) {
                 try {
-                    throw new NullPointerException(
-                            "Null Map <String, URL>. Fetch again.");
+                    throw new NullPointerException("Null Map <String, URL>. Fetch again.");
                 } catch (NullPointerException e) {
                     e.printStackTrace();
                     // TODO: I DUNOO !!
@@ -302,17 +290,15 @@ public class MainActivity extends Activity {
                 count++;
             }
 
-            ArrayAdapter<String> madap = new ArrayAdapter<String>(
-                    getApplicationContext(), R.layout.listview_layout, values);
+            ArrayAdapter<String> madap = new ArrayAdapter<String>(getApplicationContext(), R.layout.listview_layout,
+                    values);
             mListView.setAdapter(madap);
             mListView.setOnItemClickListener(new OnItemClickListener() {
 
                 @Override
-                public void onItemClick(AdapterView<?> parent, View view,
-                        int position, long id) {
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                    String item = (String) mListView.getAdapter().getItem(
-                            position);
+                    String item = (String) mListView.getAdapter().getItem(position);
                     new DownloadTabsTask(map.get(item)).execute();
                 }
             });
@@ -368,8 +354,7 @@ public class MainActivity extends Activity {
         protected void onPostExecute(final Tab tab) {
             if (tab == null) {
                 dialog.dismiss();
-                Toast.makeText(getApplicationContext(), "Invalid Tab",
-                        Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Invalid Tab", Toast.LENGTH_SHORT).show();
             }
             if (tab != null) {
                 System.out.println("tab != null");
@@ -390,10 +375,9 @@ public class MainActivity extends Activity {
      */
     public void setCustomAdapMessage(String message) {
         System.err.println("test2");
-        String[] values = {message};
+        String[] values = { message };
         System.err.println("test3");
-        ArrayAdapter<String> adap = new ArrayAdapter<String>(
-                getApplicationContext(), R.layout.listview_layout, values);
+        ArrayAdapter<String> adap = new ArrayAdapter<String>(getApplicationContext(), R.layout.listview_layout, values);
         System.err.println("test4");
         mListView.setAdapter(adap);
         System.err.println("test5");
@@ -416,11 +400,9 @@ public class MainActivity extends Activity {
      * Implementation of the additional sliding menu
      * 
      */
-    private class DrawerItemClickListener implements
-            ListView.OnItemClickListener {
+    private class DrawerItemClickListener implements ListView.OnItemClickListener {
         @Override
-        public void onItemClick(AdapterView parent, View view, int position,
-                long id) {
+        public void onItemClick(AdapterView parent, View view, int position, long id) {
             selectItem(position);
         }
     }
@@ -434,8 +416,7 @@ public class MainActivity extends Activity {
                 startActivity(new Intent(MainActivity.this, FavoritesActivity.class));
                 break;
             case 2:
-                startActivity(new Intent(MainActivity.this,
-                        PreferencesActivity.class));
+                startActivity(new Intent(MainActivity.this, PreferencesActivity.class));
                 break;
             default:
                 mDrawerLayout.closeDrawer(mDrawerList);
