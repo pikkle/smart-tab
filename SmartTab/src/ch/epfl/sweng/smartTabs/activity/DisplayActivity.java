@@ -58,7 +58,6 @@ public class DisplayActivity extends Activity {
     private static final int WEIGHT8 = 8;
     private static final int MINIMALSCROLL = 30;
     private static final int PERCENT = 100;
-
     private static final int SHIFTAFTERSCROLL = 4 * OFFSET;
     private static final long SAMPLE_TIME = 1000;
     private static final int DELAY = 2000;
