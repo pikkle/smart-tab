@@ -34,11 +34,9 @@ public class MusicSheetView extends View {
     private final static int KEYPOSLEFT = 300;
     private final static int KEYPOSTOP = 60;
     private final static int TIMESINMEASURE = 4;
-    private final static double CENTERRATIO = 7/8;
+    private final static double CENTERRATIO = 0.875;
     private final static double OCTAVESHIFT = 7;
-    private final static double NOTEHEIGHT = 1.5;
-    
-    
+    private final static double NOTEHEIGHT = 1.8;
 
     private Bitmap mNoire = BitmapFactory.decodeResource(getResources(), R.raw.noire);
     private Bitmap mDoubleCroche = BitmapFactory.decodeResource(getResources(), R.raw.double_croche);
@@ -47,16 +45,15 @@ public class MusicSheetView extends View {
     private Bitmap mRonde = BitmapFactory.decodeResource(getResources(), R.raw.ronde);
     private Bitmap mCle = BitmapFactory.decodeResource(getResources(), R.raw.cledesol);
     private Bitmap mSharp = BitmapFactory.decodeResource(getResources(), R.raw.diese);
-    
+
     private int mStartingPos;
     private int mLineMargin;
     private boolean mFirstDraw = true;
     private double mNoteDuration;
     private Bitmap mCurrNoteImage;
     private int mPos;
+    private List<Integer> mMeasures = new ArrayList<Integer>();
 
-    private List<Integer> mesure = new ArrayList<Integer>();
-    
     /**
      * @param context
      * @param attrs
@@ -76,15 +73,15 @@ public class MusicSheetView extends View {
         super.onDraw(canvas);
         if (mFirstDraw) {
             int width = canvas.getWidth();
-            int noteWidth = width / IMAGERATIO; 
+            int noteWidth = width / IMAGERATIO;
             mStartingPos = canvas.getWidth() / STARTPOSITIONRATIO;
             mLineMargin = (int) (canvas.getHeight() / MARGINRATIO);
             initializeBitmaps(noteWidth);
             paint.setColor(Color.BLACK);
             mPos = mStartingPos + 2 * mPace;
         }
-        canvas.translate(0, mLineMargin*TRANSLATIONVALUE);
-        
+        canvas.translate(0, mLineMargin * TRANSLATIONVALUE);
+
         drawCle(canvas);
 
         drawGrid(canvas, mLineMargin);
@@ -95,45 +92,44 @@ public class MusicSheetView extends View {
         mFirstDraw = false;
 
     }
-    
+
     private void drawCle(Canvas canvas) {
-        canvas.drawBitmap(mCle, KEYPOSLEFT, KEYPOSTOP-(2*mLineMargin), paint);
+        canvas.drawBitmap(mCle, KEYPOSLEFT, KEYPOSTOP - (2 * mLineMargin), paint);
     }
 
     public void drawNotes(Canvas c, int pos) {
         double temp = 0d;
         for (int i = 0; i < mTab.length(); i++) {
-            
+
             if (mFirstDraw) {
                 temp += mNoteDuration;
                 if (temp % TIMESINMEASURE == 0d) {
-                    mesure.add((int) (pos + mPace*mNoteDuration/2));
+                    mMeasures.add((int) (pos + mPace * mNoteDuration / 2));
                 }
             }
             mNoteDuration = Duration.valueOf(mTab.getTime(i).getDuration()).getDuration();
 
-            int noteHeightPos = (int)(mLineMargin * NOTEHEIGHT);
-			int imageWidth = getNoteWithDuration("Noire").getWidth();
-            if (pos - getScrollX() > -imageWidth && pos - getScrollX() < getWidth()+imageWidth) {
-                
+            int noteHeightPos = (int) (mLineMargin * NOTEHEIGHT);
+            int imageWidth = getNoteWithDuration("Noire").getWidth();
+            if (pos - getScrollX() > -imageWidth && pos - getScrollX() < getWidth() + imageWidth) {
+
                 mCurrNoteImage = getNoteWithDuration(mTab.getTime(i).getDuration());
-                
+
                 Time time = mTab.getTime(i);
                 for (int j = 0; j <= PARTITIONLINES; j++) {
                     if (time.getPartitionNote(j) != null) {
-                        
+
                         Note currNote = time.getPartitionNote(j);
                         Note sharpNote = sharpNote(currNote);
                         Boolean isSharp = sharpNote != currNote;
                         currNote = sharpNote;
-                        int posHeight = noteHeightPos
-                                - getNoteCenter(mCurrNoteImage) - mLineMargin
-                                / 2 * getNoteHeightPosition(currNote);
-                        c.drawBitmap(mCurrNoteImage, pos, posHeight,
-                                paint);
+                        int posHeight = noteHeightPos - getNoteCenter(mCurrNoteImage) - mLineMargin / 2
+                                * getNoteHeightPosition(currNote);
+                        c.drawBitmap(mCurrNoteImage, pos, posHeight, paint);
                         if (isSharp) {
-                        	c.drawBitmap(mSharp, pos+mCurrNoteImage.getWidth(), posHeight 
-                        	        + mCurrNoteImage.getHeight() - mSharp.getHeight() +  (mLineMargin / 2), paint);
+                            c.drawBitmap(mSharp, pos + mCurrNoteImage.getWidth(),
+                                    posHeight + mCurrNoteImage.getHeight() - mSharp.getHeight() + (mLineMargin / 2),
+                                    paint);
                         }
                     }
                 }
@@ -152,18 +148,18 @@ public class MusicSheetView extends View {
             canvas.drawLine(mStartingPos, i * y, mEndOfTab, i * y, paint);
         }
     }
-    
+
     private void drawMesure(Canvas canvas) {
-        for (int i = 0; i < mesure.size(); i++) {  
-            drawVerticalLineOnTab(canvas, mesure.get(i), mLineMargin);
-        }   
+        for (int i = 0; i < mMeasures.size(); i++) {
+            drawVerticalLineOnTab(canvas, mMeasures.get(i), mLineMargin);
+        }
     }
 
     private int getNoteCenter(Bitmap note) {
-        int center = (int) CENTERRATIO * note.getHeight(); 
-        //if (note == ronde) {
-         //   center = 5 * note.getHeight() / 8;
-        //}
+        int center = (int) CENTERRATIO * note.getHeight();
+        // if (note == ronde) {
+        // center = 5 * note.getHeight() / 8;
+        // }
         return center;
     }
 
@@ -183,53 +179,49 @@ public class MusicSheetView extends View {
 
     public Note sharpNote(Note note) {
         switch (note.getHeight()) {
-        case CD:
-        	return new Note(Height.C, note.getOctave());
-        	
-        case DD:
-        	return new Note(Height.D, note.getOctave());
-        	
-        case FD:
-        	return new Note(Height.F, note.getOctave());
-        	
-        case GD:
-        	return new Note(Height.G, note.getOctave());
-        	
-        case AD:
-        	return new Note(Height.A, note.getOctave());
-        	
-        default:
-        	return note;
-        	
+            case CD:
+                return new Note(Height.C, note.getOctave());
+            case DD:
+                return new Note(Height.D, note.getOctave());
+            case FD:
+                return new Note(Height.F, note.getOctave());
+            case GD:
+                return new Note(Height.G, note.getOctave());
+            case AD:
+                return new Note(Height.A, note.getOctave());
+
+            default:
+                return note;
+
         }
-        
+
     }
 
     public int getNoteHeightPosition(Note note) {
         int height = -1;
         switch (note.getHeight()) {
-        case E:
-            height = 0;
-            break;
-        case F:
-            height = 1;
-            break;
-        case G:
-            height = 2;
-            break;
-        case A:
-            height = 3;
-            break;
-        case B:
-            height = 4;
-            break;
-        case C:
-            height = 5;
-            break;
-        case D:
-            height = 6;
-            break;
-         default:
+            case E:
+                height = 0;
+                break;
+            case F:
+                height = 1;
+                break;
+            case G:
+                height = 2;
+                break;
+            case A:
+                height = 3;
+                break;
+            case B:
+                height = 4;
+                break;
+            case C:
+                height = 5;
+                break;
+            case D:
+                height = 6;
+                break;
+            default:
 
         }
         if ((note.getOctave() > 1) && (height < 2)) {
@@ -241,21 +233,16 @@ public class MusicSheetView extends View {
     private void drawVerticalLineOnTab(Canvas canvas, int x, int y) {
         canvas.drawLine(x, y, x, PARTITIONLINES * y, paint);
     }
-    
+
     private void initializeBitmaps(int noteWidth) {
-    	mDoubleCroche = Bitmap.createScaledBitmap(mDoubleCroche, noteWidth,
-                noteHeight(mDoubleCroche, noteWidth), false);
-        mCroche = Bitmap.createScaledBitmap(mCroche, noteWidth,
-                noteHeight(mCroche, noteWidth), false);
-        mNoire = Bitmap.createScaledBitmap(mNoire, noteWidth,
-                noteHeight(mNoire, noteWidth), false);
-        mBlanche = Bitmap.createScaledBitmap(mBlanche, noteWidth,
-                noteHeight(mBlanche, noteWidth), false);
-        mRonde = Bitmap.createScaledBitmap(mRonde, noteWidth,
-                noteHeight(mRonde, noteWidth), false);
-        mCle = Bitmap.createScaledBitmap(mCle, noteWidth,
-                noteHeight(mCle, noteWidth), false);
-        mSharp = Bitmap.createScaledBitmap(mSharp, mSharp.getWidth() * 2 
-                * mLineMargin / mSharp.getHeight(), 2 * mLineMargin, false);
+        mDoubleCroche = Bitmap
+                .createScaledBitmap(mDoubleCroche, noteWidth, noteHeight(mDoubleCroche, noteWidth), false);
+        mCroche = Bitmap.createScaledBitmap(mCroche, noteWidth, noteHeight(mCroche, noteWidth), false);
+        mNoire = Bitmap.createScaledBitmap(mNoire, noteWidth, noteHeight(mNoire, noteWidth), false);
+        mBlanche = Bitmap.createScaledBitmap(mBlanche, noteWidth, noteHeight(mBlanche, noteWidth), false);
+        mRonde = Bitmap.createScaledBitmap(mRonde, noteWidth, noteHeight(mRonde, noteWidth), false);
+        mCle = Bitmap.createScaledBitmap(mCle, noteWidth, noteHeight(mCle, noteWidth), false);
+        mSharp = Bitmap.createScaledBitmap(mSharp, mSharp.getWidth() * 2 * mLineMargin / mSharp.getHeight(),
+                2 * mLineMargin, false);
     }
 }
