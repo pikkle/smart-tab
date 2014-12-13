@@ -10,20 +10,20 @@ import android.media.SoundPool;
  * @author imani92 Ismail Imani
  */
 public class SampleMap {
-    private final int frets = 15;
+    private final static int NUMFRETS = 15;
     private final Map<String, Integer> samples = new HashMap<String, Integer>();
 
     public SampleMap(Context context, SoundPool pool, Note[] tuning) {
 
         for (int i = 0; i < tuning.length; i++) {
-            for (int j = 0; j < frets; j++) {
+            for (int j = 0; j < NUMFRETS; j++) {
                 Note newNote = tuning[i].addHalfTones(j);
                 String noteName = newNote.toString();
                 if (!samples.containsKey(noteName)) {
-                    samples.put(noteName, pool.load(
-                            context,
-                            context.getResources().getIdentifier(noteName,
-                                    "raw", context.getPackageName()), 1));
+                    samples.put(
+                            noteName,
+                            pool.load(context,
+                                   context.getResources().getIdentifier(noteName, "raw", context.getPackageName()), 1));
                 }
             }
         }

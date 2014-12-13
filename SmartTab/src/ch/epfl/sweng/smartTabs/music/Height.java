@@ -5,18 +5,17 @@ package ch.epfl.sweng.smartTabs.music;
  *         Do to Si, with half height ( C#).
  */
 public enum Height {
-    C(0), CD(1), D(2), DD(3), E(4), F(5), FD(6), G(7), GD(8), A(9), AD(10), B(
-            11);
+    C(0), CD(1), D(2), DD(3), E(4), F(5), FD(6), G(7), GD(8), A(9), AD(10), B(11);
 
     private static final int MAXHALFTONE = 12;
-    private final int myIndex;
+    private final int mIndex;
 
     private Height(int index) {
-        this.myIndex = index;
+        this.mIndex = index;
     }
 
     public int getIndex() {
-        return myIndex;
+        return mIndex;
     }
 
     public static int getMax() {

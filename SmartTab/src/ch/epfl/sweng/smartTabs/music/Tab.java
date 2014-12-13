@@ -15,15 +15,15 @@ import org.json.JSONObject;
 public final class Tab implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    private final static int PACE = 200;
 
     private final String mTabName;
     private final String mTabArtist;
     private final int mTempo;
     private final List<Time> mTimeList;
     private final HashMap<Float, Time> mTimeMap = new HashMap<Float, Time>();
-    private final int pace = 200;
 
-    private Tab(String tabName,String tabArtist, int tempo, List<Time> timeList) {
+    private Tab(String tabName, String tabArtist, int tempo, List<Time> timeList) {
         mTabName = tabName;
         mTabArtist = tabArtist;
         mTempo = tempo;
@@ -31,28 +31,24 @@ public final class Tab implements Serializable {
     }
 
     public static Tab parseTabFromJSON(JSONObject jsonTab) throws JSONException {
-        try{
-        	
-    	String jsonTabName = jsonTab.getString("name");
-        String jsonTabArtist = jsonTab.getString("artist");
-        int jsonTempo = jsonTab.getInt("tempo");
+        try {
+            String jsonTabName = jsonTab.getString("name");
+            String jsonTabArtist = jsonTab.getString("artist");
+            int jsonTempo = jsonTab.getInt("tempo");
 
-        JSONArray jsonTimeList = jsonTab.getJSONArray("partition");
+            JSONArray jsonTimeList = jsonTab.getJSONArray("partition");
 
-        List<Time> parsedTimeList = new ArrayList<Time>();
+            List<Time> parsedTimeList = new ArrayList<Time>();
 
-       
-        for (int i = 0; i < jsonTimeList.length(); i++) {
-            Time jsonTime = Time.parseTimeFromJson(jsonTimeList
-                    .getJSONObject(i));
-            if(!jsonTime.isEmpty()){
-            	parsedTimeList.add(jsonTime);
+            for (int i = 0; i < jsonTimeList.length(); i++) {
+                Time jsonTime = Time.parseTimeFromJson(jsonTimeList.getJSONObject(i));
+                if (!jsonTime.isEmpty()) {
+                    parsedTimeList.add(jsonTime);
+                }
             }
-        }
-        return new Tab(jsonTabName,jsonTabArtist, jsonTempo, parsedTimeList);
-        }
-        catch(JSONException e){
-        	throw new JSONException("Bad Json");
+            return new Tab(jsonTabName, jsonTabArtist, jsonTempo, parsedTimeList);
+        } catch (JSONException e) {
+            throw new JSONException("Bad Json");
         }
     }
 
@@ -69,34 +65,35 @@ public final class Tab implements Serializable {
         // first time)
         float timePos = firstPos;
         int ptr = 0;
-        while(mTimeList.get(ptr).isEmpty()){
-        	ptr++;
+        while (mTimeList.get(ptr).isEmpty()) {
+            ptr++;
         }
-        mTimeMap.put(timePos, mTimeList.get(ptr++)); // init the first item of the map
+        mTimeMap.put(timePos, mTimeList.get(ptr++)); // init the first item of
+                                                     // the map
         for (int i = ptr; i < mTimeList.size(); i++) {
-        	if(!mTimeList.get(i).isEmpty()){
-	            double dur = Duration.valueOf(mTimeList.get(i - 1).getDuration())
-	                    .getDuration();
-	            // Position of the current time is the pos. of the previous time +
-	            // the distance between them (dur*pace)
-	            timePos += dur * pace;
-	            mTimeMap.put(timePos, mTimeList.get(i));
-        	}
+            if (!mTimeList.get(i).isEmpty()) {
+                double dur = Duration.valueOf(mTimeList.get(i - 1).getDuration()).getDuration();
+                // Position of the current time is the pos. of the previous time
+                // +
+                // the distance between them (dur*pace)
+                timePos += dur * PACE;
+                mTimeMap.put(timePos, mTimeList.get(i));
+            }
         }
     }
 
     public String getTabName() {
         return mTabName;
     }
-    public String getTabArtist(){
-    	return mTabArtist;
+
+    public String getTabArtist() {
+        return mTabArtist;
     }
 
     public int length() {
         return mTimeList.size();
     }
 
-    
     public int getTempo() {
         return mTempo;
     }
@@ -118,7 +115,7 @@ public final class Tab implements Serializable {
         for (Time t : mTimeList) {
             total = total + Duration.valueOf(t.getDuration()).getDuration();
         }
-        return total * pace;
+        return total * PACE;
 
     }
 }
