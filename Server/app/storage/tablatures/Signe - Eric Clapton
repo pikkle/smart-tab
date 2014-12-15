@@ -1,0 +1,3760 @@
+{
+    "name": "Signe",
+    "artist": "Eric Clapton",
+    "tempo": 120,
+    "partition": [
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "0",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "2",
+            "string_3": "2",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Noire"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "0",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "0",
+            "string_3": "1",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Noire"
+        },
+        {
+            "string_1": "0",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Noire"
+        },
+        {
+            "string_1": "",
+            "string_2": "2",
+            "string_3": "2",
+            "string_4": "",
+            "string_5": "0",
+            "string_6": "",
+            "length": "Noire"
+        },
+        {
+            "string_1": "0",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Noire"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "0",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "0",
+            "string_3": "1",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Noire"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "0",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "0",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "2",
+            "string_3": "2",
+            "string_4": "",
+            "string_5": "0",
+            "string_6": "",
+            "length": "Noire"
+        },
+        {
+            "string_1": "0",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "0",
+            "string_3": "1",
+            "string_4": "",
+            "string_5": "0",
+            "string_6": "",
+            "length": "Noire"
+        },
+        {
+            "string_1": "0",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Noire"
+        },
+        {
+            "string_1": "",
+            "string_2": "2",
+            "string_3": "2",
+            "string_4": "",
+            "string_5": "0",
+            "string_6": "",
+            "length": "Noire"
+        },
+        {
+            "string_1": "0",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Noire"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "0",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "0",
+            "string_3": "1",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Noire"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "0",
+            "string_6": "",
+            "length": "Noire"
+        },
+        {
+            "string_1": "",
+            "string_2": "2",
+            "string_3": "2",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Noire"
+        },
+        {
+            "string_1": "0",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "0",
+            "string_3": "1",
+            "string_4": "",
+            "string_5": "0",
+            "string_6": "",
+            "length": "Noire"
+        },
+        {
+            "string_1": "0",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Noire"
+        },
+        {
+            "string_1": "",
+            "string_2": "2",
+            "string_3": "2",
+            "string_4": "",
+            "string_5": "0",
+            "string_6": "",
+            "length": "Noire"
+        },
+        {
+            "string_1": "0",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Noire"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "0",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "0",
+            "string_3": "1",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Noire"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "0",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "0",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "2",
+            "string_3": "2",
+            "string_4": "",
+            "string_5": "0",
+            "string_6": "",
+            "length": "Noire"
+        },
+        {
+            "string_1": "0",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "0",
+            "string_3": "1",
+            "string_4": "",
+            "string_5": "0",
+            "string_6": "",
+            "length": "Noire"
+        },
+        {
+            "string_1": "0",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Noire"
+        },
+        {
+            "string_1": "",
+            "string_2": "2",
+            "string_3": "2",
+            "string_4": "",
+            "string_5": "0",
+            "string_6": "",
+            "length": "Blanche"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "2",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "1",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "2",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "0",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "2",
+            "string_3": "2",
+            "string_4": "2",
+            "string_5": "0",
+            "string_6": "",
+            "length": "Noire"
+        },
+        {
+            "string_1": "0",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "0",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "4",
+            "string_3": "4",
+            "string_4": "4",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "0",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Noire"
+        },
+        {
+            "string_1": "0",
+            "string_2": "",
+            "string_3": "4",
+            "string_4": "6",
+            "string_5": "",
+            "string_6": "4",
+            "length": "Noire"
+        },
+        {
+            "string_1": "4",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "2",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "3",
+            "string_4": "4",
+            "string_5": "4",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "2",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Noire"
+        },
+        {
+            "string_1": "",
+            "string_2": "3",
+            "string_3": "2",
+            "string_4": "4",
+            "string_5": "2",
+            "string_6": "",
+            "length": "Noire"
+        },
+        {
+            "string_1": "2",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "2",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "3",
+            "string_3": "2",
+            "string_4": "4",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "2",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Noire"
+        },
+        {
+            "string_1": "",
+            "string_2": "0",
+            "string_3": "1",
+            "string_4": "2",
+            "string_5": "",
+            "string_6": "0",
+            "length": "Croche"
+        },
+        {
+            "string_1": "0",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "0",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "3",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "2",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "0",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "2",
+            "string_3": "2",
+            "string_4": "2",
+            "string_5": "0",
+            "string_6": "",
+            "length": "Noire"
+        },
+        {
+            "string_1": "0",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "0",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "2",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "0",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "2",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "3",
+            "string_4": "2",
+            "string_5": "",
+            "string_6": "2",
+            "length": "Noire"
+        },
+        {
+            "string_1": "2",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "2",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "3",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "0",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "2",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Noire"
+        },
+        {
+            "string_1": "",
+            "string_2": "3",
+            "string_3": "2",
+            "string_4": "4",
+            "string_5": "2",
+            "string_6": "",
+            "length": "Noire"
+        },
+        {
+            "string_1": "2",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "2",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "3",
+            "string_3": "2",
+            "string_4": "4",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "2",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Noire"
+        },
+        {
+            "string_1": "",
+            "string_2": "0",
+            "string_3": "1",
+            "string_4": "2",
+            "string_5": "",
+            "string_6": "0",
+            "length": "Noire"
+        },
+        {
+            "string_1": "0",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "0",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "0",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "2",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "1",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "2",
+            "string_3": "2",
+            "string_4": "2",
+            "string_5": "0",
+            "string_6": "",
+            "length": "Noire"
+        },
+        {
+            "string_1": "0",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "0",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "2",
+            "string_3": "2",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "0",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "3",
+            "string_3": "2",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "2",
+            "length": "Noire"
+        },
+        {
+            "string_1": "0",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "2",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "3",
+            "string_3": "2",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "0",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "3",
+            "string_3": "2",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "0",
+            "length": "Croche"
+        },
+        {
+            "string_1": "0",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "0",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "3",
+            "string_3": "2",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "0",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "3",
+            "string_3": "1",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "0",
+            "length": "Noire"
+        },
+        {
+            "string_1": "0",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "0",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "0",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "2",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "1",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "2",
+            "string_3": "2",
+            "string_4": "2",
+            "string_5": "0",
+            "string_6": "",
+            "length": "Noire"
+        },
+        {
+            "string_1": "0",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "0",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "2",
+            "string_3": "2",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "0",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "3",
+            "string_3": "2",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "2",
+            "length": "Croche"
+        },
+        {
+            "string_1": "0",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "2",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "3",
+            "string_3": "2",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "0",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "3",
+            "string_3": "2",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "0",
+            "length": "Noire"
+        },
+        {
+            "string_1": "0",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "0",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "3",
+            "string_3": "2",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "0",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "3",
+            "string_3": "1",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "0",
+            "length": "Noire"
+        },
+        {
+            "string_1": "0",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "0",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "1",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "2",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "0",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "2",
+            "string_3": "2",
+            "string_4": "2",
+            "string_5": "0",
+            "string_6": "",
+            "length": "Noire"
+        },
+        {
+            "string_1": "0",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "0",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "4",
+            "string_3": "4",
+            "string_4": "4",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "0",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Noire"
+        },
+        {
+            "string_1": "0",
+            "string_2": "",
+            "string_3": "4",
+            "string_4": "6",
+            "string_5": "",
+            "string_6": "4",
+            "length": "Croche"
+        },
+        {
+            "string_1": "4",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "2",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "3",
+            "string_4": "4",
+            "string_5": "4",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "2",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Noire"
+        },
+        {
+            "string_1": "",
+            "string_2": "3",
+            "string_3": "2",
+            "string_4": "4",
+            "string_5": "2",
+            "string_6": "",
+            "length": "Noire"
+        },
+        {
+            "string_1": "2",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "2",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "3",
+            "string_3": "2",
+            "string_4": "4",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "2",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Noire"
+        },
+        {
+            "string_1": "",
+            "string_2": "0",
+            "string_3": "1",
+            "string_4": "2",
+            "string_5": "",
+            "string_6": "0",
+            "length": "Noire"
+        },
+        {
+            "string_1": "0",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "0",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "3",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "2",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "0",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "2",
+            "string_3": "2",
+            "string_4": "2",
+            "string_5": "0",
+            "string_6": "",
+            "length": "Noire"
+        },
+        {
+            "string_1": "0",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "0",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "0",
+            "string_6": "",
+            "length": "Noire"
+        },
+        {
+            "string_1": "",
+            "string_2": "2",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "0",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "2",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "3",
+            "string_4": "2",
+            "string_5": "",
+            "string_6": "2",
+            "length": "Croche"
+        },
+        {
+            "string_1": "2",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "2",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "3",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "0",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "3",
+            "string_3": "2",
+            "string_4": "4",
+            "string_5": "2",
+            "string_6": "",
+            "length": "Noire"
+        },
+        {
+            "string_1": "2",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "2",
+            "string_6": "",
+            "length": "Noire"
+        },
+        {
+            "string_1": "",
+            "string_2": "3",
+            "string_3": "2",
+            "string_4": "4",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "2",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Noire"
+        },
+        {
+            "string_1": "",
+            "string_2": "0",
+            "string_3": "1",
+            "string_4": "2",
+            "string_5": "",
+            "string_6": "0",
+            "length": "Noire"
+        },
+        {
+            "string_1": "0",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "0",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "0",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "2",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "1",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "2",
+            "string_3": "2",
+            "string_4": "2",
+            "string_5": "0",
+            "string_6": "",
+            "length": "Noire"
+        },
+        {
+            "string_1": "0",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "0",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "2",
+            "string_3": "2",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "0",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "3",
+            "string_3": "2",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "2",
+            "length": "Croche"
+        },
+        {
+            "string_1": "0",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "2",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "3",
+            "string_3": "2",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "0",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "3",
+            "string_3": "2",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "0",
+            "length": "Noire"
+        },
+        {
+            "string_1": "0",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "0",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "3",
+            "string_3": "2",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "0",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "3",
+            "string_3": "1",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "0",
+            "length": "Noire"
+        },
+        {
+            "string_1": "0",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "0",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "0",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "2",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "1",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "2",
+            "string_3": "2",
+            "string_4": "2",
+            "string_5": "0",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "0",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "0",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "2",
+            "string_3": "2",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "0",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "3",
+            "string_3": "2",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "2",
+            "length": "Noire"
+        },
+        {
+            "string_1": "0",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "2",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "3",
+            "string_3": "2",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "0",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "3",
+            "string_3": "2",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "0",
+            "length": "Noire"
+        },
+        {
+            "string_1": "0",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "0",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "3",
+            "string_3": "2",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "0",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "3",
+            "string_3": "1",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "0",
+            "length": "Noire"
+        },
+        {
+            "string_1": "0",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Noire"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "0",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "1",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "2",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "0",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "4",
+            "string_3": "4",
+            "string_4": "4",
+            "string_5": "4",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "0",
+            "string_2": "0",
+            "string_3": "1",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "0",
+            "string_2": "0",
+            "string_3": "",
+            "string_4": "6",
+            "string_5": "4",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "0",
+            "string_2": "0",
+            "string_3": "",
+            "string_4": "6",
+            "string_5": "4",
+            "string_6": "",
+            "length": "Noire"
+        },
+        {
+            "string_1": "0",
+            "string_2": "0",
+            "string_3": "",
+            "string_4": "6",
+            "string_5": "4",
+            "string_6": "",
+            "length": "Noire"
+        },
+        {
+            "string_1": "",
+            "string_2": "2",
+            "string_3": "2",
+            "string_4": "2",
+            "string_5": "",
+            "string_6": "2",
+            "length": "Noire"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "2",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "2",
+            "string_3": "2",
+            "string_4": "2",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "2",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "3",
+            "string_3": "2",
+            "string_4": "4",
+            "string_5": "2",
+            "string_6": "",
+            "length": "Noire"
+        },
+        {
+            "string_1": "2",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "2",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "3",
+            "string_3": "2",
+            "string_4": "4",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "2",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "0",
+            "string_3": "1",
+            "string_4": "2",
+            "string_5": "",
+            "string_6": "0",
+            "length": "Noire"
+        },
+        {
+            "string_1": "0",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Noire"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "0",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "1",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "2",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "0",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Noire"
+        },
+        {
+            "string_1": "",
+            "string_2": "4",
+            "string_3": "4",
+            "string_4": "4",
+            "string_5": "4",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "0",
+            "string_2": "0",
+            "string_3": "1",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "0",
+            "string_2": "0",
+            "string_3": "",
+            "string_4": "6",
+            "string_5": "4",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "0",
+            "string_2": "0",
+            "string_3": "",
+            "string_4": "6",
+            "string_5": "4",
+            "string_6": "",
+            "length": "Noire"
+        },
+        {
+            "string_1": "0",
+            "string_2": "0",
+            "string_3": "",
+            "string_4": "6",
+            "string_5": "4",
+            "string_6": "",
+            "length": "Noire"
+        },
+        {
+            "string_1": "",
+            "string_2": "2",
+            "string_3": "2",
+            "string_4": "2",
+            "string_5": "",
+            "string_6": "2",
+            "length": "Noire"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "2",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "2",
+            "string_3": "2",
+            "string_4": "2",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "2",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "3",
+            "string_3": "2",
+            "string_4": "4",
+            "string_5": "2",
+            "string_6": "",
+            "length": "Noire"
+        },
+        {
+            "string_1": "2",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "2",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "3",
+            "string_3": "2",
+            "string_4": "4",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "2",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "0",
+            "string_3": "1",
+            "string_4": "2",
+            "string_5": "",
+            "string_6": "0",
+            "length": "Noire"
+        },
+        {
+            "string_1": "0",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Noire"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "0",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "1",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "2",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "0",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Noire"
+        },
+        {
+            "string_1": "4",
+            "string_2": "5",
+            "string_3": "4",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "4",
+            "length": "Croche"
+        },
+        {
+            "string_1": "4",
+            "string_2": "5",
+            "string_3": "4",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "4",
+            "length": "Croche"
+        },
+        {
+            "string_1": "4",
+            "string_2": "5",
+            "string_3": "4",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "4",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "2",
+            "string_3": "2",
+            "string_4": "2",
+            "string_5": "",
+            "string_6": "2",
+            "length": "Noire"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "2",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "2",
+            "string_3": "2",
+            "string_4": "2",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "2",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "3",
+            "string_3": "2",
+            "string_4": "4",
+            "string_5": "2",
+            "string_6": "",
+            "length": "Noire"
+        },
+        {
+            "string_1": "2",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "2",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "3",
+            "string_3": "2",
+            "string_4": "4",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "2",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "0",
+            "string_3": "1",
+            "string_4": "2",
+            "string_5": "",
+            "string_6": "0",
+            "length": "Noire"
+        },
+        {
+            "string_1": "0",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "0",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "0",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "2",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "1",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "2",
+            "string_3": "2",
+            "string_4": "2",
+            "string_5": "0",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "0",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "0",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "2",
+            "string_3": "2",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "0",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "3",
+            "string_3": "2",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "2",
+            "length": "Noire"
+        },
+        {
+            "string_1": "0",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "2",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "3",
+            "string_3": "2",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "0",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "3",
+            "string_3": "2",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "0",
+            "length": "Noire"
+        },
+        {
+            "string_1": "0",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "0",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "3",
+            "string_3": "2",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "0",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "3",
+            "string_3": "1",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "0",
+            "length": "Noire"
+        },
+        {
+            "string_1": "0",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Noire"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "0",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "0",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "2",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "1",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "2",
+            "string_3": "2",
+            "string_4": "2",
+            "string_5": "0",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "0",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "0",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "2",
+            "string_3": "2",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "0",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "3",
+            "string_3": "2",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "2",
+            "length": "Noire"
+        },
+        {
+            "string_1": "0",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "2",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "3",
+            "string_3": "2",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "0",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "3",
+            "string_3": "2",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "0",
+            "length": "Noire"
+        },
+        {
+            "string_1": "0",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "0",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "3",
+            "string_3": "2",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "0",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "3",
+            "string_3": "1",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "0",
+            "length": "Noire"
+        },
+        {
+            "string_1": "0",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Noire"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "0",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "0",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "2",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "1",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "2",
+            "string_3": "2",
+            "string_4": "2",
+            "string_5": "0",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "0",
+            "string_2": "2",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "4",
+            "string_3": "4",
+            "string_4": "4",
+            "string_5": "0",
+            "string_6": "",
+            "length": "Noire"
+        },
+        {
+            "string_1": "0",
+            "string_2": "",
+            "string_3": "4",
+            "string_4": "4",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "0",
+            "string_2": "",
+            "string_3": "4",
+            "string_4": "6",
+            "string_5": "",
+            "string_6": "4",
+            "length": "Noire"
+        },
+        {
+            "string_1": "4",
+            "string_2": "5",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "2",
+            "string_3": "2",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "2",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "3",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "2",
+            "string_2": "2",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "3",
+            "string_3": "2",
+            "string_4": "4",
+            "string_5": "2",
+            "string_6": "",
+            "length": "Noire"
+        },
+        {
+            "string_1": "2",
+            "string_2": "3",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "2",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "3",
+            "string_3": "2",
+            "string_4": "4",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "2",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "0",
+            "string_3": "1",
+            "string_4": "2",
+            "string_5": "",
+            "string_6": "0",
+            "length": "Noire"
+        },
+        {
+            "string_1": "0",
+            "string_2": "0",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "0",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "3",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "2",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "0",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "2",
+            "string_3": "2",
+            "string_4": "2",
+            "string_5": "0",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "0",
+            "string_2": "2",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "4",
+            "string_3": "4",
+            "string_4": "4",
+            "string_5": "0",
+            "string_6": "",
+            "length": "Noire"
+        },
+        {
+            "string_1": "0",
+            "string_2": "",
+            "string_3": "4",
+            "string_4": "4",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "0",
+            "string_2": "",
+            "string_3": "4",
+            "string_4": "6",
+            "string_5": "",
+            "string_6": "4",
+            "length": "Noire"
+        },
+        {
+            "string_1": "4",
+            "string_2": "5",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "2",
+            "string_3": "2",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "2",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "3",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "2",
+            "string_2": "2",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "3",
+            "string_3": "2",
+            "string_4": "4",
+            "string_5": "2",
+            "string_6": "",
+            "length": "Noire"
+        },
+        {
+            "string_1": "2",
+            "string_2": "3",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "2",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "3",
+            "string_3": "2",
+            "string_4": "4",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "2",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "0",
+            "string_3": "1",
+            "string_4": "2",
+            "string_5": "",
+            "string_6": "0",
+            "length": "Noire"
+        },
+        {
+            "string_1": "0",
+            "string_2": "0",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "0",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "3",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "2",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "0",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "2",
+            "string_3": "2",
+            "string_4": "2",
+            "string_5": "0",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "0",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "0",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "2",
+            "string_3": "2",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "0",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Noire"
+        },
+        {
+            "string_1": "",
+            "string_2": "3",
+            "string_3": "2",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "2",
+            "length": "Noire"
+        },
+        {
+            "string_1": "0",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "2",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "3",
+            "string_3": "2",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "0",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Noire"
+        },
+        {
+            "string_1": "",
+            "string_2": "3",
+            "string_3": "2",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "0",
+            "length": "Noire"
+        },
+        {
+            "string_1": "0",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "0",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "3",
+            "string_3": "2",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "3",
+            "string_3": "1",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "0",
+            "length": "Noire"
+        },
+        {
+            "string_1": "0",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Noire"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "0",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "0",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "2",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "1",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "2",
+            "string_3": "2",
+            "string_4": "2",
+            "string_5": "0",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "0",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Noire"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "0",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "2",
+            "string_3": "2",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "0",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Noire"
+        },
+        {
+            "string_1": "",
+            "string_2": "3",
+            "string_3": "2",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "2",
+            "length": "Noire"
+        },
+        {
+            "string_1": "0",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "2",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "3",
+            "string_3": "2",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "0",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Noire"
+        },
+        {
+            "string_1": "",
+            "string_2": "3",
+            "string_3": "2",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "0",
+            "length": "Noire"
+        },
+        {
+            "string_1": "0",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "0",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "3",
+            "string_3": "2",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "0",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Noire"
+        },
+        {
+            "string_1": "",
+            "string_2": "3",
+            "string_3": "1",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "0",
+            "length": "Noire"
+        },
+        {
+            "string_1": "0",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Noire"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "0",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "0",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "2",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "1",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "2",
+            "string_3": "2",
+            "string_4": "2",
+            "string_5": "0",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "0",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Noire"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "0",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "2",
+            "string_3": "2",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "0",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Noire"
+        },
+        {
+            "string_1": "",
+            "string_2": "3",
+            "string_3": "2",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "2",
+            "length": "Noire"
+        },
+        {
+            "string_1": "0",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "2",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "3",
+            "string_3": "2",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "0",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Noire"
+        },
+        {
+            "string_1": "",
+            "string_2": "3",
+            "string_3": "2",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "0",
+            "length": "Noire"
+        },
+        {
+            "string_1": "0",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "0",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "3",
+            "string_3": "2",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "0",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Noire"
+        },
+        {
+            "string_1": "",
+            "string_2": "3",
+            "string_3": "1",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "0",
+            "length": "Noire"
+        },
+        {
+            "string_1": "0",
+            "string_2": "3",
+            "string_3": "1",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Noire"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "2",
+            "string_5": "",
+            "string_6": "0",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "0",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "2",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "2",
+            "string_4": "",
+            "string_5": "0",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "6",
+            "string_5": "",
+            "string_6": "4",
+            "length": "Noire"
+        },
+        {
+            "string_1": "",
+            "string_2": "2",
+            "string_3": "",
+            "string_4": "0",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "",
+            "string_2": "2",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "0",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Croche"
+        },
+        {
+            "string_1": "5",
+            "string_2": "",
+            "string_3": "",
+            "string_4": "",
+            "string_5": "",
+            "string_6": "",
+            "length": "Ronde"
+        }
+    ]
+}
