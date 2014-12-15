@@ -30,6 +30,12 @@ public final class Tab implements Serializable {
         mTimeList = timeList;
     }
 
+    /**
+     * Parse a Json into a Tab
+     * @param jsonTab
+     * @return The tab generated from the Json
+     * @throws JSONException
+     */
     public static Tab parseTabFromJSON(JSONObject jsonTab) throws JSONException {
         try {
             String jsonTabName = jsonTab.getString("name");
