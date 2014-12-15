@@ -7,5 +7,6 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
 	<classpathentry kind="lib" path="lib/mockito-all-1.9.5.jar"/>
+	<classpathentry kind="lib" path="lib/espresso-1.1-bundled.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>
