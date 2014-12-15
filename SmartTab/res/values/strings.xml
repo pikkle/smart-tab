@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="abt_app_content">SmartTabs</string>
-    <string name="abt_dev_content">SmartTabs</string>
+    <string name="abt_dev_content">This app is brought to you by team SwaggySweng from EPFL\nSwaggySweng is made by these awesome people\n\n  Faton \'Fabrice\' Ramadani\n  Ismail \'Irène\' Imani\n  Raphael \'Rabab\' ElKhoury\n  Jad \'Jeremie\' Khoury\n  Lou \'Latifa\' Richard\n  Christophe \'Chimène\' Gaudet-Blavignac\n  Loic \'Lynda\' Serafin\n\nThese are all hard-working students, dedicated to bring you an amazing app that can be great when it comes to showing-off.\n\n#TeamSwaggySwengRPZT</string>
+    <string name="abt_app_content">SmartTabs is an application brought to you by SwaggySweng from EPFL, to give you a basic way to learn the guitar using ASCII tabs. Upgraded with a setting to slow Tab speed, and a flashing metronome in the upper right corner, we believe this application will help newcomers learn the guitar easier.\nThere is also an online editor for this app at http://178.62.199.28/ where you can upload your own tabs, and if you\'re a professional, create your own tab, and then play this tab in our application!\nPlease submit any bugs encountered to swaggy_sweng@gmail.com.</string>
     <string name="app_name">SmartTabs</string>
     <string name="title_activity_display">DisplayActivity</string>
+    <string name="title_favorites_display">Favorites</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="search_hint">Tab Name</string>
-    <string name="serverURLQuery">http://mpikkle.com/getTabs/?query=</string>
+    <string name="serverURLQuery">http://178.62.199.28/getTabs/</string>
     <string name="action_refresh">Refresh</string>
     <string name="action_search">Search</string>
     <string name="splash_screen">Splash Screen </string>
@@ -20,7 +21,8 @@
     <string name="title_about_app">About the app</string>
     <string name="title_help">Help</string>
     <string name="title_activity_help">HelpActivity</string>
-    <string name="help_content">Play/Pause : Click on Screen</string>
+    <string name="help_content">Play/Pause : Click on Screen\nMetronome on upper right corner\nScroll through Tab: Swipe left and right \nAdd to Favorite: Star Icon on Lower Right\nSet Tab Speed: Arrows on bottom of the screen\nShow Menu: Swipe from left to right on tab screen</string>
+    <string name="help_content_dialog">Play/Pause : Click on Screen\nMetronome on upper right corner\nScroll through Tab: Swipe left and right \nAdd to Favorite: Star Icon on Lower Right\nSet Tab Speed: Arrows on bottom of the screen</string>
     <string name="title_activity_settings">SettingsActivity</string>
     <string name="title_activity_preference">PreferenceActivity</string>
     <string name="title_activity_about_app">AboutAppActivity</string>
@@ -33,7 +35,7 @@
     <string name="title_dialog">Tutorial</string>
     <string name="title_activity_splash">SmartTabs</string>
     <string name="drawer_open"></string>
-    <string name="drawer_close"/>
+    <string name="drawer_close" />
     <string name="action_settings">Settings</string>
 
 </resources>

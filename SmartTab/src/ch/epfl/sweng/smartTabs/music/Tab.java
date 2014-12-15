@@ -15,50 +15,47 @@ import org.json.JSONObject;
 public final class Tab implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    private final static int PACE = 200;
 
     private final String mTabName;
-    private final boolean mComplex;
+    private final String mTabArtist;
     private final int mTempo;
-    private final List<String> mSignatures;
     private final List<Time> mTimeList;
     private final HashMap<Float, Time> mTimeMap = new HashMap<Float, Time>();
-    private final int pace = 200;
 
-    private Tab(String tabName, boolean complex, int tempo,
-            List<String> signatures, List<Time> timeList) {
+    private Tab(String tabName, String tabArtist, int tempo, List<Time> timeList) {
         mTabName = tabName;
-        mComplex = complex;
+        mTabArtist = tabArtist;
         mTempo = tempo;
-        mSignatures = signatures;
         mTimeList = timeList;
     }
 
+    /**
+     * Parse a Json into a Tab
+     * @param jsonTab
+     * @return The tab generated from the Json
+     * @throws JSONException
+     */
     public static Tab parseTabFromJSON(JSONObject jsonTab) throws JSONException {
-        String jsonTabName = jsonTab.getString("name");
-        boolean jsonComplex = jsonTab.getBoolean("complex");
-        int jsonTempo = jsonTab.getInt("tempo");
-        JSONArray jsonSignatures;
         try {
-            jsonSignatures = jsonTab.getJSONArray("signatures");
+            String jsonTabName = jsonTab.getString("name");
+            String jsonTabArtist = jsonTab.getString("artist");
+            int jsonTempo = jsonTab.getInt("tempo");
+
+            JSONArray jsonTimeList = jsonTab.getJSONArray("partition");
+
+            List<Time> parsedTimeList = new ArrayList<Time>();
+
+            for (int i = 0; i < jsonTimeList.length(); i++) {
+                Time jsonTime = Time.parseTimeFromJson(jsonTimeList.getJSONObject(i));
+                if (!jsonTime.isEmpty()) {
+                    parsedTimeList.add(jsonTime);
+                }
+            }
+            return new Tab(jsonTabName, jsonTabArtist, jsonTempo, parsedTimeList);
         } catch (JSONException e) {
-            jsonSignatures = new JSONArray();
+            throw new JSONException("Bad Json");
         }
-
-        JSONArray jsonTimeList = jsonTab.getJSONArray("partition");
-
-        List<String> parsedSignatures = new ArrayList<String>();
-        List<Time> parsedTimeList = new ArrayList<Time>();
-
-        for (int i = 0; i < jsonSignatures.length(); i++) {
-            parsedSignatures.add(jsonSignatures.getString(i));
-        }
-        for (int i = 0; i < jsonTimeList.length(); i++) {
-            Time jsonTime = Time.parseTimeFromJson(jsonTimeList
-                    .getJSONObject(i));
-            parsedTimeList.add(jsonTime);
-        }
-        return new Tab(jsonTabName, jsonComplex, jsonTempo, parsedSignatures,
-                parsedTimeList);
     }
 
     /**
@@ -73,15 +70,21 @@ public final class Tab implements Serializable {
         // Position of the time (initial value equal to the position of the
         // first time)
         float timePos = firstPos;
-        mTimeMap.put(timePos, mTimeList.get(0)); // init the first item of the
-                                                 // map
-        for (int i = 1; i < mTimeList.size(); i++) {
-            double dur = Duration.valueOf(mTimeList.get(i - 1).getDuration())
-                    .getDuration();
-            // Position of the current time is the pos. of the previous time +
-            // the distance between them (dur*pace)
-            timePos += dur * pace;
-            mTimeMap.put(Float.valueOf((float) timePos), mTimeList.get(i));
+        int ptr = 0;
+        while (mTimeList.get(ptr).isEmpty()) {
+            ptr++;
+        }
+        mTimeMap.put(timePos, mTimeList.get(ptr++)); // init the first item of
+                                                     // the map
+        for (int i = ptr; i < mTimeList.size(); i++) {
+            if (!mTimeList.get(i).isEmpty()) {
+                double dur = Duration.valueOf(mTimeList.get(i - 1).getDuration()).getDuration();
+                // Position of the current time is the pos. of the previous time
+                // +
+                // the distance between them (dur*pace)
+                timePos += dur * PACE;
+                mTimeMap.put(timePos, mTimeList.get(i));
+            }
         }
     }
 
@@ -89,20 +92,16 @@ public final class Tab implements Serializable {
         return mTabName;
     }
 
+    public String getTabArtist() {
+        return mTabArtist;
+    }
+
     public int length() {
         return mTimeList.size();
     }
 
-    public boolean isComplex() {
-        return mComplex;
-    }
-
     public int getTempo() {
         return mTempo;
-    }
-
-    public String getSignatures(int index) {
-        return mSignatures.get(index);
     }
 
     public Time getTime(int index) {
@@ -122,7 +121,7 @@ public final class Tab implements Serializable {
         for (Time t : mTimeList) {
             total = total + Duration.valueOf(t.getDuration()).getDuration();
         }
-        return total * pace;
+        return total * PACE;
 
     }
 }

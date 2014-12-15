@@ -6,13 +6,13 @@ package ch.epfl.sweng.smartTabs.music;
 public enum Instrument {
     GUITAR(6), UKELELE(4), BASS(4);
 
-    private int myStrings;
+    private int mStrings;
 
     private Instrument(int strings) {
-        myStrings = strings;
+        mStrings = strings;
     }
 
     public double getNumOfStrings() {
-        return myStrings;
+        return mStrings;
     }
 }

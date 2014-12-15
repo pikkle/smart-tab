@@ -21,11 +21,11 @@ import ch.epfl.sweng.smartTabs.music.Tab;
  * @author rphkhr Raphael El-Khoury 212765
  */
 public class NetworkClient {
-    private final int readTimeout = 10000;
-    private final int connectTimeout = 15000;
+    private final static int READTIMEOUT = 10000;
+    private final static int CONNECTIONTIMEOUT = 15000;
+    private final static int BADURL = 404;
 
-    public Map<String, URL> fetchTabMap(String url) throws IOException,
-            JSONException {
+    public Map<String, URL> fetchTabMap(String url) throws IOException, JSONException {
         return parseFromJson(downloadContent(new URL(url)));
     }
 
@@ -39,34 +39,39 @@ public class NetworkClient {
         InputStream is = null;
 
         try {
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setReadTimeout(readTimeout);
-            conn.setConnectTimeout(connectTimeout);
+            HttpURLConnection conn = getConnection(url);
+            conn.setReadTimeout(READTIMEOUT);
+            conn.setConnectTimeout(CONNECTIONTIMEOUT);
             conn.setRequestMethod("GET");
             conn.connect();
             is = conn.getInputStream();
 
-			int response = conn.getResponseCode();
-			if (response == 404){
-				throw new IOException("Could not connect, check internet connection");
-			}
-			String stringContent = readStream(is);
-			try{
-				JSONObject jsonObj = new JSONObject(stringContent);
-				if (jsonObj.length() == 0 || jsonObj.names()==null){
-					throw new Exception("Invalid content.");
-					}
-			} catch (Exception e){
-				e.printStackTrace();
-				System.err.println("Invalid content.");
-			}
-			return stringContent;
-		} finally {
-			if (is != null) {
-				is.close();
-			}
-		}
-	}
+            int response = conn.getResponseCode();
+            if (response == BADURL) {
+                throw new IOException("Could not connect, check internet connection");
+            }
+            String stringContent = readStream(is);
+            try {
+                JSONObject jsonObj = new JSONObject(stringContent);
+                if (jsonObj.length() == 0 || jsonObj.names() == null) {
+                    throw new JSONException("Invalid content.");
+                }
+            } catch (JSONException e) {
+                // Toast.makeText(appCont, "Please retry fetching Tab",
+                // Toast.LENGTH_SHORT).show();
+            }
+
+            return stringContent;
+        } finally {
+            if (is != null) {
+                is.close();
+            }
+        }
+    }
+
+    public HttpURLConnection getConnection(URL url) throws IOException {
+        return (HttpURLConnection) url.openConnection();
+    }
 
     private String readStream(InputStream is) {
         BufferedReader reader;
@@ -87,8 +92,7 @@ public class NetworkClient {
         return new String(output);
     }
 
-    public Map<String, URL> parseFromJson(String s) throws JSONException,
-            MalformedURLException {
+    public Map<String, URL> parseFromJson(String s) throws JSONException, MalformedURLException {
         JSONArray jArray = new JSONArray(s);
         HashMap<String, URL> map = new HashMap<String, URL>();
 
@@ -101,7 +105,12 @@ public class NetworkClient {
     }
 
     public Tab fetchTab(URL myUrl) throws IOException, JSONException {
-        return Tab.parseTabFromJSON(new JSONObject(downloadContent(myUrl)));
+        try {
+
+            return Tab.parseTabFromJSON(new JSONObject(downloadContent(myUrl)));
+        } catch (JSONException e) {
+            throw new JSONException("Bad JSON");
+        }
     }
 
 }

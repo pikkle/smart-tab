@@ -19,8 +19,7 @@
 
         <!-- Main Activity -->
         <activity
-            android:name=".activity.MainActivity"
-            android:parentActivityName=".activity.MainActivity" >
+            android:name=".activity.MainActivity" >
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value=".SearchResultsActivity" />
@@ -32,6 +31,13 @@
             android:label="@string/title_activity_display"
             android:screenOrientation="landscape"
             android:theme="@android:style/Theme.NoTitleBar" >
+        </activity>
+        
+        <!-- Favorites Activity -->
+        <activity
+            android:name=".activity.FavoritesActivity"
+            android:label="@string/title_favorites_display"
+            android:parentActivityName=".activity.MainActivity">
         </activity>
 
         <!-- Help Activity -->
