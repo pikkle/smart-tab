@@ -1,10 +1,10 @@
 package ch.epfl.sweng.smartTabs.test;
 
 
-import junit.framework.TestCase;
+import android.test.AndroidTestCase;
 import ch.epfl.sweng.smartTabs.music.Duration;
 
-public class DurationTest extends TestCase{
+public class DurationTest extends AndroidTestCase{
   private Duration blanche = Duration.Blanche;
   
   public void durationMatchTest(){

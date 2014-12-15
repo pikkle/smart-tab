@@ -1,5 +1,6 @@
 package ch.epfl.sweng.smartTabs.test;
 
+import android.test.AndroidTestCase;
 import ch.epfl.sweng.smartTabs.music.Duration;
 import ch.epfl.sweng.smartTabs.music.Height;
 import ch.epfl.sweng.smartTabs.music.Note;
@@ -9,7 +10,7 @@ import junit.framework.TestCase;
  * @author Faton Ramadani
  * Test for Note class
  */
-public class NoteTest extends TestCase{
+public class NoteTest extends AndroidTestCase{
 	private Height nullHeight = null;
 	private Duration nullDuration = null;
 	private Note test3 = new Note(Height.C, 1, Duration.Noire);

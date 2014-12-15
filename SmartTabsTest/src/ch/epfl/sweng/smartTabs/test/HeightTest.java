@@ -1,9 +1,10 @@
 package ch.epfl.sweng.smartTabs.test;
 
+import android.test.AndroidTestCase;
 import ch.epfl.sweng.smartTabs.music.Height;
 import junit.framework.TestCase;
 
-public class HeightTest extends TestCase{
+public class HeightTest extends AndroidTestCase{
 	private Height nullHeight = null;
 	
 	public void nullHeightTest() {

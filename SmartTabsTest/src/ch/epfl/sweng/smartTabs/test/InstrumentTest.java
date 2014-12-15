@@ -1,13 +1,13 @@
 package ch.epfl.sweng.smartTabs.test;
 
+import android.test.AndroidTestCase;
 import ch.epfl.sweng.smartTabs.music.Instrument;
-import junit.framework.TestCase;
 
 /**
  * @author fatonramadani
  * Test for the instrument enumeration
  */
-public class InstrumentTest extends TestCase{
+public class InstrumentTest extends AndroidTestCase{
 	
 	private Instrument guitar = Instrument.GUITAR;
 	private Instrument ukelele = Instrument.UKELELE;
