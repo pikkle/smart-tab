@@ -40,7 +40,6 @@ public class TabTest extends AndroidTestCase {
 		assertEquals("foo", jObj.getString("name"));
 	}
 
-
 	public void testJSONTempo() throws JSONException {
 		JSONObject jObj = new JSONObject(goodTabString);
 		Tab parsedTab = Tab.parseTabFromJSON(jObj);
@@ -48,6 +47,7 @@ public class TabTest extends AndroidTestCase {
 		int falseTempo = 121;
 		assertFalse(falseTempo == parsedTab.getTempo());
 	}
+	
 	public void testJSONLength() throws JSONException {
 		JSONObject jObj = new JSONObject(goodTabString);
 		Tab parsedTab = Tab.parseTabFromJSON(jObj);
