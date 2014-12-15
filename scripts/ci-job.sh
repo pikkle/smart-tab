@@ -1,7 +1,7 @@
 #!/bin/sh -x
 
 PROJECT_NAME=SmartTab
-TEST_PROJECT=SmartTabsTest
+TEST_PROJECT=SmartTabTest
 
 export ANDROID_HOME=/home/jenkins/tools/android-sdk
 export PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools
