@@ -13,7 +13,8 @@ import ch.epfl.sweng.smartTabs.music.Tab;
  * @author rphkhr Raphael El-Khoury 212765
  */
 public class TabTest extends AndroidTestCase {
-	public String goodTabString = "{ \"name\": \"foo\", \"complex\": false, \"tempo\": 120, \"partition\": [ { \"string_1\": \"0\", \"string_2\": \"1\", \"string_3\": \"2\", \"string_4\": \"2\", \"string_5\": \"0\", \"string_6\": \"0\", \"step\": 1, \"length\" : \"Noire\"}]}";
+	public String goodTabString = "{ \"name\": \"foo\", \"artist\": fooArtist, \"tempo\": 120, \"partition\": [ { \"string_1\": \"0\", \"string_2\": \"1\", \"string_3\": \"2\", \"string_4\": \"2\", \"string_5\": \"0\", \"string_6\": \"0\", \"step\": 1, \"length\" : \"Noire\"}]}";
+	public String badTabString = "{ \"name\": \"foo\", \"\": false, \"tempo\": 120, \"partition\": [  \"string_1\": \"0\", \"string_2\": \"1\", \"string_3\": \"2\", \"string_4\": \"2\", \"string_5\": \"0\", \"string_6\": \"0\", \"step\": 1, \"length\" : \"Noire\"}]}";
 
 	private List<String> jsonFields;
 
@@ -32,12 +33,22 @@ public class TabTest extends AndroidTestCase {
 		Tab parsedTab = Tab.parseTabFromJSON(jObj);
 		assertNotNull(parsedTab);
 	}
+
 	public void testJSONName() throws JSONException {
 		JSONObject jObj = new JSONObject(goodTabString);
 		Tab parsedTab = Tab.parseTabFromJSON(jObj);
 		assertEquals(parsedTab.getTabName(), jObj.getString("name"));
 		assertEquals("foo", parsedTab.getTabName());
 		assertEquals("foo", jObj.getString("name"));
+	}
+
+	public void testJSONArtist()throws JSONException  {
+		JSONObject jObj = new JSONObject(goodTabString);
+		Tab parsedTab = Tab.parseTabFromJSON(jObj);
+		assertEquals(parsedTab.getTabArtist(), jObj.getString("artist"));
+		assertEquals("fooArtist", parsedTab.getTabArtist());
+		assertEquals("fooArtist", jObj.getString("artist"));
+
 	}
 
 	public void testJSONTempo() throws JSONException {
@@ -47,7 +58,7 @@ public class TabTest extends AndroidTestCase {
 		int falseTempo = 121;
 		assertFalse(falseTempo == parsedTab.getTempo());
 	}
-	
+
 	public void testJSONLength() throws JSONException {
 		JSONObject jObj = new JSONObject(goodTabString);
 		Tab parsedTab = Tab.parseTabFromJSON(jObj);
@@ -64,17 +75,13 @@ public class TabTest extends AndroidTestCase {
 		}
 	}
 
-	public void testMissingFields() throws JSONException {
-		for (String field : jsonFields) {
-			JSONObject jsonObject = new JSONObject(goodTabString);
-			jsonObject.remove(field);
-
-			try {
-				Tab.parseTabFromJSON(jsonObject);
-				fail("Parsed missing field: " + field);
-			} catch (JSONException e) {
-				// success
-			}
+	public void testBadJSONParsing() throws JSONException {
+		try {
+			JSONObject jObj = new JSONObject(badTabString);
+			Tab parsedTab = Tab.parseTabFromJSON(jObj);
+			assertTrue(parsedTab == null);
+		} catch (JSONException e) {
+			// success
 		}
 	}
 
